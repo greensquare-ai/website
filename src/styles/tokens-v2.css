@@ -1,0 +1,74 @@
+/* GreenSquare "Operational Gravity" — v2 tokens.
+   Prototype design system: Palantir structure (measured from palantir.com) fused with
+   GreenSquare's forest-green identity. Light editorial canvas, heavy dark cinematic moments,
+   zero radius, currentColor hairlines, oversized light-weight grotesque, mono as motif.
+   Scoped to the v2 homepage prototype — does not touch the live token system. */
+:root {
+  /* ---- surfaces (light canvas / graphite + near-black darks) ---- */
+  --v-paper: #fbfbf9;      /* near-white editorial base */
+  --v-fill: #f1f2ef;       /* light section block */
+  --v-fill-2: #e8e9e5;     /* slightly deeper light fill / hairline-fill */
+  --v-graphite: #1a201c;   /* graphite-forest dark (Palantir #202426 + green cast) */
+  --v-black: #0b100d;      /* near-black product / terminal surface */
+  --v-deep: #070b09;       /* deepest */
+
+  /* ---- ink ---- */
+  --v-ink: #171b18;        /* near-black text (not pure) */
+  --v-ink-soft: #5c625d;   /* muted body */
+  --v-ink-faint: #8a8f8a;  /* captions */
+  --v-cream: #eef0ec;      /* text on dark */
+  --v-cream-soft: rgba(238, 240, 236, 0.60);
+  --v-cream-faint: rgba(238, 240, 236, 0.38);
+
+  /* hairlines inherit currentColor via opacity — the Palantir tell */
+  --v-line-light: rgba(23, 27, 24, 0.14);
+  --v-line-strong: rgba(23, 27, 24, 0.26);
+  --v-line-dark: rgba(238, 240, 236, 0.16);
+  --v-line-dark-strong: rgba(238, 240, 236, 0.30);
+
+  /* ---- accent (near-monochrome + one forest green; lime as the single pop) ---- */
+  --v-green: #1f5a3d;      /* forest accent — fuses Palantir #2B5945 + GreenSquare #1c5638 */
+  --v-green-deep: #123e28;
+  --v-green-bright: #2f8a57;
+  --v-signal: #3ecf6a;     /* terminal / progress green, reads on near-black */
+  --v-lime: #dff49f;       /* the one extra pop / accent node */
+
+  /* ---- type ---- */
+  --vf-display: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  --vf-body: 'Manrope', system-ui, -apple-system, sans-serif;
+  --vf-mono: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+  --vf-serif: 'Cormorant Garamond', Georgia, serif;
+
+  /* oversized display, light weight, tight tracking, sub-1.0 leading */
+  --vs-display: clamp(3rem, 7.5vw, 6rem);
+  --vs-h1: clamp(2.4rem, 5vw, 4rem);
+  --vs-h2: clamp(1.85rem, 3.8vw, 3rem);
+  --vs-h3: 1.2rem;
+  --vs-lead: clamp(1.12rem, 1.5vw, 1.35rem);
+  --vs-body: 1.0625rem;
+  --vs-small: 0.9rem;
+  --vs-label: 0.72rem;
+  --vs-mono: 0.8rem;
+
+  /* ---- layout (12-col feel, 1240 container, ~100px rhythm) ---- */
+  --v-max: 1240px;
+  --v-gutter: clamp(20px, 4vw, 44px);
+  --v-section: clamp(4.5rem, 8vw, 7rem);
+
+  /* ---- space scale (Palantir 3/10/20/40/120-ish, 4px-friendly) ---- */
+  --v-1: 4px;
+  --v-2: 8px;
+  --v-3: 12px;
+  --v-4: 16px;
+  --v-5: 24px;
+  --v-6: 32px;
+  --v-8: 48px;
+  --v-10: 64px;
+  --v-12: 96px;
+
+  /* ---- motion ---- */
+  --v-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --v-fast: 150ms;
+  --v-mid: 320ms;
+  --v-slow: 640ms;
+}
