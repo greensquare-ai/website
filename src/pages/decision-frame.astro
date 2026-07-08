@@ -1,0 +1,104 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
+
+const questions = [
+  { n: '1', q: 'What exactly are you deciding, and what triggered it now?', body: 'State the decision in one sentence, and name what made it live today rather than last month.' },
+  { n: '2', q: 'What is the decision underneath this one?', body: 'People often ask about the surface choice while avoiding the real one. If this decision went away, what larger question would still be sitting there?' },
+  { n: '3', q: 'What is the false binary?', body: 'You have probably framed this as A or B. Name a third option you have not been treating as real, including doing nothing, or a path that is neither A nor B.' },
+  { n: '4', q: 'What is the one assumption the whole thing rests on?', body: 'Find the single belief that, if it turned out to be wrong, would change everything. Not a list of risks. The load-bearing one.' },
+  { n: '5', q: 'Which of your "facts" are actually assumptions?', body: 'Take the constraints you are treating as fixed (a deadline, a budget, a flat no) and mark each one: verified, or just assumed?' },
+  { n: '6', q: 'What do you actually know?', body: 'For each thing the decision turns on, tag it: given (you know it for a fact), inferred (you are reasoning it), or unknown (you do not know, and it matters).' },
+];
+---
+<BaseLayout
+  title="The Decision Frame · GreenSquare"
+  description="A free one-page tool that interrogates your decision before you evaluate anything. Six questions, about ten minutes."
+  current="frame"
+>
+  <section class="section section-dark">
+    <div class="container-narrow">
+      <p class="overline">Free</p>
+      <h1 class="h1">The Decision Frame.</h1>
+      <p class="lead mt-6">
+        Most free tools, prompt packs, decision matrices, pros-and-cons templates, jump straight to weighing
+        options. None of them check whether you are deciding the right thing. The Frame does the one move they
+        skip: it interrogates the decision first, so you do not run a rigorous process on the wrong question.
+      </p>
+      <div class="action-row">
+        <a class="btn btn-on-dark" href="#get-it">Get the free frame</a>
+        <a class="text-action" href="/product/">See the full Decision</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-narrow">
+      <p class="overline">How to use it</p>
+      <p class="measure">
+        Run it on a real decision you are facing. Work through it by hand, or paste the six questions into
+        Claude or GPT with your decision and ask it to work through them in order. Answer honestly, the value is
+        in the questions you would rather skip. It takes about ten minutes.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-paper">
+    <div class="container-narrow">
+      <p class="overline">The six questions</p>
+      <div class="q-list">
+        {questions.map((item) => (
+          <div class="q-item reveal">
+            <span class="mono q-num">{item.n}</span>
+            <div>
+              <h3>{item.q}</h3>
+              <p class="small mt-2">{item.body}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-narrow">
+      <p class="overline">What you get</p>
+      <p class="measure">When you have worked through the six, you will have four things:</p>
+      <ul class="marked mt-6">
+        <li>The decision, reframed, often not the one you started with</li>
+        <li>The false binary exposed, with the option you had not named</li>
+        <li>The single assumption the whole call rests on</li>
+        <li>An honest map of what you know, marked given, inferred or unknown</li>
+      </ul>
+      <div class="hr"></div>
+      <p class="measure">
+        You are now framed. You are not yet decided. Framing is the front half of the work. The deciding
+        (generating genuine options, weighing the evidence, an evidence-tagged recommendation, and a self-check
+        before you commit) is the other half. That half is <a href="/product/">the Decision</a>, the paid
+        GreenSquare product. For now, use the Frame. It is yours, and it works on its own.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-dark" id="get-it">
+    <div class="container-narrow grid-split one-col">
+      <div class="reveal">
+        <p class="overline">Get it</p>
+        <h2>Send me the free Decision Frame.</h2>
+        <p class="small mt-3">
+          A one-page PDF, delivered by email. Double opt-in: confirm your address and the Frame arrives straight
+          after.
+        </p>
+        <div class="panel-on-dark mt-8">
+          <EmailCaptureForm client:visible buttonLabel="Send me the free Decision Frame" dark={true} />
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .q-list { display: grid; gap: var(--sp-8); margin-top: var(--sp-8); }
+  .q-item { display: flex; gap: var(--sp-6); align-items: flex-start; }
+  .q-num { color: var(--accent); font-size: 1rem; padding-top: 4px; }
+</style>

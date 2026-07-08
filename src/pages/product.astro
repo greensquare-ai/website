@@ -1,0 +1,221 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const stages = [
+  { n: '01', name: 'Interrogate', body: 'Short, specific questions come before any advice, scaled to the stakes: a small reversible call gets three sharp questions, a one-way-door call gets up to six.' },
+  { n: '02', name: 'Challenge the framing', body: 'The stated decision is tested once against the real one, so a solution chosen before the thinking was done gets caught rather than built around.' },
+  { n: '03', name: 'Play it back', body: 'Your situation is reflected back in a few lines, and any tension in what you have said (a fixed deadline against an unapproved budget, a stated risk appetite against the option you favour) is named for you to resolve.' },
+  { n: '04', name: 'Reason', body: 'Options are generated, including the ones you did not bring and doing nothing. Constraints you have treated as fixed are tested against what you have actually verified.' },
+  { n: '05', name: 'Produce', body: 'The five-part Decision Brief, written in clean markdown, with a self-check before it is handed to you.' },
+];
+---
+<BaseLayout
+  title="The Decision · GreenSquare"
+  description="The Decision is a single file that turns Claude or GPT into a decision advisor. It interrogates before it answers, then produces a five-part, evidence-tagged brief."
+  current="product"
+>
+  <section class="section section-dark">
+    <div class="container grid-split">
+      <div class="reveal">
+        <p class="overline">The product</p>
+        <h1 class="h1">The Decision.</h1>
+        <p class="lead mt-6">
+          One file that interrogates before it answers: it questions you, tests the framing once, plays your
+          situation back to you and catches contradictions, then produces genuine options and an evidence-tagged
+          recommendation with a self-check, all in markdown. Twelve months of model-version updates included.
+        </p>
+        <div class="action-row">
+          <a class="btn btn-on-dark" href="https://buy.stripe.com/aFaaEWfGDc7W7XF2wv3AY00" target="_blank" rel="noopener">Get the Decision, $49</a>
+          <a class="text-action" href="/benchmark/">See the benchmark</a>
+        </div>
+      </div>
+      <div class="reveal reveal-d1">
+        <div class="specimen-card panel-on-dark">
+          <p class="mono specimen-tag">01–05</p>
+          <ol class="specimen-list-simple">
+            {stages.map((s) => <li>{s.name}</li>)}
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <p class="overline">What it is</p>
+      <h2 class="maxw-30ch">A disciplined thinking partner for one decision, not another chat window.</h2>
+      <p class="measure mt-6">
+        The Decision turns a generic AI account into a decision advisor for a single real call. Open a new chat,
+        paste or upload the file, and describe the decision you are facing in your own words. It leads from
+        there: it asks before it advises, tests whether the decision you named is the real one, and only then
+        builds the brief. It behaves the same way on Claude and GPT, because the discipline is written into the
+        file, not left to the model's mood on the day.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-paper">
+    <div class="container">
+      <p class="overline">The method</p>
+      <h2>Five stages, in order, every time.</h2>
+      <p class="measure mt-4">It does not skip to the brief. Each stage exists because the one before it changes what the brief should say.</p>
+      <div class="stage-grid">
+        {stages.map((s) => (
+          <article class="reveal">
+            <span class="mono stage-num">{s.n}</span>
+            <h3>{s.name}</h3>
+            <p class="small mt-2">{s.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <p class="overline">The output</p>
+      <h2>Five parts, every time.</h2>
+      <div class="output-grid">
+        <div class="card"><span class="mono">1</span><h3>The decision, and why now</h3><p class="small">The real decision, and what makes it live today.</p></div>
+        <div class="card"><span class="mono">2</span><h3>The options, compared</h3><p class="small">A compact table, scored against the criteria that matter, including the options you did not bring.</p></div>
+        <div class="card"><span class="mono">3</span><h3>The recommendation</h3><p class="small">The call, and the one or two assumptions it rests on, each tagged given, inferred or unknown.</p></div>
+        <div class="card"><span class="mono">4</span><h3>Next steps</h3><p class="small">Three to five concrete actions, sequenced if the clock matters.</p></div>
+        <div class="card"><span class="mono">5</span><h3>What would change this call</h3><p class="small">The specific risks or unknowns that would flip the recommendation, plus a confidence line.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-paper">
+    <div class="container grid-split">
+      <div class="reveal">
+        <p class="overline">The firewall</p>
+        <h2>What it does. What it does not.</h2>
+        <p class="measure mt-4">
+          The Decision does arithmetic on numbers you give it, tagged as derived, so a claim like "roughly 8% of
+          revenue" is shown as worked, not asserted. It does not build a financial model, a valuation, a template,
+          a board pack or a risk register. That deeper modelling work is a separate product, The Case. The
+          Decision's job is the call and the brief, not the spreadsheet behind it.
+        </p>
+      </div>
+      <div class="reveal">
+        <div class="card">
+          <ul class="marked">
+            <li><span>Does:</span> arithmetic on given numbers, tagged given or derived</li>
+            <li><span>Does:</span> a five-part, evidence-tagged brief in markdown</li>
+            <li><span>Does not:</span> build a financial model or valuation</li>
+            <li><span>Does not:</span> produce a deck, a template, or a risk register</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="card hygiene-box reveal">
+        <p class="overline">Enterprise-paste hygiene</p>
+        <h3>Plain markdown. Runs in your own account. Nothing collected.</h3>
+        <p class="small mt-3 maxw-60ch">
+          The Decision is a plain markdown file: no links, no embedded code, no macros, nothing that phones home.
+          It runs entirely inside the AI account you already use. GreenSquare does not see your decision, your
+          answers, or your brief. You can paste it into a work account under the same policies you already apply
+          to any text you type into that account.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-dark" id="pricing">
+    <div class="container">
+      <p class="overline">Pricing</p>
+      <div class="pricing-grid">
+        <div class="price-card">
+          <p class="mono price-tag">Individual</p>
+          <h2>The Decision</h2>
+          <p class="mt-4"><span class="price-now">$49</span> <span class="price-was">$59</span></p>
+          <ul class="marked mt-6">
+            <li>One file, yours to keep, no subscription</li>
+            <li>Works in Claude and GPT</li>
+            <li>Twelve months of model-version updates included</li>
+            <li>Refund on request within 14 days</li>
+          </ul>
+          <a class="btn btn-on-dark mt-8" href="https://buy.stripe.com/aFaaEWfGDc7W7XF2wv3AY00" target="_blank" rel="noopener">Get the Decision</a>
+        </div>
+        <div class="price-card">
+          <p class="mono price-tag">Team, 10 seats</p>
+          <h2>Team tier</h2>
+          <p class="mt-4"><span class="price-now">A$490</span></p>
+          <ul class="marked mt-6">
+            <li>10 seats to the ladder</li>
+            <li>One transaction, one relationship</li>
+            <li>A quarterly briefing on how the benchmark has moved</li>
+          </ul>
+          <a class="text-action inline-block mt-8" href="mailto:hello@greensquare.ai?subject=Team%20tier">Write to hello@greensquare.ai</a>
+        </div>
+      </div>
+      <p class="small mt-8 maxw-62ch">
+        Priced below your expense-approval threshold on purpose. The maintenance moat is what protects it: your
+        $49 includes 12 months of model-version updates and a re-run of the public benchmark within 14 days of
+        each major frontier model release, so the file keeps being tested against the model you are actually
+        running it on.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-narrow">
+      <p class="overline">Questions</p>
+      <h2>The short answers.</h2>
+      <div class="faq-list mt-8">
+        <details open>
+          <summary>What exactly do I get?</summary>
+          <p class="small">One markdown file for Claude or GPT. Open a new chat, paste or upload it, describe your decision, answer its questions, and it produces a five-part Decision Brief in the conversation.</p>
+        </details>
+        <details>
+          <summary>Do I need to install anything?</summary>
+          <p class="small">No. It is a plain text file. No app, no plugin, no account with GreenSquare.</p>
+        </details>
+        <details>
+          <summary>Is it a subscription?</summary>
+          <p class="small">No. One file, one price: $49, anchored to $59, with 12 months of model-version updates included.</p>
+        </details>
+        <details>
+          <summary>Will it build me a financial model?</summary>
+          <p class="small">No. It does arithmetic on numbers you give it, tagged as derived. Financial modelling is a separate product, The Case.</p>
+        </details>
+        <details>
+          <summary>Is it just a prompt someone could copy?</summary>
+          <p class="small">It is a file, and that is the point: nothing to install, your data never leaves your own account. What is harder to copy is the standing commitment behind it: a published rubric, readable transcripts, and a benchmark re-run within 14 days of every major model release. See the <a href="/benchmark/">benchmark</a> and <a href="/methodology/">methodology</a>.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* hero specimen is the page's elevated object */
+  .specimen-card { box-shadow: var(--shadow-specimen-dark); }
+  .specimen-tag { color: var(--lime); margin-bottom: var(--sp-3); }
+  .specimen-list-simple { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--sp-4); color: var(--cream); font-family: var(--font-display); font-size: var(--size-stat-sub); }
+  .stage-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--sp-6); margin-top: var(--sp-12); }
+  @media (max-width: 1040px) { .stage-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 620px) { .stage-grid { grid-template-columns: 1fr; } }
+  .stage-num { color: var(--accent); font-size: 1rem; }
+  .output-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--sp-6); margin-top: var(--sp-12); }
+  .output-grid .card span { color: var(--accent); font-family: var(--font-mono); }
+  .output-grid .card h3 { margin-top: var(--sp-2); }
+  @media (max-width: 1040px) { .output-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 620px) { .output-grid { grid-template-columns: 1fr; } }
+  .hygiene-box { background: var(--bg); border-style: dashed; }
+  .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-8); margin-top: var(--sp-8); }
+  @media (max-width: 860px) { .pricing-grid { grid-template-columns: 1fr; } }
+  .price-card { border: 1px solid var(--cream-18); border-radius: var(--radius-card); padding: var(--sp-8); }
+  .price-tag { color: var(--lime); }
+  .price-now { font-family: var(--font-display); font-size: var(--size-stat); color: var(--cream); font-variant-numeric: tabular-nums; }
+  .price-was { font-family: var(--font-display); font-size: var(--size-stat-sub); color: var(--cream-60); text-decoration: line-through; margin-left: var(--sp-2); font-variant-numeric: tabular-nums; }
+  .price-card .marked li { color: var(--cream); }
+  .price-card .marked li::before { background: var(--lime); }
+  .faq-list details { border-bottom: 1px solid var(--line); padding-block: var(--sp-4); }
+  .faq-list summary { font-weight: 700; cursor: pointer; font-size: var(--size-h4); }
+  .faq-list p { margin-top: var(--sp-3); }
+</style>

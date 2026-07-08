@@ -1,0 +1,92 @@
+{
+  "phase": "design_phase_pilot",
+  "run_meta": {
+    "date": "2026-07-03",
+    "note": "Design-phase pilot on Case A only, n=3 per arm, one model (Claude Opus 4.8). Confirms the three-arm design discriminates before pre-registration. Not pooled with the pre-registered grid.",
+    "models": { "claude": "Claude Opus 4.8 (Medium)", "gpt": null, "gemini": null },
+    "n_per_cell": { "caseA": 3, "caseB": null, "caseC": null }
+  },
+  "cases": {
+    "A": {
+      "label": "Meridian Field Services — managed-service bid (fictional, ASX-200 scale)",
+      "groups": {
+        "process_discipline": {
+          "label": "Process discipline (instructed by the product)",
+          "checks": {
+            "asked_before_answering": {
+              "label": "Asked before answering",
+              "armA": { "met": 0, "partial": 0, "n": 3 },
+              "armB": { "met": 0, "partial": 0, "n": 3 },
+              "armC": { "met": 3, "partial": 0, "n": 3 }
+            },
+            "real_options_compared": {
+              "label": "Real options incl. do-nothing, compared on criteria",
+              "armA": { "met": 0, "partial": 0, "n": 3 },
+              "armB": { "met": 0, "partial": 0, "n": 3 },
+              "armC": { "met": 3, "partial": 0, "n": 3 }
+            },
+            "evidence_tagged": {
+              "label": "Evidence tagged (given/inferred/derived/unknown)",
+              "armA": { "met": 0, "partial": 0, "n": 3 },
+              "armB": { "met": 0, "partial": 0, "n": 3 },
+              "armC": { "met": 3, "partial": 0, "n": 3 }
+            },
+            "named_untested_constraint": {
+              "label": "Named an untested constraint or assumption",
+              "armA": { "met": 0, "partial": 0, "n": 3 },
+              "armB": { "met": 3, "partial": 0, "n": 3 },
+              "armC": { "met": 3, "partial": 0, "n": 3 }
+            },
+            "stated_kill_criteria": {
+              "label": "Stated kill criteria",
+              "armA": { "met": 0, "partial": 1, "n": 3 },
+              "armB": { "met": 3, "partial": 0, "n": 3 },
+              "armC": { "met": 3, "partial": 0, "n": 3 }
+            }
+          }
+        },
+        "judgment": {
+          "label": "Judgment (scored against a sealed answer key, not instructed by the product)",
+          "checks": {
+            "hidden_decision_integrated": {
+              "label": "Surfaced the hidden decision by integrating three separated facts",
+              "armA": { "met": 0, "partial": 3, "n": 3 },
+              "armB": { "met": 3, "partial": 0, "n": 3 },
+              "armC": { "met": 3, "partial": 0, "n": 3 }
+            },
+            "recommendation_direction": {
+              "label": "Recommendation direction matched the sealed key",
+              "armA": { "met": 3, "partial": 0, "n": 3 },
+              "armB": { "met": 3, "partial": 0, "n": 3 },
+              "armC": { "met": 3, "partial": 0, "n": 3 }
+            },
+            "caught_inconsistency_bias": {
+              "label": "Caught the planted inconsistency or bias",
+              "armA": { "met": 0, "partial": 3, "n": 3 },
+              "armB": { "met": 3, "partial": 0, "n": 3 },
+              "armC": { "met": 3, "partial": 0, "n": 3 }
+            }
+          }
+        }
+      },
+      "defensible_brief_structure": {
+        "label": "Produced a structured, evidence-tagged, options-compared, kill-criteria'd brief",
+        "armA": { "met": 0, "n": 3 },
+        "armB": { "met": 0, "n": 3 },
+        "armC": { "met": 3, "n": 3 }
+      },
+      "headline_gap": {
+        "label": "Naked-baseline magnitude error",
+        "detail": "Arm A reframed and sized the client-concentration risk at roughly 8% of group revenue. It never saw the facts (handed to Arm B and interrogated out by Arm C) that put the real figure at close to 40% of the Utilities division in the ramp years, and it did not surface the year-three regulatory cliff at all."
+      }
+    },
+    "B": { "status": "pending", "note": "The GO case (the correct call is the aggressive option). Full grid not yet run." },
+    "C": { "status": "pending", "note": "Disguised-real, externally sourced case. Full grid not yet run." }
+  },
+  "blind_review": {
+    "status": "pending",
+    "reviewers": null,
+    "chose_engine": null,
+    "comments": []
+  }
+}
