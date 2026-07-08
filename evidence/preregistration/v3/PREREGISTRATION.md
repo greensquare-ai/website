@@ -38,4 +38,4 @@ git push
 # then record the commit SHA and UTC timestamp below
 ```
 
-Commit SHA: __________  ·  UTC timestamp: __________
+Commit SHA: `5e89de4842693444c27e893470efecb242486cd2`  ·  pushed 2026-07-05 09:17 +1000 (AEST) to `github.com/ks-projects-66/greensquare` main, under `evidence/preregistration/v3/`. Remote blob hashes verified against this file's table. This is the pre-registration of record; scored grid runs begin after this.
