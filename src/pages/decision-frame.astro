@@ -1,5 +1,5 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
 
 const questions = [
@@ -11,31 +11,33 @@ const questions = [
   { n: '6', q: 'What do you actually know?', body: 'For each thing the decision turns on, tag it: given (you know it for a fact), inferred (you are reasoning it), or unknown (you do not know, and it matters).' },
 ];
 ---
-<BaseLayout
+<BaseLayoutV2
   title="The Decision Frame · GreenSquare"
   description="A free one-page tool that interrogates your decision before you evaluate anything. Six questions, about ten minutes."
   current="frame"
 >
-  <section class="section section-dark">
-    <div class="container-narrow">
-      <p class="overline">Free</p>
-      <h1 class="h1">The Decision Frame.</h1>
-      <p class="lead mt-6">
+  <!-- HERO — light, clean -->
+  <section class="v-section v-off hero">
+    <div class="v-container v-container--narrow v-reveal">
+      <p class="v-label v-label--rule v-eyebrow">Free</p>
+      <h1 class="v-display">The Decision Frame.</h1>
+      <p class="v-lead" style="margin-top: var(--v-6);">
         Most free tools, prompt packs, decision matrices, pros-and-cons templates, jump straight to weighing
         options. None of them check whether you are deciding the right thing. The Frame does the one move they
         skip: it interrogates the decision first, so you do not run a rigorous process on the wrong question.
       </p>
-      <div class="action-row">
-        <a class="btn btn-on-dark" href="#get-it">Get the free frame</a>
-        <a class="text-action" href="/product/">See the full Decision</a>
+      <div class="hero-actions">
+        <a class="v-btn v-btn--green" href="#get-it">Get the free frame</a>
+        <a class="v-link" href="/product/">See the full Decision <span class="arrow">&rarr;</span></a>
       </div>
     </div>
   </section>
 
-  <section class="section">
-    <div class="container-narrow">
-      <p class="overline">How to use it</p>
-      <p class="measure">
+  <!-- HOW TO USE IT -->
+  <section class="v-section">
+    <div class="v-container v-container--narrow v-reveal">
+      <p class="v-label v-eyebrow">How to use it</p>
+      <p class="v-measure">
         Run it on a real decision you are facing. Work through it by hand, or paste the six questions into
         Claude or GPT with your decision and ask it to work through them in order. Answer honestly, the value is
         in the questions you would rather skip. It takes about ten minutes.
@@ -43,35 +45,37 @@ const questions = [
     </div>
   </section>
 
-  <section class="section section-paper">
-    <div class="container-narrow">
-      <p class="overline">The six questions</p>
-      <div class="q-list">
+  <!-- THE SIX QUESTIONS — indexed capability list -->
+  <section class="v-section v-fill">
+    <div class="v-container">
+      <p class="v-label v-eyebrow">The six questions</p>
+      <div class="v-caplist">
         {questions.map((item) => (
-          <div class="q-item reveal">
-            <span class="mono q-num">{item.n}</span>
-            <div>
-              <h3>{item.q}</h3>
-              <p class="small mt-2">{item.body}</p>
-            </div>
+          <div class="v-caprow v-reveal">
+            <span class="v-index">/{item.n.padStart(2, '0')}</span>
+            <h3>{item.q}</h3>
+            <p class="v-small v-cap-body">{item.body}</p>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <section class="section">
-    <div class="container-narrow">
-      <p class="overline">What you get</p>
-      <p class="measure">When you have worked through the six, you will have four things:</p>
-      <ul class="marked mt-6">
-        <li>The decision, reframed, often not the one you started with</li>
-        <li>The false binary exposed, with the option you had not named</li>
-        <li>The single assumption the whole call rests on</li>
-        <li>An honest map of what you know, marked given, inferred or unknown</li>
-      </ul>
-      <div class="hr"></div>
-      <p class="measure">
+  <!-- WHAT YOU GET — worksheet card -->
+  <section class="v-section">
+    <div class="v-container v-container--narrow">
+      <p class="v-label v-eyebrow">What you get</p>
+      <p class="v-measure">When you have worked through the six, you will have four things:</p>
+      <div class="v-card v-reveal" style="margin-top: var(--v-6);">
+        <ul class="v-marked">
+          <li>The decision, reframed, often not the one you started with</li>
+          <li>The false binary exposed, with the option you had not named</li>
+          <li>The single assumption the whole call rests on</li>
+          <li>An honest map of what you know, marked given, inferred or unknown</li>
+        </ul>
+      </div>
+      <hr class="v-rule" style="margin-block: var(--v-8);" />
+      <p class="v-measure">
         You are now framed. You are not yet decided. Framing is the front half of the work. The deciding
         (generating genuine options, weighing the evidence, an evidence-tagged recommendation, and a self-check
         before you commit) is the other half. That half is <a href="/product/">the Decision</a>, the paid
@@ -80,25 +84,27 @@ const questions = [
     </div>
   </section>
 
-  <section class="section section-dark" id="get-it">
-    <div class="container-narrow grid-split one-col">
-      <div class="reveal">
-        <p class="overline">Get it</p>
-        <h2>Send me the free Decision Frame.</h2>
-        <p class="small mt-3">
+  <!-- GET IT — green big-block, CTA -->
+  <section class="v-section v-green" id="get-it">
+    <div class="v-container v-split is-top">
+      <div class="v-reveal">
+        <p class="v-label v-label--rule v-eyebrow">Get it</p>
+        <h2 class="v-h2">Send me the free Decision Frame.</h2>
+        <p class="v-lead" style="margin-top: var(--v-5);">
           A one-page PDF, delivered by email. Double opt-in: confirm your address and the Frame arrives straight
           after.
         </p>
-        <div class="panel-on-dark mt-8">
-          <EmailCaptureForm client:visible buttonLabel="Send me the free Decision Frame" dark={true} />
+      </div>
+      <div class="v-reveal d1">
+        <div class="v-card">
+          <EmailCaptureForm client:visible buttonLabel="Send me the free Decision Frame" />
         </div>
       </div>
     </div>
   </section>
-</BaseLayout>
+</BaseLayoutV2>
 
 <style>
-  .q-list { display: grid; gap: var(--sp-8); margin-top: var(--sp-8); }
-  .q-item { display: flex; gap: var(--sp-6); align-items: flex-start; }
-  .q-num { color: var(--accent); font-size: 1rem; padding-top: 4px; }
+  .hero { padding-top: clamp(3rem, 6vh, 5rem); }
+  .hero-actions { display: flex; gap: var(--v-6); align-items: center; flex-wrap: wrap; margin-top: var(--v-8); }
 </style>

@@ -1,5 +1,5 @@
 ---
-import BaseLayout from './BaseLayout.astro';
+import BaseLayoutV2 from './BaseLayoutV2.astro';
 export interface Props {
   frontmatter: {
     title: string;
@@ -10,11 +10,13 @@ const { frontmatter } = Astro.props;
 const title = frontmatter.title;
 const description = frontmatter.description ?? 'GreenSquare legal information.';
 ---
-<BaseLayout title={`${title} · GreenSquare`} description={description}>
-  <section class="section">
-    <div class="container-narrow prose">
-      <p class="overline">Legal</p>
-      <slot />
+<BaseLayoutV2 title={`${title} · GreenSquare`} description={description}>
+  <section class="v-section">
+    <div class="v-container v-container--narrow">
+      <p class="v-label v-label--rule v-eyebrow">Legal</p>
+      <div class="v-prose">
+        <slot />
+      </div>
     </div>
   </section>
-</BaseLayout>
+</BaseLayoutV2>

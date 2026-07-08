@@ -20,7 +20,7 @@ const links = [
           <a href={l.href} aria-current={current === l.key ? 'page' : undefined}>{l.label}</a>
         ))}
       </nav>
-      <a class="v-btn v-btn--ghost" href="/pricing/">Get the Decision</a>
+      <a class="v-btn v-btn--green" href="/pricing/">Get the Decision</a>
       <button class="v-nav__toggle" type="button" id="v-nav-toggle" aria-label="Toggle menu" aria-expanded="false">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
           <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -40,10 +40,10 @@ const links = [
   </nav>
 </header>
 <style>
-  .v-nav__drawer { background: var(--v-black); border-bottom: 1px solid var(--v-line-dark); }
+  .v-nav__drawer { background: var(--v-paper); border-bottom: 1px solid var(--v-line); }
   .v-nav__drawer .v-container { display: flex; flex-direction: column; gap: var(--v-4); padding-block: var(--v-5); }
-  .v-nav__drawer a:not(.v-btn) { color: var(--v-cream-soft); text-decoration: none; font-weight: 500; font-size: var(--vs-small); }
-  .v-nav__drawer a[aria-current='page'] { color: var(--v-cream); }
+  .v-nav__drawer a:not(.v-btn) { color: var(--v-ink-soft); text-decoration: none; font-weight: 500; font-size: var(--vs-small); }
+  .v-nav__drawer a[aria-current='page'] { color: var(--v-green); }
   .v-nav__drawer .v-btn { width: fit-content; }
   @media (min-width: 901px) { .v-nav__drawer { display: none !important; } }
 </style>

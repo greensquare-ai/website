@@ -7,19 +7,12 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
   description="GreenSquare turns Claude or GPT into a disciplined decision advisor. It interrogates before it answers, then gives you an evidence-tagged recommendation you can defend."
   current="home"
 >
-  <!-- HERO — dark cinematic, abstract square field -->
-  <section class="v-hero v-dark hero">
-    <div class="v-hero__field" aria-hidden="true"></div>
-    <div class="v-hero__nodes" aria-hidden="true">
-      <i class="sq n1"></i><i class="sq n2"></i><i class="n3"></i><i class="sq n4"></i>
-    </div>
-    <div class="v-container v-hero__inner">
-      <div class="v-split">
+  <!-- HERO — light, clean, oversized-but-balanced -->
+  <section class="v-section v-off hero">
+    <div class="v-container">
+      <div class="v-split is-top">
         <div class="v-reveal">
-          <div class="v-eyebrow-row">
-            <span class="v-notch" aria-hidden="true"></span>
-            <span class="v-label v-label--rule">It interrogates before it answers</span>
-          </div>
+          <p class="v-label v-label--rule v-eyebrow">It interrogates before it answers</p>
           <h1 class="v-display">The brief that survives senior scrutiny.</h1>
           <p class="v-lead" style="margin-top: var(--v-6);">
             Think through any decision and come out with something you would stand behind. GreenSquare turns a
@@ -33,9 +26,9 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
           </div>
         </div>
         <div class="v-reveal d1">
-          <div class="v-terminal">
-            <div class="v-terminal__bar"><span class="v-terminal__dot"></span> DECISION_BRIEF.md</div>
-            <div class="v-terminal__body">
+          <div class="v-readout">
+            <div class="v-readout__bar"><span class="v-readout__dot"></span> DECISION_BRIEF.md</div>
+            <div class="v-readout__body">
               <ul class="v-spec__list">
                 <li><span class="n">/01</span> The decision, and why now</li>
                 <li><span class="n">/02</span> The options, compared</li>
@@ -47,7 +40,7 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
                 <span class="v-tag">given</span><span class="v-tag">derived</span><span class="v-tag">unknown</span>
               </div>
             </div>
-            <div class="v-terminal__foot">MARKDOWN OUTPUT <span class="v-cursor" aria-hidden="true"></span></div>
+            <div class="v-readout__foot">MARKDOWN OUTPUT <span class="v-cursor" aria-hidden="true"></span></div>
           </div>
         </div>
       </div>
@@ -57,18 +50,15 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
   <!-- PULL-QUOTE — the one serif editorial beat -->
   <section class="v-section v-fill">
     <div class="v-container">
-      <div class="v-reveal quote">
-        <span class="v-notch" aria-hidden="true"></span>
-        <p class="v-serif">Most AI answers the question you typed. GreenSquare asks what a good adviser would ask first.</p>
-      </div>
+      <p class="v-serif v-reveal">Most AI answers the question you typed. GreenSquare asks what a good adviser would ask first.</p>
     </div>
   </section>
 
   <!-- THREE PILLARS — indexed capability list -->
   <section class="v-section">
     <div class="v-container">
-      <div class="v-eyebrow-row"><span class="v-label">Three pillars</span></div>
-      <h2 class="v-h2" style="max-width: 22ch;">Three things a generic answer skips.</h2>
+      <p class="v-label v-eyebrow">Three pillars</p>
+      <h2 class="v-h2" style="max-width: 24ch;">Three things a generic answer skips.</h2>
       <div class="v-caplist">
         <div class="v-caprow v-reveal">
           <span class="v-index">/01</span>
@@ -98,11 +88,11 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
     </div>
   </section>
 
-  <!-- EVIDENCE — terminal-green operational module -->
-  <section class="v-section v-dark">
+  <!-- EVIDENCE — big green block, operational readout -->
+  <section class="v-section v-green">
     <div class="v-container v-split is-reverse">
       <div class="v-reveal">
-        <div class="v-eyebrow-row"><span class="v-label v-label--rule">Evidence</span></div>
+        <p class="v-label v-label--rule v-eyebrow">Evidence</p>
         <h2 class="v-h2">Same model, same question. Different brief.</h2>
         <p class="v-lead" style="margin-top: var(--v-5);">
           Given only the question a real person would paste, a naked baseline reframes the problem, but sizes the
@@ -113,9 +103,9 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
         <a class="v-link" href="/benchmark/" style="margin-top: var(--v-6);">Read the full comparison <span class="arrow">&rarr;</span></a>
       </div>
       <div class="v-reveal d1">
-        <div class="v-terminal">
-          <div class="v-terminal__bar"><span class="v-terminal__dot"></span> BENCHMARK · DEFENSIBLE_BRIEF</div>
-          <div class="v-terminal__body">
+        <div class="v-readout">
+          <div class="v-readout__bar"><span class="v-readout__dot"></span> BENCHMARK · DEFENSIBLE_BRIEF</div>
+          <div class="v-readout__body">
             <div class="v-run">
               <div class="v-run__head"><span class="v-run__name">NAKED BASELINE</span><span class="v-run__val">risk 8% &middot; structure 0/3</span></div>
               <div class="v-meter"><div class="v-meter__fill is-muted" style="--w: 7%;"></div></div>
@@ -129,7 +119,7 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
               <div class="v-meter"><div class="v-meter__fill" style="--w: 100%;"></div></div>
             </div>
           </div>
-          <div class="v-terminal__foot">DESIGN-PHASE PILOT &middot; N=3 &middot; CASE A &middot; CLAUDE OPUS 4.8</div>
+          <div class="v-readout__foot">DESIGN-PHASE PILOT &middot; N=3 &middot; CASE A &middot; CLAUDE OPUS 4.8</div>
         </div>
       </div>
     </div>
@@ -137,9 +127,9 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
 
   <!-- FREE FRAME -->
   <section class="v-section v-fill" id="frame">
-    <div class="v-container v-split">
+    <div class="v-container v-split is-top">
       <div class="v-reveal">
-        <div class="v-eyebrow-row"><span class="v-label">Start free</span></div>
+        <p class="v-label v-eyebrow">Start free</p>
         <h2 class="v-h2">Frame the decision before you evaluate anything.</h2>
         <p class="v-measure" style="margin-top: var(--v-5); color: var(--v-ink-soft);">
           The Decision Frame is a free one-page tool that interrogates your decision before you weigh options:
@@ -155,15 +145,15 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
     </div>
   </section>
 
-  <!-- SPLIT CTA -->
+  <!-- SPLIT CTA — big blocks (grey + green) -->
   <section class="v-splitcta" aria-label="Get started">
-    <div class="v-splitcta__panel v-splitcta__panel--graphite v-reveal">
-      <span class="v-label" style="color: var(--v-signal);">Start free</span>
-      <h2 class="v-h2" style="font-size: clamp(1.5rem, 2.6vw, 2.1rem);">Start with the free frame.</h2>
+    <div class="v-splitcta__panel v-splitcta__panel--fill v-reveal">
+      <p class="v-label">Start free</p>
+      <h2 class="v-h2" style="font-size: clamp(1.5rem, 2.6vw, 2rem);">Start with the free frame.</h2>
       <a class="v-link" href="/decision-frame/">Free Decision Frame <span class="arrow">&rarr;</span></a>
     </div>
     <div class="v-splitcta__panel v-splitcta__panel--green v-reveal d1">
-      <span class="v-label" style="color: var(--v-lime);">Ready when you are</span>
+      <p class="v-label">Ready when you are</p>
       <h2 class="v-h2">Make the call you would stand behind.</h2>
       <a class="v-link" href="/pricing/">Get the Decision, $49 <span class="arrow">&rarr;</span></a>
     </div>
@@ -171,13 +161,7 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
 </BaseLayoutV2>
 
 <style>
-  .hero { padding-top: clamp(7rem, 13vh, 10.5rem); padding-bottom: clamp(4.5rem, 9vh, 7.5rem); }
-  .hero .v-split { align-items: center; }
+  .hero { padding-top: clamp(3rem, 6vh, 5rem); }
   .hero-actions { display: flex; gap: var(--v-6); align-items: center; flex-wrap: wrap; margin-top: var(--v-8); }
   .spec-tags { display: flex; gap: var(--v-2); flex-wrap: wrap; margin-top: var(--v-2); }
-  .quote { display: flex; gap: var(--v-6); align-items: flex-start; }
-  .quote .v-notch { margin-top: 12px; flex: none; }
-  @media (max-width: 900px) {
-    .hero .v-terminal { margin-top: var(--v-6); }
-  }
 </style>
