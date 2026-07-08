@@ -1,92 +1,59 @@
 {
-  "phase": "design_phase_pilot",
+  "phase": "pre_registered_grid",
   "run_meta": {
-    "date": "2026-07-03",
-    "note": "Design-phase pilot on Case A only, n=3 per arm, one model (Claude Opus 4.8). Confirms the three-arm design discriminates before pre-registration. Not pooled with the pre-registered grid.",
-    "models": { "claude": "Claude Opus 4.8 (Medium)", "gpt": null, "gemini": null },
-    "n_per_cell": { "caseA": 3, "caseB": null, "caseC": null }
+    "date": "2026-07-06",
+    "note": "Pre-registered grid. Two frontier models, three fictional ASX-scale cases, three conditions (naked baseline / informed baseline / loaded Decision Brief), n=3 per cell = 54 runs. Case A Claude is the folded-in design-phase pilot. Gemini pre-registered but pending. Single scorer; scored blind against a sealed key whose hash was committed before any run.",
+    "prereg_commit": "5e89de4",
+    "models": { "claude": "Claude Opus 4.8", "gpt": "ChatGPT GPT-5.5", "gemini": "pending" },
+    "n_per_cell": 3,
+    "runs_total": 54
   },
-  "cases": {
-    "A": {
-      "label": "Meridian Field Services — managed-service bid (fictional, ASX-200 scale)",
-      "groups": {
-        "process_discipline": {
-          "label": "Process discipline (instructed by the product)",
-          "checks": {
-            "asked_before_answering": {
-              "label": "Asked before answering",
-              "armA": { "met": 0, "partial": 0, "n": 3 },
-              "armB": { "met": 0, "partial": 0, "n": 3 },
-              "armC": { "met": 3, "partial": 0, "n": 3 }
-            },
-            "real_options_compared": {
-              "label": "Real options incl. do-nothing, compared on criteria",
-              "armA": { "met": 0, "partial": 0, "n": 3 },
-              "armB": { "met": 0, "partial": 0, "n": 3 },
-              "armC": { "met": 3, "partial": 0, "n": 3 }
-            },
-            "evidence_tagged": {
-              "label": "Evidence tagged (given/inferred/derived/unknown)",
-              "armA": { "met": 0, "partial": 0, "n": 3 },
-              "armB": { "met": 0, "partial": 0, "n": 3 },
-              "armC": { "met": 3, "partial": 0, "n": 3 }
-            },
-            "named_untested_constraint": {
-              "label": "Named an untested constraint or assumption",
-              "armA": { "met": 0, "partial": 0, "n": 3 },
-              "armB": { "met": 3, "partial": 0, "n": 3 },
-              "armC": { "met": 3, "partial": 0, "n": 3 }
-            },
-            "stated_kill_criteria": {
-              "label": "Stated kill criteria",
-              "armA": { "met": 0, "partial": 1, "n": 3 },
-              "armB": { "met": 3, "partial": 0, "n": 3 },
-              "armC": { "met": 3, "partial": 0, "n": 3 }
-            }
-          }
-        },
-        "judgment": {
-          "label": "Judgment (scored against a sealed answer key, not instructed by the product)",
-          "checks": {
-            "hidden_decision_integrated": {
-              "label": "Surfaced the hidden decision by integrating three separated facts",
-              "armA": { "met": 0, "partial": 3, "n": 3 },
-              "armB": { "met": 3, "partial": 0, "n": 3 },
-              "armC": { "met": 3, "partial": 0, "n": 3 }
-            },
-            "recommendation_direction": {
-              "label": "Recommendation direction matched the sealed key",
-              "armA": { "met": 3, "partial": 0, "n": 3 },
-              "armB": { "met": 3, "partial": 0, "n": 3 },
-              "armC": { "met": 3, "partial": 0, "n": 3 }
-            },
-            "caught_inconsistency_bias": {
-              "label": "Caught the planted inconsistency or bias",
-              "armA": { "met": 0, "partial": 3, "n": 3 },
-              "armB": { "met": 3, "partial": 0, "n": 3 },
-              "armC": { "met": 3, "partial": 0, "n": 3 }
-            }
-          }
+  "aggregate": {
+    "n_per_arm": 18,
+    "defensible_brief_structure": {
+      "label": "Produced a defensible brief, on every run",
+      "armA": { "met": 0, "n": 18 },
+      "armB": { "met": 0, "n": 18 },
+      "armC": { "met": 18, "n": 18 }
+    },
+    "groups": {
+      "process_discipline": {
+        "label": "Process discipline (only the product does this, reliably)",
+        "checks": {
+          "asked_before_answering": { "label": "Asked before answering", "armA": { "met": 0, "n": 18 }, "armB": { "met": 0, "n": 18 }, "armC": { "met": 18, "n": 18 } },
+          "real_options_compared": { "label": "Real options incl. do-nothing, compared on criteria", "armA": { "met": 0, "n": 18 }, "armB": { "met": 2, "n": 18 }, "armC": { "met": 18, "n": 18 } },
+          "evidence_tagged": { "label": "Evidence tagged (given, inferred, derived, unknown)", "armA": { "met": 0, "n": 18 }, "armB": { "met": 0, "n": 18 }, "armC": { "met": 18, "n": 18 } },
+          "named_untested_constraint": { "label": "Named an untested constraint or assumption", "armA": { "met": 9, "n": 18 }, "armB": { "met": 18, "n": 18 }, "armC": { "met": 18, "n": 18 } },
+          "stated_kill_criteria": { "label": "Stated kill criteria", "armA": { "met": 12, "n": 18 }, "armB": { "met": 17, "n": 18 }, "armC": { "met": 18, "n": 18 } }
         }
       },
-      "defensible_brief_structure": {
-        "label": "Produced a structured, evidence-tagged, options-compared, kill-criteria'd brief",
-        "armA": { "met": 0, "n": 3 },
-        "armB": { "met": 0, "n": 3 },
-        "armC": { "met": 3, "n": 3 }
-      },
-      "headline_gap": {
-        "label": "Naked-baseline magnitude error",
-        "detail": "Arm A reframed and sized the client-concentration risk at roughly 8% of group revenue. It never saw the facts (handed to Arm B and interrogated out by Arm C) that put the real figure at close to 40% of the Utilities division in the ramp years, and it did not surface the year-three regulatory cliff at all."
+      "judgment": {
+        "label": "Judgment (scored blind against a sealed answer key)",
+        "checks": {
+          "surfaced_hidden_decision": { "label": "Surfaced the hidden decision by integrating the facts", "armA": { "met": 0, "n": 18 }, "armB": { "met": 15, "n": 18 }, "armC": { "met": 17, "n": 18 } },
+          "direction_matched_key": { "label": "Recommendation direction matched the sealed key", "armA": { "met": 9, "n": 18 }, "armB": { "met": 18, "n": 18 }, "armC": { "met": 18, "n": 18 } },
+          "caught_planted_bias": { "label": "Caught the planted inconsistency or bias", "armA": { "met": 5, "n": 18 }, "armB": { "met": 18, "n": 18 }, "armC": { "met": 18, "n": 18 } }
+        }
       }
-    },
-    "B": { "status": "pending", "note": "The GO case (the correct call is the aggressive option). Full grid not yet run." },
-    "C": { "status": "pending", "note": "Disguised-real, externally sourced case. Full grid not yet run." }
+    }
   },
-  "blind_review": {
-    "status": "pending",
-    "reviewers": null,
-    "chose_engine": null,
-    "comments": []
-  }
+  "go_case": {
+    "label": "Case B (GO case): moved toward the aggressive, evidence-backed call",
+    "note": "The anti-hedging test. n=6 per arm (two models, three runs each).",
+    "armA": { "met": 0, "n": 6 },
+    "armB": { "met": 6, "n": 6 },
+    "armC": { "met": 6, "n": 6 }
+  },
+  "hidden_decision_by_case_and_model": {
+    "note": "Count MET (integrated all required facts) out of n=3 per cell.",
+    "caseA": { "label": "Meridian managed-service bid", "claude": { "armA": 0, "armB": 3, "armC": 3 }, "gpt": { "armA": 0, "armB": 0, "armC": 2 } },
+    "caseB": { "label": "Larkfield build-vs-buy (GO case)", "claude": { "armA": 0, "armB": 3, "armC": 3 }, "gpt": { "armA": 0, "armB": 3, "armC": 3 } },
+    "caseC": { "label": "Corvan continue-vs-exit (sunk-cost)", "claude": { "armA": 0, "armB": 3, "armC": 3 }, "gpt": { "armA": 0, "armB": 3, "armC": 3 } }
+  },
+  "honest_notes": [
+    "Some naked baselines were strong: on Case C both models declined the raise as posed, and Claude named the sunk-cost trap unprompted on all three runs. The gap the product fills is fact-integration and process discipline, not model failure.",
+    "One loaded near-miss: Case A ChatGPT loaded run 1 integrated two of three facts because its interrogation never probed payment structure. This is why the loaded hidden-decision figure is 17 of 18, not 18 of 18.",
+    "n=3 per cell, two models (Gemini pending), single scorer. Claims are about reliability and defensibility, demonstrated consistently on two architecturally different frontier models, not a universal guarantee.",
+    "Every count traces to a saved transcript; the sealed key hash was pre-registered before any run. Independent re-scoring against the published rubric is welcome."
+  ]
 }

@@ -53,23 +53,25 @@ or any claim that caps the use cases.
 
 ## 3. Site structure (as built)
 
-Flat static site, no build step. Served from the repo root.
+**Astro site** (migrated July 2026 from the old flat static HTML, which is preserved under
+`legacy/`). Build with `npm install` then `npm run build`; dev with `npm run dev`.
 
-| File | Purpose |
+| Path | Purpose |
 |---|---|
-| `index.html` | Home: hero (with hero video), reversal teaser, the output (with demo video), how it works, audience, CTA |
-| `product.html` | The Decision Brief: five-part output, how it works, pricing ($49/$59), FAQ, signup |
-| `evidence.html` | Leads with the reversal, before/after, the case, benchmark bars, link to methodology |
-| `methodology.html` | The full test design, 12-dimension rubric, results, honest caveats |
-| `decision-frame.html` | Free lead magnet: a print-ready one-page Decision Frame worksheet |
-| `404.html` | Branded not-found page |
-| `assets/styles.css` | The entire design system. One stylesheet for all pages. |
-| `assets/site.js` | Scroll reveal, mobile nav, reduced-motion handling |
-| `assets/*.mp4 / *.jpg / *.svg / og-image.png` | Media. `hero.mp4` is a custom Remotion render (source: `../greensquare-animation/src/Hero.tsx`, composition `Hero`); re-render and copy it in to change the hero. |
-| `sitemap.xml`, `robots.txt` | SEO. URLs point at the production domain `www.greensquare.ai`. |
+| `src/pages/index.astro` | Home |
+| `src/pages/product.astro` | The Decision Brief: five-part output, how it works, pricing ($49/$59), FAQ, signup |
+| `src/pages/benchmark.astro` | The benchmark, in an editorial exhibit format. Data-driven from `src/data/benchmark-results.json`. Route is `/benchmark` (old `/evidence` redirects here) |
+| `src/pages/methodology.astro` | Test design and honest caveats |
+| `src/pages/decision-frame.astro` | Free lead magnet: the one-page Decision Frame |
+| `src/pages/pricing.astro` | Pricing ladder |
+| `src/pages/404.astro`, `src/pages/legal/*.md` | 404 + privacy/terms/cookies |
+| `src/layouts/`, `src/components/` | Layouts (incl. `BaseLayoutV2` from the "Operational Gravity" uplift) and shared components (Nav, Footer, EmailCaptureForm) |
+| `src/styles/tokens*.css`, `global*.css` | Design tokens + system. Canonical palette in the token files; change colour there only |
+| `public/assets/*` | Media (logo, favicon, og-image, hero.mp4) |
+| `legacy/` | The old flat static site, preserved, not built |
 
-Navigation is multi-page (Home / Product / Evidence). Footer also links Methodology and
-the free Decision Frame.
+Nav is Home / Benchmark / Product / Pricing. Footer also links Methodology and the free frame.
+Integrations: Kit form 9283111 (email capture) and the Stripe Payment Link (buy button) are wired.
 
 ---
 
@@ -87,8 +89,16 @@ the free Decision Frame.
   sell the engine. Built at `decision-frame.html`.
 - **Audience**: broad professionals at the moment of making a decision (consultants,
   managers, analysts, founders, students). Not "solo advisors only".
-- **Evidence**: lead with the reversal (outcome), keep scores and the rubric secondary.
-  The "+35%" uplift is deliberately not in a headline role.
+- **Evidence (current, honest — the old framing is RETIRED)**: the benchmark page leads with
+  an honest, pre-registered result, NOT a "reversal". Do NOT use: the "+35%" uplift, the 6.1 to
+  8.6 scores, the 12-dimension weighted table, the FreshTaste case, or "baseline launches,
+  framework reverses it" (that reversal claim was disproven on 2026 frontier models, which reframe
+  on their own). The real claim: only the loaded product reliably produces a defensible,
+  interrogated, evidence-tagged, options-compared brief (18/18 across two models and three cases,
+  baselines ~0); naked baselines miss the hidden decision because they do not interrogate; informed
+  baselines are capable, so the product's edge is discipline and reliability, not raw reasoning. All
+  numbers must trace to a saved transcript. Pre-registration + full method live in
+  `evidence/preregistration/v3/`; scoring is in the main project's `04_evidence/v3/scoring/`.
 - **Pro tier** (full nine-section framework + templates, ~$129): later, not now. Do not put
   it on the site.
 
@@ -96,17 +106,15 @@ the free Decision Frame.
 
 ## 5. What is stubbed / outstanding
 
-1. **Email form is inert.** Both signup forms (`#signup` on home and product) post nowhere.
-   To wire to Kit (ConvertKit): set the `<form>` action to the Kit form endpoint,
-   `method="post"`, and keep the email input name as `email_address` (or match Kit's field).
-   See the comment above each form.
-2. **Custom domain not connected.** Canonature/OG/sitemap URLs already point at
-   `https://www.greensquare.ai/`. `404.html` uses absolute paths (correct once the domain is
-   live; on the interim `github.io/greensquare/` URL the 404 styling will not resolve).
-3. **Demo video is 4.75 MB** (`assets/demo.mp4`). No transcoding tool was available locally.
-   Consider compressing it (target ~1.5 MB, H.264, ~1280px wide) before heavy traffic.
-4. **Real product files** (the system prompt and sections in `Strategy Framework/`) have not
-   been migrated into the repo. Out of scope for this build.
+1. **Email capture is wired** to Kit form 9283111 (`EmailCaptureForm`), and the buy button uses the
+   Stripe Payment Link. Stripe Tax and post-payment file delivery still need configuring on Stripe.
+2. **Custom domain not connected.** OG/sitemap URLs point at `https://www.greensquare.ai/`. Deploy
+   is via Vercel; the domain cutover from the Framer waitlist is a manual DNS step at Crazy Domains.
+3. **Visual uplift** ("Operational Gravity", Palantir/Linear direction) is in progress across the
+   site; review before the domain cutover.
+4. **Paid product file is NOT in this repo** by design (it is the thing being sold). Only its
+   SHA-256 hash is published, under `evidence/preregistration/v3/`. Never commit the product text.
+5. **Gemini** benchmark leg is pre-registered but pending (two models run so far: Claude, ChatGPT).
 
 ---
 
