@@ -1,7 +1,9 @@
-# Dependencies (only used locally to generate assets; not part of the static site)
+# Astro build (this is now a real Astro project; package.json and
+# package-lock.json ARE tracked so the build is reproducible)
 node_modules/
-package-lock.json
-package.json
+dist/
+.astro/
+.vercel/
 
 # OS / editor junk
 .DS_Store

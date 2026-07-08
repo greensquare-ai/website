@@ -1,0 +1,172 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
+---
+<BaseLayout
+  title="GreenSquare · The brief that survives senior scrutiny"
+  description="GreenSquare turns Claude or GPT into a disciplined decision advisor. It interrogates before it answers, then gives you an evidence-tagged recommendation you can defend."
+  current="home"
+>
+  <section class="section section-dark hero-section">
+    <div class="container grid-split">
+      <div class="reveal">
+        <p class="overline">It interrogates before it answers</p>
+        <h1 class="display">The brief that survives senior scrutiny.</h1>
+        <p class="lead mt-6">
+          Think through any decision and come out with something you would stand behind. GreenSquare turns a
+          generic AI into a disciplined thinking partner: it questions you before it answers, frames the real
+          call, generates genuine options, and hands you an evidence-tagged recommendation, in markdown,
+          identical on Claude and GPT.
+        </p>
+        <div class="action-row">
+          <a class="btn btn-on-dark" href="/product/">See how it works</a>
+          <a class="text-action" href="/benchmark/">See the benchmark</a>
+        </div>
+      </div>
+      <div class="reveal reveal-d1">
+        <div class="specimen-card panel-on-dark">
+          <div class="specimen-head">
+            <span class="specimen-mark" aria-hidden="true"></span>
+            <span class="mono">Decision Brief</span>
+          </div>
+          <ol class="specimen-list">
+            <li>The decision, and why now</li>
+            <li>The options, compared</li>
+            <li>The recommendation</li>
+            <li>Next steps</li>
+            <li>What would change this call</li>
+          </ol>
+          <div class="specimen-foot">
+            <span class="tag tag-given">given</span>
+            <span class="tag tag-derived">derived</span>
+            <span class="tag tag-unknown">unknown</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="quote-block reveal">
+        <p>Most AI answers the question you typed. GreenSquare asks what a good adviser would ask first.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-paper">
+    <div class="container">
+      <p class="overline">Three pillars</p>
+      <h2 class="maxw-26ch">Three things a generic answer skips.</h2>
+      <div class="pillars-grid two-col">
+        <article class="reveal">
+          <span class="square-marker" aria-hidden="true"></span>
+          <h3>It interrogates before it answers</h3>
+          <p class="small mt-3">
+            It asks what a good adviser would ask first, tests the framing once, plays the situation back to
+            you, and catches where your own answers contradict each other, before it produces anything.
+          </p>
+        </article>
+        <article class="reveal reveal-d1">
+          <span class="square-marker" aria-hidden="true"></span>
+          <h3>It shows its evidence</h3>
+          <p class="small mt-3">
+            Every claim the call rests on is tagged given, inferred or unknown, and the recommendation names
+            the single assumption it stands on.
+          </p>
+        </article>
+        <article class="reveal reveal-d2">
+          <span class="square-marker" aria-hidden="true"></span>
+          <h3>It holds a consulting standard, on any model</h3>
+          <p class="small mt-3">
+            The discipline is encoded in the file, so the output behaves the same on Claude or GPT, and scales
+            effort to the stakes rather than over-engineering a small call.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container grid-split reverse">
+      <div class="reveal order-2">
+        <p class="overline">Evidence</p>
+        <h2>Same model, same question. Different brief.</h2>
+        <p class="measure mt-4">
+          Given only the question a real person would paste, a naked baseline reframes the problem, but sizes the
+          risk at roughly 8% of revenue and never sees the mechanism that actually kills the deal. Loaded with
+          the Decision, the same model interrogates the facts out, reaches close to 40% of the division, and
+          lands a brief you could defend.
+        </p>
+        <a class="text-action inline-block mt-6" href="/benchmark/">Read the full comparison</a>
+      </div>
+      <div class="reveal order-1">
+        <div class="card">
+          <p class="caption">Design-phase pilot, n=3, Case A, Claude Opus 4.8</p>
+          <table class="data-table mt-4">
+            <thead>
+              <tr><th>Defensible brief structure</th><th class="num">Baseline</th><th class="num">The Decision</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Naked baseline</td><td class="num">0/3</td><td class="num">—</td></tr>
+              <tr><td>Informed baseline</td><td class="num">0/3</td><td class="num">—</td></tr>
+              <tr><td>The Decision</td><td class="num">—</td><td class="num">3/3</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-paper" id="frame">
+    <div class="container grid-split">
+      <div class="reveal">
+        <p class="overline">Start free</p>
+        <h2>Frame the decision before you evaluate anything.</h2>
+        <p class="measure mt-4">
+          The Decision Frame is a free one-page tool that interrogates your decision before you weigh options:
+          the real question, the false binary, the load-bearing assumption, and what you actually know. Then it
+          hands you to the Decision to decide.
+        </p>
+      </div>
+      <div class="reveal">
+        <div class="card">
+          <EmailCaptureForm client:visible buttonLabel="Send me the free Decision Frame" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-dark">
+    <div class="container" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap: var(--sp-8);">
+      <div class="reveal">
+        <p class="overline">Ready when you are</p>
+        <h2 class="maxw-20ch">Make the call you would stand behind.</h2>
+      </div>
+      <div class="action-row reveal mt-0">
+        <a class="btn btn-on-dark" href="/pricing/">Get the Decision, $49</a>
+        <a class="text-action" href="/decision-frame/">Start with the free frame</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero-section { padding-top: clamp(3.5rem, 6vw, 6rem); }
+  /* the hero specimen is the page's single elevated object */
+  .specimen-card { box-shadow: var(--shadow-specimen-dark); }
+  .specimen-head { display: flex; align-items: center; gap: var(--sp-3); margin-bottom: var(--sp-6); color: var(--cream); }
+  .specimen-mark { width: 12px; height: 12px; background: var(--lime); display: inline-block; }
+  .specimen-list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--sp-3); color: var(--cream); }
+  .specimen-list li { counter-increment: item; padding-left: var(--sp-6); position: relative; font-size: var(--size-small); }
+  .specimen-list li::before {
+    content: counter(item);
+    position: absolute; left: 0; top: 0;
+    font-family: var(--font-mono); font-size: 0.7rem; color: var(--lime);
+  }
+  .specimen-foot { display: flex; gap: var(--sp-2); margin-top: var(--sp-8); padding-top: var(--sp-6); border-top: 1px solid var(--cream-12); flex-wrap: wrap; }
+  .pillars-grid { grid-template-columns: repeat(3, 1fr); margin-top: var(--sp-12); gap: var(--sp-8); }
+  @media (max-width: 860px) {
+    .pillars-grid { grid-template-columns: 1fr; }
+  }
+</style>

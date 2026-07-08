@@ -1,0 +1,634 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import benchmarkResults from '../data/benchmark-results.json';
+
+type Score = { met: number; partial?: number; n: number };
+
+const caseA = (benchmarkResults as any).cases.A;
+const groups = caseA.groups as Record<string, { label: string; checks: Record<string, { label: string; armA: Score; armB: Score; armC: Score }> }>;
+const defensible = caseA.defensible_brief_structure as { label: string; armA: Score; armB: Score; armC: Score };
+
+function dots(score: Score) {
+  const partial = score.partial ?? 0;
+  const met = score.met;
+  const notMet = Math.max(score.n - met - partial, 0);
+  return { met, partial, notMet, n: score.n };
+}
+
+const GH_BASE = 'https://github.com/ks-projects-66/greensquare';
+const artefacts = [
+  {
+    title: 'Case A: the anchor-client brief',
+    subtitle: 'Meridian Field Services managed-service bid (fictional, ASX-scale). The frozen prompt and fact sheet.',
+    href: `${GH_BASE}/blob/main/evidence/preregistration/v3/cases/case-A-anchor-client.md`,
+  },
+  {
+    title: 'Case B: the GO case',
+    subtitle: 'Pre-registered. The correct call is the aggressive option, not caution.',
+    href: `${GH_BASE}/blob/main/evidence/preregistration/v3/cases/case-B-go-case.md`,
+  },
+  {
+    title: 'Case C: the disguised-real case',
+    subtitle: 'Adapted and disguised from a documented Australian post-mortem.',
+    href: `${GH_BASE}/blob/main/evidence/preregistration/v3/cases/case-C-disguised-real.md`,
+  },
+  {
+    title: 'Test protocol',
+    subtitle: 'The three conditions, the answering rule, and the scoring procedure.',
+    href: `${GH_BASE}/blob/main/evidence/preregistration/v3/protocol.md`,
+  },
+  {
+    title: 'Scoring rubric and operationalisations',
+    subtitle: 'Binary checks, split into process discipline and judgment, with pass criteria.',
+    href: `${GH_BASE}/blob/main/evidence/preregistration/v3/rubric-operationalisations.md`,
+  },
+  {
+    title: 'Methodology',
+    subtitle: 'Design rationale, repetition, independent scoring, and the limitations we do not hide.',
+    href: `${GH_BASE}/blob/main/evidence/preregistration/v3/methodology.md`,
+  },
+  {
+    title: 'Pre-registration hashes',
+    subtitle: 'Commit hashes for the cases, rubric, and sealed answer key, timestamped before any scored run.',
+    href: `${GH_BASE}/blob/main/evidence/preregistration/v3/PREREGISTRATION.md`,
+  },
+];
+
+const rubricChecks = [
+  { group: 'Process discipline', label: 'Asked before answering', def: 'Did the run ask clarifying questions before offering a recommendation.' },
+  { group: 'Process discipline', label: 'Real options, including doing nothing, compared on criteria', def: 'Did the run set out genuine alternatives, not just the plan as pitched, scored against named criteria.' },
+  { group: 'Process discipline', label: 'Evidence tagged', def: "Is every load-bearing claim marked given, inferred, derived, or unknown." },
+  { group: 'Process discipline', label: 'Named an untested constraint or assumption', def: 'Did the run flag at least one thing the organisation was treating as fixed but had not actually verified.' },
+  { group: 'Process discipline', label: 'Stated kill criteria', def: 'Did the run name a condition that would stop or reverse the recommended course.' },
+  { group: 'Judgment', label: 'Surfaced the hidden decision by integrating the three separated facts', def: 'Scored blind against the sealed answer key. Naming one component risk is partial; connecting all three facts into the reframed decision is a full pass.' },
+  { group: 'Judgment', label: 'Recommendation direction matched the sealed key', def: 'Scored blind. Did the final call point the same way as the pre-registered answer.' },
+  { group: 'Judgment', label: 'Caught the planted inconsistency or bias', def: 'Scored blind. Did the run name the advocacy or optimism bias in the brief, and distinguish it correctly from sunk cost.' },
+];
+---
+<BaseLayout
+  title="Benchmark · GreenSquare"
+  description="A pre-registered, three-condition benchmark. Design-phase pilot (n=3, Case A, Claude Opus 4.8): the naked baseline reframes the question but sizes the risk at 8% when the real figure is close to 40%, and never sees the clause that could strand the investment. Only the Decision Brief produced a defensible brief, every run."
+  current="benchmark"
+>
+  <section class="section">
+    <div class="container-doc">
+
+      <p class="overline">Methodology &middot; Decision Brief Benchmark</p>
+      <h1 class="h1">A frontier model reasons brilliantly once it has the facts. Who gets the facts out of you?</h1>
+      <p class="lead mt-6">
+        A controlled, pre-registered benchmark, run in three conditions per case: a naked baseline (the question
+        exactly as a real person would ask it), an informed baseline (the same question with every fact handed
+        over), and the Decision Brief, loaded and interrogating. This is the design-phase pilot, Case A, Claude
+        Opus 4.8, three repeats per condition, run to confirm the design discriminates before the full grid is
+        scored. The full three-model grid is pre-registered and in progress, and every input, the rubric, and the
+        answer-key hashes are published on GitHub.
+      </p>
+
+      <div class="card callout mt-12">
+        <p class="overline">Key findings</p>
+        <ul class="marked">
+          <li>
+            The reversal you might expect did not happen. Even given nothing but the question, the model pushed
+            back on the framing. That is not the finding here, and we are not claiming it.
+          </li>
+          <li>
+            Given only the question a real person asks, the model sized the decisive risk at about 8% of revenue,
+            when the fact that mattered put it near 40% of the division, and it never surfaced the payment clause
+            that could strand the investment, because it never asked. Handed every fact, it reasoned well.
+            Getting those facts out of you is the product's work.
+          </li>
+          <li>
+            Only the loaded product produced a structured, evidence-tagged, defensible brief, on every run (naked
+            baseline 0 of 3, informed baseline 0 of 3, product 3 of 3). Reliability and defensibility, not raw
+            capability, is the gap.
+          </li>
+        </ul>
+      </div>
+
+      <p class="measure mt-12">
+        In July 2026, Claude Opus 4.8 was asked to advise on the same fictional case three times, once per
+        condition, three repeats each. The naked baseline received only the question a real executive would ask.
+        The informed baseline received the identical question plus the full seventeen-fact sheet. The Decision
+        Brief received its own product file, then the question, then answered its own interrogation using only
+        the fact sheet, saying "that has not been assessed" wherever the sheet was silent. Runs were scored
+        against a rubric fixed in advance and a sealed answer key. This is a design-phase pilot (n=3), run to
+        confirm the three-condition design discriminates before the full three-model grid is pre-registered and
+        scored.
+      </p>
+
+      <div class="mt-16">
+        <h2>The test isn't whether the model can reason. It's whether it gets the facts that change the call.</h2>
+        <p class="measure mt-4">
+          Meridian Field Services is a fictional, ASX-scale provider of inspection, testing and compliance
+          services to infrastructure and utility clients (revenue about A$480m, group EBITDA margin about 11%). A
+          state water utility has offered to consolidate its national compliance work into a five-year, A$190m
+          managed-service contract. Winning it would make Meridian the clear category leader in its slowest-growing
+          division, and the sales and delivery teams are strongly in favour.
+        </p>
+        <p class="measure mt-4">
+          <strong>The presented question.</strong> How should Meridian structure its bid and delivery model to win
+          and deliver this A$190m, five-year contract. The sales team can quote a win probability at an aggressive
+          price. The momentum behind the deal, from sales, delivery and the CEO, is real.
+        </p>
+        <p class="measure mt-4">
+          <strong>The unpresented question.</strong> Whether to accept close to 40% single-client concentration of
+          a division in the contract's ramp years, behind a counterparty whose payments depend on a state
+          regulator's five-yearly determination (with a rescope-or-pause right at year three, on 90 days'
+          notice), funded by a bespoke A$14m platform with little value outside this contract and 60 staff hired
+          specifically for it. The tension sits in the brief; the question is whether the model integrates the
+          three facts placed far apart in it.
+        </p>
+        <p class="measure mt-4">
+          None of this is hidden. The concentration numbers, the regulator's determination cycle, and the platform
+          spend are all in the fact sheet. The naked baseline is not handed the fact sheet, only the question a
+          real person would ask. The question this benchmark tests is not whether the model can reason well when
+          the facts are in front of it. It is whether not asking is a capability gap, or whether extracting the
+          facts was always meant to be the product's job.
+        </p>
+      </div>
+
+      <div class="exhibit">
+        <div class="exhibit-head">
+          <div class="exhibit-label-row">
+            <span class="exhibit-tag">Exhibit 1</span>
+            <span class="exhibit-title">How each condition treated the question</span>
+          </div>
+          <p class="exhibit-source">Source: GreenSquare pilot, July 2026. Case A. Claude Opus 4.8. n = 3 per condition (design-phase pilot).</p>
+        </div>
+        <div class="exhibit1-grid">
+          <div class="exhibit1-col">
+            <p class="col-label">Naked baseline</p>
+            <p class="col-verdict">Reframed, but at the wrong magnitude.</p>
+            <p class="small">
+              Reframed the question and challenged the sales enthusiasm every run, unprompted. But because it
+              never interrogates, it never gets the facts that change the decision: it sized the concentration at
+              roughly 8% of group revenue and never saw the year-three regulatory cliff at all.
+            </p>
+          </div>
+          <div class="exhibit1-col">
+            <p class="col-label">Informed baseline</p>
+            <p class="col-verdict">Correct, once handed every fact.</p>
+            <p class="small">
+              Given the full fact sheet up front, integrated the year-three cliff, the concentration close to 40%
+              of the division, and the stranded platform and staff, every run. Recommended bidding only on
+              conditions. What it did not do: interrogate, or produce a brief structured well enough to defend.
+            </p>
+          </div>
+          <div class="exhibit1-col">
+            <p class="col-label">The Decision Brief</p>
+            <p class="col-verdict">Interrogated the facts out, then produced a defensible brief.</p>
+            <p class="small">
+              Asked six scaled questions before offering a view, played its read back, named four contradictions
+              in the answers it was given, then delivered a five-part brief: options compared, evidence tagged,
+              kill criteria stated, confidence declared.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="exhibit">
+        <div class="exhibit-head">
+          <div class="exhibit-label-row">
+            <span class="exhibit-tag">Exhibit 2</span>
+            <span class="exhibit-title">Verbatim output, naked baseline vs the Decision Brief</span>
+          </div>
+          <p class="exhibit-source">Source: Test transcripts, 3 July 2026, lightly condensed. Full transcripts published on completion of the grid.</p>
+        </div>
+        <div class="exhibit2-grid">
+          <div class="exhibit2-col">
+            <div class="exhibit2-col-head">
+              <span class="col-label">Baseline</span>
+              <span class="col-sub">No interrogation</span>
+            </div>
+            <p class="quote-line">"A$190m over five years is ~A$38m a year, roughly 8% of revenue, from a single client, on a single contract, under a new commercial model."</p>
+            <p class="quote-line">"Push hard away from pure fixed-price outcome risk and toward a managed-service wrapper over retained rate-card economics&hellip; The non-negotiables: indexation, volume floor, capped at-risk margin, change-of-law relief, funded mobilisation, termination-for-convenience protection."</p>
+            <p class="quote-line">"Set board-approved walk-away parameters (minimum margin, non-negotiable risk terms, maximum acceptable concentration) before you enter final negotiation."</p>
+          </div>
+          <div class="exhibit2-col">
+            <div class="exhibit2-col-head">
+              <span class="col-label">The Decision Brief</span>
+              <span class="col-sub">Interrogated first</span>
+            </div>
+            <p class="quote-line">"Do not authorise a bid yet."</p>
+            <p class="quote-line">"&hellip;close to 40% of the Utilities division in years two and three (derived from your figures)&hellip;"</p>
+            <p class="quote-line">"Meridian would carry the full mobilisation cost in years two and three while the client holds a no-cost exit tied to a regulatory determination expiring in year three&hellip; The evidence does not support bidding blind into that."</p>
+            <p class="quote-line">"Confidence: low. Validate first: the scope split and the actual bid deadline. Those two gate everything else."</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-16">
+        <h2>Scoring the runs</h2>
+        <p class="measure mt-4">
+          Each run is scored against a rubric fixed in advance and a sealed answer key, split into two
+          honestly-labelled groups. Process discipline is what the product itself instructs the model to do:
+          asking before answering, comparing real options, tagging evidence, naming an untested constraint,
+          stating what would change the call. Judgment is not instructed by the product at all, and is scored
+          blind against the sealed key: whether the run surfaced the hidden decision, whether its recommendation
+          matched the key's direction, and whether it caught the planted inconsistency or bias.
+        </p>
+      </div>
+
+      <div class="exhibit">
+        <div class="exhibit-head">
+          <div class="exhibit-label-row">
+            <span class="exhibit-tag">Exhibit 3</span>
+            <span class="exhibit-title">Scoring, split by rubric group</span>
+          </div>
+          <p class="exhibit-source">
+            Source: GreenSquare pilot, July 2026. Case A, Claude Opus 4.8, n = 3 per condition. Binary checks
+            scored against a pre-registered rubric and sealed answer key. The full three-model grid, with
+            per-model results, is in progress.
+          </p>
+        </div>
+
+        <div style="overflow-x: auto;">
+          <table class="bm-table">
+            <thead>
+              <tr>
+                <th scope="col">Check</th>
+                <th scope="col">Naked baseline</th>
+                <th scope="col">Informed baseline</th>
+                <th scope="col">Decision Brief</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Object.entries(groups).map(([groupKey, group]) => (
+                <>
+                  <tr class="group-row"><td colspan="4">{group.label}</td></tr>
+                  {Object.entries(group.checks).map(([checkKey, check]) => {
+                    const a = dots(check.armA);
+                    const b = dots(check.armB);
+                    const c = dots(check.armC);
+                    return (
+                      <tr>
+                        <td class="check-label">{check.label}</td>
+                        <td>
+                          <span class="dotset" aria-hidden="true">
+                            {Array.from({ length: a.met }).map(() => <span class="dot met" />)}
+                            {Array.from({ length: a.partial }).map(() => <span class="dot partial" />)}
+                            {Array.from({ length: a.notMet }).map(() => <span class="dot" />)}
+                          </span>
+                          <span class="dotcount">{a.met} / {a.n}{a.partial ? ` (+${a.partial} partial)` : ''}</span>
+                        </td>
+                        <td>
+                          <span class="dotset" aria-hidden="true">
+                            {Array.from({ length: b.met }).map(() => <span class="dot met" />)}
+                            {Array.from({ length: b.partial }).map(() => <span class="dot partial" />)}
+                            {Array.from({ length: b.notMet }).map(() => <span class="dot" />)}
+                          </span>
+                          <span class="dotcount">{b.met} / {b.n}{b.partial ? ` (+${b.partial} partial)` : ''}</span>
+                        </td>
+                        <td>
+                          <span class="dotset" aria-hidden="true">
+                            {Array.from({ length: c.met }).map(() => <span class="dot met" />)}
+                            {Array.from({ length: c.partial }).map(() => <span class="dot partial" />)}
+                            {Array.from({ length: c.notMet }).map(() => <span class="dot" />)}
+                          </span>
+                          <span class="dotcount">{c.met} / {c.n}{c.partial ? ` (+${c.partial} partial)` : ''}</span>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <p class="small mt-3">
+          Partial (the diagonal-filled square) marks a component risk named but not integrated across the three
+          separated facts, or a bias caught but not fully resolved. It is a distinct, lesser result from a full
+          pass in the underlying rubric, not rounded up to one.
+        </p>
+
+        <div class="card headline-stat mt-8">
+          <p class="caption">{defensible.label}</p>
+          <div class="headline-stat-row">
+            <span><strong>{defensible.armA.met} / {defensible.armA.n}</strong> naked baseline</span>
+            <span><strong>{defensible.armB.met} / {defensible.armB.n}</strong> informed baseline</span>
+            <span><strong>{defensible.armC.met} / {defensible.armC.n}</strong> Decision Brief</span>
+          </div>
+          <p class="small mt-3">
+            Only the Decision Brief produced a defensible brief, on every run.
+          </p>
+        </div>
+
+        <details class="rubric-disclosure">
+          <summary>Inspect the rubric</summary>
+          <div class="rubric-list">
+            {rubricChecks.map((r) => (
+              <div class="rubric-item">
+                <p class="caption">{r.group}</p>
+                <p class="rubric-item-label">{r.label}</p>
+                <p class="small">{r.def}</p>
+              </div>
+            ))}
+          </div>
+        </details>
+      </div>
+
+      <p class="measure mt-12">
+        The Decision Brief only pulled ahead on defensible structure, not on judgment. Handed the same facts as
+        the product, the informed baseline reasoned to essentially the same call: it named the untested
+        assumption, stated kill criteria, and integrated the concentration and the cliff, every run. The daylight
+        is not in whether the model can think. It is in whether a real person, who does not arrive with a
+        seventeen-fact dossier, ever gets those facts onto the table, and whether what comes out the other end is
+        structured well enough for someone senior to defend.
+      </p>
+      <p class="measure mt-4">
+        The naked baseline is the honest warning here. It is fluent, commercially literate, and reframes without
+        being asked. On this pilot it also pushed back in the right direction on all three runs. What it did not
+        do is get the facts that changed the size of the risk by a factor of five, or see the mechanism, a
+        regulatory determination expiring in year three, that could strand a A$14m platform and 60 staff. That is
+        not a reasoning failure. It is what happens when nobody asks.
+      </p>
+
+      <div class="mt-16">
+        <h2>Method, artefacts, and limitations</h2>
+        <p class="measure mt-4">
+          This pilot is a design check, not the scored result. The full test is built to be replicable and
+          contestable: every input, the rubric, and the sealed answer key are hashed and committed to a public
+          repository before any scored run. Readers who want to dispute the protocol, or run the case themselves,
+          can do so now.
+        </p>
+        <a class="text-action inline-block mt-4" href="https://github.com/ks-projects-66/greensquare/tree/main/evidence/preregistration/v3" target="_blank" rel="noopener">Read the test protocol</a>
+
+        <h3 class="mt-12">Raw artefacts</h3>
+        <div class="artefact-list">
+          {artefacts.map((a) => (
+            <a class="artefact-card" href={a.href} target="_blank" rel="noopener">
+              <span class="artefact-text">
+                <span class="artefact-title">{a.title}</span>
+                <span class="artefact-subtitle">{a.subtitle}</span>
+              </span>
+              <span class="artefact-arrow">View &rarr;</span>
+            </a>
+          ))}
+        </div>
+        <p class="small mt-4">
+          Transcripts, the naked baseline, informed baseline, and Decision Brief runs behind every count on this
+          page, are published on completion of the full grid.
+        </p>
+
+        <p class="measure mt-8">
+          <strong>Caveats.</strong> This is a design-phase pilot: one model and one case fully run so far (n=3 per
+          condition), to confirm the design before scoring the whole grid. The three-model grid (Claude, GPT and
+          Gemini, three cases) is pre-registered and in progress. An independent, blind senior-reviewer study,
+          asking verified senior operators which brief they would send to their own executive committee, is
+          planned and not yet run. No score-uplift percentage is claimed anywhere on this page. Every count above
+          traces to a saved transcript.
+        </p>
+      </div>
+
+      <div class="obj-block mt-16">
+        <h3>Anticipated objections</h3>
+        <div class="obj-item">
+          <p class="obj-q">Isn't this just a prompt that will be copied?</p>
+          <p class="small">
+            Yes, it is a file. That is the point: nothing to install, nothing for IT to approve, and your data
+            never leaves your own account. What is harder to copy is the standing commitment behind it: a rubric
+            and answer key we did not grade ourselves, transcripts published for every run, and a re-test within
+            fourteen days of each major model release. Copy the file today and you have copied a version that is
+            already scheduled to be re-tested.
+          </p>
+        </div>
+        <div class="obj-item">
+          <p class="obj-q">The founder is anonymous. Why should I trust an anonymous claim?</p>
+          <p class="small">
+            You should not, on the strength of a claim alone. That is why this page is not a claim, it is a
+            reproduction pack: the cases, the fact sheets, the rubric, the sealed answer key and the transcripts
+            are published so the work can be judged directly, not the person making it.
+          </p>
+        </div>
+        <div class="obj-item">
+          <p class="obj-q">You wrote the case yourself. Doesn't that make the benchmark rigged?</p>
+          <p class="small">
+            We wrote two of the three cases, and we are publishing that fact rather than hiding it.
+            Pre-registration and a sealed answer key shrink the problem, they do not erase it. Download the case,
+            the fact sheet and the Decision Brief, and run the comparison on a decision of your own. The
+            benchmark's real job is to teach you how to check us.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-16">
+        <h2>What this means</h2>
+        <p class="measure mt-4">
+          A frontier model is brilliant on its best day. Your executive committee is not scheduled for the
+          model's best day, and neither, in this pilot, was the naked baseline: it was fluent and it reframed,
+          and it still sized a risk five times too small and missed the clause that could strand the investment,
+          because nobody asked it the right questions.
+        </p>
+        <p class="measure mt-4">
+          The lever is not which model you choose. Handed the same facts, the informed baseline reasoned nearly as
+          well as the loaded product. The lever is the structure that interrogates the facts out of a person who
+          does not know which ones matter, and packages what comes back into a brief that survives scrutiny,
+          every time, not only on the runs where the model happens to ask the right question on its own.
+        </p>
+        <p class="measure mt-4">
+          That is a narrower claim than a reversal. It is also the one this pilot actually supports, and the one
+          we will keep testing against the sealed key as the full grid completes.
+        </p>
+      </div>
+
+      <div class="card callout mt-12">
+        <p class="overline">Refresh commitment</p>
+        <p class="mt-2">
+          Re-tested within 14 days of each major frontier model release. The protocol and rubric are versioned
+          and published; earlier versions and re-test deltas will be published alongside current results.
+        </p>
+      </div>
+
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* .container-doc is defined globally */
+  .callout {
+    background: var(--paper);
+  }
+
+  /* exhibits */
+  .exhibit { margin-top: var(--sp-16); }
+  .exhibit-head { margin-bottom: var(--sp-6); }
+  .exhibit-label-row { display: flex; align-items: baseline; gap: var(--sp-3); flex-wrap: wrap; }
+  .exhibit-tag {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink);
+    border: 1px solid var(--line);
+    padding: 2px 8px;
+    flex: none;
+  }
+  .exhibit-title { font-weight: 700; font-size: var(--size-h4); }
+  .exhibit-source { font-size: var(--size-caption); color: var(--muted); margin-top: var(--sp-2); }
+
+  .exhibit1-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-6);
+    margin-top: var(--sp-6);
+  }
+  .exhibit1-col { border-top: 2px solid var(--accent); padding-top: var(--sp-4); }
+  .exhibit1-col .col-label {
+    font-family: var(--font-mono);
+    font-size: var(--size-caption);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin-bottom: var(--sp-2);
+  }
+  .exhibit1-col .col-verdict {
+    font-family: var(--font-display);
+    font-size: var(--size-stat-sub);
+    line-height: 1.25;
+    margin-bottom: var(--sp-3);
+  }
+  @media (max-width: 780px) {
+    .exhibit1-grid { grid-template-columns: 1fr; }
+  }
+
+  .exhibit2-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-8);
+    margin-top: var(--sp-6);
+  }
+  .exhibit2-col-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: var(--sp-3);
+    margin-bottom: var(--sp-4);
+  }
+  .exhibit2-col-head .col-label { font-weight: 700; }
+  .exhibit2-col-head .col-sub {
+    font-family: var(--font-mono);
+    font-size: var(--size-caption);
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .quote-line {
+    font-style: italic;
+    border-left: 2px solid var(--accent);
+    padding-left: var(--sp-4);
+    margin-bottom: var(--sp-4);
+    max-width: none;
+  }
+  @media (max-width: 780px) {
+    .exhibit2-grid { grid-template-columns: 1fr; }
+  }
+
+  /* scoring table */
+  .bm-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--size-small);
+    margin-top: var(--sp-6);
+  }
+  .bm-table th, .bm-table td {
+    padding: 12px 10px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: middle;
+    text-align: left;
+  }
+  .bm-table thead th {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    color: var(--muted);
+    font-size: var(--size-caption);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-bottom: 1px solid var(--ink);
+  }
+  .bm-table .group-row td {
+    padding-top: 20px;
+    font-weight: 700;
+    color: var(--accent);
+    font-size: var(--size-caption);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-top: 1px solid var(--line);
+    border-bottom: none;
+  }
+  .check-label { max-width: 28ch; }
+  .dotset { display: inline-flex; gap: 4px; align-items: center; margin-right: var(--sp-2); }
+  .dot { width: 8px; height: 8px; border: 1px solid var(--line); background: transparent; flex: none; position: relative; }
+  .dot.met { background: var(--accent); border-color: var(--accent); }
+  /* partial: a crisp diagonal half-fill with a true hairline edge */
+  .dot.partial { border-color: var(--accent); }
+  .dot.partial::after { content: ''; position: absolute; inset: 0; background: var(--accent); clip-path: polygon(0 0, 100% 0, 0 100%); }
+  .dotcount { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+  .headline-stat { border-color: var(--accent); }
+  .headline-stat-row { display: flex; gap: var(--sp-8); flex-wrap: wrap; margin-top: var(--sp-3); font-family: var(--font-mono); font-size: var(--size-small); font-variant-numeric: tabular-nums; }
+  .headline-stat-row strong { color: var(--accent); font-size: var(--size-h4); }
+
+  .rubric-disclosure {
+    margin-top: var(--sp-8);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    padding: var(--sp-4) var(--sp-6);
+  }
+  .rubric-disclosure summary {
+    cursor: pointer;
+    font-weight: 700;
+    color: var(--accent);
+    font-size: var(--size-small);
+  }
+  .rubric-list { margin-top: var(--sp-6); display: grid; gap: var(--sp-4); }
+  .rubric-item { border-top: 1px solid var(--line); padding-top: var(--sp-4); }
+  .rubric-item:first-child { border-top: none; padding-top: 0; }
+  .rubric-item-label { font-weight: 700; margin: var(--sp-1) 0 var(--sp-2); }
+
+  /* artefacts */
+  .artefact-list { display: grid; gap: var(--sp-3); margin-top: var(--sp-6); }
+  .artefact-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-6);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    padding: var(--sp-4) var(--sp-6);
+    background: var(--paper);
+    text-decoration: none;
+    color: var(--ink);
+    transition: border-color var(--motion-hover) var(--ease-out);
+  }
+  .artefact-card:hover { border-color: var(--accent); }
+  .artefact-text { display: flex; flex-direction: column; gap: var(--sp-1); }
+  .artefact-title { font-weight: 700; }
+  .artefact-subtitle { font-size: var(--size-small); color: var(--muted); }
+  .artefact-arrow { font-family: var(--font-mono); font-size: var(--size-caption); color: var(--accent); white-space: nowrap; flex: none; }
+
+  /* anticipated objections */
+  .obj-item {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    padding: var(--sp-6);
+    background: var(--paper);
+  }
+  .obj-item + .obj-item { margin-top: var(--sp-4); }
+  .obj-q {
+    font-weight: 700;
+    font-size: var(--size-h4);
+    margin-bottom: var(--sp-3);
+    display: flex;
+    gap: var(--sp-3);
+    align-items: baseline;
+  }
+  .obj-q::before {
+    content: '';
+    width: 7px; height: 7px;
+    background: var(--accent);
+    flex: none;
+    transform: translateY(-2px);
+  }
+</style>

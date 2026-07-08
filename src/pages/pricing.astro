@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const STRIPE_LINK = 'https://buy.stripe.com/aFaaEWfGDc7W7XF2wv3AY00';
+---
+<BaseLayout
+  title="Pricing · GreenSquare"
+  description="The Decision is $49, anchored to $59. A Team tier is $490 for 10 seats. Priced below your expense-approval threshold on purpose."
+  current="pricing"
+>
+  <section class="section">
+    <div class="container">
+      <p class="overline">Pricing</p>
+      <h1 class="h1 maxw-22ch">Priced below your expense-approval threshold, on purpose.</h1>
+      <p class="lead mt-6">
+        The Decision is bought at the moment of a real call. It has to clear an impulse threshold for a
+        professional, while staying high enough to signal it is not a prompt pack. A single, one-time price,
+        not a subscription.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-paper">
+    <div class="container">
+      <div class="tier-grid">
+        <div class="card reveal">
+          <p class="caption">Free</p>
+          <h2 class="mt-2">Decision Frame</h2>
+          <p class="small mt-3">Frame the decision before you evaluate anything.</p>
+          <p class="mt-6"><span class="tier-price">Free</span></p>
+          <a class="text-action inline-block mt-6" href="/decision-frame/">Get the free frame</a>
+        </div>
+
+        <div class="card card-lifted reveal tier-keystone">
+          <p class="caption">Keystone</p>
+          <h2 class="mt-2">The Decision</h2>
+          <p class="small mt-3">Make one call you would stand behind, engine included.</p>
+          <p class="mt-6"><span class="tier-price">$49</span> <span class="tier-anchor">$59</span></p>
+          <ul class="marked mt-6">
+            <li>Works in Claude and GPT</li>
+            <li>One file, no subscription</li>
+            <li>12 months of model-version updates</li>
+            <li>Refund on request within 14 days</li>
+          </ul>
+          <a class="btn btn-primary mt-8" href={STRIPE_LINK} target="_blank" rel="noopener">Get the Decision</a>
+        </div>
+
+        <div class="card reveal">
+          <p class="caption">Next, demand-gated</p>
+          <h2 class="mt-2">Team tier</h2>
+          <p class="small mt-3">A standing decision capability for a function.</p>
+          <p class="mt-6"><span class="tier-price">A$490</span></p>
+          <ul class="marked mt-6">
+            <li>10 seats to the individual ladder</li>
+            <li>One transaction, one relationship</li>
+            <li>A quarterly briefing on how the benchmark has moved</li>
+          </ul>
+          <a class="text-action inline-block mt-8" href="mailto:hello@greensquare.ai?subject=Team%20tier">Write to hello@greensquare.ai</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-narrow">
+      <p class="overline">Why $49, anchored at $59</p>
+      <ul class="marked mt-8">
+        <li><strong>Single-decision value, not subscription value.</strong> The price has to clear an impulse threshold for a professional, at the moment of a real call, while staying high enough to signal it is not a prompt pack.</li>
+        <li><strong>The anchor does the framing.</strong> $59 struck to $49 reads as a deliberate price, not a discount gimmick.</li>
+        <li><strong>The maintenance moat protects the price, rather than arguing against it.</strong> A one-time file invites "it will be copied." The answer is a standing commitment, not a higher price: 12 months of model-version updates, and a benchmark re-run within 14 days of each major frontier model release.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section-dark">
+    <div class="container-narrow">
+      <p class="overline">Refund stance</p>
+      <p class="lead">
+        A no-quibble refund on the Decision, on request, within 14 days. It is a single low-priced file; the
+        cost of an occasional refund is far below the trust cost of a hard policy.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .tier-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-8); align-items: stretch; }
+  @media (max-width: 1040px) { .tier-grid { grid-template-columns: 1fr; } }
+  .tier-keystone { border-color: var(--accent); }
+  .tier-price { font-family: var(--font-display); font-size: var(--size-stat); font-variant-numeric: tabular-nums; }
+  .tier-anchor { font-family: var(--font-display); font-size: var(--size-stat-sub); color: var(--muted); text-decoration: line-through; margin-left: var(--sp-2); font-variant-numeric: tabular-nums; }
+</style>

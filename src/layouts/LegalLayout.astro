@@ -1,0 +1,20 @@
+---
+import BaseLayout from './BaseLayout.astro';
+export interface Props {
+  frontmatter: {
+    title: string;
+    description?: string;
+  };
+}
+const { frontmatter } = Astro.props;
+const title = frontmatter.title;
+const description = frontmatter.description ?? 'GreenSquare legal information.';
+---
+<BaseLayout title={`${title} · GreenSquare`} description={description}>
+  <section class="section">
+    <div class="container-narrow prose">
+      <p class="overline">Legal</p>
+      <slot />
+    </div>
+  </section>
+</BaseLayout>
