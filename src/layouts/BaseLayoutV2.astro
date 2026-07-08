@@ -1,0 +1,69 @@
+---
+import NavV2 from '../components/NavV2.astro';
+import FooterV2 from '../components/FooterV2.astro';
+import '../styles/global-v2.css';
+
+export interface Props {
+  title: string;
+  description: string;
+  current?: string;
+}
+const { title, description, current = '' } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+---
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="v2">
+    <a class="skip-link" href="#main" style="position:absolute;left:-9999px;top:0;background:var(--v-green);color:var(--v-cream);padding:10px 16px;z-index:100;">Skip to content</a>
+    <NavV2 current={current} />
+    <main id="main">
+      <slot />
+    </main>
+    <FooterV2 />
+    <script>
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              io.unobserve(entry.target);
+            }
+          }
+        },
+        { threshold: 0.12 }
+      );
+      document.querySelectorAll('.v-reveal').forEach((el) => io.observe(el));
+
+      const nav = document.querySelector('.v-nav');
+      if (nav) {
+        let ticking = false;
+        const sync = () => { nav.classList.toggle('is-solid', window.scrollY > 12); ticking = false; };
+        window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(sync); } }, { passive: true });
+        sync();
+      }
+
+      const toggle = document.getElementById('v-nav-toggle');
+      const drawer = document.getElementById('v-nav-drawer');
+      toggle?.addEventListener('click', () => {
+        const open = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', String(!open));
+        if (drawer) drawer.hidden = open;
+      });
+    </script>
+  </body>
+</html>
