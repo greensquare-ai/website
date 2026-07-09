@@ -10,10 +10,9 @@ const { frontmatter } = Astro.props;
 const title = frontmatter.title;
 const description = frontmatter.description ?? 'GreenSquare legal information.';
 ---
-<BaseLayoutV2 title={`${title} · GreenSquare`} description={description}>
+<BaseLayoutV2 title={`${title} | GreenSquare`} description={description}>
   <section class="v-section">
     <div class="v-container v-container--narrow">
-      <p class="v-label v-label--rule v-eyebrow">Legal</p>
       <div class="v-prose">
         <slot />
       </div>

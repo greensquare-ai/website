@@ -14,6 +14,7 @@
   --v-green: #1f5a3d;      /* forest green block + accent */
   --v-green-deep: #16452e;
   --v-green-bright: #29764e;
+  --v-green-ink: #0b2318;  /* near-black green, footer only (distinct from any section above) */
   --v-lime: #dff49f;       /* the single pop */
 
   /* ---- ink ---- */
@@ -34,11 +35,10 @@
   --v-signal: #2a9d55;
   --v-signal-on-green: #cdeeb4;
 
-  /* ---- type ---- */
+  /* ---- type: three families only (Space Grotesk display, Manrope text, mono for readout chrome) ---- */
   --vf-display: 'Space Grotesk', system-ui, -apple-system, sans-serif;
   --vf-body: 'Manrope', system-ui, -apple-system, sans-serif;
   --vf-mono: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
-  --vf-serif: 'Cormorant Garamond', Georgia, serif;
 
   /* reduced + balanced scale (was oversized) */
   --vs-display: clamp(2.3rem, 4.4vw, 3.5rem);
