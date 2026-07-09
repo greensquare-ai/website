@@ -67,14 +67,13 @@ const rubricChecks = [
 ];
 ---
 <BaseLayoutV2
-  title="Benchmark · GreenSquare"
+  title="Benchmark | GreenSquare"
   description="A pre-registered, three-condition benchmark across two frontier models and three fictional ASX-scale cases (54 runs). Only the Decision Brief produced a defensible, evidence-tagged brief, every run, 18 of 18 on both models across all three cases. On the anchor case, the naked baseline sizes the risk at 8% when the real figure is close to 40%, and never sees the clause that could strand the investment."
   current="benchmark"
 >
   <!-- INTRO — header + key findings -->
   <section class="v-section v-off bm-hero">
     <div class="v-container v-container--narrow bm-copy">
-      <p class="v-label v-label--rule v-eyebrow v-reveal">Methodology &middot; Decision Brief Benchmark</p>
       <h1 class="v-h1 v-reveal">A frontier model reasons brilliantly once it has the facts. Who gets the facts out of you?</h1>
       <p class="v-lead v-reveal" style="margin-top: var(--v-6);">
         A controlled, pre-registered benchmark, run in three conditions per case: a naked baseline (the question
@@ -86,23 +85,22 @@ const rubricChecks = [
       </p>
 
       <div class="v-card v-card--fill bm-callout v-reveal" style="margin-top: var(--v-10);">
-        <p class="v-label v-eyebrow">Key findings</p>
-        <ul class="v-marked">
+        <h2 class="bm-callout-title">Key findings</h2>
+        <ul class="v-leadlist">
           <li>
-            The reversal you might expect did not happen. Even given nothing but the question, the model pushed
-            back on the framing. That is not the finding here, and we are not claiming it.
+            <strong>No reversal, and we are not claiming one.</strong> Even given nothing but the question, the
+            model pushed back on the framing. That is not the finding here.
           </li>
           <li>
-            On the anchor case, given only the question a real person asks, the model sized the decisive risk at
-            about 8% of revenue, when the fact that mattered put it near 40% of the division, and it never
-            surfaced the payment clause that could strand the investment, because it never asked. The same
-            pattern held across the full grid: the naked baseline never integrated the hidden decision, on any of
-            the 18 runs, on either model. Handed every fact, it reasoned far better. Getting those facts out of
-            you is the product's work.
+            <strong>The facts it never asked for.</strong> On the anchor case, given only the question a real
+            person asks, the model sized the decisive risk at about 8% of revenue when the fact that mattered put
+            it near 40% of the division, and it never surfaced the payment clause that could strand the
+            investment. The naked baseline missed the hidden decision on all 18 runs, on either model. Getting
+            those facts out of you is the product's work.
           </li>
           <li>
-            Only the loaded product produced a structured, evidence-tagged, defensible brief, on every run: 18 of
-            18, both models, all three cases. The naked and informed baselines managed it on none (0 of 18 each).
+            <strong>Only the loaded product was defensible.</strong> A structured, evidence-tagged brief on every
+            run: 18 of 18, both models, all three cases. The naked and informed baselines managed it on none.
             Reliability and defensibility, not raw capability, is the gap.
           </li>
         </ul>
@@ -186,7 +184,7 @@ const rubricChecks = [
             do, on any of the 18 runs: interrogate, or produce a brief structured well enough to defend.
           </p>
         </div>
-        <div class="v-card bm-col v-reveal d2">
+        <div class="v-card bm-col bm-col--key v-reveal d2">
           <p class="v-label bm-col-label">The Decision Brief</p>
           <p class="bm-col-verdict">Interrogated the facts out, then produced a defensible brief.</p>
           <p class="v-small">
@@ -326,14 +324,14 @@ const rubricChecks = [
   <section class="v-section v-green">
     <div class="v-container v-split is-reverse">
       <div class="v-reveal">
-        <p class="v-label v-label--rule v-eyebrow">{defensible.label}</p>
+        <h2 class="v-h2">{defensible.label}</h2>
         <p class="v-lead" style="margin-top: var(--v-5);">
           Only the Decision Brief produced a defensible brief, on every run: both models, all three cases.
         </p>
       </div>
       <div class="v-reveal d1">
         <div class="v-readout">
-          <div class="v-readout__bar"><span class="v-readout__dot"></span> DEFENSIBLE_BRIEF &middot; FULL GRID</div>
+          <div class="v-readout__bar"><span class="v-readout__dot"></span> DEFENSIBLE_BRIEF / FULL GRID</div>
           <div class="v-readout__body">
             <div class="v-run">
               <div class="v-run__head"><span class="v-run__name">Naked baseline</span><span class="v-run__val">{defensible.armA.met} / {defensible.armA.n}</span></div>
@@ -348,7 +346,7 @@ const rubricChecks = [
               <div class="v-meter"><div class="v-meter__fill" style="--w: 100%;"></div></div>
             </div>
           </div>
-          <div class="v-readout__foot">PRE-REGISTERED GRID &middot; N=18 PER ARM &middot; 2 MODELS &middot; 3 CASES</div>
+          <div class="v-readout__foot">PRE-REGISTERED GRID / N=18 PER ARM / 2 MODELS / 3 CASES</div>
         </div>
       </div>
     </div>
@@ -391,7 +389,7 @@ const rubricChecks = [
       </p>
 
       <div class="v-card v-card--fill bm-callout v-reveal" style="margin-top: var(--v-8);">
-        <p class="v-label v-eyebrow">The GO case</p>
+        <h2 class="bm-callout-title">The GO case</h2>
         <p style="margin-bottom: 0;">
           Larkfield is the case pre-registered to test the opposite failure mode: caution when the evidence
           supports moving. Here, the correct call is the aggressive acquisition, not the safe build. Handed only
@@ -415,7 +413,7 @@ const rubricChecks = [
         to dispute the protocol, or run the cases themselves, can do so now.
       </p>
       <p class="v-reveal" style="margin-top: var(--v-4);">
-        <a class="v-link" href="https://github.com/ks-projects-66/greensquare/tree/main/evidence/preregistration/v3" target="_blank" rel="noopener">Read the test protocol <span class="arrow">&rarr;</span></a>
+        <a class="v-link" href="https://github.com/ks-projects-66/greensquare/tree/main/evidence/preregistration/v3" target="_blank" rel="noopener">Read the test protocol</a>
       </p>
 
       <details class="bm-artefacts-disclosure v-reveal" style="margin-top: var(--v-12);">
@@ -427,7 +425,7 @@ const rubricChecks = [
                 <span class="bm-artefact-title">{a.title}</span>
                 <span class="bm-artefact-subtitle">{a.subtitle}</span>
               </span>
-              <span class="bm-artefact-arrow">View &rarr;</span>
+              <span class="bm-artefact-arrow">View</span>
             </a>
           ))}
         </div>
@@ -506,7 +504,7 @@ const rubricChecks = [
       </p>
 
       <div class="v-card v-card--fill bm-callout v-reveal" style="margin-top: var(--v-10);">
-        <p class="v-label v-eyebrow">Refresh commitment</p>
+        <h2 class="bm-callout-title">Refresh commitment</h2>
         <p style="margin-bottom: 0;">
           Re-tested within 14 days of each major frontier model release. The protocol and rubric are versioned
           and published; earlier versions and re-test deltas will be published alongside current results.
@@ -525,28 +523,31 @@ const rubricChecks = [
   .bm-copy .bm-callout { margin-bottom: 0; }
 
   /* callout card */
-  .bm-callout .v-marked { margin-top: var(--v-4); gap: var(--v-4); }
+  .bm-callout .v-leadlist { margin-top: var(--v-4); }
+  .bm-callout-title { font-family: var(--vf-body); font-weight: 600; font-size: 1.1rem; letter-spacing: -0.005em; margin-bottom: var(--v-3); }
 
-  /* exhibit heads — hairlines + mono, no square markers */
+  /* exhibit heads — a labelled chip, sentence case */
   .bm-exhibit-head { margin-bottom: var(--v-6); }
   .bm-exhibit-label-row { display: flex; align-items: baseline; gap: var(--v-3); flex-wrap: wrap; }
   .bm-exhibit-tag {
-    font-family: var(--vf-mono);
+    font-family: var(--vf-body);
     font-size: var(--vs-label);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--v-ink);
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--v-ink-soft);
     border: 1px solid var(--v-line-strong);
     padding: 3px 9px;
     flex: none;
   }
-  .bm-exhibit-title { font-family: var(--vf-body); font-weight: 700; font-size: var(--vs-h3); letter-spacing: -0.01em; }
+  .bm-exhibit-title { font-family: var(--vf-body); font-weight: 600; font-size: var(--vs-h3); letter-spacing: -0.01em; }
   .bm-exhibit-source { font-size: var(--vs-label); color: var(--v-ink-faint); margin-top: var(--v-2); max-width: 80ch; }
 
-  /* exhibit 1 — three condition cards */
+  /* exhibit 1 — three condition cards (elevation, no coloured lip) */
   .bm-cols3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--v-5); }
-  .bm-col { border-top: 2px solid var(--v-green); }
   .bm-col-label { margin-bottom: var(--v-3); color: var(--v-ink-faint); }
+  .bm-col--key { box-shadow: 0 2px 4px rgba(23,27,24,0.06), 0 26px 56px -22px rgba(23,27,24,0.20); }
+  .bm-col--key .bm-col-label { color: var(--v-green); }
   .bm-col-verdict {
     font-family: var(--vf-display);
     font-weight: 500;
@@ -567,13 +568,14 @@ const rubricChecks = [
     padding-bottom: var(--v-3);
     margin-bottom: var(--v-4);
   }
-  .bm-col-strong { font-weight: 700; }
+  .bm-col-strong { font-weight: 600; }
   .bm-col-sub {
-    font-family: var(--vf-mono);
+    font-family: var(--vf-body);
     font-size: var(--vs-label);
+    font-weight: 500;
     color: var(--v-ink-faint);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
+    text-transform: none;
+    letter-spacing: 0;
   }
   .bm-quote {
     font-style: italic;
@@ -590,13 +592,13 @@ const rubricChecks = [
   .bm-table { font-size: var(--vs-small); }
   .bm-table td { vertical-align: middle; }
   .bm-group-row td {
-    padding-top: var(--v-5);
-    font-family: var(--vf-mono);
-    font-weight: 500;
+    padding-top: var(--v-6);
+    font-family: var(--vf-body);
+    font-weight: 600;
     color: var(--v-green);
-    font-size: var(--vs-label);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+    font-size: 0.82rem;
+    text-transform: none;
+    letter-spacing: 0;
     border-bottom: none;
   }
   .bm-check-label { max-width: 30ch; }
@@ -629,7 +631,7 @@ const rubricChecks = [
   .bm-rubric-item { border-top: 1px solid var(--v-line); padding-top: var(--v-4); }
   .bm-rubric-item:first-child { border-top: none; padding-top: 0; }
   .bm-rubric-group { margin-bottom: var(--v-1); }
-  .bm-rubric-item-label { font-weight: 700; margin: var(--v-1) 0 var(--v-2); }
+  .bm-rubric-item-label { font-weight: 600; margin: var(--v-1) 0 var(--v-2); }
 
   /* raw artefacts */
   .bm-artefact-list { display: grid; gap: var(--v-3); margin-top: var(--v-5); }
@@ -638,19 +640,20 @@ const rubricChecks = [
     align-items: center;
     justify-content: space-between;
     gap: var(--v-6);
-    border: 1px solid var(--v-line);
     padding: var(--v-4) var(--v-6);
     background: var(--v-paper);
+    box-shadow: 0 1px 2px rgba(23,27,24,0.05), 0 10px 26px -18px rgba(23,27,24,0.14);
     text-decoration: none;
     color: var(--v-ink);
-    transition: border-color var(--v-fast) var(--v-ease);
+    transition: transform var(--v-fast) var(--v-ease), box-shadow var(--v-fast) var(--v-ease);
   }
-  .bm-artefact:hover { border-color: var(--v-green); }
+  .bm-artefact:hover { transform: translateY(-2px); box-shadow: 0 2px 4px rgba(23,27,24,0.06), 0 18px 40px -20px rgba(23,27,24,0.20); }
   .bm-artefact-text { display: flex; flex-direction: column; gap: var(--v-1); }
-  .bm-artefact-title { font-weight: 700; }
+  .bm-artefact-title { font-weight: 600; }
   .bm-artefact-subtitle { font-size: var(--vs-small); color: var(--v-ink-soft); }
   .bm-artefact-arrow {
-    font-family: var(--vf-mono);
+    font-family: var(--vf-body);
+    font-weight: 600;
     font-size: var(--vs-label);
     color: var(--v-green);
     white-space: nowrap;
