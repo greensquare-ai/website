@@ -163,6 +163,9 @@ a.v-card:hover, .v-card--hover:hover { transform: translateY(-2px); box-shadow: 
 .v-splitcta__panel--deep { background: var(--v-green-deep); color: var(--v-cream); }
 .v-splitcta__panel--fill { background: var(--v-fill-2); color: var(--v-ink); }
 .v-splitcta__panel h2 { max-width: 18ch; }
+/* the green/deep panels are not .v-green, so text must be set to cream explicitly */
+.v-splitcta__panel--green, .v-splitcta__panel--deep { color: var(--v-cream); }
+.v-splitcta__panel--green .v-lead, .v-splitcta__panel--deep .v-lead, .v-splitcta__panel--green .v-small, .v-splitcta__panel--deep .v-small { color: var(--v-cream); }
 
 /* ---------- prose (methodology, legal) ---------- */
 .v-prose { max-width: 72ch; }
