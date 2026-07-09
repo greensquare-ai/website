@@ -1,5 +1,6 @@
 ---
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
+import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
 
 const stages = [
   { n: '01', name: 'Interrogate', body: 'Short, specific questions come before any advice, scaled to the stakes: a small reversible call gets three sharp questions, a one-way-door call gets up to six.' },
@@ -10,7 +11,7 @@ const stages = [
 ];
 ---
 <BaseLayoutV2
-  title="The Decision · GreenSquare"
+  title="The Decision | GreenSquare"
   description="The Decision is a single file that turns Claude or GPT into a decision advisor. It interrogates before it answers, then produces a five-part, evidence-tagged brief."
   current="product"
 >
@@ -19,7 +20,6 @@ const stages = [
     <div class="v-container">
       <div class="v-split is-top">
         <div class="v-reveal">
-          <p class="v-label v-label--rule v-eyebrow">The product</p>
           <h1 class="v-display">The Decision.</h1>
           <p class="v-lead" style="margin-top: var(--v-6);">
             One file that interrogates before it answers: it questions you, tests the framing once, plays your
@@ -27,13 +27,13 @@ const stages = [
             recommendation with a self-check, all in markdown. Twelve months of model-version updates included.
           </p>
           <div class="hero-actions">
-            <a class="v-btn v-btn--green" href="https://buy.stripe.com/aFaaEWfGDc7W7XF2wv3AY00" target="_blank" rel="noopener">Get the Decision, $49</a>
-            <a class="v-link" href="/benchmark/">See the benchmark <span class="arrow">&rarr;</span></a>
+            <a class="v-btn v-btn--green" href="/decision-frame/">Get the free Decision Frame</a>
+            <a class="v-btn v-btn--grey" href="/benchmark/">See the benchmark</a>
           </div>
         </div>
         <div class="v-reveal d1">
           <div class="v-readout">
-            <div class="v-readout__bar"><span class="v-readout__dot"></span> THE DECISION &middot; 01&ndash;05</div>
+            <div class="v-readout__bar"><span class="v-readout__dot"></span> THE DECISION / 01&ndash;05</div>
             <div class="v-readout__body">
               <ul class="v-spec__list">
                 {stages.map((s) => <li><span class="n">/{s.n}</span> {s.name}</li>)}
@@ -49,7 +49,6 @@ const stages = [
   <!-- WHAT IT IS -->
   <section class="v-section">
     <div class="v-container">
-      <p class="v-label v-eyebrow">What it is</p>
       <h2 class="v-h2" style="max-width: 30ch;">A disciplined thinking partner for one decision, not another chat window.</h2>
       <p class="v-measure" style="margin-top: var(--v-6); color: var(--v-ink-soft);">
         The Decision turns a generic AI account into a decision advisor for a single real call. Open a new chat,
@@ -64,7 +63,6 @@ const stages = [
   <!-- THE METHOD — five stages, indexed capability rows -->
   <section class="v-section v-fill">
     <div class="v-container">
-      <p class="v-label v-eyebrow">The method</p>
       <h2 class="v-h2">Five stages, in order, every time.</h2>
       <p class="v-measure" style="margin-top: var(--v-4); color: var(--v-ink-soft);">It does not skip to the brief. Each stage exists because the one before it changes what the brief should say.</p>
       <div class="v-caplist">
@@ -82,7 +80,6 @@ const stages = [
   <!-- THE OUTPUT — five parts, indexed capability rows -->
   <section class="v-section">
     <div class="v-container">
-      <p class="v-label v-eyebrow">The output</p>
       <h2 class="v-h2">Five parts, every time.</h2>
       <div class="v-caplist">
         <div class="v-caprow v-reveal">
@@ -118,7 +115,6 @@ const stages = [
   <section class="v-section v-fill">
     <div class="v-container v-split is-top">
       <div class="v-reveal">
-        <p class="v-label v-eyebrow">The firewall</p>
         <h2 class="v-h2">What it does. What it does not.</h2>
         <p class="v-measure" style="margin-top: var(--v-4); color: var(--v-ink-soft);">
           The Decision does arithmetic on numbers you give it, tagged as derived, so a claim like "roughly 8% of
@@ -129,11 +125,11 @@ const stages = [
       </div>
       <div class="v-reveal d1">
         <div class="v-card">
-          <ul class="v-marked">
-            <li><b>Does:</b> arithmetic on given numbers, tagged given or derived</li>
-            <li><b>Does:</b> a five-part, evidence-tagged brief in markdown</li>
-            <li><b>Does not:</b> build a financial model or valuation</li>
-            <li><b>Does not:</b> produce a deck, a template, or a risk register</li>
+          <ul class="v-leadlist">
+            <li><strong>Does the arithmetic.</strong> Works the numbers you give it, each tagged given or derived, shown as worked rather than asserted.</li>
+            <li><strong>Does the brief.</strong> A five-part, evidence-tagged decision brief in clean markdown.</li>
+            <li><strong>Does not model.</strong> No financial model or valuation; that deeper work is a separate product, the Case.</li>
+            <li><strong>Does not decorate.</strong> No deck, no template, no risk register.</li>
           </ul>
         </div>
       </div>
@@ -143,7 +139,6 @@ const stages = [
   <!-- ENTERPRISE-PASTE HYGIENE — green big-block, the proof moment -->
   <section class="v-section v-green">
     <div class="v-container">
-      <p class="v-label v-label--rule v-eyebrow">Enterprise-paste hygiene</p>
       <h2 class="v-h2" style="max-width: 24ch;">Plain markdown. Runs in your own account. Nothing collected.</h2>
       <p class="v-lead" style="margin-top: var(--v-5); max-width: 60ch;">
         The Decision is a plain markdown file: no links, no embedded code, no macros, nothing that phones home.
@@ -154,48 +149,28 @@ const stages = [
     </div>
   </section>
 
-  <!-- PRICING -->
-  <section class="v-section" id="pricing">
-    <div class="v-container">
-      <p class="v-label v-eyebrow">Pricing</p>
-      <div class="v-tiers" style="margin-top: var(--v-6);">
-        <div class="v-tier v-tier--key v-reveal">
-          <p class="v-label">Individual</p>
-          <h2 class="v-h3">The Decision</h2>
-          <p><span class="v-tier__price">$49</span> <span class="v-tier__anchor">$59</span></p>
-          <ul class="v-marked">
-            <li>One file, yours to keep, no subscription</li>
-            <li>Works in Claude and GPT</li>
-            <li>Twelve months of model-version updates included</li>
-            <li>Refund on request within 14 days</li>
-          </ul>
-          <a class="v-btn v-btn--on-green" href="https://buy.stripe.com/aFaaEWfGDc7W7XF2wv3AY00" target="_blank" rel="noopener" style="margin-top: var(--v-4);">Get the Decision</a>
-        </div>
-        <div class="v-tier v-reveal d1">
-          <p class="v-label">Team, 10 seats</p>
-          <h2 class="v-h3">Team tier</h2>
-          <p><span class="v-tier__price">A$490</span></p>
-          <ul class="v-marked">
-            <li>10 seats to the ladder</li>
-            <li>One transaction, one relationship</li>
-            <li>A quarterly briefing on how the benchmark has moved</li>
-          </ul>
-          <a class="v-link" href="mailto:hello@greensquare.ai?subject=Team%20tier" style="margin-top: var(--v-4);">Write to hello@greensquare.ai <span class="arrow">&rarr;</span></a>
+  <!-- FREE FRAME CTA — green big-block -->
+  <section class="v-section v-green" id="get-started">
+    <div class="v-container v-split is-top">
+      <div class="v-reveal">
+        <h2 class="v-h2">Start with the free Decision Frame.</h2>
+        <p class="v-lead" style="margin-top: var(--v-5);">
+          Before anything paid, run the free one-page Frame on a real call: the question underneath the
+          question, the false binary, the load-bearing assumption, and what you actually know. Delivered by
+          email, yours to keep.
+        </p>
+      </div>
+      <div class="v-reveal d1">
+        <div class="v-card">
+          <EmailCaptureForm client:visible buttonLabel="Send me the free Decision Frame" />
         </div>
       </div>
-      <p class="v-small" style="margin-top: var(--v-8); max-width: 62ch;">
-        Priced below your expense-approval threshold on purpose. The maintenance moat is what protects it: your
-        $49 includes 12 months of model-version updates and a re-run of the public benchmark within 14 days of
-        each major frontier model release, so the file keeps being tested against the model you are actually
-        running it on.
-      </p>
     </div>
   </section>
 
   <!-- QUESTIONS — native disclosure -->
   <section class="v-section v-fill">
     <div class="v-container v-container--narrow">
-      <p class="v-label v-eyebrow">Questions</p>
       <h2 class="v-h2">The short answers.</h2>
       <div style="margin-top: var(--v-8);">
         <details open>
@@ -208,7 +183,7 @@ const stages = [
         </details>
         <details>
           <summary>Is it a subscription?</summary>
-          <p class="v-small">No. One file, one price: $49, anchored to $59, with 12 months of model-version updates included.</p>
+          <p class="v-small">No. It is one file, yours to keep, not a subscription, with twelve months of model-version updates included.</p>
         </details>
         <details>
           <summary>Will it build me a financial model?</summary>
