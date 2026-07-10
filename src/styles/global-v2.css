@@ -166,6 +166,15 @@ a.v-card:hover, .v-card--hover:hover { transform: translateY(-2px); box-shadow: 
 /* the green/deep panels are not .v-green, so text must be set to cream explicitly */
 .v-splitcta__panel--green, .v-splitcta__panel--deep { color: var(--v-cream); }
 .v-splitcta__panel--green .v-lead, .v-splitcta__panel--deep .v-lead, .v-splitcta__panel--green .v-small, .v-splitcta__panel--deep .v-small { color: var(--v-cream); }
+/* Bare-button panels get a button + caption action block that mirrors the form
+   panel (input+button+fineprint), so the two panels' buttons align on one line
+   and read as a matched pair (same 48px height, same 440px cap). */
+.v-splitcta__action { width: 100%; max-width: 440px; }
+.v-splitcta__btn { width: 100%; height: 48px; }
+/* margin mirrors the left form's button-to-fineprint spacing (its flex row-gap
+   var(--v-3) plus the fineprint's own var(--v-2) top margin) so both buttons
+   sit the same distance above the panel floor and align. */
+.v2 .v-splitcta__note { font-size: var(--vs-label); margin-top: calc(var(--v-3) + var(--v-2)); color: var(--v-cream-faint); }
 
 /* ---------- prose (methodology, legal) ---------- */
 .v-prose { max-width: 72ch; }

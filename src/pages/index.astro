@@ -16,8 +16,8 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
           <p class="v-lead" style="margin-top: var(--v-6);">
             Think through any decision and come out with something you would stand behind. GreenSquare turns a
             generic AI into a disciplined thinking partner: it questions you before it answers, frames the real
-            call, generates genuine options, and hands you an evidence-tagged recommendation, in markdown,
-            identical on Claude and GPT.
+            call, generates genuine options, and hands you an evidence-tagged recommendation, in markdown, with
+            the same interrogation method and five-part output structure across Claude, ChatGPT and Gemini.
           </p>
           <div class="hero-actions">
             <a class="v-btn v-btn--green" href="#frame">Get the free Decision Frame</a>
@@ -36,7 +36,7 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
                 <li><span class="n">/05</span> What would change this call</li>
               </ul>
               <div class="spec-tags">
-                <span class="v-tag">given</span><span class="v-tag">derived</span><span class="v-tag">unknown</span>
+                <span class="v-tag">given</span><span class="v-tag">derived</span><span class="v-tag">inferred</span><span class="v-tag">unknown</span>
               </div>
             </div>
             <div class="v-readout__foot">MARKDOWN OUTPUT <span class="v-cursor" aria-hidden="true"></span></div>
@@ -70,7 +70,7 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
           <span class="v-index">/02</span>
           <h3>It shows its evidence</h3>
           <p class="v-small v-cap-body">
-            Every claim the call rests on is tagged given, inferred or unknown, and the recommendation names
+            Every claim the call rests on is tagged given, derived, inferred or unknown, and the recommendation names
             the single assumption it stands on.
           </p>
         </div>
@@ -78,8 +78,8 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
           <span class="v-index">/03</span>
           <h3>It holds a consulting standard, on any model</h3>
           <p class="v-small v-cap-body">
-            The discipline is encoded in the file, so the output behaves the same on Claude or GPT, and scales
-            effort to the stakes rather than over-engineering a small call.
+            The discipline is encoded in the file, so the output holds the same structure across Claude, ChatGPT
+            and Gemini, and scales effort to the stakes rather than over-engineering a small call.
           </p>
         </div>
       </div>
@@ -159,7 +159,10 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
         <h2 class="v-h2">The proof, pre-registered.</h2>
         <p class="v-lead" style="margin-top: var(--v-4);">Fifty-four runs, two frontier models, a sealed answer key. Only the loaded product produced a defensible brief, every run.</p>
       </div>
-      <a class="v-btn v-btn--on-green" href="/benchmark/">See the benchmark</a>
+      <div class="v-splitcta__action">
+        <a class="v-btn v-btn--on-green v-splitcta__btn" href="/benchmark/">See the benchmark</a>
+        <p class="v-splitcta__note">No email needed. Read the full method.</p>
+      </div>
     </div>
   </section>
 </BaseLayoutV2>
