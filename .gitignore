@@ -13,3 +13,9 @@ Thumbs.db
 # Local QA artefacts
 /_qa/
 /screenshots/
+
+# Internal / commercial docs — keep OUT of this public repo.
+# Canonical home is the private repo ks-projects-66/greensquare-ops (+ OneDrive copies).
+/CLAUDE.md
+/docs/strategy/
+/docs/superpowers/
