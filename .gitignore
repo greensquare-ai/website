@@ -19,3 +19,7 @@ Thumbs.db
 /CLAUDE.md
 /docs/strategy/
 /docs/superpowers/
+
+# Local AI tooling config (personal, not for the public repo)
+/.claude/
+/.codex/
