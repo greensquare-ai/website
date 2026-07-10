@@ -41,7 +41,7 @@ export default function EmailCaptureForm({
 
   if (status === 'success') {
     return (
-      <p className="form-status" role="status">
+      <p className="form-status form-status--success" role="status">
         Check your inbox to confirm. Once you do, the Decision Frame is on its way.
       </p>
     );
@@ -64,7 +64,7 @@ export default function EmailCaptureForm({
         {status === 'loading' ? 'Sending…' : buttonLabel}
       </button>
       {status === 'error' && (
-        <p className="form-status" role="alert" style={{ width: '100%', color: '#8a2f1f' }}>
+        <p className="form-status form-status--error" role="alert">
           Something went wrong sending that. Try again, or write to hello@greensquare.ai.
         </p>
       )}

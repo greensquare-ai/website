@@ -206,20 +206,56 @@ a.v-card:hover, .v-card--hover:hover { transform: translateY(-2px); box-shadow: 
 .v-footer__legal { margin-top: var(--v-10); padding-top: var(--v-5); border-top: 1px solid var(--v-line-green); display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--v-3); font-family: var(--vf-body); font-size: var(--vs-small); letter-spacing: 0; color: var(--v-cream-faint); }
 
 /* ---------- forms ---------- */
-.v2 .field-row { display: flex; gap: var(--v-3); flex-wrap: wrap; align-items: stretch; }
-.v2 input[type='email'] { flex: 1 1 240px; padding: 0 15px; height: 48px; border: 1px solid var(--v-line-strong); border-radius: 0; font-family: var(--vf-body); font-size: var(--vs-small); background: var(--v-paper); color: var(--v-ink); transition: border-color var(--v-fast); }
+/* Visually-hidden utility. Defined in global.css but this stylesheet (BaseLayoutV2)
+   ships without it, so the sr-only email label was rendering visibly beside the input. */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.v2 .field-row { display: flex; gap: var(--v-3); flex-wrap: wrap; align-items: stretch; container-type: inline-size; }
+.v2 input[type='email'] { flex: 1 1 240px; padding: 0 15px; height: 48px; border: 1px solid var(--v-line-strong); border-radius: 0; font-family: var(--vf-body); font-size: var(--vs-small); background: var(--v-paper); color: var(--v-ink); transition: border-color var(--v-fast) var(--v-ease), box-shadow var(--v-fast) var(--v-ease); }
 .v2 input[type='email']:focus { border-color: var(--v-green); outline: none; }
+.v2 input[type='email']:focus-visible { border-color: var(--v-green); box-shadow: 0 0 0 3px color-mix(in srgb, var(--v-green) 22%, transparent); }
 .v2 .form-note { font-size: var(--vs-label); color: var(--v-ink-faint); margin-top: var(--v-2); width: 100%; }
-.v2 .form-status { font-size: var(--vs-small); margin-top: var(--v-2); width: 100%; }
+.v2 .form-status { font-size: var(--vs-small); margin-top: var(--v-2); width: 100%; animation: v-status-in var(--v-fast) var(--v-ease) both; }
 .v2 .form-status--error, .v2 [class*='form-status'][role='alert'] { color: #b23a2a; }
 .v2 .form-status--success { color: var(--v-green); }
-.v2 .field-row .btn, .v2 .field-row button[type='submit'] { border-radius: 0; background: var(--v-green); color: var(--v-cream); border: 1px solid var(--v-green); font-family: var(--vf-body); font-weight: 600; font-size: var(--vs-small); height: 48px; padding: 0 20px; cursor: pointer; transition: background-color var(--v-fast) var(--v-ease); }
+.v2 .field-row .btn, .v2 .field-row button[type='submit'] { border-radius: 0; background: var(--v-green); color: var(--v-cream); border: 1px solid var(--v-green); font-family: var(--vf-body); font-weight: 600; font-size: var(--vs-small); height: 48px; padding: 0 20px; cursor: pointer; transition: background-color var(--v-fast) var(--v-ease), transform var(--v-fast) var(--v-ease), box-shadow var(--v-fast) var(--v-ease); }
 .v2 .field-row .btn:hover, .v2 .field-row button[type='submit']:hover { background: var(--v-green-bright); }
+.v2 .field-row .btn:active, .v2 .field-row button[type='submit']:active { transform: translateY(1px); }
+.v2 .field-row .btn:focus-visible, .v2 .field-row button[type='submit']:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--v-paper), 0 0 0 4px var(--v-green); }
+.v2 .field-row button[type='submit']:disabled { opacity: 0.72; cursor: progress; }
+/* When the row is too narrow to hold input + button side by side (either a narrow
+   form column on desktop or a small viewport), the button wraps. In that case it
+   should span the input's full width, not hug its label as a short orphaned button.
+   Container-query on .field-row's own inline size, so it responds to the actual
+   available width rather than the viewport. */
+@container (max-width: 560px) {
+  .v2 .field-row .btn, .v2 .field-row button[type='submit'] { flex: 1 1 100%; width: 100%; }
+}
 /* inside a green block, the submit button flips to cream so it doesn't vanish */
 .v2 .v-green .field-row .btn, .v2 .v-green .field-row button[type='submit'] { background: var(--v-cream); color: var(--v-green); border-color: var(--v-cream); }
 .v2 .v-green .field-row .btn:hover, .v2 .v-green .field-row button[type='submit']:hover { background: #fff; }
+.v2 .v-green .field-row .btn:focus-visible, .v2 .v-green .field-row button[type='submit']:focus-visible { box-shadow: 0 0 0 2px var(--v-green), 0 0 0 4px var(--v-cream); }
+.v2 .v-green input[type='email']:focus-visible { box-shadow: 0 0 0 3px color-mix(in srgb, var(--v-cream) 40%, transparent); }
 .v2 .v-green .form-note { color: var(--v-cream-faint); }
 .v2 .v-green .form-status--success { color: var(--v-cream); }
+
+@keyframes v-status-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .v2 .form-status { animation: none; }
+  .v2 .field-row .btn, .v2 .field-row button[type='submit'],
+  .v2 input[type='email'] { transition: none; }
+  .v2 .field-row .btn:active, .v2 .field-row button[type='submit']:active { transform: none; }
+}
 
 /* ---------- disclosure (FAQ) ---------- */
 .v2 details { border-bottom: 1px solid var(--v-line); padding: var(--v-4) 0; }
