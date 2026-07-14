@@ -3,112 +3,146 @@ import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 ---
 <BaseLayoutV2
   title="Methodology | GreenSquare"
-  description="How we test the Decision Brief: three arms, a split rubric, pre-registration, independent scoring, and a blind senior-reviewer study. Limitations stated plainly."
+  description="How GreenSquare designed, ran and scored the current 54 run benchmark, including the completed grid, the limits of the evidence and the work still pending."
   current="methodology"
 >
-  <!-- HERO — light intro header -->
   <section class="v-section v-off hero">
     <div class="v-container v-container--narrow">
       <div class="v-reveal">
-        <h1 class="v-h1">How we test the Decision Brief.</h1>
+        <h1 class="v-h1">How the current benchmark was run.</h1>
         <p class="v-lead" style="margin-top: var(--v-6);">
-          Honest by construction: every claim traces to a saved transcript, the inputs are pre-registered before
-          any scored run, and the failures are published with the successes.
+          The current result covers 54 scored runs across two models, three cases and three test conditions. This
+          page records what was tested, how it was scored, where the protocol changed, and which claims remain
+          open.
         </p>
       </div>
     </div>
   </section>
 
-  <!-- BODY — long-form prose -->
   <section class="v-section">
     <div class="v-container v-container--narrow">
       <div class="v-prose v-reveal">
-        <h2>What we are actually claiming</h2>
+        <h2>The claim under test</h2>
         <p>
-          Frontier models are brilliant on their good days. Your steering committee is not scheduled for the
-          model's good days. The Decision exists to make the brief that survives senior scrutiny the one you get
-          every time, not the one you get when the model happens to interrogate the question instead of answering
-          it.
+          The Decision is designed to make an AI model follow a reliable process for one business decision. It
+          should ask for missing facts, test the framing, compare genuine options, mark the basis of important
+          claims, and state what would change the recommendation.
         </p>
         <p>
-          So the claim we test is reliability and defensibility, not "raw AI fails." A modern model, well prompted
-          and fully informed, will sometimes surface the real decision on its own. We show you how often
-          "sometimes" is, and we show the Decision doing it consistently, on three different models, on cases the
-          model has never seen.
+          The benchmark tests two related questions. First, does the process hold across models and repeated
+          runs? Second, does asking before advising help the model connect the facts that reveal the underlying
+          decision?
+        </p>
+
+        <h2>The completed grid</h2>
+        <p>The scored result currently includes:</p>
+        <ul>
+          <li>Claude Opus 4.8 and ChatGPT GPT-5.5.</li>
+          <li>Three fictional business cases.</li>
+          <li>Three test conditions for every case and model.</li>
+          <li>Three repeats in each cell.</li>
+          <li>54 runs in total, with 18 runs per condition.</li>
+        </ul>
+        <p>
+          The pre-registered protocol targeted about 180 runs, including Gemini and more repeats. The completed
+          grid was reduced to 54 runs. Gemini remains pending. The current website reports the completed 54 run
+          result as an interim two model grid.
         </p>
 
         <h2>The cases</h2>
         <p>
-          Three fictional, un-Googleable cases built at ASX-200 scale, each with a seductive surface question that
-          hides the real decision. They are fictional on purpose: a famous real case is useless here, because the
-          model recognises it and recalls the answer from memory instead of reasoning. One of the three is adapted
-          and disguised from a documented Australian post-mortem, so the answer key is not entirely ours to write.
+          The three cases are fictional and cannot be found through search. Each presents an attractive surface
+          question while placing three facts elsewhere in the case that change the real decision.
         </p>
-        <p>
-          Critically, one case is a GO case: the correct call is the bold, aggressive option, not caution. It is
-          there to prove the Decision changes direction toward the evidence, not toward hedging. If it ever
-          recommends "validate first" on the case where the evidence says "move now," we publish that.
-        </p>
-        <p>
-          Each case surfaces its real decision only by integrating three facts placed far apart in the brief. A
-          single-pass read tends to mention one of them. Connecting all three, and acting on them, is the judgment
-          we measure.
-        </p>
-
-        <h2>Three arms, so the comparison is fair</h2>
-        <p>For each case, on each model, we run three conditions:</p>
         <ul>
-          <li><strong>Arm A, the naked baseline.</strong> The question as a real person would paste it. This is what you actually experience.</li>
-          <li><strong>Arm B, the informed baseline.</strong> The same question with the full fact sheet handed over up front. Equal information to the Decision, the only difference is discipline. This is the controlled comparison a skeptic should demand.</li>
-          <li><strong>Arm C, the Decision.</strong> The model loaded with the product, interrogating; a person answers its questions using only the case fact sheet, and says "that has not been assessed" to anything the sheet does not cover.</li>
+          <li><strong>Meridian.</strong> A large managed service bid with concentration, regulatory and stranded investment risk.</li>
+          <li><strong>Larkfield.</strong> A build or acquire choice where the evidence supports the more aggressive acquisition.</li>
+          <li><strong>Corvan.</strong> A continue or exit decision adapted from a documented Australian post mortem.</li>
         </ul>
-        <p>Publishing Arm A and Arm B both matters: A shows the felt difference, B rules out "it only won because it knew more."</p>
-
-        <h2>The scorecard, split in two</h2>
-        <p>Each run is scored against a rubric fixed and published in advance, split into two honestly-labelled groups:</p>
-        <ul>
-          <li><strong>Process discipline</strong> (the product tells the model to do these): asked before answering; generated real options including doing nothing; tagged its evidence; named an untested constraint; stated what would change the call. We expect the baselines to manage some of these sometimes. The point is whether they hold every time.</li>
-          <li><strong>Judgment</strong> (the product does not name these; scored against a sealed answer key): surfaced the hidden decision by integrating the three facts; the recommendation went the right direction; caught the planted inconsistency or bias. This is the part that separates reasoning from instruction-following.</li>
-        </ul>
-
-        <h2>Discipline that makes the numbers trustworthy</h2>
-        <ul>
-          <li><strong>Pre-registration.</strong> The cases, fact sheets, rubric and the sealed answer key are hashed and committed to a public repository before any scored run.</li>
-          <li><strong>Repetition.</strong> The primary case is run ten times per cell; reliability is the whole claim, so a single run is not evidence. Results are reported as raw counts, for example 10/10 versus 4/10, never a lone percentage.</li>
-          <li><strong>Independent, blinded scoring.</strong> Transcripts are stripped of which arm and model produced them before scoring. A second scorer checks a sample; an AI judge from a different model family is a cross-check only, never the headline.</li>
-          <li><strong>Everything is downloadable.</strong> Every count links to the transcript behind it, including the runs where the baseline did well and the case where the Decision added least.</li>
-        </ul>
-
-        <h2>The part that speaks your language: the blind senior-reviewer study</h2>
         <p>
-          Machines grading machines does not answer the only question that matters to you: would a senior person
-          send this up under their own name? So we also run a blind panel. Verified senior operators (ex-Big-4 and
-          MBB, current ASX corporate strategy and finance) are shown two briefs per case, de-identified and in
-          random order, and asked one question: which would you be more willing to send to your executive
-          committee under your own name? We publish the split and their verbatim comments, including any who
-          preferred the baseline.
+          Larkfield matters because it tests direction. A useful method should support a bold move when the facts
+          warrant it as readily as it supports caution when the downside is stronger.
         </p>
 
-        <h2>Run it yourself</h2>
+        <h2>The three conditions</h2>
+        <ul>
+          <li><strong>Question only.</strong> The model receives the short question a business user might type into a new chat. It answers once. Any questions it asks receive no reply.</li>
+          <li><strong>All facts provided.</strong> The model receives the same short question plus the full case fact sheet in the first message. It answers once.</li>
+          <li><strong>The Decision loaded.</strong> The model receives the product file and the short question. It asks its own questions. The operator answers only from the same fact sheet used in the all facts condition.</li>
+        </ul>
         <p>
-          The whole point of a vendor-built benchmark is that you should not have to believe it. Download the
-          cases, the fact sheets, the rubric and the Decision, and run the comparison on your own live decision.
-          The benchmark's real job is to teach you how to check us.
+          The all facts condition is the controlled comparison. It shows how well the model reasons when someone
+          already knows which information matters. The loaded condition tests whether the file can draw that
+          information out through questions and then produce the structured brief.
         </p>
 
-        <h2>Limitations we will not hide</h2>
+        <h2>The scorecard</h2>
+        <p>Every run is scored on eight checks fixed before the scored grid began.</p>
+        <h3>Process checks</h3>
+        <p>The product file directly requests these behaviours:</p>
         <ul>
-          <li>We wrote two of the three cases. Pre-registration and independent scoring shrink that problem, they do not erase it. Run your own.</li>
-          <li>Frontier models change monthly. These results carry model versions and dates, and we re-run the grid within fourteen days of every major model release.</li>
-          <li>Fictional cases are not your business. They are designed to be representative, not identical. The reproduction pack exists so you can test the one thing that is identical to your business: your decision.</li>
+          <li>Asked questions before giving the recommendation.</li>
+          <li>Compared real options, including keeping the current position.</li>
+          <li>Marked the basis of important claims.</li>
+          <li>Named an untested constraint or assumption.</li>
+          <li>Stated the conditions that would change the recommendation.</li>
+        </ul>
+        <h3>Judgment checks</h3>
+        <p>These checks come from the sealed answer prepared for each case:</p>
+        <ul>
+          <li>Connected the three relevant facts and surfaced the underlying decision.</li>
+          <li>Recommended the same direction as the sealed answer.</li>
+          <li>Caught the planted inconsistency or bias.</li>
         </ul>
 
-        <h2>Where things stand today</h2>
+        <h2>Pre-registration and scoring</h2>
         <p>
-          A design-phase pilot has run on Case A only, n=3 per arm, on Claude Opus 4.8, to confirm the three-arm
-          design discriminates before we pre-register and run the scored grid. Those pilot numbers are on the
-          <a href="/benchmark/">benchmark page</a>, clearly labelled as design-phase. The pre-registered grid and the
-          blind senior-reviewer study are both in progress.
+          The cases, fact sheets, protocol, rubric and answer key hashes were committed publicly before the scored
+          grid began. The paid product and sealed answer were recorded by hash so their exact versions could be
+          fixed without publishing their contents during the test.
+        </p>
+        <p>
+          The current grid has one scorer. The scorer used the published rubric and sealed answer. Results are
+          reported as raw counts with the number of runs shown. A second independent score has yet to be completed.
+        </p>
+
+        <h2>What the evidence supports today</h2>
+        <ul>
+          <li>The loaded file completed all five process checks in 18 of 18 runs.</li>
+          <li>It surfaced the underlying decision in 17 of 18 runs.</li>
+          <li>The question only condition surfaced the underlying decision in 0 of 18 runs.</li>
+          <li>The all facts condition surfaced it in 15 of 18 runs and matched the sealed direction in 18 of 18.</li>
+          <li>The loaded condition matched the sealed direction in 18 of 18.</li>
+        </ul>
+        <p>
+          These results support a claim about process consistency and fact gathering across the two tested
+          models. A blind senior reviewer study has yet to test which brief experienced operators would prefer to
+          send to an executive committee.
+        </p>
+
+        <h2>Transparency still pending</h2>
+        <p>
+          The run transcripts are saved but are not yet published. GreenSquare plans to publish them when the
+          Gemini grid is complete. Until then, readers can inspect the cases, fact sheets, protocol, rubric and
+          pre-registration record, while the reported counts cannot be independently re-scored from the public
+          repository.
+        </p>
+
+        <h2>Limitations</h2>
+        <ul>
+          <li>Three repeats per cell provide an early reliability signal and leave substantial uncertainty.</li>
+          <li>GreenSquare wrote two of the three cases.</li>
+          <li>The current grid covers two models. Gemini remains pending.</li>
+          <li>One person scored the current runs.</li>
+          <li>The senior reviewer study and independent re-score remain planned work.</li>
+          <li>AI models change frequently, so every result needs its model version and test date.</li>
+        </ul>
+
+        <h2>Current status</h2>
+        <p>
+          The completed 54 run result is published on the <a href="/benchmark/">Benchmark page</a>. It is current
+          as at 14 July 2026. Claude Opus 4.8 and ChatGPT GPT-5.5 are complete. Gemini, the independent re-score,
+          the transcript release and the senior reviewer study remain pending.
         </p>
       </div>
     </div>

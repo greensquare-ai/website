@@ -32,6 +32,8 @@ dashes, no exclamation marks, no founder name, and honour the word blacklist in 
 | `--v-cream-faint` | `rgba(242,244,238,.52)` | Captions on green |
 | `--v-signal` | `#2a9d55` | Readout progress/pass on light |
 | `--v-signal-on-green` | `#cdeeb4` | Readout progress/pass on green |
+| `--v-error` | `#b23a2a` | Form error text on light grounds |
+| `--v-error-on-green` | `#ffd8d1` | Form error text on green grounds |
 
 Hairlines are `currentColor`-based at low opacity (`--v-line`, `--v-line-strong`, and the `-green`
 variants). Use them for structural dividers (list rows, tables), never as the only thing defining a card.

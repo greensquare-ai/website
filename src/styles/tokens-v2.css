@@ -34,6 +34,8 @@
   /* signal green for readouts/progress on light + green grounds */
   --v-signal: #2a9d55;
   --v-signal-on-green: #cdeeb4;
+  --v-error: #b23a2a;
+  --v-error-on-green: #ffd8d1;
 
   /* ---- type: three families only (Space Grotesk display, Manrope text, mono for readout chrome) ---- */
   --vf-display: 'Space Grotesk', system-ui, -apple-system, sans-serif;

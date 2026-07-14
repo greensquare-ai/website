@@ -1,45 +1,87 @@
-# How we test the Decision Brief (methodology)
+# GreenSquare benchmark v3: current methodology
 
-*Public-facing methodology, drafted for the Evidence and Methodology pages. Honest by construction: every claim traces to a saved transcript, the inputs are pre-registered before any scored run, and the failures are published with the successes. Numbers are filled from the scored grid; until then this reads as method, not results.*
+Current as at 14 July 2026.
 
-## What we are actually claiming
-Frontier models are brilliant on their good days. Your executive committee is not scheduled for the model's good days. The Decision Brief exists to make the brief that survives senior scrutiny the one you get **every time**, not the one you get when the model happens to interrogate the question instead of answering it.
+## Completed grid
 
-So the claim we test is **reliability and defensibility**, not "raw AI fails." A modern model, well prompted and fully informed, will sometimes surface the real decision on its own. We show you how often "sometimes" is, and we show the Decision Brief doing it consistently, on three different models, on cases the model has never seen.
+The scored result currently covers two models, three cases, three conditions and three repeats per cell.
 
-## The cases
-Three fictional, un-Googleable cases built at ASX-200 scale, each with a seductive surface question that hides the real decision. They are fictional on purpose: a famous real case (a well-known collapse) is useless here, because the model recognises it and recalls the answer from memory instead of reasoning. One of the three is adapted and disguised from a documented Australian post-mortem so the answer key is not entirely ours to write.
+| Item | Current completed result |
+|---|---|
+| Models | Claude Opus 4.8 and ChatGPT GPT-5.5 |
+| Cases | Meridian, Larkfield and Corvan |
+| Conditions | Question only, all facts provided, The Decision loaded |
+| Repeats | Three per cell |
+| Total runs | 54 |
+| Scoring | One scorer |
+| Pending | Gemini, independent re-score, transcript publication, senior reviewer study |
 
-Critically, one case is a **GO case**: the correct call is the bold, aggressive option, not caution. It is there to prove the Decision Brief changes direction *toward the evidence*, not toward hedging. If it ever recommends "validate first" on the case where the evidence says "move now", we publish that.
+The pre-registered protocol targeted about 180 runs, with ten repeats for Case A, five repeats for Cases B and C, and three model families. The completed grid was reduced to 54 runs. Gemini remains pending. This reduction is disclosed here and on the public methodology page.
 
-Each case surfaces its real decision only by **integrating three facts placed far apart** in the brief. A single-pass read tends to mention one of them. Connecting all three, and acting on them, is the judgment we measure.
+## Claim under test
 
-## Three arms, so the comparison is fair
-For each case, on each model, we run three conditions:
-- **Arm A — the naked baseline.** The question as a real person would paste it. This is what you actually experience.
-- **Arm B — the informed baseline.** The same question with the full fact sheet handed over up front. Equal information to the Decision Brief; the only difference is discipline. This is the controlled comparison a skeptic should demand.
-- **Arm C — the Decision Brief.** The model loaded with the product, interrogating; a person answers its questions using only the case fact sheet, and says "that has not been assessed" to anything the sheet does not cover.
+The Decision is designed to make an AI model follow a reliable process for one business decision. The benchmark tests whether the file consistently makes the model:
 
-Publishing Arm A and Arm B both matters: A shows the felt difference, B rules out "it only won because it knew more."
+1. Ask for missing facts before giving a recommendation.
+2. Test the framing and unverified constraints.
+3. Compare genuine options, including keeping the current position.
+4. Mark the basis of important claims.
+5. State what would change the recommendation.
 
-## The scorecard, split in two
-We score each run against a rubric fixed and published in advance, split into two honestly-labelled groups:
-- **Process discipline** (the product tells the model to do these): asked before answering; generated real options including doing nothing; tagged its evidence; named an untested constraint; stated what would change the call. We expect the baselines to manage some of these sometimes. The point is whether they hold *every time*.
-- **Judgment** (the product does not name these; scored against a sealed answer key): surfaced the hidden decision by integrating the three facts; the recommendation went the right direction; caught the planted inconsistency or bias. This is the part that separates reasoning from instruction-following.
+The judgment checks then test whether the model connects the facts that reveal the underlying decision, recommends the direction recorded in the sealed answer, and catches the planted inconsistency or bias.
 
-## Discipline that makes the numbers trustworthy
-- **Pre-registration.** The cases, fact sheets, rubric, and the sealed answer key are hashed and committed to a public repository before any scored run. The commit timestamp proves the test was fixed in advance and the scoring was not fitted to the results.
-- **Repetition.** The primary case is run ten times per cell; reliability is the whole claim, so a single run is not evidence. Results are reported as raw counts (for example, 10/10 versus 4/10), never a lone percentage.
-- **Independent, blinded scoring.** Transcripts are stripped of which arm and model produced them before scoring. A second scorer checks a sample; an AI judge from a different model family is a cross-check only, never the headline.
-- **Everything is downloadable.** Every count links to the transcript behind it, including the runs where the baseline did well and the case where the Decision Brief added least.
+## Cases
 
-## The part that speaks your language: the blind senior-reviewer study
-Machines grading machines does not answer the only question that matters to you: would a senior person send this up under their own name? So we also run a blind panel. Verified senior operators (ex-Big-4 and MBB, current ASX corporate strategy and finance) are shown two briefs per case, de-identified and in random order, and asked one question: which would you be more willing to send to your executive committee under your own name? We publish the split and their verbatim comments, including any who preferred the baseline.
+The three cases are fictional and cannot be found through search. Each case presents a plausible surface question and places three facts elsewhere in the fact sheet that change the underlying decision.
 
-## Run it yourself
-The whole point of a vendor-built benchmark is that you should not have to believe it. Download the cases, the fact sheets, the rubric, and the Decision Brief, and run the comparison on your own live decision. The benchmark's real job is to teach you how to check us.
+1. Meridian is a managed service bid with concentration, regulatory and stranded investment risk.
+2. Larkfield is a build or acquire choice where the evidence supports the acquisition.
+3. Corvan is a continue or exit decision adapted from a documented Australian post mortem.
 
-## Limitations we will not hide
-- We wrote two of the three cases. Pre-registration and independent scoring shrink that problem; they do not erase it. Run your own.
-- Frontier models change monthly. These results carry model versions and dates, and we re-run the grid within fourteen days of every major model release.
-- Fictional cases are not your business. They are designed to be representative, not identical. The reproduction pack exists so you can test the one thing that is identical to your business: your decision.
+Larkfield tests whether the method follows evidence towards a more aggressive option when that direction is supported.
+
+## Test conditions
+
+### Question only
+
+The model receives the short question a business user might type into a new chat. It answers once. Any questions it asks receive no reply.
+
+### All facts provided
+
+The model receives the same question plus the full fact sheet in the first message. It answers once.
+
+### The Decision loaded
+
+The model receives the product file and the short question. It asks its own questions. The operator answers only from the same fact sheet used in the all facts condition and replies “That has not been assessed” when the fact sheet is silent.
+
+## Scoring
+
+Each run is scored against the rubric fixed before the scored grid began.
+
+The five process checks measure behaviour directly requested by the product file. The three judgment checks use the sealed case answer.
+
+The current grid has one scorer. Results are reported as raw counts with the number of runs shown. A second independent score has yet to be completed.
+
+## Current result
+
+1. The loaded file completed all five process checks in 18 of 18 runs.
+2. It surfaced the underlying decision in 17 of 18 runs.
+3. The question only condition surfaced the underlying decision in 0 of 18 runs.
+4. The all facts condition surfaced it in 15 of 18 runs.
+5. The all facts and loaded conditions matched the sealed direction in 18 of 18 runs each.
+
+These results support a claim about process consistency and fact gathering across the two tested models.
+
+## Limitations
+
+1. Three repeats per cell provide an early signal and leave substantial uncertainty.
+2. GreenSquare wrote two cases.
+3. Gemini remains pending.
+4. One person scored the current grid.
+5. One loaded ChatGPT run integrated two of the three required facts.
+6. The senior reviewer study and independent re-score remain pending.
+7. The saved transcripts will be published after the Gemini grid is complete. Public independent re-scoring is therefore unavailable today.
+
+## Refresh policy
+
+GreenSquare commits to re-running the benchmark within 14 days of a major model release. Results remain labelled with the tested model version and date until the refresh is complete.

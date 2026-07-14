@@ -3,50 +3,46 @@ import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
 
 const questions = [
-  { n: '1', q: 'What exactly are you deciding, and what triggered it now?', body: 'State the decision in one sentence, and name what made it live today rather than last month.' },
-  { n: '2', q: 'What is the decision underneath this one?', body: 'People often ask about the surface choice while avoiding the real one. If this decision went away, what larger question would still be sitting there?' },
-  { n: '3', q: 'What is the false binary?', body: 'You have probably framed this as A or B. Name a third option you have not been treating as real, including doing nothing, or a path that is neither A nor B.' },
-  { n: '4', q: 'What is the one assumption the whole thing rests on?', body: 'Find the single belief that, if it turned out to be wrong, would change everything. Not a list of risks. The load-bearing one.' },
-  { n: '5', q: 'Which of your "facts" are actually assumptions?', body: 'Take the constraints you are treating as fixed (a deadline, a budget, a flat no) and mark each one: verified, or just assumed?' },
-  { n: '6', q: 'What do you actually know?', body: 'For each thing the decision turns on, tag it: given (you know it for a fact), inferred (you are reasoning it), or unknown (you do not know, and it matters).' },
+  { n: '1', q: 'What exactly are you deciding, and why now?', body: 'State the decision in one sentence. Then name the event, deadline or pressure that made it active now.' },
+  { n: '2', q: 'What larger decision sits underneath it?', body: 'If the immediate choice disappeared, which bigger question would still need an answer?' },
+  { n: '3', q: 'Which option is missing?', body: 'Add a genuine third path. It may be a smaller commitment, a different sequence, or keeping the current position.' },
+  { n: '4', q: 'Which assumption carries the decision?', body: 'Find the single belief that would change the recommendation if it proved wrong.' },
+  { n: '5', q: 'Which constraints have you verified?', body: 'Check the deadline, budget, policy, capacity and stakeholder positions you have been treating as fixed.' },
+  { n: '6', q: 'What do you know?', body: 'Mark each important claim as given, inferred or unknown. Keep the gaps visible.' },
 ];
 ---
 <BaseLayoutV2
   title="The Decision Frame | GreenSquare"
-  description="A free one-page tool that interrogates your decision before you evaluate anything. Six questions, about ten minutes."
+  description="A free one-page worksheet with six questions that helps you define the real decision, test assumptions and map the evidence before comparing options."
   current="frame"
 >
-  <!-- HERO — light, clean -->
   <section class="v-section v-off hero">
     <div class="v-container v-container--narrow v-reveal">
       <h1 class="v-display">The Decision Frame.</h1>
       <p class="v-lead" style="margin-top: var(--v-6);">
-        Most free tools, prompt packs, decision matrices, pros-and-cons templates, jump straight to weighing
-        options. None of them check whether you are deciding the right thing. The Frame does the one move they
-        skip: it interrogates the decision first, so you do not run a rigorous process on the wrong question.
+        A free one page worksheet with six questions. In about ten minutes, it helps you define the real call,
+        find the assumption carrying the most risk, and separate facts from guesses before you compare options.
       </p>
       <div class="hero-actions">
-        <a class="v-btn v-btn--green" href="#get-it">Get the free frame</a>
-        <a class="v-btn v-btn--grey" href="/product/">See the full Decision</a>
+        <a class="v-btn v-btn--green" href="#get-it">Get the one page PDF</a>
+        <a class="v-btn v-btn--grey" href="/product/">See The Decision</a>
       </div>
     </div>
   </section>
 
-  <!-- HOW TO USE IT -->
   <section class="v-section">
     <div class="v-container v-container--narrow v-reveal">
-      <p class="v-measure">
-        Run it on a real decision you are facing. Work through it by hand, or paste the six questions into
-        Claude or GPT with your decision and ask it to work through them in order. Answer honestly, the value is
-        in the questions you would rather skip. It takes about ten minutes.
+      <h2 class="v-h2">Use it on a live decision.</h2>
+      <p class="v-measure" style="margin-top: var(--v-5); color: var(--v-ink-soft);">
+        Work through the questions by hand, or paste them into Claude, ChatGPT or Gemini with your decision.
+        Answer in order. The questions that feel inconvenient often reveal the evidence that matters most.
       </p>
     </div>
   </section>
 
-  <!-- THE SIX QUESTIONS — indexed capability list -->
   <section class="v-section v-fill">
     <div class="v-container">
-      <h2 class="v-h2" style="max-width: 20ch;">The six questions.</h2>
+      <h2 class="v-h2">The six questions.</h2>
       <div class="v-caplist">
         {questions.map((item) => (
           <div class="v-caprow v-reveal">
@@ -59,42 +55,35 @@ const questions = [
     </div>
   </section>
 
-  <!-- WHAT YOU GET — worksheet card -->
   <section class="v-section">
     <div class="v-container v-container--narrow">
-      <h2 class="v-h2">What you get.</h2>
-      <p class="v-measure" style="margin-top: var(--v-4);">When you have worked through the six, you will have four things:</p>
+      <h2 class="v-h2">You finish with four things.</h2>
       <div class="v-card v-reveal" style="margin-top: var(--v-6);">
         <ul class="v-leadlist">
-          <li><strong>The real decision.</strong> Reframed, often not the one you started with.</li>
-          <li><strong>The false binary, exposed.</strong> With the third option you had not been treating as real.</li>
-          <li><strong>The load-bearing assumption.</strong> The single belief the whole call rests on.</li>
-          <li><strong>An honest evidence map.</strong> What you know, marked given, inferred or unknown.</li>
+          <li><strong>The real decision.</strong> One clear sentence that names the choice and the reason it matters now.</li>
+          <li><strong>A wider option set.</strong> At least one credible path beyond the choices you started with.</li>
+          <li><strong>The critical assumption.</strong> The belief that deserves the fastest test.</li>
+          <li><strong>An evidence map.</strong> A simple view of what is given, inferred and still unknown.</li>
         </ul>
       </div>
-      <hr class="v-rule" style="margin-block: var(--v-8);" />
-      <p class="v-measure">
-        You are now framed. You are not yet decided. Framing is the front half of the work. The deciding
-        (generating genuine options, weighing the evidence, an evidence-tagged recommendation, and a self-check
-        before you commit) is the other half. That half is <a href="/product/">the Decision</a>, the paid
-        GreenSquare product. For now, use the Frame. It is yours, and it works on its own.
+      <p class="v-measure" style="margin-top: var(--v-8); color: var(--v-ink-soft);">
+        The Frame prepares the decision. <a href="/product/">The Decision</a> then compares the options, makes
+        the recommendation, and produces the complete brief.
       </p>
     </div>
   </section>
 
-  <!-- GET IT — green big-block, CTA -->
   <section class="v-section v-green" id="get-it">
     <div class="v-container v-split is-top">
       <div class="v-reveal">
-        <h2 class="v-h2">Send me the free Decision Frame.</h2>
+        <h2 class="v-h2">Get the free Decision Frame.</h2>
         <p class="v-lead" style="margin-top: var(--v-5);">
-          A one-page PDF, delivered by email. Double opt-in: confirm your address and the Frame arrives straight
-          after.
+          We will email you the one page PDF. Confirm your address, then the Frame will arrive in your inbox.
         </p>
       </div>
       <div class="v-reveal d1">
         <div class="v-card">
-          <EmailCaptureForm client:visible buttonLabel="Send me the free Decision Frame" />
+          <EmailCaptureForm client:visible buttonLabel="Email me the Decision Frame" />
         </div>
       </div>
     </div>
@@ -103,5 +92,5 @@ const questions = [
 
 <style>
   .hero { padding-top: clamp(3rem, 6vh, 5rem); }
-  .hero-actions { display: flex; gap: var(--v-6); align-items: center; flex-wrap: wrap; margin-top: var(--v-8); }
+  .hero-actions { display: flex; gap: var(--v-4); align-items: center; flex-wrap: wrap; margin-top: var(--v-8); }
 </style>

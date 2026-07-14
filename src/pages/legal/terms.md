@@ -8,11 +8,11 @@ description: The terms governing use of the GreenSquare website and the Decision
 
 Last updated: 3 July 2026
 
-These terms govern your use of www.greensquare.ai and your purchase of the Decision, run by GreenSquare (the trading name of the operator of this site). By using the site, joining the waitlist, or buying the Decision, you agree to them.
+These terms govern your use of www.greensquare.ai and any GreenSquare product you purchase, run by GreenSquare (the trading name of the operator of this site). By using the site, joining the launch list, requesting the Decision Frame, or buying a product, you agree to them.
 
 ## What the site is
 
-The site describes GreenSquare's products, lets you join the waitlist, request the free Decision Frame, and buy the Decision. Payment for the Decision is processed by Stripe.
+The site describes GreenSquare's products and lets you request the free Decision Frame. Purchase access will be shown when The Decision opens for sale. Stripe processes any payment made through GreenSquare checkout.
 
 ## The Decision and the Decision Frame
 
@@ -24,13 +24,13 @@ Where the site describes products that are not yet available, those descriptions
 
 Please use the site as intended. You agree not to interfere with the site or its security, attempt to access data or systems you are not authorised to reach, use automated means to scrape or overload the site, submit anyone else's personal information without their consent, or use the site for anything unlawful.
 
-## Guidance, not advice
+## Guidance only
 
-GreenSquare helps you think through a decision. It does not make the decision for you, and it is not a substitute for professional advice on legal, financial, tax, or other regulated matters. You are responsible for the decisions you make and the actions you take. Check anything that carries real consequences with a qualified adviser.
+GreenSquare helps you think through a decision. You remain responsible for the decisions you make and the actions you take. Seek qualified legal, financial, tax, or other professional advice when the consequences require it.
 
 ## Refunds
 
-We offer a no-quibble refund on the Decision, on request, within 14 days of purchase. Write to hello@greensquare.ai to request one.
+If you buy The Decision, you can request a refund within 14 days of purchase. Write to hello@greensquare.ai.
 
 ## Availability
 

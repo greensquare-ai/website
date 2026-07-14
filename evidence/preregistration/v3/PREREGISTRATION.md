@@ -1,10 +1,10 @@
-# Pre-registration — GreenSquare benchmark v3
+# GreenSquare benchmark v3: pre-registration record
 
-*This file records the SHA-256 hashes of the frozen benchmark inputs. Its purpose: to let anyone verify that the cases, fact sheets, scoring rubric, and the sealed answer key were fixed BEFORE any scored run, so the scoring cannot have been fitted to the results. The pre-registration becomes real when this file (and the hashed files) are committed to the public repo `ks-projects-66/greensquare` under `evidence/preregistration/` and time-stamped by the commit.*
+This file records the SHA-256 hashes of the frozen benchmark inputs. The hashes allow readers to verify that the cases, fact sheets, scoring rubric, sealed answer and product version were fixed before the scored runs began.
 
-**Status: PREPARED, NOT YET COMMITTED.** Hashes computed 2026-07-04 by the build. The commit (the actual pre-registration act) is left for Karim to push, since it writes to the public repo. Do not begin scored grid runs until this is committed. The pilot (n=3, Case A, Claude only) is a design-phase check and runs before pre-registration by design; its runs are not pooled with the pre-registered grid.
+**Status: COMMITTED.** The pre-registration commit was pushed on 5 July 2026 before the scored grid began.
 
-## Hashed inputs (SHA-256)
+## Hashed inputs
 
 | File | SHA-256 |
 |---|---|
@@ -15,27 +15,32 @@
 | `rubric-operationalisations.md` | `9EC0DA0E97088B1584B0958798928ED3F72C10FCFB33392C254CC7FE4C400700` |
 | `reference-answers-SEALED.md` | `7D1ED905C88B1288179B4892DE2D6251ED4350CC78CEBA860A1C8042E3B01FCA` |
 
-The product under test is `decision-brief-v2.0.md`. Its SHA-256 is `3FF4672830AD1AB590AFD58F0D56DDC4B14E095588F730FACACD14CE3ABBE1E1`. The product file itself is the paid product and is deliberately NOT published here; only its hash is, which is enough to prove the exact version benchmarked without giving the product away. A buyer can hash their copy and confirm it matches.
+## Product version
 
-`reference-answers-SEALED.md` is likewise NOT included in this commit; only its hash (in the table above) is published now. The file is released after scoring completes, and anyone can then confirm it matches its hash, proving the answer key was fixed before the runs without revealing it during scoring.
+The product tested was `decision-brief-v2.0.md`.
 
-The cases, fact sheets, protocol, rubric, and methodology ARE published in full here: they are the reproduction pack, and a skeptic is meant to run them.
+SHA-256: `3FF4672830AD1AB590AFD58F0D56DDC4B14E095588F730FACACD14CE3ABBE1E1`
 
-## How to verify (for a skeptic)
-1. Download the six files above from the pre-registration commit.
-2. Run `sha256sum <file>` (or PowerShell `Get-FileHash -Algorithm SHA256`) on each.
-3. Confirm the hashes match this table and that the commit timestamp predates the run dates recorded in `methodology.md`.
-4. `reference-answers-SEALED.md` is published only after scoring completes; its hash here proves it was fixed in advance without revealing the answer key during scoring.
+The paid product file is withheld from the public repository. A buyer can hash their copy and confirm that it matches the tested version.
 
-## To commit (Karim, when ready)
-```
-# from the greensquare repo working tree
-mkdir -p evidence/preregistration/v3
-cp <these six files + decision-brief-v2.0.md> evidence/preregistration/v3/
-git add evidence/preregistration/v3
-git commit -m "Pre-register benchmark v3: cases, fact sheets, rubric, sealed answer key (hashes in PREREGISTRATION.md)"
-git push
-# then record the commit SHA and UTC timestamp below
-```
+## Sealed answer
 
-Commit SHA: `5e89de4842693444c27e893470efecb242486cd2`  ·  pushed 2026-07-05 09:17 +1000 (AEST) to `github.com/ks-projects-66/greensquare` main, under `evidence/preregistration/v3/`. Remote blob hashes verified against this file's table. This is the pre-registration of record; scored grid runs begin after this.
+The sealed answer remains withheld until the full scored grid is complete. Its hash fixes the answer in advance without revealing it during scoring. When the file is released, readers can confirm that it matches the hash recorded above.
+
+## Commit record
+
+Commit: `5e89de4842693444c27e893470efecb242486cd2`
+
+Pushed: 5 July 2026 at 09:17 AEST
+
+Repository: `github.com/ks-projects-66/greensquare`
+
+The remote file hashes were checked against the table after the commit was pushed.
+
+## How to verify
+
+1. Download the published inputs from the pre-registration commit.
+2. Calculate the SHA-256 hash of each file.
+3. Confirm that each hash matches the table above.
+4. Confirm that the commit timestamp predates the scored run dates.
+5. When the sealed answer is released, hash it and compare it with the recorded value.

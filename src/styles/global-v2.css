@@ -46,7 +46,7 @@ html:has(.v2) { scroll-behavior: smooth; }
 /* quiet kicker/label — sentence case Manrope, no tracking, no uppercase, no hairline rule.
    Replaces the old tracked-uppercase-mono eyebrow. Used only for functional section labels. */
 .v-label { font-family: var(--vf-body); font-size: 0.82rem; font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--v-ink-faint); display: inline-block; }
-.v-green .v-label { color: var(--v-cream-faint); }
+.v-green .v-label { color: var(--v-cream-soft); }
 .v-index { font-family: var(--vf-mono); font-size: var(--vs-mono); font-weight: 400; color: var(--v-green); font-variant-numeric: tabular-nums; }
 .v-green .v-index { color: var(--v-lime); }
 .v-mono { font-family: var(--vf-mono); font-size: var(--vs-mono); font-variant-numeric: tabular-nums; }
@@ -174,7 +174,7 @@ a.v-card:hover, .v-card--hover:hover { transform: translateY(-2px); box-shadow: 
 /* margin mirrors the left form's button-to-fineprint spacing (its flex row-gap
    var(--v-3) plus the fineprint's own var(--v-2) top margin) so both buttons
    sit the same distance above the panel floor and align. */
-.v2 .v-splitcta__note { font-size: var(--vs-label); margin-top: calc(var(--v-3) + var(--v-2)); color: var(--v-cream-faint); }
+.v2 .v-splitcta__note { font-size: var(--vs-label); margin-top: calc(var(--v-3) + var(--v-2)); color: var(--v-cream-soft); }
 
 /* ---------- prose (methodology, legal) ---------- */
 .v-prose { max-width: 72ch; }
@@ -200,7 +200,7 @@ a.v-card:hover, .v-card--hover:hover { transform: translateY(-2px); box-shadow: 
 .v-nav__links a { color: var(--v-ink-soft); text-decoration: none; font-size: var(--vs-small); font-weight: 500; transition: color var(--v-fast); }
 .v-nav__links a:hover, .v-nav__links a[aria-current='page'] { color: var(--v-green); }
 .v-nav__right { display: flex; align-items: center; gap: var(--v-5); }
-.v-nav__toggle { display: none; background: none; border: 1px solid var(--v-line-strong); color: var(--v-ink); padding: 10px; cursor: pointer; }
+.v-nav__toggle { display: none; background: none; border: 1px solid var(--v-line-strong); color: var(--v-ink); padding: 11px; cursor: pointer; }
 .v-nav__toggle svg { width: 20px; height: 20px; display: block; }
 
 /* ---------- footer (near-black green big block, distinct from any section above) ---------- */
@@ -228,11 +228,12 @@ a.v-card:hover, .v-card--hover:hover { transform: translateY(-2px); box-shadow: 
 }
 .v2 .field-row { display: flex; gap: var(--v-3); flex-wrap: wrap; align-items: stretch; container-type: inline-size; }
 .v2 input[type='email'] { flex: 1 1 240px; padding: 0 15px; height: 48px; border: 1px solid var(--v-line-strong); border-radius: 0; font-family: var(--vf-body); font-size: var(--vs-small); background: var(--v-paper); color: var(--v-ink); transition: border-color var(--v-fast) var(--v-ease), box-shadow var(--v-fast) var(--v-ease); }
+.v2 input[type='email']::placeholder { color: var(--v-ink-soft); opacity: 1; }
 .v2 input[type='email']:focus { border-color: var(--v-green); outline: none; }
 .v2 input[type='email']:focus-visible { border-color: var(--v-green); box-shadow: 0 0 0 3px color-mix(in srgb, var(--v-green) 22%, transparent); }
 .v2 .form-note { font-size: var(--vs-label); color: var(--v-ink-faint); margin-top: var(--v-2); width: 100%; }
 .v2 .form-status { font-size: var(--vs-small); margin-top: var(--v-2); width: 100%; animation: v-status-in var(--v-fast) var(--v-ease) both; }
-.v2 .form-status--error, .v2 [class*='form-status'][role='alert'] { color: #b23a2a; }
+.v2 .form-status--error, .v2 [class*='form-status'][role='alert'] { color: var(--v-error); }
 .v2 .form-status--success { color: var(--v-green); }
 .v2 .field-row .btn, .v2 .field-row button[type='submit'] { border-radius: 0; background: var(--v-green); color: var(--v-cream); border: 1px solid var(--v-green); font-family: var(--vf-body); font-weight: 600; font-size: var(--vs-small); height: 48px; padding: 0 20px; cursor: pointer; transition: background-color var(--v-fast) var(--v-ease), transform var(--v-fast) var(--v-ease), box-shadow var(--v-fast) var(--v-ease); }
 .v2 .field-row .btn:hover, .v2 .field-row button[type='submit']:hover { background: var(--v-green-bright); }
@@ -252,8 +253,9 @@ a.v-card:hover, .v-card--hover:hover { transform: translateY(-2px); box-shadow: 
 .v2 .v-green .field-row .btn:hover, .v2 .v-green .field-row button[type='submit']:hover { background: #fff; }
 .v2 .v-green .field-row .btn:focus-visible, .v2 .v-green .field-row button[type='submit']:focus-visible { box-shadow: 0 0 0 2px var(--v-green), 0 0 0 4px var(--v-cream); }
 .v2 .v-green input[type='email']:focus-visible { box-shadow: 0 0 0 3px color-mix(in srgb, var(--v-cream) 40%, transparent); }
-.v2 .v-green .form-note { color: var(--v-cream-faint); }
+.v2 .v-green .form-note { color: var(--v-cream-soft); }
 .v2 .v-green .form-status--success { color: var(--v-cream); }
+.v2 .v-green .form-status--error { color: var(--v-error-on-green); }
 
 @keyframes v-status-in {
   from { opacity: 0; transform: translateY(4px); }

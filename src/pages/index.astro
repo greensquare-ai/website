@@ -4,24 +4,26 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
 ---
 <BaseLayoutV2
   title="GreenSquare | The brief that survives senior scrutiny"
-  description="GreenSquare turns Claude or GPT into a disciplined decision advisor. It interrogates before it answers, then gives you an evidence-tagged recommendation you can defend."
+  description="GreenSquare gives Claude, ChatGPT and Gemini a rigorous process for one consequential business decision, from the first question to a clear recommendation."
   current="home"
 >
-  <!-- HERO — light, clean, oversized-but-balanced -->
   <section class="v-section v-off hero">
     <div class="v-container">
       <div class="v-split is-top">
         <div class="v-reveal">
           <h1 class="v-display">The brief that survives senior scrutiny.</h1>
           <p class="v-lead" style="margin-top: var(--v-6);">
-            Think through any decision and come out with something you would stand behind. GreenSquare turns a
-            generic AI into a disciplined thinking partner: it questions you before it answers, frames the real
-            call, generates genuine options, and hands you an evidence-tagged recommendation, in markdown, with
-            the same interrogation method and five-part output structure across Claude, ChatGPT and Gemini.
+            GreenSquare turns the AI account you already use into a rigorous decision process. The Decision asks
+            the questions that reveal missing facts, compares the real options, and produces a clear
+            recommendation with the assumptions and evidence behind it.
+          </p>
+          <p class="v-small hero-audience">
+            For strategy, finance and operating leaders preparing a call for a steering committee, investment
+            committee or executive team.
           </p>
           <div class="hero-actions">
-            <a class="v-btn v-btn--green" href="#frame">Get the free Decision Frame</a>
-            <a class="v-btn v-btn--grey" href="/benchmark/">See the benchmark</a>
+            <a class="v-btn v-btn--green" href="/decision-frame/">Get the free Decision Frame</a>
+            <a class="v-btn v-btn--grey" href="/benchmark/">Read the benchmark</a>
           </div>
         </div>
         <div class="v-reveal d1">
@@ -29,11 +31,11 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
             <div class="v-readout__bar"><span class="v-readout__dot"></span> DECISION_BRIEF.md</div>
             <div class="v-readout__body">
               <ul class="v-spec__list">
-                <li><span class="n">/01</span> The decision, and why now</li>
-                <li><span class="n">/02</span> The options, compared</li>
+                <li><span class="n">/01</span> The decision and why it matters now</li>
+                <li><span class="n">/02</span> The options compared</li>
                 <li><span class="n">/03</span> The recommendation</li>
-                <li><span class="n">/04</span> Next steps</li>
-                <li><span class="n">/05</span> What would change this call</li>
+                <li><span class="n">/04</span> The next actions</li>
+                <li><span class="n">/05</span> What would change the recommendation</li>
               </ul>
               <div class="spec-tags">
                 <span class="v-tag">given</span><span class="v-tag">derived</span><span class="v-tag">inferred</span><span class="v-tag">unknown</span>
@@ -46,122 +48,102 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
     </div>
   </section>
 
-  <!-- PULL-QUOTE — the one serif editorial beat -->
   <section class="v-section v-fill">
     <div class="v-container">
-      <p class="v-quote v-reveal">Most AI answers the question you typed. GreenSquare asks what a good adviser would ask first.</p>
+      <p class="v-quote v-reveal">A sound recommendation starts with the questions that change the call.</p>
     </div>
   </section>
 
-  <!-- THREE PILLARS — indexed capability list -->
   <section class="v-section">
     <div class="v-container">
-      <h2 class="v-h2" style="max-width: 24ch;">Three things a generic answer skips.</h2>
+      <h2 class="v-h2" style="max-width: 24ch;">What The Decision adds to the model.</h2>
       <div class="v-caplist">
         <div class="v-caprow v-reveal">
           <span class="v-index">/01</span>
-          <h3>It interrogates before it answers</h3>
+          <h3>Find the facts that matter</h3>
           <p class="v-small v-cap-body">
-            It asks what a good adviser would ask first, tests the framing once, plays the situation back to
-            you, and catches where your own answers contradict each other, before it produces anything.
+            Short, focused questions come before the recommendation. The file checks the framing, plays the
+            situation back, and asks you to resolve contradictions.
           </p>
         </div>
         <div class="v-caprow v-reveal d1">
           <span class="v-index">/02</span>
-          <h3>It shows its evidence</h3>
+          <h3>Compare real options</h3>
           <p class="v-small v-cap-body">
-            Every claim the call rests on is tagged given, derived, inferred or unknown, and the recommendation names
-            the single assumption it stands on.
+            The model considers alternatives you may have missed, including keeping the current position, then
+            compares them against the criteria that matter to the decision.
           </p>
         </div>
         <div class="v-caprow v-reveal d2">
           <span class="v-index">/03</span>
-          <h3>It holds a consulting standard, on any model</h3>
+          <h3>Show the reasoning</h3>
           <p class="v-small v-cap-body">
-            The discipline is encoded in the file, so the output holds the same structure across Claude, ChatGPT
-            and Gemini, and scales effort to the stakes rather than over-engineering a small call.
+            Important claims are marked as given, derived, inferred or unknown. The recommendation also states
+            the assumptions it depends on and the conditions that would change it.
           </p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- EVIDENCE — big green block, operational readout -->
   <section class="v-section v-green">
     <div class="v-container v-split is-reverse">
       <div class="v-reveal">
-        <h2 class="v-h2">Same model, same question. Different brief.</h2>
+        <h2 class="v-h2">54 runs. The process held every time.</h2>
         <p class="v-lead" style="margin-top: var(--v-5);">
-          Given only the question a real person would paste, a naked baseline reframes the problem, but sizes the
-          risk at roughly 8% of revenue and never sees the mechanism that actually kills the deal. Loaded with
-          the Decision, the same model interrogates the facts out, reaches close to 40% of the division, and
-          lands a brief you could defend.
+          We tested The Decision on Claude Opus 4.8 and ChatGPT GPT-5.5 across three business cases. The loaded
+          file completed all five process checks in 18 of 18 runs and surfaced the hidden decision in 17 of 18.
+          A question only baseline surfaced it in 0 of 18. The method and limitations are public.
         </p>
-        <a class="v-link" href="/benchmark/" style="display:inline-block; margin-top: var(--v-6);">Read the full comparison</a>
+        <a class="v-link" href="/benchmark/" style="display:inline-block; margin-top: var(--v-6);">Read the full benchmark</a>
       </div>
       <div class="v-reveal d1">
         <div class="v-readout">
-          <div class="v-readout__bar"><span class="v-readout__dot"></span> BENCHMARK / DEFENSIBLE_BRIEF</div>
+          <div class="v-readout__bar"><span class="v-readout__dot"></span> HIDDEN DECISION / 18 RUNS PER CONDITION</div>
           <div class="v-readout__body">
             <div class="v-run">
-              <div class="v-run__head"><span class="v-run__name">NAKED BASELINE</span><span class="v-run__val">risk 8% / structure 0/3</span></div>
-              <div class="v-meter"><div class="v-meter__fill is-muted" style="--w: 7%;"></div></div>
+              <div class="v-run__head"><span class="v-run__name">QUESTION ONLY</span><span class="v-run__val">0 / 18</span></div>
+              <div class="v-meter"><div class="v-meter__fill is-muted" style="--w: 0%;"></div></div>
             </div>
             <div class="v-run">
-              <div class="v-run__head"><span class="v-run__name">INFORMED BASELINE</span><span class="v-run__val">structure 0/3</span></div>
-              <div class="v-meter"><div class="v-meter__fill is-muted" style="--w: 7%;"></div></div>
+              <div class="v-run__head"><span class="v-run__name">ALL FACTS PROVIDED</span><span class="v-run__val">15 / 18</span></div>
+              <div class="v-meter"><div class="v-meter__fill is-muted" style="--w: 83.3%;"></div></div>
             </div>
             <div class="v-run">
-              <div class="v-run__head"><span class="v-run__name">THE DECISION</span><span class="v-run__val"><b>risk 40% / structure 3/3</b></span></div>
-              <div class="v-meter"><div class="v-meter__fill" style="--w: 100%;"></div></div>
+              <div class="v-run__head"><span class="v-run__name">THE DECISION</span><span class="v-run__val"><b>17 / 18</b></span></div>
+              <div class="v-meter"><div class="v-meter__fill" style="--w: 94.4%;"></div></div>
             </div>
           </div>
-          <div class="v-readout__foot">DESIGN-PHASE PILOT / N=3 / CASE A / CLAUDE OPUS 4.8</div>
+          <div class="v-readout__foot">TWO MODELS / THREE CASES / JULY 2026</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- FREE FRAME — one unified, balanced card -->
-  <section class="v-section v-fill" id="frame">
-    <div class="v-container">
-      <div class="v-card frame-card v-reveal">
-        <div class="frame-card__grid">
-          <div>
-            <h2 class="v-h2">Frame the decision before you evaluate anything.</h2>
-            <p class="v-measure" style="margin-top: var(--v-5); color: var(--v-ink-soft);">
-              The Decision Frame is a free one-page tool that interrogates your decision before you weigh options:
-              the real question, the false binary, the load-bearing assumption, and what you actually know. Then it
-              hands you to the Decision to decide.
-            </p>
-          </div>
-          <div class="frame-card__form">
-            <EmailCaptureForm client:visible buttonLabel="Send me the free Decision Frame" />
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SPLIT CTA — differentiated: capture (grey) + evidence (green) -->
   <section class="v-splitcta" aria-label="Get started">
     <div class="v-splitcta__panel v-splitcta__panel--fill v-reveal">
       <div>
-        <h2 class="v-h2" style="font-size: clamp(1.5rem, 2.6vw, 2rem);">Start with the free frame.</h2>
-        <p class="v-small" style="margin-top: var(--v-4); max-width: 42ch;">The one-page Decision Frame, free. Interrogate the decision before you weigh a single option.</p>
+        <h2 class="v-h2">Start with the free Decision Frame.</h2>
+        <p class="v-small" style="margin-top: var(--v-4); max-width: 46ch;">
+          Six questions, one page, about ten minutes. Define the real decision, expose the assumption carrying
+          the most risk, and separate facts from guesses before you compare options.
+        </p>
       </div>
       <div style="width: 100%; max-width: 440px;">
-        <EmailCaptureForm client:visible buttonLabel="Send me the free frame" />
+        <EmailCaptureForm client:visible buttonLabel="Email me the Decision Frame" />
       </div>
     </div>
     <div class="v-splitcta__panel v-splitcta__panel--green v-reveal d1">
       <div>
-        <h2 class="v-h2">The proof, pre-registered.</h2>
-        <p class="v-lead" style="margin-top: var(--v-4);">Fifty-four runs, two frontier models, a sealed answer key. Only the loaded product produced a defensible brief, every run.</p>
+        <h2 class="v-h2">See every result and limitation.</h2>
+        <p class="v-lead" style="margin-top: var(--v-4);">
+          The benchmark shows where the file helped, where a fully informed model was already strong, and the
+          loaded run that missed part of the hidden decision.
+        </p>
       </div>
       <div class="v-splitcta__action">
-        <a class="v-btn v-btn--on-green v-splitcta__btn" href="/benchmark/">See the benchmark</a>
-        <p class="v-splitcta__note">No email needed. Read the full method.</p>
+        <a class="v-btn v-btn--on-green v-splitcta__btn" href="/benchmark/">Read the benchmark</a>
+        <p class="v-splitcta__note">No email required.</p>
       </div>
     </div>
   </section>
@@ -169,9 +151,7 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
 
 <style>
   .hero { padding-top: clamp(3rem, 6vh, 5rem); }
+  .hero-audience { margin-top: var(--v-5); max-width: 58ch; }
   .hero-actions { display: flex; gap: var(--v-4); align-items: center; flex-wrap: wrap; margin-top: var(--v-8); }
   .spec-tags { display: flex; gap: var(--v-2); flex-wrap: wrap; margin-top: var(--v-2); }
-  .frame-card { padding: clamp(1.75rem, 4vw, var(--v-10)); }
-  .frame-card__grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(var(--v-6), 4vw, var(--v-10)); align-items: center; }
-  @media (max-width: 760px) { .frame-card__grid { grid-template-columns: 1fr; gap: var(--v-8); } }
 </style>
