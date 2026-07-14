@@ -120,7 +120,7 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
     </div>
   </section>
 
-  <section class="home-next v-green v-green-deep" aria-label="Get started">
+  <section class="home-next v-fill-2" aria-label="Get started">
     <div class="v-container home-next__inner">
       <div class="home-next__copy v-reveal">
         <h2 class="v-h2">Test it on a real decision.</h2>
@@ -145,9 +145,9 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
   .home-next { padding-block: clamp(4.5rem, 8vw, 6.5rem); }
   .home-next__inner { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(25rem, 1.1fr); gap: clamp(3rem, 8vw, 7rem); align-items: center; }
   .home-next__copy { max-width: 40rem; }
-  .home-next__copy .v-lead { max-width: 48ch; margin-top: var(--v-4); color: var(--v-cream-soft); }
+  .home-next__copy .v-lead { max-width: 48ch; margin-top: var(--v-4); color: var(--v-ink-soft); }
   .home-next__action { width: min(100%, 35rem); justify-self: end; }
-  .home-next__benchmark { display: inline-block; margin-top: var(--v-4); color: var(--v-cream); }
+  .home-next__benchmark { display: inline-block; margin-top: var(--v-4); color: var(--v-green); }
   @media (max-width: 900px) {
     .home-next__inner { grid-template-columns: 1fr; gap: var(--v-8); }
     .home-next__action { justify-self: start; }
