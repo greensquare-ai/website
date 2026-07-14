@@ -120,30 +120,18 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
     </div>
   </section>
 
-  <section class="v-splitcta" aria-label="Get started">
-    <div class="v-splitcta__panel v-splitcta__panel--fill v-reveal">
-      <div>
-        <h2 class="v-h2">Start with the free Decision Frame.</h2>
-        <p class="v-small" style="margin-top: var(--v-4); max-width: 46ch;">
-          Six questions, one page, about ten minutes. Define the real decision, expose the assumption carrying
-          the most risk, and separate facts from guesses before you compare options.
+  <section class="home-next v-green v-green-deep" aria-label="Get started">
+    <div class="v-container home-next__inner">
+      <div class="home-next__copy v-reveal">
+        <h2 class="v-h2">Test it on a real decision.</h2>
+        <p class="v-lead">
+          Use the free Decision Frame to define the real call, surface the riskiest assumption and separate facts
+          from guesses in about ten minutes.
         </p>
       </div>
-      <div style="width: 100%; max-width: 440px;">
+      <div class="home-next__action v-reveal d1">
         <EmailCaptureForm client:visible buttonLabel="Email me the Decision Frame" />
-      </div>
-    </div>
-    <div class="v-splitcta__panel v-splitcta__panel--green v-reveal d1">
-      <div>
-        <h2 class="v-h2">See every result and limitation.</h2>
-        <p class="v-lead" style="margin-top: var(--v-4);">
-          The benchmark shows where the file helped, where a fully informed model was already strong, and the
-          loaded run that missed part of the hidden decision.
-        </p>
-      </div>
-      <div class="v-splitcta__action">
-        <a class="v-btn v-btn--on-green v-splitcta__btn" href="/benchmark/">Read the benchmark</a>
-        <p class="v-splitcta__note">No email required.</p>
+        <a class="v-link home-next__benchmark" href="/benchmark/">Read the benchmark and limitations</a>
       </div>
     </div>
   </section>
@@ -154,4 +142,14 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
   .hero-audience { margin-top: var(--v-5); max-width: 58ch; }
   .hero-actions { display: flex; gap: var(--v-4); align-items: center; flex-wrap: wrap; margin-top: var(--v-8); }
   .spec-tags { display: flex; gap: var(--v-2); flex-wrap: wrap; margin-top: var(--v-2); }
+  .home-next { padding-block: clamp(4.5rem, 8vw, 6.5rem); }
+  .home-next__inner { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(25rem, 1.1fr); gap: clamp(3rem, 8vw, 7rem); align-items: center; }
+  .home-next__copy { max-width: 40rem; }
+  .home-next__copy .v-lead { max-width: 48ch; margin-top: var(--v-4); color: var(--v-cream-soft); }
+  .home-next__action { width: min(100%, 35rem); justify-self: end; }
+  .home-next__benchmark { display: inline-block; margin-top: var(--v-4); color: var(--v-cream); }
+  @media (max-width: 900px) {
+    .home-next__inner { grid-template-columns: 1fr; gap: var(--v-8); }
+    .home-next__action { justify-self: start; }
+  }
 </style>
