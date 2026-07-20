@@ -54,7 +54,7 @@ html:has(.v2) { scroll-behavior: smooth; }
 
 /* ---------- layout ---------- */
 .v-container { max-width: var(--v-max); margin: 0 auto; padding-inline: var(--v-gutter); }
-.v-container--wide { max-width: 1360px; }
+.v-container--wide { max-width: 1520px; }
 .v-container--narrow { max-width: 780px; }
 .v-section { padding-block: var(--v-section); position: relative; }
 .v-fill { background: var(--v-fill); }

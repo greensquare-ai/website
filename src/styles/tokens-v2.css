@@ -55,7 +55,7 @@
   --vs-mono: 0.8rem;
 
   /* ---- layout ---- */
-  --v-max: 1220px;
+  --v-max: 1400px;
   --v-gutter: clamp(20px, 4vw, 44px);
   --v-section: clamp(4rem, 7vw, 6.5rem);
 
