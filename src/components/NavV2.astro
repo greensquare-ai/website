@@ -29,7 +29,7 @@ const links = [
       </button>
     </div>
   </div>
-  <nav class="v-nav__drawer" id="v-nav-drawer" aria-label="Primary mobile" hidden>
+  <nav class="v-nav__drawer" id="v-nav-drawer" aria-label="Primary mobile">
     <div class="v-container">
       {links.map((l) => (
         <a href={l.href} aria-current={current === l.key ? 'page' : undefined}>{l.label}</a>
@@ -39,10 +39,35 @@ const links = [
   </nav>
 </header>
 <style>
-  .v-nav__drawer { background: var(--v-paper); border-bottom: 1px solid var(--v-line); }
+  .v-nav__drawer {
+    background: var(--v-paper);
+    border-bottom: 1px solid var(--v-line);
+    opacity: 0;
+    transform: translateY(-6px);
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity var(--v-fast) var(--v-ease), transform var(--v-fast) var(--v-ease), visibility 0s linear var(--v-fast);
+  }
+  .v-nav__drawer.is-open {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+    pointer-events: auto;
+    transition: opacity var(--v-fast) var(--v-ease), transform var(--v-fast) var(--v-ease), visibility 0s linear;
+  }
   .v-nav__drawer .v-container { display: flex; flex-direction: column; gap: var(--v-4); padding-block: var(--v-5); }
   .v-nav__drawer a:not(.v-btn) { color: var(--v-ink-soft); text-decoration: none; font-weight: 500; font-size: var(--vs-small); min-height: 44px; display: flex; align-items: center; }
   .v-nav__drawer a[aria-current='page'] { color: var(--v-green); }
   .v-nav__drawer .v-btn { width: fit-content; }
   @media (min-width: 901px) { .v-nav__drawer { display: none !important; } }
+  @media (prefers-reduced-motion: reduce) {
+    .v-nav__drawer {
+      transform: none;
+      transition: opacity var(--v-fast) linear, visibility 0s linear var(--v-fast);
+    }
+    .v-nav__drawer.is-open {
+      transform: none;
+      transition: opacity var(--v-fast) linear, visibility 0s linear;
+    }
+  }
 </style>

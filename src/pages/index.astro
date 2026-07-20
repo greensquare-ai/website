@@ -7,40 +7,38 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
   description="GreenSquare gives Claude, ChatGPT and Gemini a rigorous process for one consequential business decision, from the first question to a clear recommendation."
   current="home"
 >
-  <section class="v-section v-off hero">
-    <div class="v-container">
-      <div class="v-split is-top">
-        <div class="v-reveal">
-          <h1 class="v-display">The brief that survives senior scrutiny.</h1>
-          <p class="v-lead" style="margin-top: var(--v-6);">
-            GreenSquare turns the AI account you already use into a rigorous decision process. The Decision asks
-            the questions that reveal missing facts, compares the real options, and produces a clear
-            recommendation with the assumptions and evidence behind it.
-          </p>
-          <p class="v-small hero-audience">
-            For strategy, finance and operating leaders preparing a call for a steering committee, investment
-            committee or executive team.
-          </p>
-          <div class="hero-actions">
-            <a class="v-btn v-btn--green" href="/decision-frame/">Get the free Decision Frame</a>
-            <a class="v-btn v-btn--grey" href="/benchmark/">Read the benchmark</a>
-          </div>
-        </div>
-        <div class="v-reveal d1">
-          <video
-            class="hero-video"
-            autoplay
-            muted
-            loop
-            playsinline
-            preload="metadata"
-            poster="/assets/hero-poster.jpg"
-            src="/assets/hero-loop.mp4"
-            aria-hidden="true"
-            disablepictureinpicture
-          ></video>
+  <section class="hero-split-section v-off hero">
+    <div class="v-container hero-split__grid">
+      <div class="hero-split__text v-reveal">
+        <h1 class="v-display">The brief that survives senior scrutiny.</h1>
+        <p class="v-lead" style="margin-top: var(--v-6);">
+          GreenSquare turns the AI account you already use into a rigorous decision process. The Decision asks
+          the questions that reveal missing facts, compares the real options, and produces a clear
+          recommendation with the assumptions and evidence behind it.
+        </p>
+        <p class="v-small hero-audience">
+          For strategy, finance and operating leaders preparing a call for a steering committee, investment
+          committee or executive team.
+        </p>
+        <div class="hero-actions">
+          <a class="v-btn v-btn--green" href="/decision-frame/">Get the free Decision Frame</a>
+          <a class="v-btn v-btn--grey" href="/benchmark/">Read the benchmark</a>
         </div>
       </div>
+    </div>
+    <div class="hero-split__media v-reveal d1">
+      <video
+        class="hero-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        poster="/assets/hero-poster.jpg"
+        src="/assets/hero-loop.mp4"
+        aria-hidden="true"
+        disablepictureinpicture
+      ></video>
     </div>
   </section>
 
@@ -134,10 +132,49 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
 </BaseLayoutV2>
 
 <style>
-  .hero { padding-top: clamp(3rem, 6vh, 5rem); }
-  .hero-audience { margin-top: var(--v-5); max-width: 58ch; }
+  /* Full-bleed split-screen hero: text left (aligned to page gutter), video right (bleeds to edge). */
+  .hero-split-section {
+    position: relative;
+    min-height: clamp(560px, 80vh, 860px);
+    display: flex;             /* stretch the container to full band height */
+    overflow: hidden;          /* clip the bleeding video */
+  }
+  .hero-split__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;   /* divider sits at container centre = screen centre */
+    align-items: center;              /* vertically centre the text */
+    width: 100%;
+  }
+  .hero-split__text {
+    grid-column: 1;                   /* text occupies the left half only */
+    max-width: 34rem;
+    padding-right: clamp(1.5rem, 4vw, 3.5rem);
+    padding-block: clamp(2.5rem, 5vh, 4rem);
+    position: relative;
+    z-index: 1;
+  }
+  .hero-audience { margin-top: var(--v-5); max-width: 52ch; }
   .hero-actions { display: flex; gap: var(--v-4); align-items: center; flex-wrap: wrap; margin-top: var(--v-8); }
-  .hero-video { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 0; box-shadow: 0 1px 2px rgba(23,27,24,0.04), 0 24px 48px -16px rgba(11,35,24,0.35); }
+  .hero-split__media {
+    position: absolute; top: 0; bottom: 0;
+    left: 50%;                        /* meets the text column's right edge exactly */
+    right: 0;                         /* full-bleed to the right viewport edge */
+  }
+  .hero-split__media::before {        /* Palantir-style hairline at the split */
+    content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 1px;
+    background: var(--v-line); z-index: 1;
+  }
+  .hero-video {
+    display: block; width: 100%; height: 100%;
+    object-fit: cover; border-radius: 0; box-shadow: none;
+  }
+  @media (max-width: 900px) {
+    .hero-split-section { min-height: 0; display: block; }
+    .hero-split__grid { grid-template-columns: 1fr; }
+    .hero-split__media { position: static; }
+    .hero-split__media::before { display: none; }
+    .hero-video { aspect-ratio: 16 / 9; height: auto; box-shadow: 0 1px 2px rgba(23,27,24,0.04), 0 24px 48px -16px rgba(11,35,24,0.35); }
+  }
   .home-next { padding-block: clamp(4.5rem, 8vw, 6.5rem); }
   .home-next__inner { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(25rem, 1.1fr); gap: clamp(3rem, 8vw, 7rem); align-items: center; }
   .home-next__copy { max-width: 40rem; }

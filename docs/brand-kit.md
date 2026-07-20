@@ -114,6 +114,10 @@ methodology copy.
 - Distinguish a "key" card by weight and a green kicker, not by a coloured top border ("lip"). Lips are
   banned.
 - All motion respects `prefers-reduced-motion`.
+- Pressable buttons (`.v-btn`) get a press feedback of `translateY(1px)` on active, 150ms on `--v-ease` (mirroring the form submit button).
+- Readout meter bars fill once from the left (`scaleX` 0 to 1) over 620ms on `--v-ease` when their block scroll-reveals; they render at rest under reduced motion.
+- Native disclosures (FAQ `<details>`) animate open and closed with a height and opacity transition at 300ms on `--v-ease`, with a clean instant fallback in unsupporting browsers.
+- The mobile nav drawer enters and exits with a symmetric 150ms opacity and small `translateY` move on `--v-ease`.
 
 ---
 
