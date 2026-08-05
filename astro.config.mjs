@@ -4,7 +4,8 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://www.greensquare.ai',
+  site: 'https://ks-projects-66.github.io',
+  base: '/greensquare',
   integrations: [react(), mdx(), sitemap()],
   redirects: {
     '/evidence': '/benchmark',

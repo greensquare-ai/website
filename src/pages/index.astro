@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/paths';
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
 ---
@@ -21,8 +22,8 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
           committee or executive team.
         </p>
         <div class="hero-actions">
-          <a class="v-btn v-btn--green" href="/decision-frame/">Get the free Decision Frame</a>
-          <a class="v-btn v-btn--grey" href="/benchmark/">Read the benchmark</a>
+          <a class="v-btn v-btn--green" href={withBase('/decision-frame/')}>Get the free Decision Frame</a>
+          <a class="v-btn v-btn--grey" href={withBase('/benchmark/')}>Read the benchmark</a>
         </div>
       </div>
     </div>
@@ -34,8 +35,8 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
         loop
         playsinline
         preload="metadata"
-        poster="/assets/hero-poster.jpg"
-        src="/assets/hero-loop.mp4"
+        poster={withBase('/assets/hero-poster.jpg')}
+        src={withBase('/assets/hero-loop.mp4')}
         aria-hidden="true"
         disablepictureinpicture
       ></video>
@@ -89,7 +90,7 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
           file completed all five process checks in 18 of 18 runs and surfaced the hidden decision in 17 of 18.
           A question only baseline surfaced it in 0 of 18. The method and limitations are public.
         </p>
-        <a class="v-link" href="/benchmark/" style="display:inline-block; margin-top: var(--v-6);">Read the full benchmark</a>
+        <a class="v-link" href={withBase('/benchmark/')} style="display:inline-block; margin-top: var(--v-6);">Read the full benchmark</a>
       </div>
       <div class="v-reveal d1">
         <div class="v-readout">
@@ -125,7 +126,7 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
       </div>
       <div class="home-next__action v-reveal d1">
         <EmailCaptureForm client:visible buttonLabel="Email me the Decision Frame" />
-        <a class="v-link home-next__benchmark" href="/benchmark/">Read the benchmark and limitations</a>
+        <a class="v-link home-next__benchmark" href={withBase('/benchmark/')}>Read the benchmark and limitations</a>
       </div>
     </div>
   </section>

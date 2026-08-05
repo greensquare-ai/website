@@ -1,0 +1,86 @@
+---
+import { withBase } from '../lib/paths';
+import '../styles/v3.css';
+
+export interface Props {
+  title: string;
+  focus: string;
+  description?: string;
+}
+
+const {
+  title,
+  focus,
+  description = 'A system for representing, navigating and improving consequential decisions.',
+} = Astro.props;
+
+const nav = [
+  ['System', '/v3/'],
+  ['Constitution', '/v3/constitution/'],
+  ['Grammar', '/v3/grammar/'],
+  ['Decision model', '/v3/decision-model/'],
+  ['Interface', '/v3/interface/'],
+  ['Applications', '/v3/applications/'],
+  ['Audit', '/v3/audit/'],
+] as const;
+
+const current = Astro.url.pathname.replace(import.meta.env.BASE_URL.replace(/\/$/, ''), '');
+const canonical = new URL(withBase(current), Astro.site).toString();
+---
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} · GreenSquare v3</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href={withBase('/assets/favicon.svg')} type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Literata:opsz,wght@7..72,400;7..72,600&family=Manrope:wght@400;500;600&family=Source+Sans+3:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="v3">
+    <a class="v3-skip" href="#v3-main">Skip to decision</a>
+    <header class="v3-header">
+      <a href={withBase('/v3/')} class="v3-mark" aria-label="GreenSquare v3 home">
+        <span class="v3-mark-shape" aria-hidden="true"></span>
+        <span>GS / Decision OS</span>
+      </a>
+      <nav aria-label="V3 sections" class="v3-nav">
+        {
+          nav.map(([label, path]) => {
+            const isCurrent = current.replace(/\/$/, '') === path.replace(/\/$/, '');
+            return (
+              <a
+                href={withBase(path)}
+                class="v3-nav-link"
+                data-current={isCurrent ? 'true' : undefined}
+                aria-current={isCurrent ? 'page' : undefined}
+              >
+                {label}
+              </a>
+            );
+          })
+        }
+      </nav>
+      <span class="v3-version">V3 / 05.08.26</span>
+    </header>
+    <main id="v3-main">
+      <article class="v3-page" data-route-title={title}>
+        <header class="v3-page-head">
+          <p class="v3-focus">Governing question / {focus}</p>
+          <h1 tabindex="-1">{title}</h1>
+        </header>
+        <slot />
+      </article>
+    </main>
+    <footer class="v3-footer">
+      <span>Structure that turns uncertainty into deliberate action.</span>
+      <a href={withBase('/')}>View marketing site</a>
+    </footer>
+  </body>
+</html>

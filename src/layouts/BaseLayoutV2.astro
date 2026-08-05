@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/paths';
 import NavV2 from '../components/NavV2.astro';
 import FooterV2 from '../components/FooterV2.astro';
 import '../styles/global-v2.css';
@@ -20,7 +21,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href={withBase('/assets/favicon.svg')} type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

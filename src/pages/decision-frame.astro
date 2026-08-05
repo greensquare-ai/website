@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/paths';
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
 
@@ -25,7 +26,7 @@ const questions = [
       </p>
       <div class="hero-actions">
         <a class="v-btn v-btn--green" href="#get-it">Get the one page PDF</a>
-        <a class="v-btn v-btn--grey" href="/product/">See The Decision</a>
+        <a class="v-btn v-btn--grey" href={withBase('/product/')}>See The Decision</a>
       </div>
     </div>
   </section>
@@ -67,7 +68,7 @@ const questions = [
         </ul>
       </div>
       <p class="v-measure" style="margin-top: var(--v-8); color: var(--v-ink-soft);">
-        The Frame prepares the decision. <a href="/product/">The Decision</a> then compares the options, makes
+        The Frame prepares the decision. <a href={withBase('/product/')}>The Decision</a> then compares the options, makes
         the recommendation, and produces the complete brief.
       </p>
     </div>

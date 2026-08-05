@@ -1,19 +1,20 @@
 ---
+import { withBase } from '../lib/paths';
 export interface Props {
   current?: string;
 }
 const { current = '' } = Astro.props;
 const links = [
-  { href: '/', label: 'Home', key: 'home' },
-  { href: '/benchmark/', label: 'Benchmark', key: 'benchmark' },
-  { href: '/product/', label: 'Product', key: 'product' },
-  { href: '/pricing/', label: 'Pricing', key: 'pricing' },
+  { href: withBase('/'), label: 'Home', key: 'home' },
+  { href: withBase('/benchmark/'), label: 'Benchmark', key: 'benchmark' },
+  { href: withBase('/product/'), label: 'Product', key: 'product' },
+  { href: withBase('/pricing/'), label: 'Pricing', key: 'pricing' },
 ];
 ---
 <header class="site-header">
   <div class="container nav-row">
-    <a class="brand" href="/" aria-label="GreenSquare home">
-      <img src="/assets/logo-mark.svg" alt="" width="26" height="26" />
+    <a class="brand" href={withBase('/')} aria-label="GreenSquare home">
+      <img src={withBase('/assets/logo-mark.svg')} alt="" width="26" height="26" />
       <span class="brand-name">GreenSquare</span>
     </a>
     <div class="nav-right">
@@ -22,7 +23,7 @@ const links = [
           <a href={l.href} aria-current={current === l.key ? 'page' : undefined}>{l.label}</a>
         ))}
       </nav>
-      <a class="btn btn-primary" href="/pricing/">Get the Decision</a>
+      <a class="btn btn-primary" href={withBase('/pricing/')}>Get the Decision</a>
       <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" id="nav-toggle">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -37,7 +38,7 @@ const links = [
       {links.map((l) => (
         <a href={l.href} aria-current={current === l.key ? 'page' : undefined}>{l.label}</a>
       ))}
-      <a class="btn btn-primary" href="/pricing/" style="width:fit-content;">Get the Decision</a>
+      <a class="btn btn-primary" href={withBase('/pricing/')} style="width:fit-content;">Get the Decision</a>
     </div>
   </nav>
 </header>
