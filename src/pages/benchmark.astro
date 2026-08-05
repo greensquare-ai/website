@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/paths';
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 import benchmarkResults from '../data/benchmark-results.json';
 
@@ -322,8 +323,8 @@ const artefacts = [
         <p class="v-lead">Use the free Decision Frame to work through the first six questions in about ten minutes.</p>
       </div>
       <div class="bm-next__action v-reveal d1">
-        <a class="v-btn v-btn--on-green bm-next__button" href="/decision-frame/">Get the free Decision Frame</a>
-        <a class="v-link bm-next__link" href="/product/">See how the complete process works</a>
+        <a class="v-btn v-btn--on-green bm-next__button" href={withBase('/decision-frame/')}>Get the free Decision Frame</a>
+        <a class="v-link bm-next__link" href={withBase('/product/')}>See how the complete process works</a>
       </div>
     </div>
   </section>

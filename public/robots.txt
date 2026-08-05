@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.greensquare.ai/sitemap-index.xml
+Sitemap: https://ks-projects-66.github.io/greensquare/sitemap-index.xml

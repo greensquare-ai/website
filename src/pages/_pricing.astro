@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/paths';
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 const STRIPE_LINK = 'https://buy.stripe.com/aFaaEWfGDc7W7XF2wv3AY00';
 ---
@@ -31,7 +32,7 @@ const STRIPE_LINK = 'https://buy.stripe.com/aFaaEWfGDc7W7XF2wv3AY00';
           <h2 class="v-h3">Decision Frame</h2>
           <p class="v-small">Frame the decision before you evaluate anything.</p>
           <p class="v-tier__price">Free</p>
-          <a class="v-link" href="/decision-frame/">Get the free frame <span class="arrow">&rarr;</span></a>
+          <a class="v-link" href={withBase('/decision-frame/')}>Get the free frame <span class="arrow">&rarr;</span></a>
         </div>
 
         <div class="v-tier v-tier--key v-reveal d1">

@@ -1,16 +1,17 @@
 ---
+import { withBase } from '../lib/paths';
 export interface Props { current?: string; }
 const { current = '' } = Astro.props;
 const links = [
-  { href: '/', label: 'Home', key: 'home' },
-  { href: '/product/', label: 'The Decision', key: 'product' },
-  { href: '/benchmark/', label: 'Benchmark', key: 'benchmark' },
+  { href: withBase('/'), label: 'Home', key: 'home' },
+  { href: withBase('/product/'), label: 'The Decision', key: 'product' },
+  { href: withBase('/benchmark/'), label: 'Benchmark', key: 'benchmark' },
 ];
 ---
 <header class="v-nav">
   <div class="v-container v-nav__row">
-    <a class="v-nav__brand" href="/" aria-label="GreenSquare home">
-      <img src="/assets/logo-mark.svg" alt="" width="24" height="24" />
+    <a class="v-nav__brand" href={withBase('/')} aria-label="GreenSquare home">
+      <img src={withBase('/assets/logo-mark.svg')} alt="" width="24" height="24" />
       <span>GreenSquare</span>
     </a>
     <div class="v-nav__right">
@@ -19,7 +20,7 @@ const links = [
           <a href={l.href} aria-current={current === l.key ? 'page' : undefined}>{l.label}</a>
         ))}
       </nav>
-      <a class="v-btn v-btn--green" href="/decision-frame/">Get the free worksheet</a>
+      <a class="v-btn v-btn--green" href={withBase('/decision-frame/')}>Get the free worksheet</a>
       <button class="v-nav__toggle" type="button" id="v-nav-toggle" aria-label="Toggle menu" aria-expanded="false">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
           <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -34,7 +35,7 @@ const links = [
       {links.map((l) => (
         <a href={l.href} aria-current={current === l.key ? 'page' : undefined}>{l.label}</a>
       ))}
-      <a class="v-btn v-btn--green" href="/decision-frame/">Get the free worksheet</a>
+      <a class="v-btn v-btn--green" href={withBase('/decision-frame/')}>Get the free worksheet</a>
     </div>
   </nav>
 </header>

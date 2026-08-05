@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/paths';
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 ---
 <BaseLayoutV2
@@ -12,8 +13,8 @@ import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
         The address may be incorrect, or the page may have moved.
       </p>
       <div style="display: flex; gap: var(--v-5); align-items: center; flex-wrap: wrap; margin-top: var(--v-8);">
-        <a class="v-btn v-btn--on-green" href="/">Back to home</a>
-        <a class="v-link" href="/benchmark/">Read the benchmark</a>
+        <a class="v-btn v-btn--on-green" href={withBase('/')}>Back to home</a>
+        <a class="v-link" href={withBase('/benchmark/')}>Read the benchmark</a>
       </div>
     </div>
   </section>

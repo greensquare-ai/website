@@ -1,40 +1,44 @@
 # GreenSquare
 
-The GreenSquare marketing site. Static HTML, CSS and a little JavaScript. No build step,
-no dependencies, no framework.
+The public GreenSquare website and Decision Operating System.
+
+- Marketing site: `/`
+- Decision OS v3: `/v3/`
+- Public Pages site: <https://ks-projects-66.github.io/greensquare/>
+
+The project is built with Astro and uses small React islands for interactive decision models.
 
 ## Run locally
 
-It is just static files. Either open `index.html` in a browser, or serve the folder:
-
 ```bash
-# Python
-python -m http.server 8000
-# or Node
-npx serve .
+npm ci
+npm run dev
 ```
 
-Then visit `http://localhost:8000`.
+Astro serves the project at `http://localhost:4321/greensquare/` because the production site is
+hosted as a GitHub project page.
+
+## Validate
+
+```bash
+npm run build
+npm run preview
+```
+
+The production build is written to `dist/`.
 
 ## Structure
 
-- `index.html`, `product.html`, `evidence.html`, `methodology.html`, `decision-frame.html` — the pages
-- `404.html` — branded not-found page
-- `assets/styles.css` — the entire design system (all colour and type tokens live in `:root`)
-- `assets/site.js` — scroll reveal, mobile nav, reduced-motion handling
-- `assets/` — logos, videos, posters, favicon, OG image
-- `sitemap.xml`, `robots.txt` — SEO
-
-See `CLAUDE.md` for brand system, locked decisions, voice rules and outstanding tasks.
+- `src/pages/` — Astro routes, including the complete `/v3/` system
+- `src/components/v3/` — Decision Field, Decision Model, workspace and application specimens
+- `src/styles/v3.css` — the v3 visual and interaction language
+- `public/assets/` — public logos, video, poster and sharing image
+- `.github/workflows/deploy-pages.yml` — GitHub Pages build and deployment
 
 ## Deploy
 
-Hosted on GitHub Pages (and intended for the custom domain `greensquare.ai`). Pushing to the
-default branch publishes. To attach the custom domain, add a `CNAME` file with `www.greensquare.ai`
-and point DNS at GitHub Pages.
+Merging to `main` runs the Pages workflow. The workflow builds Astro, uploads `dist/`, and
+publishes the result to the repository's GitHub Pages environment.
 
-## Outstanding
-
-- Wire the email signup forms to Kit (ConvertKit). They are stubbed; see the comment above each form.
-- Connect the custom domain and DNS.
-- Optionally compress `assets/demo.mp4` (currently ~4.75 MB).
+This is a public repository. Internal strategy, commercial material and working documentation stay
+in the private `ks-projects-66/greensquare-ops` repository.
