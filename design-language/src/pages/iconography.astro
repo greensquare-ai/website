@@ -1,0 +1,113 @@
+---
+import DesignLayout from '../layouts/DesignLayout.astro';
+import {
+  ArrowRight,
+  Calendar,
+  CheckCircle,
+  Database,
+  Download,
+  GraphUp,
+  InfoCircle,
+  LightBulb,
+  Search,
+  Settings,
+  TaskList,
+  WarningCircle,
+} from 'iconoir-react';
+
+const iconProps = { width: 24, height: 24, strokeWidth: 1.5, 'aria-hidden': true } as const;
+---
+<DesignLayout
+  section="Iconography"
+  title="Icons direct attention."
+  focus="Where can a symbol reduce effort without replacing the explanation?"
+  description="GreenSquare AI iconography rules using the Iconoir outline library."
+>
+  <section class="v3-section icon-intro">
+    <div class="type-opening">
+      <div>
+        <p class="type-label">Official library · Iconoir</p>
+        <h2 class="v3-section-title-sm">Functional, consistent and restrained.</h2>
+      </div>
+      <div class="type-opening-copy">
+        <p class="v3-lede">An icon should shorten the path to meaning. It should never become decoration.</p>
+        <p>GreenSquare AI uses the regular Iconoir outline family at a standard 1.5 stroke. The library is used for navigation, actions, evidence states and compact data annotation. Text remains the authority.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="v3-section icon-library-section">
+    <div class="type-section-head">
+      <h2>A single visual grammar.</h2>
+      <p>Choose the most literal available symbol. Use the same metaphor for the same action across every website, document and internal tool.</p>
+    </div>
+
+    <div class="icon-specimen-grid" aria-label="Approved Iconoir examples">
+      <div><GraphUp {...iconProps} /><span>Performance</span></div>
+      <div><Database {...iconProps} /><span>Evidence</span></div>
+      <div><LightBulb {...iconProps} /><span>Interpretation</span></div>
+      <div><TaskList {...iconProps} /><span>Next action</span></div>
+      <div><Search {...iconProps} /><span>Search</span></div>
+      <div><Download {...iconProps} /><span>Download</span></div>
+      <div><Calendar {...iconProps} /><span>Due date</span></div>
+      <div><Settings {...iconProps} /><span>Settings</span></div>
+    </div>
+  </section>
+
+  <section class="v3-section icon-principle-section">
+    <div class="type-section-head">
+      <h2>Principle → test → example → explanation</h2>
+      <p>Icon usage follows the same proof pattern as every other GreenSquare AI design rule.</p>
+    </div>
+
+    <div class="icon-principle">
+      <div class="icon-principle-rule">
+        <span>Principle</span>
+        <h3>Use an icon when recognition is faster than reading.</h3>
+      </div>
+      <div class="icon-principle-test">
+        <span>Test</span>
+        <p>Would the action remain unambiguous if the user saw only the icon and its short label?</p>
+      </div>
+      <div class="icon-example icon-example--correct">
+        <header><CheckCircle {...iconProps} /><strong>Correct</strong></header>
+        <button type="button"><Download {...iconProps} />Download report</button>
+        <p>A familiar action, paired with an explicit label.</p>
+      </div>
+      <div class="icon-example icon-example--incorrect">
+        <header><WarningCircle {...iconProps} /><strong>Incorrect</strong></header>
+        <div class="icon-decoration"><LightBulb width={48} height={48} strokeWidth={1.5} aria-hidden="true" /><h3>Our approach</h3></div>
+        <p>A large decorative icon repeats the heading and adds no information.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="v3-section icon-standards-section">
+    <div class="type-section-head">
+      <h2>Size, stroke and colour.</h2>
+      <p>Consistency comes from a small set of fixed production choices rather than redrawing individual symbols.</p>
+    </div>
+
+    <div class="icon-standards" role="table" aria-label="Icon production standards">
+      <div class="icon-standard-row icon-standard-row--head" role="row"><span>Context</span><span>Specification</span><span>Rule</span></div>
+      <div class="icon-standard-row" role="row"><strong>Compact interface</strong><span><InfoCircle width={20} height={20} strokeWidth={1.5} aria-hidden="true" />20px · 1.5 stroke</span><span>Buttons, tables and dense navigation.</span></div>
+      <div class="icon-standard-row" role="row"><strong>Standard use</strong><span><InfoCircle {...iconProps} />24px · 1.5 stroke</span><span>Default for pages, tools and annotations.</span></div>
+      <div class="icon-standard-row" role="row"><strong>Colour</strong><span><CheckCircle {...iconProps} />Ink, forest or white</span><span>State colours only when the icon communicates that state.</span></div>
+      <div class="icon-standard-row" role="row"><strong>Alignment</strong><span><ArrowRight {...iconProps} />Optically centred</span><span>Align to the text baseline; do not position by the SVG box alone.</span></div>
+    </div>
+  </section>
+
+  <section class="v3-section icon-boundaries-section">
+    <div class="type-section-head">
+      <h2>What Iconoir does not replace.</h2>
+      <p>The brand mark, evidence shapes and data graphics have separate jobs. Keeping those systems distinct protects recognition.</p>
+    </div>
+    <ul class="type-rules">
+      <li><strong>Never replace the GreenSquare leaf.</strong><span>The brand mark remains a supplied asset, not an icon-library substitute.</span></li>
+      <li><strong>Never mix outline and solid styles.</strong><span>GreenSquare AI uses Iconoir Regular only.</span></li>
+      <li><strong>Never use icons as heading ornaments.</strong><span>Headings establish hierarchy through language and typography.</span></li>
+      <li><strong>Never colour icons decoratively.</strong><span>Colour communicates brand, evidence, assumption or uncertainty.</span></li>
+      <li><strong>Never leave an unfamiliar action unlabelled.</strong><span>A tooltip is supplementary; it does not repair an unclear control.</span></li>
+    </ul>
+  </section>
+</DesignLayout>

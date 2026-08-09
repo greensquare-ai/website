@@ -71,7 +71,7 @@ export function DecisionField({ compact = false }: { compact?: boolean }) {
 
         <div className="field-board">
           <section className="field-column field-column--decision v3-field-stage v3-field-stage-base">
-            <span className="field-step">01 / Governing decision</span>
+            <span className="field-step">Governing decision</span>
             <div className="field-box field-box--governing">
               <h4>Which EU operating model should we commit to for FY27?</h4>
               <p>One decision. Three credible operating choices.</p>
@@ -81,22 +81,22 @@ export function DecisionField({ compact = false }: { compact?: boolean }) {
           <div className="field-bridge field-bridge--solid v3-field-stage v3-field-stage-structure" aria-hidden="true" />
 
           <section className="field-column field-column--options v3-field-stage v3-field-stage-structure">
-            <span className="field-step">02 / Options and evidence</span>
+            <span className="field-step">Options and evidence</span>
             <div className="field-option-stack">
               <article className="field-box field-box--evidence">
-                <div className="field-box-head"><span>H1 / Continuity</span><em>Confirmed</em></div>
+                <div className="field-box-head"><span>Continuity</span><em>Confirmed</em></div>
                 <h4>Retain the team</h4>
                 <p><strong>E-04</strong> Revenue concentration confirmed.</p>
               </article>
 
               <article className="field-box field-box--assumption" aria-current="true">
-                <div className="field-box-head"><span>H2 / Economics</span><em>Under test</em></div>
+                <div className="field-box-head"><span>Economics</span><em>Under test</em></div>
                 <h4>Two specialist partners</h4>
                 <p><strong>A-03</strong> Transferred-account churn remains below 8%.</p>
               </article>
 
               <article className="field-box field-box--uncertainty">
-                <div className="field-box-head"><span>H3 / Control</span><em>Unresolved</em></div>
+                <div className="field-box-head"><span>Control</span><em>Unresolved</em></div>
                 <h4>Hybrid transfer</h4>
                 <p><strong>U-02</strong> Regulated-account ramp time is unknown.</p>
               </article>
@@ -106,7 +106,7 @@ export function DecisionField({ compact = false }: { compact?: boolean }) {
           <div className="field-bridge field-bridge--selected v3-field-stage v3-field-stage-decision" aria-hidden="true" />
 
           <section className="field-column field-column--tension v3-field-stage v3-field-stage-decision">
-            <span className="field-step">03 / Material trade-off</span>
+            <span className="field-step">Material trade-off</span>
             <div className="field-box field-box--tension">
               <dl>
                 <div><dt>Economics</dt><dd>€1.4m annualised saving</dd></div>
@@ -119,7 +119,7 @@ export function DecisionField({ compact = false }: { compact?: boolean }) {
           <div className="field-bridge field-bridge--selected v3-field-stage v3-field-stage-decision" aria-hidden="true" />
 
           <section className="field-column field-column--outcome v3-field-stage v3-field-stage-decision">
-            <span className="field-step">04 / Recommendation and action</span>
+            <span className="field-step">Recommendation and action</span>
             <div className="field-outcome-stack">
               <article className="field-box field-box--recommendation">
                 <div className="field-recommendation-meta"><span>Emerging recommendation</span><strong>72%</strong></div>
