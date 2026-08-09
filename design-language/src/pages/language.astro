@@ -1,0 +1,88 @@
+---
+import DesignLayout from '../layouts/DesignLayout.astro';
+
+const examples = [
+  {
+    principle: 'Make the recommendation defensible.',
+    test: 'Can the reader trace the call to evidence, a trade-off and a condition that could change it?',
+    correct: 'Use two specialist partners and retain the 25 strategic accounts in-house. This protects 61% of revenue while delivering €1.4m annualised savings; reconsider if transferred-account churn exceeds 8%.',
+    incorrect: 'A partner model is the preferred strategic direction and should create significant efficiencies.',
+    explanation: 'The first sentence makes the action, evidence, trade-off and reversal threshold inspectable. The second asks the reader to trust an unsupported conclusion.',
+  },
+  {
+    principle: 'Separate evidence from interpretation.',
+    test: 'Could another person distinguish what the source says from what GreenSquare concludes?',
+    correct: 'Evidence: 25 accounts generate 61% of revenue. Interpretation: those accounts should remain in-house during transition.',
+    incorrect: 'The evidence shows that strategic accounts must remain in-house.',
+    explanation: 'Evidence records what is observed. Interpretation explains what it means for the decision. Do not merge them into one claim.',
+  },
+  {
+    principle: 'Name the uncertainty.',
+    test: 'Does the caution identify the unknown, its range and why it matters?',
+    correct: 'Transferred-account churn is untested. At 8% the recommendation changes; the current planning range is 5–11%.',
+    incorrect: 'There are some risks and uncertainties that should be considered.',
+    explanation: 'Specific uncertainty can be tested and owned. Vague caution protects the author but does not help the decision-maker.',
+  },
+  {
+    principle: 'Turn the open point into an owned action.',
+    test: 'Is there a named owner, output and date?',
+    correct: 'Maya Chen will validate 12-month churn for transferred accounts with both partners by 18 August.',
+    incorrect: 'Continue monitoring churn and update stakeholders as appropriate.',
+    explanation: 'An action closes an evidence gap. “Continue monitoring” postpones accountability and leaves the decision unchanged.',
+  },
+  {
+    principle: 'Write the executive sentence first.',
+    test: 'Can a decision-maker understand the call and its material reason in one reading?',
+    correct: 'Move to two specialist partners, while keeping strategic accounts in-house, to meet the Q4 break-even target without concentrating continuity risk.',
+    incorrect: 'Following a comprehensive review of the available options and the relevant strategic considerations, a blended delivery approach is recommended.',
+    explanation: 'The clear sentence states the move, boundary and purpose. Generic consultancy language describes the process of recommending instead of the recommendation.',
+  },
+];
+---
+<DesignLayout
+  section="04 / Language"
+  title="Judgement must be visible in the sentence."
+  focus="Can every recommendation be tested, challenged and acted on without translating consultancy language?"
+  description="GreenSquare AI language standards for defensible recommendations, evidence, uncertainty and owned action."
+>
+  <section class="v3-section language-pattern">
+    <div class="v3-split">
+      <div>
+        <span class="identity-kicker">Highest-value addition</span>
+        <h2 class="v3-section-title-sm">Use one pattern for real work.</h2>
+      </div>
+      <div>
+        <p class="v3-lede">KPMG’s strongest pattern is not a logo or colour rule. It is a repeatable way to teach judgement.</p>
+        <div class="language-sequence" aria-label="Language guidance sequence">
+          <span>Principle</span><i>→</i><span>Test</span><i>→</i><span>Correct</span><i>→</i><span>Incorrect</span><i>→</i><span>Explanation</span>
+        </div>
+        <p class="v3-note">GreenSquare’s Constitution already uses this at principle level. These examples apply it to the sentences, claims and actions people produce every day.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="v3-section language-examples" aria-label="Five judgement tests">
+    {examples.map((example, index) => (
+      <article class="language-example">
+        <header>
+          <span>{String(index + 1).padStart(2, '0')}</span>
+          <div>
+            <h2>{example.principle}</h2>
+            <p><strong>Test:</strong> {example.test}</p>
+          </div>
+        </header>
+        <div class="language-comparison">
+          <section class="language-sample language-sample--correct">
+            <span>Correct</span>
+            <p>{example.correct}</p>
+          </section>
+          <section class="language-sample language-sample--incorrect">
+            <span>Incorrect</span>
+            <p>{example.incorrect}</p>
+          </section>
+        </div>
+        <footer><strong>Why</strong><p>{example.explanation}</p></footer>
+      </article>
+    ))}
+  </section>
+</DesignLayout>
