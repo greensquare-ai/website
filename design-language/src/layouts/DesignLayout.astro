@@ -13,17 +13,18 @@ const {
   title,
   focus,
   section,
-  description = 'The GreenSquare system for representing, navigating and improving consequential decisions.',
+  description = 'The GreenSquare AI system for representing, navigating and improving consequential decisions.',
 } = Astro.props;
 
 const nav = [
   ['01', 'System', '/'],
   ['02', 'Constitution', '/constitution/'],
-  ['03', 'Grammar', '/grammar/'],
-  ['04', 'Decision model', '/decision-model/'],
-  ['05', 'Interface', '/interface/'],
-  ['06', 'Applications', '/applications/'],
-  ['07', 'Audit', '/audit/'],
+  ['03', 'Identity', '/identity/'],
+  ['04', 'Grammar', '/grammar/'],
+  ['05', 'Decision model', '/decision-model/'],
+  ['06', 'Interface', '/interface/'],
+  ['07', 'Applications', '/applications/'],
+  ['08', 'Audit', '/audit/'],
 ] as const;
 
 const current = Astro.url.pathname.replace(/\/$/, '') || '/';
@@ -34,7 +35,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title} · GreenSquare design language</title>
+    <title>{title} · GreenSquare AI design language</title>
     <meta name="description" content={description} />
     <meta name="robots" content="noindex, nofollow" />
     <link rel="canonical" href={canonical} />
@@ -50,9 +51,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <a class="design-skip" href="#design-main">Skip to content</a>
     <div class="design-shell">
       <aside class="design-rail" aria-label="Design language navigation">
-        <a href="/" class="design-brand" aria-label="GreenSquare design language home">
+        <a href="/" class="design-brand" aria-label="GreenSquare AI design language home">
           <img src="/assets/logo.svg" alt="" width="34" height="34" />
-          <span>GreenSquare</span>
+          <span>GreenSquare AI</span>
         </a>
 
         <div class="design-rail-label">
@@ -88,7 +89,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
       <main id="design-main" class="design-main">
         <header class="design-topbar">
           <span>{section}</span>
-          <span>GreenSquare / Design language</span>
+          <span>GreenSquare AI / Design language</span>
         </header>
 
         <article class="v3-page" data-route-title={title}>
@@ -106,7 +107,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
         </article>
 
         <footer class="design-footer">
-          <strong>GreenSquare</strong>
+          <strong>GreenSquare AI</strong>
           <span>Structure that turns uncertainty into deliberate action.</span>
           <span>Internal / v3.1</span>
         </footer>
