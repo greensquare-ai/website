@@ -1,0 +1,116 @@
+---
+import '../../../src/styles/v3.css';
+import '../styles/design.css';
+
+export interface Props {
+  title: string;
+  focus: string;
+  section: string;
+  description?: string;
+}
+
+const {
+  title,
+  focus,
+  section,
+  description = 'The GreenSquare system for representing, navigating and improving consequential decisions.',
+} = Astro.props;
+
+const nav = [
+  ['01', 'System', '/'],
+  ['02', 'Constitution', '/constitution/'],
+  ['03', 'Grammar', '/grammar/'],
+  ['04', 'Decision model', '/decision-model/'],
+  ['05', 'Interface', '/interface/'],
+  ['06', 'Applications', '/applications/'],
+  ['07', 'Audit', '/audit/'],
+] as const;
+
+const current = Astro.url.pathname.replace(/\/$/, '') || '/';
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+---
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} · GreenSquare design language</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="v3 design-system">
+    <a class="design-skip" href="#design-main">Skip to content</a>
+    <div class="design-shell">
+      <aside class="design-rail" aria-label="Design language navigation">
+        <a href="/" class="design-brand" aria-label="GreenSquare design language home">
+          <img src="/assets/logo.svg" alt="" width="34" height="34" />
+          <span>GreenSquare</span>
+        </a>
+
+        <div class="design-rail-label">
+          <span>Decision operating system</span>
+          <span>Internal / v3.1</span>
+        </div>
+
+        <nav class="design-nav">
+          {
+            nav.map(([index, label, path]) => {
+              const isCurrent = current === (path.replace(/\/$/, '') || '/');
+              return (
+                <a
+                  href={path}
+                  class="design-nav-link"
+                  data-current={isCurrent ? 'true' : undefined}
+                  aria-current={isCurrent ? 'page' : undefined}
+                >
+                  <span>{index}</span>
+                  <strong>{label}</strong>
+                </a>
+              );
+            })
+          }
+        </nav>
+
+        <div class="design-rail-footer">
+          <span>Internal working source</span>
+          <span>August 2026</span>
+        </div>
+      </aside>
+
+      <main id="design-main" class="design-main">
+        <header class="design-topbar">
+          <span>{section}</span>
+          <span>GreenSquare / Design language</span>
+        </header>
+
+        <article class="v3-page" data-route-title={title}>
+          <header class="v3-page-head">
+            <div class="design-page-meta">
+              <span>{section}</span>
+              <span>Governing question</span>
+            </div>
+            <div class="design-hero-copy">
+              <h1 tabindex="-1">{title}</h1>
+              <p class="v3-focus">{focus}</p>
+            </div>
+          </header>
+          <slot />
+        </article>
+
+        <footer class="design-footer">
+          <strong>GreenSquare</strong>
+          <span>Structure that turns uncertainty into deliberate action.</span>
+          <span>Internal / v3.1</span>
+        </footer>
+      </main>
+    </div>
+  </body>
+</html>

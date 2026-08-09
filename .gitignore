@@ -4,6 +4,7 @@ node_modules/
 dist/
 .astro/
 .vercel/
+/design-language/src/env.d.ts
 
 # OS / editor junk
 .DS_Store

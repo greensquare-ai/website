@@ -2,7 +2,7 @@ import { DecisionField } from "../DecisionField";
 import { PRINCIPLES } from "../v3-data";
 import { withBase } from "../../../lib/paths";
 
-export function HomeContent() {
+export function HomeContent({ basePath = "/v3" }: { basePath?: string }) {
   return (
     <>
       <section className="v3-section v3-split">
@@ -33,25 +33,29 @@ export function HomeContent() {
         <h2 className="v3-section-title-sm">Inspect the system</h2>
         <div className="v3-index-list">
           {[
-            ["Constitution", "/v3/constitution", "The tests governing every design choice."],
+            [
+              "Constitution",
+              `${basePath}/constitution`,
+              "The tests governing every design choice.",
+            ],
             [
               "Decision grammar",
-              "/v3/grammar",
+              `${basePath}/grammar`,
               "The spatial rules connecting a decision to its working.",
             ],
             [
               "Decision model",
-              "/v3/decision-model",
+              `${basePath}/decision-model`,
               "One model viewed for executives, practitioners and challengers.",
             ],
             [
               "Project-room interface",
-              "/v3/interface",
+              `${basePath}/interface`,
               "A live decision workspace without chat or dashboard posture.",
             ],
             [
               "Applications",
-              "/v3/applications",
+              `${basePath}/applications`,
               "The same grammar across briefs, decks, sheets and publications.",
             ],
           ].map(([title, to, description]) => (

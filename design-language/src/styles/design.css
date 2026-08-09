@@ -1,0 +1,522 @@
+:root {
+  --design-forest: #133f26;
+  --design-deep: #0b2313;
+  --design-ink: #12140f;
+  --design-muted: #63645c;
+  --design-line: #dedad2;
+  --design-ground: #f5f5f5;
+  --design-white: #ffffff;
+  --design-rail: #10110f;
+}
+
+html {
+  background: var(--design-rail);
+  scroll-behavior: smooth;
+}
+
+body.design-system {
+  --v3-ground: var(--design-white);
+  --v3-surface: var(--design-white);
+  --v3-ink: var(--design-ink);
+  --v3-mid: var(--design-muted);
+  --v3-faint: #aaa9a1;
+  --v3-rule: var(--design-line);
+  --v3-active: var(--design-forest);
+  --v3-evidence: #2b6c56;
+  --v3-assumption: #9a6500;
+  --v3-risk: #a13e30;
+  --v3-wash: #efefec;
+  margin: 0;
+  background: var(--design-rail);
+  color: var(--design-ink);
+  font-family: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  font-feature-settings: "tnum";
+}
+
+.design-system h1,
+.design-system h2,
+.design-system h3,
+.design-system .v3-model-call,
+.design-system .v3-dock-call {
+  font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+}
+
+.design-system .v3-focus,
+.design-system .v3-model-confidence,
+.design-system .v3-claim-id,
+.design-system .v3-option-score,
+.design-system .v3-score,
+.design-system .field-code {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+.design-skip {
+  position: fixed;
+  z-index: 100;
+  top: 0.75rem;
+  left: 0.75rem;
+  translate: 0 -180%;
+  background: white;
+  color: var(--design-ink);
+  padding: 0.7rem 0.9rem;
+  font-weight: 700;
+}
+
+.design-skip:focus {
+  translate: 0;
+}
+
+.design-shell {
+  display: grid;
+  grid-template-columns: 14.25rem minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.design-shell,
+.design-main {
+  min-width: 0;
+}
+
+.design-rail {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  width: 14.25rem;
+  height: 100vh;
+  overflow-y: auto;
+  background: var(--design-rail);
+  color: white;
+}
+
+.design-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  min-height: 5.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  color: white !important;
+  padding: 1.25rem;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.design-brand img {
+  width: 1.9rem;
+  height: 1.9rem;
+  filter: brightness(0) invert(1);
+}
+
+.design-rail-label,
+.design-rail-footer {
+  display: grid;
+  gap: 0.35rem;
+  color: rgba(255, 255, 255, 0.62);
+  padding: 1.15rem 1.25rem;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.61rem;
+  line-height: 1.45;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.design-nav {
+  display: grid;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.design-nav-link {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  gap: 0.65rem;
+  align-items: center;
+  min-height: 3.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.68) !important;
+  padding: 0.75rem 1.25rem;
+  text-decoration: none;
+  transition: background-color 180ms ease-out, color 180ms ease-out;
+}
+
+.design-nav-link > span {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.61rem;
+}
+
+.design-nav-link > strong {
+  font-size: 0.79rem;
+  font-weight: 600;
+}
+
+.design-nav-link:hover {
+  background: rgba(255, 255, 255, 0.07);
+  color: white !important;
+}
+
+.design-nav-link[data-current="true"] {
+  background: var(--design-forest);
+  color: white !important;
+}
+
+.design-rail-footer {
+  margin-top: auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.design-main {
+  min-width: 0;
+  background: var(--design-white);
+}
+
+.design-topbar {
+  position: sticky;
+  z-index: 35;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  min-height: 3.75rem;
+  align-items: center;
+  border-bottom: 1px solid var(--design-line);
+  background: color-mix(in srgb, white 94%, transparent);
+  backdrop-filter: blur(12px);
+  padding: 0 3.5vw;
+  color: var(--design-muted);
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.design-system .v3-page {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+.design-system .v3-page-head {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+  gap: clamp(4rem, 13vh, 9rem);
+  min-height: calc(100vh - 3.75rem);
+  align-items: stretch;
+  border-bottom: 0;
+  background: var(--design-forest);
+  color: white;
+  padding: clamp(3rem, 6vw, 6rem) clamp(2rem, 6vw, 7rem) clamp(2.5rem, 5vw, 5rem);
+}
+
+.design-page-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  color: rgba(255, 255, 255, 0.68);
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.67rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.design-hero-copy {
+  display: grid;
+  grid-template-columns: minmax(0, 1.18fr) minmax(17rem, 0.82fr);
+  gap: clamp(3rem, 8vw, 8rem);
+  align-items: end;
+}
+
+.design-system .v3-page-head h1 {
+  max-width: 13ch;
+  margin: 0;
+  color: white;
+  font-size: clamp(3.4rem, 6vw, 6.2rem);
+  line-height: 0.96;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+
+.design-system .v3-page[data-route-title^="Compress"] .v3-page-head h1 {
+  max-width: 16ch;
+  font-size: clamp(3.2rem, 5.2vw, 5.4rem);
+}
+
+.design-system .v3-page-head .v3-focus {
+  max-width: 34ch;
+  margin: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.32);
+  color: rgba(255, 255, 255, 0.78);
+  padding-top: 1.25rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  line-height: 1.7;
+  letter-spacing: 0;
+}
+
+.design-system .v3-section,
+.design-system .v3-workspace {
+  max-width: none;
+  margin-inline: 0;
+}
+
+.design-system .v3-section {
+  padding: clamp(4.5rem, 8vw, 8.5rem) clamp(2rem, 6vw, 7rem);
+}
+
+.design-system .v3-section:nth-of-type(even) {
+  background: var(--design-ground);
+}
+
+.design-system .v3-section-title,
+.design-system .v3-section-title-sm {
+  letter-spacing: -0.035em;
+}
+
+.design-system .v3-section-title-sm {
+  max-width: 16ch;
+  font-size: clamp(2.25rem, 4.6vw, 4.9rem);
+  line-height: 1.02;
+}
+
+.design-system .v3-lede {
+  max-width: 42ch;
+  font-size: clamp(1.25rem, 2vw, 2rem);
+  line-height: 1.45;
+}
+
+.design-system .v3-note {
+  color: #4f504a;
+}
+
+.design-system .v3-split {
+  grid-template-columns: minmax(13rem, 0.68fr) minmax(0, 1.32fr);
+  gap: clamp(3rem, 8vw, 9rem);
+}
+
+.design-system .v3-index-list {
+  border-top: 2px solid var(--design-ink);
+}
+
+.design-system .v3-index-list > li,
+.design-system .v3-index-row {
+  grid-template-columns: minmax(10rem, 0.6fr) minmax(0, 1.4fr);
+  gap: 2.5rem;
+  padding: 1.5rem 0;
+}
+
+.design-system .v3-index-list h3,
+.design-system .v3-index-row h3 {
+  font-family: "Manrope", ui-sans-serif, sans-serif;
+  font-weight: 700;
+}
+
+.design-system .v3-field,
+.design-system .v3-model-shell,
+.design-system .v3-app-specimen,
+.design-system .v3-viz-grid {
+  border-top-width: 2px;
+}
+
+.design-system .v3-field {
+  background: var(--design-white);
+}
+
+.design-system .v3-field text,
+.design-system .v3-chart svg text {
+  font-family: "Manrope", ui-sans-serif, sans-serif;
+}
+
+.design-system .v3-field .field-code,
+.design-system .v3-chart .chart-note {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+.design-system .v3-model-toolbar {
+  min-height: 4rem;
+}
+
+.design-system .v3-text-button[data-active="true"] {
+  border-bottom: 3px solid var(--design-forest);
+  color: var(--design-forest);
+}
+
+.design-system .v3-model-view {
+  min-height: 38rem;
+  padding: clamp(2rem, 5vw, 5rem) 0;
+}
+
+.design-system .v3-workspace {
+  border-top: 2px solid var(--design-ink);
+  border-bottom: 2px solid var(--design-ink);
+}
+
+.design-system .v3-workspace-head,
+.design-system .v3-room,
+.design-system .v3-room-dock {
+  padding-right: clamp(2rem, 5vw, 5rem);
+  padding-left: clamp(2rem, 5vw, 5rem);
+}
+
+.design-system .v3-workspace-head {
+  background: var(--design-deep);
+  color: white;
+}
+
+.design-system .v3-workspace-head .v3-workspace-stage {
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.design-system .v3-app-specimen > figcaption {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.design-system .v3-mini-home,
+.design-system .v3-slide {
+  background: var(--design-forest);
+  color: white;
+}
+
+.design-system .v3-brief-sheet,
+.design-system .v3-a4 {
+  box-shadow: 0 5px 8px rgba(18, 20, 15, 0.09);
+}
+
+.design-system .v3-cover {
+  background: var(--design-forest);
+}
+
+.design-footer {
+  display: grid;
+  grid-template-columns: 0.6fr 1.4fr auto;
+  gap: 2rem;
+  align-items: baseline;
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+  background: var(--design-deep);
+  color: white;
+  padding: 2rem clamp(2rem, 6vw, 7rem);
+  font-size: 0.78rem;
+}
+
+.design-footer span:last-child {
+  color: rgba(255, 255, 255, 0.62);
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1020px) {
+  .design-shell {
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+    max-width: 100vw;
+  }
+
+  .design-rail {
+    position: sticky;
+    z-index: 50;
+    width: 100%;
+    max-width: 100vw;
+    height: auto;
+    overflow: visible;
+  }
+
+  .design-brand {
+    min-height: 4.5rem;
+  }
+
+  .design-rail-label,
+  .design-rail-footer {
+    display: none;
+  }
+
+  .design-nav {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .design-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .design-nav-link {
+    grid-template-columns: auto auto;
+    min-width: max-content;
+    min-height: 3.25rem;
+    border-right: 1px solid rgba(255, 255, 255, 0.18);
+    border-bottom: 0;
+    padding: 0.6rem 1rem;
+  }
+
+  .design-topbar {
+    position: static;
+  }
+
+  .design-system .v3-page-head {
+    min-height: 42rem;
+  }
+}
+
+@media (max-width: 760px) {
+  .design-topbar span:last-child,
+  .design-page-meta span:last-child {
+    display: none;
+  }
+
+  .design-system .v3-page-head {
+    gap: 4rem;
+    min-height: 34rem;
+    padding: 2.5rem 1.25rem;
+  }
+
+  .design-hero-copy,
+  .design-system .v3-split {
+    grid-template-columns: 1fr;
+  }
+
+  .design-hero-copy {
+    gap: 2rem;
+  }
+
+  .design-system .v3-page-head h1 {
+    font-size: clamp(3rem, 15vw, 5rem);
+  }
+
+  .design-system .v3-section {
+    padding: 4.5rem 1.25rem;
+  }
+
+  .design-system .v3-section-title-sm {
+    font-size: clamp(2.4rem, 12vw, 4rem);
+  }
+
+  .design-system .v3-index-list > li,
+  .design-system .v3-index-row {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .design-system .v3-workspace-head,
+  .design-system .v3-room,
+  .design-system .v3-room-dock {
+    padding-right: 1.25rem;
+    padding-left: 1.25rem;
+  }
+
+  .design-footer {
+    grid-template-columns: 1fr;
+    padding: 2rem 1.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
