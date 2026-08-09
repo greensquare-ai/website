@@ -52,6 +52,50 @@ import DesignLayout from '../layouts/DesignLayout.astro';
     </div>
   </section>
 
+  <section class="v3-section identity-palette-section">
+    <div class="identity-section-head">
+      <div>
+        <span class="identity-kicker">Colour system</span>
+        <h2 class="v3-section-title-sm">Colour has a job before it has a name.</h2>
+      </div>
+      <p>Use the core palette to establish GreenSquare AI. Use state colours only to carry evidence meaning. Tints support structure; they never create a second brand.</p>
+    </div>
+
+    <div class="palette-group">
+      <div class="palette-group-label"><strong>Core</strong><span>Identity and authority</span></div>
+      <div class="palette-swatches palette-swatches--core">
+        <figure class="palette-swatch palette-swatch--black"><div></div><figcaption><strong>Black</strong><span>#10110F</span><em>Primary ground</em></figcaption></figure>
+        <figure class="palette-swatch palette-swatch--forest"><div></div><figcaption><strong>Forest</strong><span>#133F26</span><em>Brand field</em></figcaption></figure>
+        <figure class="palette-swatch palette-swatch--white"><div></div><figcaption><strong>White</strong><span>#FFFFFF</span><em>Primary surface</em></figcaption></figure>
+      </div>
+    </div>
+
+    <div class="palette-group">
+      <div class="palette-group-label"><strong>Supporting</strong><span>Hierarchy and separation</span></div>
+      <div class="palette-swatches palette-swatches--supporting">
+        <figure class="palette-swatch palette-swatch--deep"><div></div><figcaption><strong>Deep</strong><span>#0B2313</span><em>Dark extension</em></figcaption></figure>
+        <figure class="palette-swatch palette-swatch--ground"><div></div><figcaption><strong>Ground</strong><span>#F5F5F5</span><em>Secondary surface</em></figcaption></figure>
+        <figure class="palette-swatch palette-swatch--line"><div></div><figcaption><strong>Line</strong><span>#DEDAD2</span><em>Rules and axes</em></figcaption></figure>
+        <figure class="palette-swatch palette-swatch--muted"><div></div><figcaption><strong>Muted</strong><span>#63645C</span><em>Supporting text</em></figcaption></figure>
+      </div>
+    </div>
+
+    <div class="palette-group palette-group--state">
+      <div class="palette-group-label"><strong>Evidence state</strong><span>Meaning, never decoration</span></div>
+      <div class="palette-swatches palette-swatches--state">
+        <figure class="palette-swatch palette-swatch--evidence"><div></div><figcaption><strong>Confirmed</strong><span>#2B6C56</span><em>Solid outline / verified</em></figcaption></figure>
+        <figure class="palette-swatch palette-swatch--assumption"><div></div><figcaption><strong>Assumption</strong><span>#9A6500</span><em>Dashed outline / under test</em></figcaption></figure>
+        <figure class="palette-swatch palette-swatch--risk"><div></div><figcaption><strong>Uncertainty</strong><span>#A13E30</span><em>Dotted outline / unresolved</em></figcaption></figure>
+      </div>
+    </div>
+
+    <div class="palette-pairings" aria-label="Approved colour pairings">
+      <div class="palette-pairing palette-pairing--black"><img src="/assets/logo-lockup-primary.svg" alt="GreenSquare AI"/><span>Primary / black</span></div>
+      <div class="palette-pairing palette-pairing--forest"><img src="/assets/logo-lockup-forest.svg" alt="GreenSquare AI"/><span>Owned / forest</span></div>
+      <div class="palette-pairing palette-pairing--light"><img src="/assets/logo-lockup-light.svg" alt="GreenSquare AI"/><span>Document / white</span></div>
+    </div>
+  </section>
+
   <section class="v3-section identity-anatomy-section">
     <div class="v3-split identity-anatomy">
       <div class="identity-mark-stage" aria-label="GreenSquare AI single-leaf mark enlarged">
@@ -87,5 +131,42 @@ import DesignLayout from '../layouts/DesignLayout.astro';
       <div class="identity-usage-row" role="row"><strong>Internal interface</strong><span>Mark + live label</span><span>Only when the supplied lockup cannot fit.</span></div>
     </div>
     <p class="identity-minimum">Minimum width: <strong>120px</strong> horizontal lockup · <strong>20px</strong> mark only · clear space: <strong>one leaf</strong> on every side.</p>
+  </section>
+  <section class="v3-section identity-placement-section">
+    <div class="identity-section-head">
+      <div>
+        <span class="identity-kicker">Placement and protection</span>
+        <h2 class="v3-section-title-sm">Anchor the signature. Give it room.</h2>
+      </div>
+      <p>Place the lockup on a stable edge, aligned to the content grid. The logo identifies the work; it does not float above it or compete with the conclusion.</p>
+    </div>
+
+    <div class="logo-placement-grid">
+      <figure class="logo-placement logo-placement--correct">
+        <div class="logo-placement-sheet"><img src="/assets/logo-lockup-light.svg" alt="GreenSquare AI"/><span>Decision brief</span><h3>Use two specialist partners.</h3></div>
+        <figcaption><strong>Correct / document</strong><span>Top-left, aligned to the content grid, one-leaf clear space.</span></figcaption>
+      </figure>
+      <figure class="logo-placement logo-placement--correct logo-placement--dark">
+        <div class="logo-placement-sheet"><img src="/assets/logo-lockup-primary.svg" alt="GreenSquare AI"/><span>Internal decision room</span><h3>Evidence before interpretation.</h3></div>
+        <figcaption><strong>Correct / dark surface</strong><span>Supplied white lockup on approved black.</span></figcaption>
+      </figure>
+      <figure class="logo-placement logo-placement--incorrect">
+        <div class="logo-placement-sheet"><img src="/assets/logo-lockup-light.svg" alt="GreenSquare AI"/><span>Decision brief</span><h3>Use two specialist partners.</h3></div>
+        <figcaption><strong>Incorrect / floating</strong><span>Do not centre, rotate or detach the logo from the layout grid.</span></figcaption>
+      </figure>
+      <figure class="logo-placement logo-placement--incorrect logo-placement--crowded">
+        <div class="logo-placement-sheet"><img src="/assets/logo-lockup-light.svg" alt="GreenSquare AI"/><span>CONFIDENTIAL · DRAFT · 09 AUG</span><h3>Use two specialist partners.</h3></div>
+        <figcaption><strong>Incorrect / crowded</strong><span>Do not place labels, rules or page edges inside the clear-space zone.</span></figcaption>
+      </figure>
+    </div>
+
+    <div class="logo-clearspace">
+      <div class="logo-clearspace-stage">
+        <span class="logo-space logo-space--top">1 leaf</span><span class="logo-space logo-space--right">1 leaf</span><span class="logo-space logo-space--bottom">1 leaf</span><span class="logo-space logo-space--left">1 leaf</span>
+        <img src="/assets/logo-lockup-light.svg" alt="GreenSquare AI" />
+      </div>
+      <div><strong>Clear space</strong><p>Measure the exclusion zone with the width of one leaf from the mark. This is a minimum, not a target.</p></div>
+      <div><strong>Preferred corners</strong><p>Top-left for covers, pages and interfaces. Bottom-left is allowed for closing frames. Use right alignment only where the whole content grid is right-anchored.</p></div>
+    </div>
   </section>
 </DesignLayout>
