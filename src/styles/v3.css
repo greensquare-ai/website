@@ -358,74 +358,337 @@
 /* Decision Field */
 .v3-field {
   position: relative;
-  min-height: 39rem;
-  overflow: hidden;
   background: var(--v3-surface);
   border-top: 1px solid var(--v3-ink);
   border-bottom: 1px solid var(--v3-ink);
+  color: var(--v3-ink);
 }
 
-.v3-field svg {
-  display: block;
-  width: 100%;
-  height: auto;
-  min-height: 39rem;
-}
-
-.v3-field-line {
-  fill: none;
-  stroke: var(--v3-ink);
-  stroke-width: 1.4;
-  vector-effect: non-scaling-stroke;
-}
-
-.v3-field-line-muted {
-  stroke: var(--v3-faint);
-}
-
-.v3-field-line-assumption {
-  stroke: var(--v3-assumption);
-  stroke-dasharray: 9 7;
-}
-
-.v3-field-line-risk {
-  stroke: var(--v3-risk);
-}
-
-.v3-field-node {
-  fill: var(--v3-surface);
-  stroke: var(--v3-ink);
-  stroke-width: 1.5;
-  vector-effect: non-scaling-stroke;
-}
-
-.v3-field-node-solid {
-  fill: var(--v3-ink);
-}
-
-.v3-field-pin {
-  fill: var(--v3-evidence);
-}
-
-.v3-field text {
-  fill: var(--v3-ink);
-  font-family: "Source Sans 3", ui-sans-serif, sans-serif;
-}
-
-.v3-field .field-label {
-  font-size: 13px;
-  font-weight: 650;
-}
-
-.v3-field .field-note {
-  fill: var(--v3-mid);
-  font-size: 10px;
-}
-
-.v3-field .field-code {
-  fill: var(--v3-mid);
+.field-meta,
+.field-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 0.85rem 1rem;
+  color: var(--v3-mid);
   font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 8.5px;
+  font-size: 0.61rem;
+  line-height: 1.5;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.field-meta {
+  border-bottom: 1px solid var(--v3-rule);
+}
+
+.field-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(15rem, 0.65fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+  padding: 2.25rem 1rem 2rem;
+}
+
+.field-intro h3 {
+  max-width: none;
+  margin: 0;
+  font-size: clamp(1.55rem, 2.5vw, 2.2rem);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+
+.field-intro p {
+  max-width: 64ch;
+  margin: 0.8rem 0 0;
+  color: var(--v3-mid);
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+
+.field-legend {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.55rem;
+  border: 1px solid var(--v3-rule);
+  background: var(--v3-wash);
+  padding: 0.85rem 1rem;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 0.61rem;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.field-legend strong {
+  margin-bottom: 0.15rem;
+  color: var(--v3-mid);
+  font-weight: 500;
+  letter-spacing: 0.07em;
+}
+
+.field-legend span {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.field-key {
+  display: inline-block;
+  width: 1.25rem;
+  height: 0.72rem;
+  background: var(--v3-surface);
+}
+
+.field-key--solid {
+  border: 1px solid var(--v3-evidence);
+  background: color-mix(in oklab, var(--v3-evidence) 10%, white);
+}
+
+.field-key--dashed {
+  border: 1px dashed var(--v3-assumption);
+  background: color-mix(in oklab, var(--v3-assumption) 8%, white);
+}
+
+.field-key--open {
+  border: 1px dotted var(--v3-risk);
+  background: color-mix(in oklab, var(--v3-risk) 6%, white);
+}
+
+.field-board {
+  display: grid;
+  grid-template-columns:
+    minmax(9.5rem, 0.85fr) 2.2rem
+    minmax(16rem, 1.45fr) 2.2rem
+    minmax(10rem, 0.8fr) 2.2rem
+    minmax(15rem, 1.2fr);
+  gap: 0;
+  align-items: center;
+  padding: 1.5rem 1rem 3rem;
+}
+
+.field-column {
+  min-width: 0;
+}
+
+.field-step {
+  display: block;
+  margin-bottom: 0.65rem;
+  color: var(--v3-mid);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 0.59rem;
+  line-height: 1.4;
+  letter-spacing: 0.065em;
+  text-transform: uppercase;
+}
+
+.field-box {
+  width: 100%;
+  border: 1px solid var(--v3-ink);
+  background: var(--v3-surface);
+  padding: 1rem;
+}
+
+.field-box h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 680;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.field-box p {
+  margin: 0.75rem 0 0;
+  color: var(--v3-mid);
+  font-size: 0.72rem;
+  line-height: 1.5;
+}
+
+.field-box p strong {
+  color: inherit;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 0.62rem;
+  font-weight: 500;
+}
+
+.field-box-head,
+.field-recommendation-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: baseline;
+  margin-bottom: 0.8rem;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 0.56rem;
+  line-height: 1.4;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.field-box-head em {
+  font-style: normal;
+  text-align: right;
+}
+
+.field-box--governing {
+  background: var(--v3-wash);
+  padding: 1.25rem;
+}
+
+.field-box--governing h4 {
+  font-size: 1.32rem;
+  line-height: 1.18;
+}
+
+.field-option-stack,
+.field-outcome-stack {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.field-box--evidence {
+  border-color: var(--v3-evidence);
+  background: color-mix(in oklab, var(--v3-evidence) 9%, white);
+}
+
+.field-box--evidence .field-box-head,
+.field-box--evidence p {
+  color: color-mix(in oklab, var(--v3-evidence) 82%, black);
+}
+
+.field-box--assumption {
+  border: 1px dashed var(--v3-assumption);
+  background: color-mix(in oklab, var(--v3-assumption) 8%, white);
+}
+
+.field-box--assumption .field-box-head,
+.field-box--assumption p {
+  color: color-mix(in oklab, var(--v3-assumption) 82%, black);
+}
+
+.field-box--uncertainty {
+  border: 1px dotted var(--v3-risk);
+  background: color-mix(in oklab, var(--v3-risk) 6%, white);
+}
+
+.field-box--uncertainty .field-box-head,
+.field-box--uncertainty p {
+  color: color-mix(in oklab, var(--v3-risk) 78%, black);
+}
+
+.field-box--tension {
+  background: color-mix(in oklab, var(--v3-wash) 78%, white);
+  padding: 1.1rem;
+}
+
+.field-box--tension dl,
+.field-box--tension dl > div {
+  margin: 0;
+}
+
+.field-box--tension dl {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.field-box--tension dl > div {
+  border-bottom: 1px solid var(--v3-rule);
+  padding-bottom: 0.85rem;
+}
+
+.field-box--tension dt {
+  color: var(--v3-mid);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 0.56rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.field-box--tension dd {
+  margin: 0.35rem 0 0;
+  font-size: 0.92rem;
+  font-weight: 680;
+  line-height: 1.3;
+}
+
+.field-box--recommendation {
+  border-color: var(--v3-active);
+  background: var(--v3-active);
+  color: white;
+  padding: 1.15rem;
+}
+
+.field-box--recommendation .field-recommendation-meta {
+  color: color-mix(in oklab, white 75%, var(--v3-active));
+}
+
+.field-box--recommendation .field-recommendation-meta strong {
+  color: white;
+  font-size: 1.35rem;
+}
+
+.field-box--recommendation h4 {
+  color: white;
+  font-size: 1.08rem;
+  line-height: 1.3;
+}
+
+.field-box--action {
+  border-color: var(--v3-ink);
+  background: var(--v3-surface);
+}
+
+.field-box--action .field-box-head {
+  color: var(--v3-mid);
+}
+
+.field-box--feedback {
+  border: 1px dashed var(--v3-risk);
+  background: color-mix(in oklab, var(--v3-risk) 5%, white);
+}
+
+.field-box--feedback .field-box-head,
+.field-box--feedback p {
+  color: color-mix(in oklab, var(--v3-risk) 78%, black);
+}
+
+.field-bridge {
+  position: relative;
+  display: grid;
+  place-items: center;
+  align-self: stretch;
+  min-height: 8rem;
+}
+
+.field-bridge::before {
+  width: 100%;
+  border-top: 1px solid var(--v3-faint);
+  content: "";
+}
+
+.field-bridge::after {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 6px solid var(--v3-faint);
+  translate: 0 -50%;
+  content: "";
+}
+
+.field-bridge--selected::before {
+  border-color: var(--v3-evidence);
+}
+
+.field-bridge--selected::after {
+  border-left-color: var(--v3-evidence);
+}
+
+.field-footer {
+  border-top: 1px solid var(--v3-rule);
 }
 
 .v3-field-stage {
@@ -1141,6 +1404,55 @@
   .v3-viz-grid {
     grid-template-columns: 1fr;
   }
+
+  .field-intro {
+    grid-template-columns: 1fr;
+  }
+
+  .field-legend {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .field-legend strong {
+    grid-column: 1 / -1;
+  }
+
+  .field-board {
+    grid-template-columns: minmax(0, 1fr);
+    padding-top: 1rem;
+  }
+
+  .field-bridge {
+    min-height: 3.25rem;
+  }
+
+  .field-bridge::before {
+    width: 0;
+    height: 100%;
+    border-top: 0;
+    border-left: 1px solid var(--v3-faint);
+  }
+
+  .field-bridge::after {
+    top: auto;
+    right: 50%;
+    bottom: 0;
+    border-top: 6px solid var(--v3-faint);
+    border-right: 4px solid transparent;
+    border-bottom: 0;
+    border-left: 4px solid transparent;
+    translate: 50% 0;
+  }
+
+  .field-bridge--selected::before {
+    border-color: var(--v3-evidence);
+  }
+
+  .field-bridge--selected::after {
+    border-top-color: var(--v3-evidence);
+    border-left-color: transparent;
+  }
+
 }
 
 @media (max-width: 640px) {
@@ -1168,12 +1480,27 @@
     font-size: clamp(2.7rem, 14vw, 4.5rem);
   }
 
-  .v3-field {
-    overflow-x: auto;
+  .field-meta,
+  .field-footer {
+    display: grid;
+    gap: 0.35rem;
   }
 
-  .v3-field svg {
-    min-width: 62rem;
+  .field-intro {
+    padding: 1.5rem 1rem;
+  }
+
+  .field-legend {
+    grid-template-columns: 1fr;
+  }
+
+  .field-legend strong {
+    grid-column: auto;
+  }
+
+  .field-board {
+    padding-right: 1rem;
+    padding-left: 1rem;
   }
 
   .v3-index-list > li,
