@@ -36,22 +36,22 @@ export function GrammarContent() {
         <div>
           <h2 className="v3-section-title-sm">Primary type test</h2>
           <p className="v3-note" style={{ marginTop: "1rem" }}>
-            Source Sans 3 is selected for executive reading, numerical clarity and useful density
-            across product, decks and publications.
+            Space Grotesk carries major conclusions. IBM Plex Sans carries reading, data and
+            interface work. Manrope Semibold remains exclusive to the supplied logo.
           </p>
         </div>
         <div className="v3-type-test">
-          <div className="v3-type-row">
-            <strong>Source Sans 3 / selected</strong>
+          <div className="v3-type-row v3-type-space">
+            <strong>Space Grotesk / H1 and H2</strong>
+            <p>Evidence before interpretation.</p>
+          </div>
+          <div className="v3-type-row v3-type-plex">
+            <strong>IBM Plex Sans / functional text</strong>
             <p>Transferred-account churn changes the call above 8%.</p>
           </div>
-          <div className="v3-type-row v3-type-literata">
-            <strong>Literata / rejected</strong>
-            <p>Transferred-account churn changes the call above 8%.</p>
-          </div>
-          <div className="v3-type-row v3-type-manrope">
-            <strong>Manrope / rejected</strong>
-            <p>Transferred-account churn changes the call above 8%.</p>
+          <div className="v3-type-row v3-type-logo">
+            <strong>Manrope Semibold / logo only</strong>
+            <p>GreenSquare AI</p>
           </div>
         </div>
       </section>

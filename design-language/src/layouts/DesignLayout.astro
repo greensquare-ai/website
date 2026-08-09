@@ -20,14 +20,16 @@ const nav = [
   ['01', 'System', '/'],
   ['02', 'Constitution', '/constitution/'],
   ['03', 'Identity', '/identity/'],
-  ['04', 'Language', '/language/'],
-  ['05', 'Grammar', '/grammar/'],
-  ['06', 'Decision model', '/decision-model/'],
-  ['07', 'Data graphics', '/data-graphics/'],
-  ['08', 'Interface', '/interface/'],
-  ['09', 'Applications', '/applications/'],
-  ['10', 'Governance', '/governance/'],
-  ['11', 'Audit', '/audit/'],
+  ['04', 'Typography', '/typography/'],
+  ['05', 'Iconography', '/iconography/'],
+  ['06', 'Language', '/language/'],
+  ['07', 'Grammar', '/grammar/'],
+  ['08', 'Decision model', '/decision-model/'],
+  ['09', 'Data graphics', '/data-graphics/'],
+  ['10', 'Interface', '/interface/'],
+  ['11', 'Applications', '/applications/'],
+  ['12', 'Governance', '/governance/'],
+  ['13', 'Audit', '/audit/'],
 ] as const;
 
 const current = Astro.url.pathname.replace(/\/$/, '') || '/';
@@ -46,11 +48,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Manrope:wght@600&family=Space+Grotesk:wght@600;700&display=swap"
       rel="stylesheet"
     />
   </head>
-  <body class="v3 design-system">
+  <body class="v3 design-system approved-type">
     <a class="design-skip" href="#design-main">Skip to content</a>
     <div class="design-shell">
       <aside class="design-rail" aria-label="Design language navigation">
