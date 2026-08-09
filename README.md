@@ -8,6 +8,10 @@ The public GreenSquare website and Decision Operating System.
 
 The project is built with Astro and uses small React islands for interactive decision models.
 
+The access-controlled design-language site is a separate Astro app in `design-language/`. The
+Vercel project `greensquare-design-language` must use that folder as its Root Directory. This keeps
+the design deployment separate from the public website deployment.
+
 ## Run locally
 
 ```bash
@@ -26,12 +30,21 @@ npm run preview
 
 The production build is written to `dist/`.
 
+Validate the design-language app separately:
+
+```bash
+cd design-language
+npm ci
+npm run build
+```
+
 ## Structure
 
 - `src/pages/` — Astro routes, including the complete `/v3/` system
 - `src/components/v3/` — Decision Field, Decision Model, workspace and application specimens
 - `src/styles/v3.css` — the v3 visual and interaction language
 - `public/assets/` — public logos, video, poster and sharing image
+- `design-language/` — dedicated app for the protected Vercel design-language project
 
 ## Deploy
 
