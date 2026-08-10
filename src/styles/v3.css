@@ -1265,6 +1265,9 @@
 
 .v3-cover {
   position: relative;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  gap: clamp(1.5rem, 4vw, 3rem);
   aspect-ratio: 4 / 5;
   width: min(100%, 34rem);
   overflow: hidden;
@@ -1273,36 +1276,60 @@
   padding: clamp(1.5rem, 5vw, 4rem);
 }
 
-.v3-cover::before,
-.v3-cover::after {
-  position: absolute;
-  content: "";
-  border: 1px solid white;
+.v3-cover-masthead,
+.v3-cover-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  align-items: baseline;
+  font-size: clamp(0.75rem, 1.3vw, 0.9375rem);
+  line-height: 1.4;
 }
 
-.v3-cover::before {
-  top: 21%;
-  right: -18%;
-  width: 68%;
-  height: 48%;
+.v3-cover-masthead {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.62);
+  padding-bottom: 1rem;
 }
 
-.v3-cover::after {
-  right: 21%;
-  bottom: 15%;
-  width: 12%;
-  height: 12%;
-  background: white;
+.v3-cover-masthead strong {
+  font-family: "Manrope", Arial, sans-serif;
+  font-weight: 600;
 }
 
 .v3-cover h3 {
-  position: relative;
-  z-index: 1;
-  max-width: 10ch;
+  align-self: center;
+  max-width: none;
   margin: 0;
-  font-size: clamp(2.5rem, 6vw, 5.4rem);
-  line-height: 0.92;
-  letter-spacing: -0.04em;
+  font-size: clamp(2.25rem, 4.2vw, 3.5rem);
+  line-height: 1.03;
+  letter-spacing: -0.018em;
+}
+
+.v3-cover h3 span {
+  display: block;
+  white-space: nowrap;
+}
+
+.v3-cover-signature {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.v3-cover-signature > span {
+  flex: 1 1 auto;
+  height: 4px;
+  background: white;
+}
+
+.v3-cover-signature img {
+  width: clamp(3.5rem, 9vw, 5.25rem);
+  height: auto;
+  filter: brightness(0) invert(1);
+}
+
+.v3-cover-meta {
+  color: rgba(255, 255, 255, 0.76);
 }
 
 .v3-table-wrap {

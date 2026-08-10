@@ -1,5 +1,8 @@
 ---
 import DesignLayout from '../layouts/DesignLayout.astro';
+import { CheckCircle, WarningCircle } from 'iconoir-react';
+
+const exampleIconProps = { width: 20, height: 20, strokeWidth: 1.5, 'aria-hidden': true } as const;
 
 const examples = [
   {
@@ -11,7 +14,7 @@ const examples = [
   },
   {
     principle: 'Separate evidence from interpretation.',
-    test: 'Could another person distinguish what the source says from what GreenSquare concludes?',
+    test: 'Could another person distinguish what the source says from what GreenSquare AI concludes?',
     correct: 'Evidence: 25 accounts generate 61% of revenue. Interpretation: those accounts should remain in-house during transition.',
     incorrect: 'The evidence shows that strategic accounts must remain in-house.',
     explanation: 'Evidence records what is observed. Interpretation explains what it means for the decision. Do not merge them into one claim.',
@@ -40,7 +43,7 @@ const examples = [
 ];
 ---
 <DesignLayout
-  section="04 / Language"
+  section="Language"
   title="Judgement must be visible in the sentence."
   focus="Can every recommendation be tested, challenged and acted on without translating consultancy language?"
   description="GreenSquare AI language standards for defensible recommendations, evidence, uncertainty and owned action."
@@ -62,10 +65,9 @@ const examples = [
   </section>
 
   <section class="v3-section language-examples" aria-label="Five judgement tests">
-    {examples.map((example, index) => (
+    {examples.map((example) => (
       <article class="language-example">
         <header>
-          <span>{String(index + 1).padStart(2, '0')}</span>
           <div>
             <h2>{example.principle}</h2>
             <p><strong>Test:</strong> {example.test}</p>
@@ -73,11 +75,11 @@ const examples = [
         </header>
         <div class="language-comparison">
           <section class="language-sample language-sample--correct">
-            <span>Correct</span>
+            <header><CheckCircle {...exampleIconProps} /><strong>Correct</strong></header>
             <p>{example.correct}</p>
           </section>
           <section class="language-sample language-sample--incorrect">
-            <span>Incorrect</span>
+            <header><WarningCircle {...exampleIconProps} /><strong>Needs revision</strong></header>
             <p>{example.incorrect}</p>
           </section>
         </div>

@@ -21,7 +21,7 @@ export function ConstitutionContent() {
               </ul>
             </div>
             <div className="v3-index-row">
-              <h3>Pass / fail test</h3>
+              <h3>Pass or fail test</h3>
               <p>{principle.test}</p>
             </div>
             <div className="v3-index-row">

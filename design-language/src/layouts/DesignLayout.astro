@@ -16,20 +16,40 @@ const {
   description = 'The GreenSquare AI system for representing, navigating and improving consequential decisions.',
 } = Astro.props;
 
-const nav = [
-  ['01', 'System', '/'],
-  ['02', 'Constitution', '/constitution/'],
-  ['03', 'Identity', '/identity/'],
-  ['04', 'Typography', '/typography/'],
-  ['05', 'Iconography', '/iconography/'],
-  ['06', 'Language', '/language/'],
-  ['07', 'Grammar', '/grammar/'],
-  ['08', 'Decision model', '/decision-model/'],
-  ['09', 'Data graphics', '/data-graphics/'],
-  ['10', 'Interface', '/interface/'],
-  ['11', 'Applications', '/applications/'],
-  ['12', 'Governance', '/governance/'],
-  ['13', 'Audit', '/audit/'],
+const navGroups = [
+  {
+    label: 'Foundations',
+    items: [
+      ['System', '/'],
+      ['Constitution', '/constitution/'],
+      ['Identity', '/identity/'],
+      ['Typography', '/typography/'],
+      ['Iconography', '/iconography/'],
+    ],
+  },
+  {
+    label: 'Expression',
+    items: [
+      ['Language', '/language/'],
+      ['Grammar', '/grammar/'],
+      ['Data graphics', '/data-graphics/'],
+    ],
+  },
+  {
+    label: 'Applications',
+    items: [
+      ['Decision model', '/decision-model/'],
+      ['Interface', '/interface/'],
+      ['Applications', '/applications/'],
+    ],
+  },
+  {
+    label: 'Stewardship',
+    items: [
+      ['Governance', '/governance/'],
+      ['Audit', '/audit/'],
+    ],
+  },
 ] as const;
 
 const current = Astro.url.pathname.replace(/\/$/, '') || '/';
@@ -62,31 +82,37 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
         </a>
 
         <div class="design-rail-label">
-          <span>Decision operating system</span>
-          <span>Internal / v3.1</span>
+          <span>Design language</span>
+          <span>Internal working standard</span>
         </div>
 
         <nav class="design-nav">
           {
-            nav.map(([index, label, path]) => {
-              const isCurrent = current === (path.replace(/\/$/, '') || '/');
-              return (
-                <a
-                  href={path}
-                  class="design-nav-link"
-                  data-current={isCurrent ? 'true' : undefined}
-                  aria-current={isCurrent ? 'page' : undefined}
-                >
-                  <span>{index}</span>
-                  <strong>{label}</strong>
-                </a>
-              );
-            })
+            navGroups.map((group) => (
+              <div class="design-nav-group">
+                <span class="design-nav-group-label">{group.label}</span>
+                <div>
+                  {group.items.map(([label, path]) => {
+                    const isCurrent = current === (path.replace(/\/$/, '') || '/');
+                    return (
+                      <a
+                        href={path}
+                        class="design-nav-link"
+                        data-current={isCurrent ? 'true' : undefined}
+                        aria-current={isCurrent ? 'page' : undefined}
+                      >
+                        <strong>{label}</strong>
+                      </a>
+                    );
+                  })}
+                </div>
+              </div>
+            ))
           }
         </nav>
 
         <div class="design-rail-footer">
-          <span>Internal working source</span>
+          <span>GreenSquare AI</span>
           <span>August 2026</span>
         </div>
       </aside>
@@ -94,13 +120,12 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
       <main id="design-main" class="design-main">
         <header class="design-topbar">
           <span>{section}</span>
-          <span>GreenSquare AI / Design language</span>
+          <span>GreenSquare AI</span>
         </header>
 
         <article class="v3-page" data-route-title={title}>
           <header class="v3-page-head">
             <div class="design-page-meta">
-              <span>{section}</span>
               <span>Governing question</span>
             </div>
             <div class="design-hero-copy">
@@ -114,7 +139,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
         <footer class="design-footer">
           <strong>GreenSquare AI</strong>
           <span>Structure that turns uncertainty into deliberate action.</span>
-          <span>Internal / v3.1</span>
+          <span>Internal design language</span>
         </footer>
       </main>
     </div>

@@ -7,7 +7,7 @@ type Lens = "summary" | "working" | "review";
 const LENSES: { id: Lens; label: string }[] = [
   { id: "summary", label: "Executive summary" },
   { id: "working", label: "Working analysis" },
-  { id: "review", label: "Review / challenge" },
+  { id: "review", label: "Review and challenge" },
 ];
 
 export function DecisionModel() {
@@ -49,7 +49,7 @@ export function DecisionModel() {
             </TextButton>
           ))}
         </div>
-        <span className="v3-model-confidence">MODEL / EU-OM-27.4</span>
+        <span className="v3-model-confidence">EU operating model</span>
       </div>
 
       {lens === "summary" ? (

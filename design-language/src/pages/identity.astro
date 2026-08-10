@@ -2,7 +2,7 @@
 import DesignLayout from '../layouts/DesignLayout.astro';
 ---
 <DesignLayout
-  section="03 / Identity"
+  section="Identity"
   title="One leaf carries the decision."
   focus="How should GreenSquare AI remain recognisable across every surface?"
   description="The GreenSquare AI logo, single-leaf mark, approved colour variants and usage rules."
@@ -10,7 +10,6 @@ import DesignLayout from '../layouts/DesignLayout.astro';
   <section class="v3-section identity-intro">
     <div class="v3-split">
       <div>
-        <span class="identity-kicker">Primary signature</span>
         <h2 class="v3-section-title-sm">GreenSquare AI</h2>
       </div>
       <div>
@@ -20,14 +19,13 @@ import DesignLayout from '../layouts/DesignLayout.astro';
     </div>
     <figure class="identity-primary">
       <img src="/assets/logo-lockup-primary.svg" alt="GreenSquare AI" />
-      <figcaption><span>Primary / black</span><span>White mark and wordmark</span></figcaption>
+      <figcaption><span>Primary black</span><span>White mark and wordmark</span></figcaption>
     </figure>
   </section>
 
   <section class="v3-section identity-variants-section">
     <div class="identity-section-head">
       <div>
-        <span class="identity-kicker">Approved variants</span>
         <h2 class="v3-section-title-sm">One mark. Four controlled expressions.</h2>
       </div>
       <p>Choose the treatment from the surface. Do not improvise a new colourway.</p>
@@ -55,7 +53,6 @@ import DesignLayout from '../layouts/DesignLayout.astro';
   <section class="v3-section identity-palette-section">
     <div class="identity-section-head">
       <div>
-        <span class="identity-kicker">Colour system</span>
         <h2 class="v3-section-title-sm">Colour has a job before it has a name.</h2>
       </div>
       <p>Use the core palette to establish GreenSquare AI. Use state colours only to carry evidence meaning. Tints support structure; they never create a second brand.</p>
@@ -81,18 +78,31 @@ import DesignLayout from '../layouts/DesignLayout.astro';
     </div>
 
     <div class="palette-group palette-group--state">
-      <div class="palette-group-label"><strong>Evidence state</strong><span>Meaning, never decoration</span></div>
-      <div class="palette-swatches palette-swatches--state">
-        <figure class="palette-swatch palette-swatch--evidence"><div></div><figcaption><strong>Confirmed</strong><span>#2B6C56</span><em>Solid outline / verified</em></figcaption></figure>
-        <figure class="palette-swatch palette-swatch--assumption"><div></div><figcaption><strong>Assumption</strong><span>#9A6500</span><em>Dashed outline / under test</em></figcaption></figure>
-        <figure class="palette-swatch palette-swatch--risk"><div></div><figcaption><strong>Uncertainty</strong><span>#A13E30</span><em>Dotted outline / unresolved</em></figcaption></figure>
+      <div class="palette-group-label"><strong>Decision notation</strong><span>Small signals, never colour fields</span></div>
+      <div class="state-notations" aria-label="Decision notation colours">
+        <figure class="state-notation state-notation--confirmed">
+          <div class="state-notation-sample" aria-hidden="true"><span></span><i></i></div>
+          <figcaption><strong>Confirmed</strong><span>#24553B</span><em>Filled marker · verified evidence</em></figcaption>
+        </figure>
+        <figure class="state-notation state-notation--assumption">
+          <div class="state-notation-sample" aria-hidden="true"><span></span><i></i></div>
+          <figcaption><strong>Assumption</strong><span>#745B2D</span><em>Open marker · dashed test line</em></figcaption>
+        </figure>
+        <figure class="state-notation state-notation--uncertainty">
+          <div class="state-notation-sample" aria-hidden="true"><span></span><i></i></div>
+          <figcaption><strong>Uncertainty</strong><span>#686B65</span><em>Open circle · unresolved direction</em></figcaption>
+        </figure>
+        <figure class="state-notation state-notation--risk">
+          <div class="state-notation-sample" aria-hidden="true"><span></span><i></i></div>
+          <figcaption><strong>Material risk</strong><span>#77372F</span><em>Filled diamond · downside evidenced</em></figcaption>
+        </figure>
       </div>
     </div>
 
     <div class="palette-pairings" aria-label="Approved colour pairings">
-      <div class="palette-pairing palette-pairing--black"><img src="/assets/logo-lockup-primary.svg" alt="GreenSquare AI"/><span>Primary / black</span></div>
-      <div class="palette-pairing palette-pairing--forest"><img src="/assets/logo-lockup-forest.svg" alt="GreenSquare AI"/><span>Owned / forest</span></div>
-      <div class="palette-pairing palette-pairing--light"><img src="/assets/logo-lockup-light.svg" alt="GreenSquare AI"/><span>Document / white</span></div>
+      <div class="palette-pairing palette-pairing--black"><img src="/assets/logo-lockup-primary.svg" alt="GreenSquare AI"/><span>Primary black</span></div>
+      <div class="palette-pairing palette-pairing--forest"><img src="/assets/logo-lockup-forest.svg" alt="GreenSquare AI"/><span>Owned forest</span></div>
+      <div class="palette-pairing palette-pairing--light"><img src="/assets/logo-lockup-light.svg" alt="GreenSquare AI"/><span>Document white</span></div>
     </div>
   </section>
 
@@ -103,13 +113,12 @@ import DesignLayout from '../layouts/DesignLayout.astro';
         <span>Fixed filled leaf</span>
       </div>
       <div>
-        <span class="identity-kicker">Recognition rule</span>
         <h2 class="v3-section-title-sm">The filled leaf is invariant.</h2>
         <ol class="identity-rules">
-          <li><span>01</span><div><strong>Keep it lower-left.</strong><p>Changing the filled leaf creates a different symbol.</p></div></li>
-          <li><span>02</span><div><strong>Keep the geometry intact.</strong><p>No rotation, mirroring, stretching or redrawing.</p></div></li>
-          <li><span>03</span><div><strong>Use supplied lockups.</strong><p>Never retype, regroup or alter “GreenSquare AI”.</p></div></li>
-          <li><span>04</span><div><strong>Protect contrast.</strong><p>White on black, lime and cream on forest, forest and ink on light.</p></div></li>
+          <li><div><strong>Keep it lower-left.</strong><p>Changing the filled leaf creates a different symbol.</p></div></li>
+          <li><div><strong>Keep the geometry intact.</strong><p>No rotation, mirroring, stretching or redrawing.</p></div></li>
+          <li><div><strong>Use supplied lockups.</strong><p>Never retype, regroup or alter “GreenSquare AI”.</p></div></li>
+          <li><div><strong>Protect contrast.</strong><p>White on black, lime and cream on forest, forest and ink on light.</p></div></li>
         </ol>
       </div>
     </div>
@@ -118,7 +127,6 @@ import DesignLayout from '../layouts/DesignLayout.astro';
   <section class="v3-section identity-usage-section">
     <div class="identity-section-head">
       <div>
-        <span class="identity-kicker">Use</span>
         <h2 class="v3-section-title-sm">Lockup when naming. Mark when recognised.</h2>
       </div>
       <p>The full signature introduces the organisation. The mark alone is for repeated, compact or already-labelled contexts.</p>
@@ -127,7 +135,7 @@ import DesignLayout from '../layouts/DesignLayout.astro';
       <div class="identity-usage-row identity-usage-row--head" role="row"><span>Context</span><span>Asset</span><span>Rule</span></div>
       <div class="identity-usage-row" role="row"><strong>Website header</strong><span>Horizontal lockup</span><span>Use GreenSquare AI in full.</span></div>
       <div class="identity-usage-row" role="row"><strong>Document cover</strong><span>Primary black lockup</span><span>Preferred expression.</span></div>
-      <div class="identity-usage-row" role="row"><strong>Avatar / favicon</strong><span>Mark only</span><span>White on black tile.</span></div>
+      <div class="identity-usage-row" role="row"><strong>Avatar and favicon</strong><span>Mark only</span><span>White on black tile.</span></div>
       <div class="identity-usage-row" role="row"><strong>Internal interface</strong><span>Mark + live label</span><span>Only when the supplied lockup cannot fit.</span></div>
     </div>
     <p class="identity-minimum">Minimum width: <strong>120px</strong> horizontal lockup · <strong>20px</strong> mark only · clear space: <strong>one leaf</strong> on every side.</p>
@@ -135,7 +143,6 @@ import DesignLayout from '../layouts/DesignLayout.astro';
   <section class="v3-section identity-placement-section">
     <div class="identity-section-head">
       <div>
-        <span class="identity-kicker">Placement and protection</span>
         <h2 class="v3-section-title-sm">Anchor the signature. Give it room.</h2>
       </div>
       <p>Place the lockup on a stable edge, aligned to the content grid. The logo identifies the work; it does not float above it or compete with the conclusion.</p>
@@ -144,19 +151,19 @@ import DesignLayout from '../layouts/DesignLayout.astro';
     <div class="logo-placement-grid">
       <figure class="logo-placement logo-placement--correct">
         <div class="logo-placement-sheet"><img src="/assets/logo-lockup-light.svg" alt="GreenSquare AI"/><span>Decision brief</span><h3>Use two specialist partners.</h3></div>
-        <figcaption><strong>Correct / document</strong><span>Top-left, aligned to the content grid, one-leaf clear space.</span></figcaption>
+        <figcaption><strong>Correct — document</strong><span>Top-left, aligned to the content grid, one-leaf clear space.</span></figcaption>
       </figure>
       <figure class="logo-placement logo-placement--correct logo-placement--dark">
         <div class="logo-placement-sheet"><img src="/assets/logo-lockup-primary.svg" alt="GreenSquare AI"/><span>Internal decision room</span><h3>Evidence before interpretation.</h3></div>
-        <figcaption><strong>Correct / dark surface</strong><span>Supplied white lockup on approved black.</span></figcaption>
+        <figcaption><strong>Correct — dark surface</strong><span>Supplied white lockup on approved black.</span></figcaption>
       </figure>
       <figure class="logo-placement logo-placement--incorrect">
         <div class="logo-placement-sheet"><img src="/assets/logo-lockup-light.svg" alt="GreenSquare AI"/><span>Decision brief</span><h3>Use two specialist partners.</h3></div>
-        <figcaption><strong>Incorrect / floating</strong><span>Do not centre, rotate or detach the logo from the layout grid.</span></figcaption>
+        <figcaption><strong>Incorrect — floating</strong><span>Do not centre, rotate or detach the logo from the layout grid.</span></figcaption>
       </figure>
       <figure class="logo-placement logo-placement--incorrect logo-placement--crowded">
         <div class="logo-placement-sheet"><img src="/assets/logo-lockup-light.svg" alt="GreenSquare AI"/><span>CONFIDENTIAL · DRAFT · 09 AUG</span><h3>Use two specialist partners.</h3></div>
-        <figcaption><strong>Incorrect / crowded</strong><span>Do not place labels, rules or page edges inside the clear-space zone.</span></figcaption>
+        <figcaption><strong>Incorrect — crowded</strong><span>Do not place labels, rules or page edges inside the clear-space zone.</span></figcaption>
       </figure>
     </div>
 

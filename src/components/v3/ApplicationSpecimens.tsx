@@ -6,11 +6,11 @@ export function ApplicationSpecimens() {
       <figure className="v3-app-specimen">
         <figcaption>
           <span>Homepage</span>
-          <span>Digital / responsive</span>
+          <span>Responsive digital</span>
         </figcaption>
         <div className="v3-mini-home">
           <div>
-            <span className="v3-focus">GreenSquare / Decision capability</span>
+            <span className="v3-focus">GreenSquare AI decision capability</span>
             <h3>Make the next move defensible.</h3>
           </div>
           <div>
@@ -23,10 +23,10 @@ export function ApplicationSpecimens() {
       <figure className="v3-app-specimen">
         <figcaption>
           <span>Executive Decision Brief</span>
-          <span>Digital / print</span>
+          <span>Digital and print</span>
         </figcaption>
         <div className="v3-brief-sheet">
-          <span className="v3-focus">Decision brief / EU-OM-27.4 / 05 August 2026</span>
+          <span className="v3-focus">Decision brief · EU-OM-27.4 · 5 August 2026</span>
           <h3>Use two partners and retain strategic accounts in-house.</h3>
           <div className="v3-index-list">
             <div className="v3-index-row">
@@ -60,7 +60,7 @@ export function ApplicationSpecimens() {
         <div className="v3-slide">
           <div>
             <span className="v3-focus" style={{ color: "rgba(255,255,255,.72)" }}>
-              Recommendation / conditional
+              Conditional recommendation
             </span>
             <h3 style={{ marginTop: "2rem" }}>
               Partner-led delivery meets the economic objective.
@@ -86,7 +86,7 @@ export function ApplicationSpecimens() {
           <span>A4</span>
         </figcaption>
         <div className="v3-a4">
-          <span className="v3-focus">Decision working sheet / EU operating model</span>
+          <span className="v3-focus">Decision working sheet · EU operating model</span>
           <h3 className="v3-section-title-sm" style={{ marginTop: "1.5rem" }}>
             What must be true for the partner option to work?
           </h3>
@@ -119,7 +119,7 @@ export function ApplicationSpecimens() {
           <span>Challenge mode</span>
         </figcaption>
         <div className="v3-review-band" style={{ padding: "3rem 0" }}>
-          <StateMark kind="risk" label="Challenge 02 / material" />
+          <StateMark kind="risk" label="Material challenge" />
           <h2>Would the recommendation survive a 20-week regulated-account ramp?</h2>
           <div className="v3-split" style={{ marginTop: "2rem" }}>
             <p className="v3-note">
@@ -180,13 +180,26 @@ export function ApplicationSpecimens() {
       <figure className="v3-app-specimen">
         <figcaption>
           <span>Publication cover</span>
-          <span>Decision Review / No. 04</span>
+          <span>Decision Review · Issue 4</span>
         </figcaption>
         <div className="v3-cover">
-          <span className="v3-focus" style={{ color: "white" }}>
-            GreenSquare / Decision Review
-          </span>
-          <h3 style={{ marginTop: "3rem" }}>The assumption that changes the call.</h3>
+          <div className="v3-cover-masthead">
+            <strong>GreenSquare AI</strong>
+            <span>Decision Review</span>
+          </div>
+          <h3>
+            <span>The assumption</span>
+            <span>that changes</span>
+            <span>the call.</span>
+          </h3>
+          <div className="v3-cover-signature" aria-hidden="true">
+            <span></span>
+            <img src="/assets/logo.svg" alt="" />
+          </div>
+          <div className="v3-cover-meta">
+            <span>Issue 4</span>
+            <span>Decision quality</span>
+          </div>
         </div>
       </figure>
     </div>

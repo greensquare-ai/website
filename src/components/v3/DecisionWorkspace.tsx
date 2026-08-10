@@ -18,8 +18,8 @@ export function DecisionWorkspace() {
         <div>
           <p className="v3-workspace-stage">
             {challenge
-              ? "Test / recommendation reopened"
-              : "Compare / partner option under pressure"}
+              ? "Test — recommendation reopened"
+              : "Compare — partner option under pressure"}
           </p>
           <h2>{DECISION.question}</h2>
         </div>
@@ -130,7 +130,7 @@ export function DecisionWorkspace() {
           </dl>
 
           <div className="v3-dock-action">
-            <span className="v3-focus">Next action / Maya Chen / 18 Aug</span>
+            <span className="v3-focus">Next action · Maya Chen · 18 August</span>
             <strong>
               {challenge
                 ? "Request regulated-account ramp cohorts from both partners."
