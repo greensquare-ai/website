@@ -1,0 +1,147 @@
+---
+import '../../../src/styles/v3.css';
+import '../styles/design.css';
+
+export interface Props {
+  title: string;
+  focus: string;
+  section: string;
+  description?: string;
+}
+
+const {
+  title,
+  focus,
+  section,
+  description = 'The GreenSquare AI system for representing, navigating and improving consequential decisions.',
+} = Astro.props;
+
+const navGroups = [
+  {
+    label: 'Foundations',
+    items: [
+      ['System', '/'],
+      ['Constitution', '/constitution/'],
+      ['Identity', '/identity/'],
+      ['Typography', '/typography/'],
+      ['Iconography', '/iconography/'],
+    ],
+  },
+  {
+    label: 'Expression',
+    items: [
+      ['Language', '/language/'],
+      ['Grammar', '/grammar/'],
+      ['Data graphics', '/data-graphics/'],
+    ],
+  },
+  {
+    label: 'Applications',
+    items: [
+      ['Decision model', '/decision-model/'],
+      ['Interface', '/interface/'],
+      ['Applications', '/applications/'],
+    ],
+  },
+  {
+    label: 'Stewardship',
+    items: [
+      ['Governance', '/governance/'],
+      ['Audit', '/audit/'],
+    ],
+  },
+] as const;
+
+const current = Astro.url.pathname.replace(/\/$/, '') || '/';
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+---
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} · GreenSquare AI design language</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Manrope:wght@600&family=Space+Grotesk:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="v3 design-system approved-type">
+    <a class="design-skip" href="#design-main">Skip to content</a>
+    <div class="design-shell">
+      <aside class="design-rail" aria-label="Design language navigation">
+        <a href="/" class="design-brand" aria-label="GreenSquare AI design language home">
+          <img src="/assets/logo.svg" alt="" width="34" height="34" />
+          <span>GreenSquare AI</span>
+        </a>
+
+        <div class="design-rail-label">
+          <span>Design language</span>
+          <span>Internal working standard</span>
+        </div>
+
+        <nav class="design-nav">
+          {
+            navGroups.map((group) => (
+              <div class="design-nav-group">
+                <span class="design-nav-group-label">{group.label}</span>
+                <div>
+                  {group.items.map(([label, path]) => {
+                    const isCurrent = current === (path.replace(/\/$/, '') || '/');
+                    return (
+                      <a
+                        href={path}
+                        class="design-nav-link"
+                        data-current={isCurrent ? 'true' : undefined}
+                        aria-current={isCurrent ? 'page' : undefined}
+                      >
+                        <strong>{label}</strong>
+                      </a>
+                    );
+                  })}
+                </div>
+              </div>
+            ))
+          }
+        </nav>
+
+        <div class="design-rail-footer">
+          <span>GreenSquare AI</span>
+          <span>August 2026</span>
+        </div>
+      </aside>
+
+      <main id="design-main" class="design-main">
+        <header class="design-topbar">
+          <span>{section}</span>
+          <span>GreenSquare AI</span>
+        </header>
+
+        <article class="v3-page" data-route-title={title}>
+          <header class="v3-page-head">
+            <div class="design-page-meta">
+              <span>Governing question</span>
+            </div>
+            <div class="design-hero-copy">
+              <h1 tabindex="-1">{title}</h1>
+              <p class="v3-focus">{focus}</p>
+            </div>
+          </header>
+          <slot />
+        </article>
+
+        <footer class="design-footer">
+          <strong>GreenSquare AI</strong>
+          <span>Structure that turns uncertainty into deliberate action.</span>
+          <span>Internal design language</span>
+        </footer>
+      </main>
+    </div>
+  </body>
+</html>

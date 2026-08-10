@@ -1,0 +1,11 @@
+---
+import DesignLayout from '../layouts/DesignLayout.astro';
+import { DecisionModelContent } from '../../../src/components/v3/pages/DecisionModelContent';
+---
+<DesignLayout
+  section="Decision model"
+  title="Decision Model"
+  focus="Which EU operating model should we commit to for FY27?"
+>
+  <DecisionModelContent client:load />
+</DesignLayout>

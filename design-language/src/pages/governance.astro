@@ -1,0 +1,55 @@
+---
+import DesignLayout from '../layouts/DesignLayout.astro';
+---
+<DesignLayout
+  section="Governance"
+  title="The system stays useful only when someone owns it."
+  focus="How are standards approved, released, challenged and improved without becoming optional?"
+  description="GreenSquare AI design-language governance, approval roles, release gates and exception handling."
+>
+  <section class="v3-section governance-model">
+    <div class="v3-split">
+      <div>
+        <span class="identity-kicker">Operating model</span>
+        <h2 class="v3-section-title-sm">One owner. Distributed contribution.</h2>
+      </div>
+      <p class="v3-lede">The design language is an internal control for how GreenSquare AI represents evidence, judgement and action—not a gallery of optional styles.</p>
+    </div>
+    <div class="governance-roles" role="table" aria-label="Design language roles">
+      <div class="governance-row governance-row--head"><span>Role</span><span>Accountability</span><span>Decision right</span></div>
+      <div class="governance-row"><strong>System owner</strong><span>Maintains principles, identity, components and release notes.</span><span>Approves standards and deprecations.</span></div>
+      <div class="governance-row"><strong>Practice leads</strong><span>Test standards in client work and propose changes with examples.</span><span>Approve practice-specific extensions.</span></div>
+      <div class="governance-row"><strong>Engagement lead</strong><span>Ensures deliverables meet evidence, language and accessibility rules.</span><span>Approves documented exceptions.</span></div>
+      <div class="governance-row"><strong>Every author</strong><span>Uses current assets, cites sources and names uncertainty.</span><span>Stops unsupported claims from progressing.</span></div>
+    </div>
+  </section>
+
+  <section class="v3-section governance-gates">
+    <div class="identity-section-head">
+      <div><span class="identity-kicker">Release gate</span><h2 class="v3-section-title-sm">Five checks before work leaves the room.</h2></div>
+      <p>The gate applies to decks, briefs, reports, interfaces and published charts. Evidence quality is part of design quality.</p>
+    </div>
+    <ol class="governance-checks">
+      <li><span>01</span><div><strong>Decision clarity</strong><p>The governing question, recommendation, trade-off and next action are explicit.</p></div><em>Owner: engagement lead</em></li>
+      <li><span>02</span><div><strong>Evidence integrity</strong><p>Claims have sources; interpretation is separated; uncertainty is named and material.</p></div><em>Owner: author</em></li>
+      <li><span>03</span><div><strong>Language quality</strong><p>The executive sentence is direct, specific and free of killed consultancy language.</p></div><em>Owner: reviewer</em></li>
+      <li><span>04</span><div><strong>Visual compliance</strong><p>Current logo assets, palette, chart grammar, spacing and placement rules are followed.</p></div><em>Owner: design reviewer</em></li>
+      <li><span>05</span><div><strong>Access and handover</strong><p>Contrast, reading order, alt text, editable source and accountable owner are present.</p></div><em>Owner: publisher</em></li>
+    </ol>
+  </section>
+
+  <section class="v3-section governance-change">
+    <div class="v3-split">
+      <div><span class="identity-kicker">Change control</span><h2 class="v3-section-title-sm">Exceptions create evidence for the next release.</h2></div>
+      <div class="governance-flow" aria-label="Design language change process">
+        <div><strong>Propose</strong><p>Show the problem, the current rule and a real example.</p></div>
+        <div><strong>Test</strong><p>Use the change in at least two different deliverables.</p></div>
+        <div><strong>Decide</strong><p>Accept, revise or reject with the governing principle.</p></div>
+        <div><strong>Release</strong><p>Version assets, publish notes and state what is deprecated.</p></div>
+      </div>
+    </div>
+    <div class="governance-version">
+      <strong>Version convention</strong><span>Major: principle or identity change</span><span>Minor: component or guidance addition</span><span>Patch: correction with no behavioural change</span>
+    </div>
+  </section>
+</DesignLayout>

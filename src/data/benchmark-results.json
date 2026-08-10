@@ -166,7 +166,7 @@
 
   "limitations": [
     "No condition in this grid resembles a real operator. The question-only condition has nothing and the all-facts condition has everything. An operator who arrives with most of what matters and a blind spot they cannot see is the condition the product exists for, and it was not run.",
-    "One person ran the grid, scored it, held the sealed reference answers, and answered the file's questions during the runs. The re-score was carried out by three agents working from the published rubric, blind to the original scoring. Neither they nor the adjudication were independent of GreenSquare, and this page does not use that word.",
+    "One person ran the grid, scored it, held the sealed reference answers, and answered the file's questions during the runs. The re-score was carried out by three agents working from the published rubric, blind to the original scoring. Neither they nor the adjudication were independent of GreenSquare AI, and this page does not use that word.",
     "Two published cells are definitional rather than empirical, and a third is partly so. A single-turn condition cannot ask before answering, and it cannot obtain three facts that are not in its prompt.",
     "The three checks that separate most cleanly are the behaviours the file instructs the model to perform. A reasonable reading is that they measure whether the file was loaded, not whether the model reasoned better.",
     "The all-facts condition was not information-equal between the two models on Case B. The Claude fact sheet carries two cross-reference pointers the ChatGPT one lacks.",

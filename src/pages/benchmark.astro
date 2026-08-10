@@ -33,7 +33,7 @@ const artefacts = [
 ];
 ---
 <BaseLayoutV2
-  title="Benchmark | GreenSquare"
+  title="Benchmark | GreenSquare AI"
   description={`A ${g.runs_total} run pre-registered benchmark of The Decision across two AI models, three business cases and three conditions, with the method, the results, every deviation and the limitations stated plainly.`}
   current="benchmark"
 >
@@ -280,7 +280,7 @@ const artefacts = [
       <h2 class="dl-h2">Inspect it yourself, starting with the commit that actually exists.</h2>
       <p>The pre-registration commit is <code>{p.full}</code>, dated {p.authoredAt}. If you tried to verify this benchmark before and could not, the reason is deviation 3. The commit ID published until now is in no ref in the repository, and the procedure failed at its first step.</p>
       <p>Six inputs were hashed and frozen before the first scored run, and all six SHA-256 values match their files when read with LF line endings. If you hash with CRLF you will get six different values, for a reason that has nothing to do with this benchmark.</p>
-      <p><strong>There is a limit to what you can check today, and it is a large one.</strong> No transcript is published. The sealed reference answers are not published. Nobody outside GreenSquare can re-score a single run or confirm a single adjudicated cell. Those are deviations 4 and 5.</p>
+      <p><strong>There is a limit to what you can check today, and it is a large one.</strong> No transcript is published. The sealed reference answers are not published. Nobody outside GreenSquare AI can re-score a single run or confirm a single adjudicated cell. Those are deviations 4 and 5.</p>
       <ul class="dl-art">
         {artefacts.map((a) => (
           <li><a href={p.fileUrl(a.path)} target="_blank" rel="noopener"><span><b>{a.title}</b><em>{a.sub}</em></span><span class="dl-art__go">View</span></a></li>
@@ -295,7 +295,7 @@ const artefacts = [
     <div class="dl-w">
       <p class="dl-k">Status</p>
       <h2 class="dl-h2">The refresh commitment has lapsed on both model legs.</h2>
-      <p>GreenSquare commits to re-running this benchmark within {r.commitmentDays} days of a major model release. The grid was scored on {d.scoredOn} against {g.models.map((m) => m.name).join(' and ')}. Both have since been superseded and both windows have expired.</p>
+      <p>GreenSquare AI commits to re-running this benchmark within {r.commitmentDays} days of a major model release. The grid was scored on {d.scoredOn} against {g.models.map((m) => m.name).join(' and ')}. Both have since been superseded and both windows have expired.</p>
       {r.legs.map((leg) => (
         <p><strong>The {leg.vendor} leg.</strong> {leg.tested_model} was superseded by {leg.superseded_by} on {leg.releasedOn}, {leg.daysSinceRelease} days before {d.currentAsAt}. The {r.commitmentDays} day window expired on {leg.dueOn}. As at {d.currentAsAt} the re-run is {leg.daysPastDue} days past that deadline. {leg.caveat}</p>
       ))}

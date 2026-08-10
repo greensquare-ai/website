@@ -25,11 +25,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&family=Manrope:wght@400;500;600&family=IBM+Plex+Mono:wght@400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Manrope:wght@600&family=Space+Grotesk:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
   </head>
-  <body class="v2">
+  <body class="v2 brand-site">
     <a class="skip-link" href="#main" style="position:absolute;left:-9999px;top:0;background:var(--v-green);color:var(--v-cream);padding:10px 16px;z-index:100;">Skip to content</a>
     <NavV2 current={current} />
     <main id="main">
