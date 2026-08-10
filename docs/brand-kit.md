@@ -1,160 +1,166 @@
-# GreenSquare brand kit
+# GreenSquare AI brand system
 
-The single source of truth for the GreenSquare visual system, as shipped in the "Operational Gravity"
-uplift (July 2026). Reuse this to re-skin the free Decision Frame and any future surface. Canonical CSS
-tokens live in `src/styles/tokens-v2.css`; the system rules live in `src/styles/global-v2.css`. Change
-colour and type in the token file only.
+> **Canonical source:** [GreenSquare AI design language](https://greensquare-brand-guideline-51fb7ad.vercel.app/)
+>
+> The deployed design-language application is the governing standard. This file is a repository-facing summary for contributors. If this summary and the deployed guideline differ, the deployed guideline wins.
 
-North star: Linear / Palantir. Quiet authority, infrastructure-first, faceless. Australian English. No em
-dashes, no exclamation marks, no founder name, and honour the word blacklist in `CLAUDE.md`.
+**Version:** August 2026  
+**Status:** Internal working standard  
+**Source application:** `design-language/`
 
----
+## 1. Governing idea
 
-## 1. Colour
+GreenSquare AI compresses the distance between uncertainty and a defensible decision.
 
-| Token | Value | Role |
+The design system must keep the governing question, evidence, tension, recommendation and next action connected. Structure is the identity. Decoration that does not improve judgement should be removed.
+
+Every surface must pass five constitutional tests:
+
+1. **Structure creates capability.** Does the design make the work easier to understand and perform?
+2. **Move from reactive to deliberate.** Does the user feel more capable after interacting with it?
+3. **Make judgement defensible.** Can another informed person inspect, challenge and understand the recommendation?
+4. **Hold the practitioner's standard.** Would an experienced operator trust it in a consequential working session?
+5. **Remove what does not improve judgement.** Would removing an element reduce the user's ability to decide?
+
+## 2. Name and identity
+
+- Use **GreenSquare AI** as the registered business name and full wordmark.
+- Use only supplied logo assets. Never retype, regroup or alter the wordmark.
+- The mark contains four leaves. The **lower-left leaf is always filled**.
+- Never rotate, mirror, stretch, redraw or change the filled leaf.
+- Use the full lockup when introducing or naming the organisation.
+- Use the mark alone only in compact, repeated or already-labelled contexts.
+- Minimum width: 120px horizontal lockup, 20px mark only.
+- Minimum clear space: one leaf on every side.
+- Preferred placement: top-left on the content grid. Bottom-left is allowed for closing frames.
+
+Do not reuse the retired diagonal two-filled quadrant or improvised square mark.
+
+## 3. Colour
+
+### Core identity
+
+| Role | Value | Use |
+|---|---:|---|
+| Black | `#10110F` | Primary ground and highest-authority expression |
+| Forest | `#133F26` | Owned brand field |
+| White | `#FFFFFF` | Primary surface |
+| Deep | `#0B2313` | Dark extension |
+| Ground | `#F5F5F5` | Secondary surface |
+| Line | `#DEDAD2` | Rules, axes and structure |
+| Muted | `#63645C` | Supporting text |
+
+### Decision notation
+
+| State | Value | Expression |
+|---|---:|---|
+| Confirmed | `#24553B` | Filled marker, verified evidence |
+| Assumption | `#745B2D` | Open marker, dashed test line |
+| Uncertainty | `#686B65` | Open circle, unresolved direction |
+| Material risk | `#77372F` | Filled diamond, evidenced downside |
+
+Colour corroborates meaning. Position, label, shape and line treatment must carry the same meaning in greyscale. State colours are small signals, never decorative fields.
+
+## 4. Typography
+
+The approved system uses two text families and one supplied wordmark treatment.
+
+| Role | Family | Specification |
 |---|---|---|
-| `--v-paper` | `#ffffff` | Base white; cards |
-| `--v-off` | `#fbfbfa` | Barely-off-white section |
-| `--v-fill` | `#f3f4f1` | Light grey section |
-| `--v-fill-2` | `#e9ebe6` | Mid grey; secondary button; grey CTA panel |
-| `--v-fill-3` | `#dde0da` | Deeper grey; secondary button hover |
-| `--v-green` | `#1f5a3d` | The brand green block + accent |
-| `--v-green-deep` | `#16452e` | Deeper green panel |
-| `--v-green-bright` | `#29764e` | Primary button hover |
-| `--v-green-ink` | `#0b2318` | Near-black green. **Footer only**, so it stays distinct from any green section above it |
-| `--v-lime` | `#dff49f` | The single pop. The brand mark on dark grounds; index/label accent on green |
-| `--v-ink` | `#171b18` | Near-black text |
-| `--v-ink-soft` | `#545a54` | Muted body |
-| `--v-ink-faint` | `#7d827c` | Captions, kickers |
-| `--v-cream` | `#f2f4ee` | Text/mark on green |
-| `--v-cream-soft` | `rgba(242,244,238,.74)` | Muted text on green |
-| `--v-cream-faint` | `rgba(242,244,238,.52)` | Captions on green |
-| `--v-signal` | `#2a9d55` | Readout progress/pass on light |
-| `--v-signal-on-green` | `#cdeeb4` | Readout progress/pass on green |
-| `--v-error` | `#b23a2a` | Form error text on light grounds |
-| `--v-error-on-green` | `#ffd8d1` | Form error text on green grounds |
+| H1 and H2 | Space Grotesk | Semibold, restrained scale, no artificial tracking |
+| Functional text | IBM Plex Sans | H3, body, navigation, tables, charts, captions and controls |
+| Wordmark only | Manrope | Semibold inside the supplied lockup, never rebuilt as live text |
 
-Hairlines are `currentColor`-based at low opacity (`--v-line`, `--v-line-strong`, and the `-green`
-variants). Use them for structural dividers (list rows, tables), never as the only thing defining a card.
+- Page title: 48–56px.
+- Section title: 32–38px.
+- Subheading: 21–24px.
+- Body: 18–20px, capped at 65–72 characters per line.
+- Data and labels: 14–17px.
+- Sentence case is the default.
+- Do not use capitals, miniature labels or tracking to manufacture hierarchy.
+- IBM Plex Mono and JetBrains Mono are not part of the canonical brand typography.
 
-**Contrast rule:** any element on a green ground that is not itself a `.v-green` element must set its text
-to `--v-cream` explicitly (e.g. the split-CTA green panel). Do not rely on inheritance.
+## 5. Language
 
----
+Judgement must be visible in the sentence.
 
-## 2. Type
+- Lead with the executive sentence.
+- Separate evidence from interpretation.
+- State the recommendation, evidence, trade-off and condition that changes the call.
+- Name uncertainty specifically, including its decision relevance.
+- Turn every material open point into an owned action with an output and date.
+- Prefer direct, specific language to consultancy theatre.
+- Use Australian English.
+- Do not use em dashes or exclamation marks.
+- Do not make the work sound more confident than its evidence.
 
-Three families, one tight weight ladder. Loaded in `BaseLayoutV2.astro`.
+## 6. Decision grammar
 
-| Role | Family / weight | Token | Used for |
-|---|---|---|---|
-| Display | Space Grotesk 500 | `--vf-display` | h1–h4, `.v-display`, `.v-quote`, tier price |
-| Body | Manrope 400 | `--vf-body` | body copy, leads, captions |
-| UI | Manrope 500 | `--vf-body` | nav links, small UI labels, sub-labels |
-| Semibold | Manrope 600 | `--vf-body` | wordmark, buttons, `.v-h3`/`.v-h4`, kickers, lead-in leads, table headers, FAQ summaries, footer headings |
-| Mono | IBM Plex Mono 400 | `--vf-mono` | readout-module chrome, `/01` indexes, `.v-tag`, table numerics |
+Every decision artefact keeps these elements connected:
 
-Rules:
-- **No serif.** Cormorant is removed. The editorial pull-quote (`.v-quote`) is Space Grotesk.
-- **No extended letter-spacing.** Body and labels are `0`. Display headings may go tight negative
-  (`-0.01` to `-0.02em`). The only positive tracking permitted is `0.02em`, and only inside readout
-  modules (the terminal idiom), never on eyebrows, labels, nav, footer or tables.
-- Mono is reserved for the operational readout artefacts and index numerals. Never set an eyebrow,
-  heading or nav item in mono.
+1. Governing decision.
+2. Objective and context.
+3. Credible options.
+4. Criteria and evidence.
+5. Assumptions and unknowns.
+6. Material trade-off.
+7. Recommendation.
+8. Reversal threshold or test.
+9. Owned next action.
 
----
+Visual relationships:
 
-## 3. Kickers (the old "eyebrow", reformed)
+- Solid line: confirmed structure.
+- Dashed line: assumption under test.
+- Open marker: unresolved uncertainty.
+- Convergence: supported recommendation.
+- Return loop: test that can reopen the recommendation.
+- Exit vector: owned action with a verb and date.
 
-- Default to **no kicker**. Lead with the headline.
-- Where a small section label genuinely aids scanning, use `.v-label`: Manrope 600, ~0.82rem, sentence
-  case, `--v-ink-faint` (or `--v-cream-faint` on green), **zero tracking, no uppercase, no hairline rule**.
-- The old `.v-label--rule` left-vertical-line motif is retired. Do not reintroduce it.
+## 7. Data graphics
 
----
+Use familiar business charts before specialist formats:
 
-## 4. Buttons and links
+- bars or clustered columns for comparison;
+- lines or columns for change over time;
+- waterfalls for reconciled movement;
+- stacked bars for composition;
+- Gantt charts only when dates, dependencies and owners are maintained.
 
-| Class | Look | Use |
-|---|---|---|
-| `.v-btn.v-btn--green` | Green fill, cream text, hover `--v-green-bright` | Primary CTA on light grounds |
-| `.v-btn.v-btn--grey` | `--v-fill-2` fill, ink text, no border, hover `--v-fill-3` | Secondary CTA, paired with the primary |
-| `.v-btn.v-btn--on-green` | Cream fill, green text | Primary/secondary CTA on green grounds |
-| `.v-link` | Green underline, `text-underline-offset:3px`, no arrow | Inline prose links only |
+Lead with a conclusion, label data directly, use colour for one material distinction and state unit, period, scope, source and assumptions beside the chart.
 
-- Paired hero buttons share height and `min-width:220px` (`.hero-actions .v-btn`) so they read as equals;
-  they go full-width when stacked on mobile.
-- **No arrow glyphs** (`→`) anywhere. Affordance comes from the button shape or an underline, not an arrow.
-- Filled link-buttons must out-specify the base link colour. The base rule is `.v2 :where(a){color:green}`
-  (zero specificity) precisely so `.v-btn--green` etc. win. Never raise link specificity above that.
+## 8. Application anatomy
 
----
+Every brief, slide, working sheet, interface or publication must preserve:
 
-## 5. Lists: keyword lead-in
+- the governing question;
+- the recommendation;
+- the evidence state;
+- the material uncertainty or trade-off;
+- the owned next action.
 
-Retire bullet markers (no dashes, no dots, no squares). Use `.v-leadlist`: each item opens with a 2–4 word
-`<strong>` lead (Manrope 600, ink; cream on green) ending in a full stop, then the sentence continues in
-`--v-ink-soft` (`--v-cream-soft` on green). Example:
+Format changes density, not meaning.
 
-> **Defensible, every run.** Only the loaded product produced a structured, evidence-tagged brief, 18 of 18
-> across both models.
+## 9. Release gate
 
-Native prose lists (`.v-prose ul`) keep a simple green `::marker`, which is fine for long-form legal and
-methodology copy.
+Before work leaves the room, confirm:
 
----
+1. Decision clarity.
+2. Evidence integrity.
+3. Language quality.
+4. Visual compliance.
+5. Accessibility, editable source and accountable ownership.
 
-## 6. Cards, elevation and motion
+## 10. Deprecated systems
 
-- `.v-card`: paper background, radius 0, **no hairline border on tinted grounds**. Presence comes from a
-  layered soft shadow (`0 1px 2px rgba(23,27,24,.05), 0 16px 40px -20px rgba(23,27,24,.12)`).
-- Static cards get elevation, not hover. **Interactive** elements (linked cards, artefact rows) get a hover
-  lift: `translateY(-2px)` plus a deeper shadow, 150–300ms on `--v-ease`.
-- Distinguish a "key" card by weight and a green kicker, not by a coloured top border ("lip"). Lips are
-  banned.
-- All motion respects `prefers-reduced-motion`.
-- Pressable buttons (`.v-btn`) get a press feedback of `translateY(1px)` on active, 150ms on `--v-ease` (mirroring the form submit button).
-- Readout meter bars fill once from the left (`scaleX` 0 to 1) over 620ms on `--v-ease` when their block scroll-reveals; they render at rest under reduced motion.
-- Native disclosures (FAQ `<details>`) animate open and closed with a height and opacity transition at 300ms on `--v-ease`, with a clean instant fallback in unsupporting browsers.
-- The mobile nav drawer enters and exits with a symmetric 150ms opacity and small `translateY` move on `--v-ease`.
+The following are superseded and must not be used as current guidance:
 
----
+- the July 2026 “Operational Gravity” brand kit;
+- the private 35-route React design-language draft;
+- the diagonal two-filled quadrant identity;
+- Manrope as the body family;
+- IBM Plex Mono as brand notation;
+- `#1F5A3D` or `#006142` as the canonical brand green;
+- campaign rules based on the superseded private design-language application.
 
-## 7. Readout module (the code/markdown artefact)
-
-The operational readout (`.v-readout`) is the one place the mono, uppercase, terminal idiom lives. On a
-light ground it is an off-white panel with a `--v-line-strong` border and a soft shadow. **On a green
-ground it flips to a floating white paper card** (`box-shadow: 0 24px 48px -16px rgba(0,0,0,.35)`), never a
-dark box on dark green. Data separators inside readouts use ` / ` (the file-path idiom), never `·`.
-
----
-
-## 8. Logo and wordmark
-
-- Mark: the four-square glyph. `logo-mark.svg` (green `#133f26`) for light grounds; `logo-mark-lime.svg`
-  (lime `#DFF49F`) for the dark footer; `logo.svg` is the `currentColor` tintable version; `favicon.svg` is
-  the lime mark on a green tile.
-- Wordmark "GreenSquare" is always **Manrope 600** (semibold), never the display face.
-- On the near-black footer the mark is lime so it stays visible.
-
----
-
-## 9. Footer
-
-Near-black green (`--v-green-ink`), always darker than the section above it. Lime mark, Manrope 600
-wordmark, sentence-case column headings, a plain meta line ("Decision infrastructure for Claude, GPT and
-Gemini."), and a legal row of `© {year} GreenSquare` + `hello@greensquare.ai`. No ABN, no `·` separators.
-
----
-
-## 10. Do / don't
-
-**Never:** tracked or uppercase eyebrows · a left hairline rule on a label · arrow glyphs (`→`) · em-dash or
-symbol bullet markers · `·` / `&middot;` separators · green text on a green fill (or any low-contrast button
-text) · coloured card "lips" · faint hairline-only card borders · a dark box on a dark green ground · serif
-type (Cormorant) · "ABN to be confirmed" · a price surfaced at launch · extended letter-spacing.
-
-**Always:** headline-first sections · sentence case · three families and a tight weight ladder · elevation
-or motion to make cards present · paper readouts on green · the free Decision Frame as the primary CTA ·
-Australian English, no em dashes, no banned words.
+For implementation detail, assets and worked examples, use the [live canonical guideline](https://greensquare-brand-guideline-51fb7ad.vercel.app/) and the `design-language/` source application.
