@@ -84,32 +84,25 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
   <section class="v-section v-green">
     <div class="v-container v-split is-reverse">
       <div class="v-reveal">
-        <h2 class="v-h2">54 runs. The process held every time.</h2>
+        <h2 class="v-h2">The test is pre-registered, and every departure from it is published.</h2>
         <p class="v-lead" style="margin-top: var(--v-5);">
-          We tested The Decision on Claude Opus 4.8 and ChatGPT GPT-5.5 across three business cases. The loaded
-          file completed all five process checks in 18 of 18 runs and surfaced the hidden decision in 17 of 18.
-          A question only baseline surfaced it in 0 of 18. The method and limitations are public.
+          The Decision was tested against two baselines on two frontier models and three business cases. The
+          cases, the protocol, the scoring rubric and the pre-registration record are public and hashed. So is
+          every place the benchmark departed from what it promised.
         </p>
-        <a class="v-link" href={withBase('/benchmark/')} style="display:inline-block; margin-top: var(--v-6);">Read the full benchmark</a>
+        <a class="v-link" href={withBase('/benchmark/')} style="display:inline-block; margin-top: var(--v-6);">Read the benchmark, including what it cannot tell you</a>
       </div>
       <div class="v-reveal d1">
         <div class="v-readout">
-          <div class="v-readout__bar"><span class="v-readout__dot"></span> HIDDEN DECISION / 18 RUNS PER CONDITION</div>
+          <div class="v-readout__bar"><span class="v-readout__dot"></span> WHAT IS PUBLISHED</div>
           <div class="v-readout__body">
-            <div class="v-run">
-              <div class="v-run__head"><span class="v-run__name">QUESTION ONLY</span><span class="v-run__val">0 / 18</span></div>
-              <div class="v-meter"><div class="v-meter__fill is-muted" style="--w: 0%;"></div></div>
-            </div>
-            <div class="v-run">
-              <div class="v-run__head"><span class="v-run__name">ALL FACTS PROVIDED</span><span class="v-run__val">15 / 18</span></div>
-              <div class="v-meter"><div class="v-meter__fill is-muted" style="--w: 83.3%;"></div></div>
-            </div>
-            <div class="v-run">
-              <div class="v-run__head"><span class="v-run__name">THE DECISION</span><span class="v-run__val"><b>17 / 18</b></span></div>
-              <div class="v-meter"><div class="v-meter__fill" style="--w: 94.4%;"></div></div>
-            </div>
+            <div class="v-run"><div class="v-run__head"><span class="v-run__name">PRE-REGISTRATION</span><span class="v-run__val"><b>HASHED</b></span></div></div>
+            <div class="v-run"><div class="v-run__head"><span class="v-run__name">CASES AND RUBRIC</span><span class="v-run__val"><b>PUBLIC</b></span></div></div>
+            <div class="v-run"><div class="v-run__head"><span class="v-run__name">DEVIATIONS</span><span class="v-run__val"><b>PUBLISHED</b></span></div></div>
+            <div class="v-run"><div class="v-run__head"><span class="v-run__name">TRANSCRIPTS</span><span class="v-run__val">WITHHELD</span></div></div>
+            <div class="v-run"><div class="v-run__head"><span class="v-run__name">RESULTS</span><span class="v-run__val">SEE BENCHMARK</span></div></div>
           </div>
-          <div class="v-readout__foot">TWO MODELS / THREE CASES / JULY 2026</div>
+          <div class="v-readout__foot">FIGURES LIVE ON ONE PAGE ONLY / SEE BENCHMARK</div>
         </div>
       </div>
     </div>

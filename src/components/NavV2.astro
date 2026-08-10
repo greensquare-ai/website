@@ -41,6 +41,13 @@ const links = [
 </header>
 <style>
   .v-nav__drawer {
+    /* Out of flow. With visibility:hidden alone the closed drawer still occupied
+       its full height, adding roughly 280px of dead space above every page on
+       mobile. Absolute keeps the open/close transition and costs no layout. */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
     background: var(--v-paper);
     border-bottom: 1px solid var(--v-line);
     opacity: 0;

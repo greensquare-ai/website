@@ -1,59 +1,177 @@
 {
-  "phase": "pre_registered_grid",
-  "run_meta": {
-    "date": "2026-07-06",
-    "note": "Pre-registered grid. Two frontier models, three fictional ASX-scale cases, three conditions (naked baseline / informed baseline / loaded Decision Brief), n=3 per cell = 54 runs. Case A Claude is the folded-in design-phase pilot. Gemini pre-registered but pending. Single scorer; scored blind against a sealed key whose hash was committed before any run.",
-    "prereg_commit": "5e89de4",
-    "models": { "claude": "Claude Opus 4.8", "gpt": "ChatGPT GPT-5.5", "gemini": "pending" },
+  "schema": "v4-adjudicated",
+  "grid": {
+    "id": "pre_registered_45",
+    "runs_total": 45,
+    "n_per_arm": 15,
     "n_per_cell": 3,
-    "runs_total": 54
-  },
-  "aggregate": {
-    "n_per_arm": 18,
-    "defensible_brief_structure": {
-      "label": "Produced a defensible brief, on every run",
-      "armA": { "met": 0, "n": 18 },
-      "armB": { "met": 0, "n": 18 },
-      "armC": { "met": 18, "n": 18 }
+    "target_runs": 180,
+    "models": [
+      { "id": "claude", "name": "Claude Opus 4.8" },
+      { "id": "gpt", "name": "ChatGPT GPT-5.5" }
+    ],
+    "planned_models": [{ "id": "gemini", "name": "Gemini", "status": "not_run" }],
+    "cases": [
+      { "id": "A", "name": "Meridian managed-service bid", "models": ["gpt"], "n_per_arm": 3 },
+      { "id": "B", "name": "Larkfield build-vs-buy", "models": ["claude", "gpt"], "n_per_arm": 6, "engine_adds_least": true },
+      { "id": "C", "name": "Corvan continue-vs-exit", "models": ["claude", "gpt"], "n_per_arm": 6 }
+    ],
+    "excluded": {
+      "pilot_runs": 9,
+      "transcript_files_on_disk": 10,
+      "reconciled": false,
+      "reason": "Design-phase pilot, Case A on Claude, all three arms. protocol.md:23 excludes pilot runs from the pre-registered grid."
     },
-    "groups": {
-      "process_discipline": {
-        "label": "Process discipline (only the product does this, reliably)",
-        "checks": {
-          "asked_before_answering": { "label": "Asked before answering", "armA": { "met": 0, "n": 18 }, "armB": { "met": 0, "n": 18 }, "armC": { "met": 18, "n": 18 } },
-          "real_options_compared": { "label": "Real options incl. do-nothing, compared on criteria", "armA": { "met": 0, "n": 18 }, "armB": { "met": 2, "n": 18 }, "armC": { "met": 18, "n": 18 } },
-          "evidence_tagged": { "label": "Evidence tagged (given, inferred, derived, unknown)", "armA": { "met": 0, "n": 18 }, "armB": { "met": 0, "n": 18 }, "armC": { "met": 18, "n": 18 } },
-          "named_untested_constraint": { "label": "Named an untested constraint or assumption", "armA": { "met": 9, "n": 18 }, "armB": { "met": 18, "n": 18 }, "armC": { "met": 18, "n": 18 } },
-          "stated_kill_criteria": { "label": "Stated kill criteria", "armA": { "met": 12, "n": 18 }, "armB": { "met": 17, "n": 18 }, "armC": { "met": 18, "n": 18 } }
-        }
-      },
-      "judgment": {
-        "label": "Judgment (scored blind against a sealed answer key)",
-        "checks": {
-          "surfaced_hidden_decision": { "label": "Surfaced the hidden decision by integrating the facts", "armA": { "met": 0, "n": 18 }, "armB": { "met": 15, "n": 18 }, "armC": { "met": 17, "n": 18 } },
-          "direction_matched_key": { "label": "Recommendation direction matched the sealed key", "armA": { "met": 9, "n": 18 }, "armB": { "met": 18, "n": 18 }, "armC": { "met": 18, "n": 18 } },
-          "caught_planted_bias": { "label": "Caught the planted inconsistency or bias", "armA": { "met": 5, "n": 18 }, "armB": { "met": 18, "n": 18 }, "armC": { "met": 18, "n": 18 } }
-        }
-      }
+    "retired": {
+      "runs_total": 54,
+      "reason": "The published 54-run grid pooled nine pilot runs that the protocol excluded."
     }
   },
+
+  "arms": [
+    { "id": "armA", "label": "Question only", "note": "The frozen prompt only. One turn. If the model asks questions they are not answered." },
+    { "id": "armB", "label": "All facts", "note": "The frozen prompt with the full fact sheet appended in the first message. One turn. Equal information to the loaded condition." },
+    { "id": "armC", "label": "The Decision loaded", "note": "The file, then the frozen prompt. The model interrogates; the operator answers only from the fact sheet and replies 'That has not been assessed' to anything off-sheet." }
+  ],
+
+  "checks": [
+    { "id": "c1", "group": "process", "label": "Asked before answering", "page_label": "Asked before answering",
+      "armA": { "met": 0, "n": 15 }, "armB": { "met": 0, "n": 15 }, "armC": { "met": 15, "n": 15 },
+      "definitional": ["armA", "armB"],
+      "definitional_note": "Arms A and B are single-turn by construction (protocol.md:9-10), so neither can pass this check. The zero restates the design of the test." },
+
+    { "id": "c2", "group": "process", "label": "Real options incl. do-nothing, compared on criteria", "page_label": "Compared real options, including doing nothing",
+      "armA": { "met": 0, "n": 15 }, "armB": { "met": 1, "n": 15 }, "armC": { "met": 15, "n": 15 },
+      "definitional": [],
+      "caveat": "The scorer calls this the load-bearing check of the three. A more lenient reading of 'compared on criteria' credits further all-facts runs. That reading was recorded internally and is disclosed here for the first time." },
+
+    { "id": "c3", "group": "process", "label": "Evidence tagged (given, derived, inferred, unknown)", "page_label": "Tagged its evidence",
+      "armA": { "met": 0, "n": 15 }, "armB": { "met": 0, "n": 15 }, "armC": { "met": 15, "n": 15 },
+      "definitional": [] },
+
+    { "id": "c4", "group": "process", "label": "Named an untested constraint or assumption", "page_label": "Named an untested constraint",
+      "armA": { "met": 9, "n": 15 }, "armB": { "met": 15, "n": 15 }, "armC": { "met": 15, "n": 15 },
+      "definitional": [], "adjudication": "Original scoring upheld. The re-score read the all-facts condition as 13 of 15." },
+
+    { "id": "c5", "group": "process", "label": "Stated kill criteria", "page_label": "Stated what would change the call",
+      "armA": { "met": 15, "n": 15 }, "armB": { "met": 15, "n": 15 }, "armC": { "met": 15, "n": 15 },
+      "definitional": [], "adjudication": "Original scoring overturned. The question-only condition moves from 12 to 15, in the baseline's favour. This check does not discriminate between conditions." },
+
+    { "id": "c6", "group": "judgment", "label": "Surfaced the hidden decision by integrating the facts", "page_label": "Surfaced the hidden decision",
+      "armA": { "met": 0, "n": 15 }, "armB": { "met": 15, "n": 15 }, "armC": { "met": 14, "n": 15 },
+      "definitional": ["armA"],
+      "definitional_note": "The hidden decision in each case turns on three facts placed in the fact sheet. None appears in the frozen prompt, which is identical across all three arms. A single-turn condition that receives only the prompt cannot obtain them. All three case files were checked. The zero restates the design of the test and is not a measurement of baseline judgement.",
+      "adjudication": "Original scoring upheld on both cells. The re-score read them as 5 of 15 and 15 of 15, and was found to have collapsed the MET and PARTIAL distinction the rubric calls the core of the benchmark." },
+
+    { "id": "c7", "group": "judgment", "label": "Recommendation direction matched the sealed key", "page_label": "Direction matched the sealed key",
+      "armA": { "met": 9, "n": 15 }, "armB": { "met": 15, "n": 15 }, "armC": { "met": 15, "n": 15 },
+      "definitional": [] },
+
+    { "id": "c8", "group": "judgment", "label": "Caught the planted inconsistency or bias", "page_label": "Caught the planted bias",
+      "armA": { "met": 6, "n": 15 }, "armB": { "met": 15, "n": 15 }, "armC": { "met": 15, "n": 15 },
+      "definitional": ["armA_partial"],
+      "definitional_note": "The planted tension sits in the fact sheet, which the question-only condition never receives. Part of this figure is therefore an artefact of the design in the same way as the check above, though not wholly, since some of each case's tension is visible in the frozen prompt. The proportion has not been quantified.",
+      "adjudication": "Original scoring overturned. The question-only condition moves from 5 to 6, in the baseline's favour." }
+  ],
+
+  "composite": {
+    "id": "defensible_brief_structure",
+    "label": "Produced a defensible brief, on every run",
+    "derived": true,
+    "derivation": "AND",
+    "components": ["c1", "c2", "c3", "c4", "c5"],
+    "provenance": "Logical AND of the five process checks. Not an independent ninth result, and not the pre-registered headline.",
+    "gated_by": "c1",
+    "recomputed_without_c1": { "armA": 0, "armB": 0, "armC": 15 },
+    "recomputed_note": "Recomputed over the four remaining checks the figures do not move, because the question-only condition compared real options in 0 of 15 runs and the all-facts condition tagged its evidence in 0 of 15. This recomputation was done after the fact and was not pre-registered."
+  },
+
   "go_case": {
-    "label": "Case B (GO case): moved toward the aggressive, evidence-backed call",
-    "note": "The anti-hedging test. n=6 per arm (two models, three runs each).",
-    "armA": { "met": 0, "n": 6 },
-    "armB": { "met": 6, "n": 6 },
-    "armC": { "met": 6, "n": 6 }
+    "case_id": "B",
+    "label": "Case B, Larkfield: moved toward the aggressive, evidence-backed call",
+    "note": "The anti-hedging test. n=6 per arm, two models, three runs each. Unaffected by the pilot exclusion.",
+    "armA": { "met": 0, "n": 6 }, "armB": { "met": 6, "n": 6 }, "armC": { "met": 6, "n": 6 }
   },
-  "hidden_decision_by_case_and_model": {
-    "note": "Count MET (integrated all required facts) out of n=3 per cell.",
-    "caseA": { "label": "Meridian managed-service bid", "claude": { "armA": 0, "armB": 3, "armC": 3 }, "gpt": { "armA": 0, "armB": 0, "armC": 2 } },
-    "caseB": { "label": "Larkfield build-vs-buy (GO case)", "claude": { "armA": 0, "armB": 3, "armC": 3 }, "gpt": { "armA": 0, "armB": 3, "armC": 3 } },
-    "caseC": { "label": "Corvan continue-vs-exit (sunk-cost)", "claude": { "armA": 0, "armB": 3, "armC": 3 }, "gpt": { "armA": 0, "armB": 3, "armC": 3 } }
+
+  "direction_by_case": {
+    "note": "Check c7, split by case. Published for the first time.",
+    "cases_A_and_C": { "armA": { "met": 9, "n": 9 }, "armB": { "met": 9, "n": 9 }, "armC": { "met": 9, "n": 9 } },
+    "case_B": { "armA": { "met": 0, "n": 6 }, "armB": { "met": 6, "n": 6 }, "armC": { "met": 6, "n": 6 } },
+    "reading": "Outside Case B, direction did not discriminate between a short question and the loaded file at all. The whole measured direction deficit sits in Case B, and those question-only runs were contaminated."
   },
-  "honest_notes": [
-    "Some naked baselines were strong: on Case C both models declined the raise as posed, and Claude named the sunk-cost trap unprompted on all three runs. The gap the product fills is fact-integration and process discipline, not model failure.",
-    "One loaded near-miss: Case A ChatGPT loaded run 1 integrated two of three facts because its interrogation never probed payment structure. This is why the loaded hidden-decision figure is 17 of 18, not 18 of 18.",
-    "n=3 per cell, two models (Gemini pending), single scorer. Claims are about reliability and defensibility, demonstrated consistently on two architecturally different frontier models, not a universal guarantee.",
-    "Every count traces to a saved transcript; the sealed key hash was pre-registered before any run. Independent re-scoring against the published rubric is welcome."
+
+  "dates": {
+    "run_window": { "start": "2026-07-05", "end": "2026-07-06", "verified": false },
+    "scored_on": "2026-07-06",
+    "adjudicated_on": "2026-08-10",
+    "current_as_at": "2026-08-10"
+  },
+
+  "refresh": {
+    "commitment_days": 14,
+    "legs": [
+      { "vendor": "OpenAI", "tested_model": "ChatGPT GPT-5.5", "superseded_by": "GPT-5.6",
+        "released_on": "2026-07-09", "due_on": "2026-07-23", "source_strength": "moderate",
+        "caveat": "The scope of the 9 July rollout is not settled. OpenAI's forum post for that date uses trusted-partner language while its X post describes a broad release. The source is the X post, quoted, because openai.com returned 403." },
+      { "vendor": "Anthropic", "tested_model": "Claude Opus 4.8", "superseded_by": "Claude Opus 5",
+        "released_on": "2026-07-24", "due_on": "2026-08-07", "source_strength": "strong",
+        "caveat": "Anthropic newsroom, opened directly. No ambiguity on this leg." }
+    ]
+  },
+
+  "provenance": {
+    "repo": "ks-projects-66/greensquare",
+    "prereg_commit": "3e5e46f1a7cc154e1b91120ec9336e3eb089fd2c",
+    "prereg_commit_short": "3e5e46f",
+    "prereg_authored_at": "2026-07-05T09:10:37+10:00",
+    "prereg_pushed_at": "2026-07-05T09:17:03+10:00",
+    "superseded_commit_ids": ["5e89de4842693444c27e893470efecb242486cd2"],
+    "sealed_key_sha256": "7D1ED905C88B1288179B4892DE2D6251ED4350CC78CEBA860A1C8042E3B01FCA",
+    "sealed_key_verified": true,
+    "sealed_key_published": false,
+    "transcripts_published": false
+  },
+
+  "parity": {
+    "source": "protocol.md:10-13",
+    "statement": "Arm B carries equal information to Arm C; the only difference is the product's discipline. The pre-registration names it the sceptic's controlled comparison. In Arm C the operator answers each question using only the fact sheet, verbatim in substance, and replies 'That has not been assessed' to anything off-sheet, so the operator cannot feed the model convenient answers.",
+    "frozen_prompt": "Identical across all three arms."
+  },
+
+  "deviations": [
+    { "n": 1, "title": "The composite is not the pre-registered headline", "detail": "rubric-operationalisations.md:23 pre-registers checks 6 and 7 as the primary result, and rubric:3 states a run's score is a vector, not a single number. Leading with a Group 1 composite is a primary-endpoint substitution." },
+    { "n": 2, "title": "Pilot runs were pooled and the promise not to pool them was deleted afterwards", "detail": "protocol.md:23 excluded them. Commit 85f8c71, 14 July 2026, removed that sentence and set the record to COMMITTED. Scoring finished 6 July 2026, eight days earlier. The original wording survives in commit 1dfeb6d. This page reports only the 45 pre-registered runs." },
+    { "n": 3, "title": "The published pre-registration commit ID does not exist", "detail": "5e89de4842693444c27e893470efecb242486cd2 is in no ref. The real commit is 3e5e46f1a7cc154e1b91120ec9336e3eb089fd2c. Anyone who followed the published verification procedure failed at step 1, and the failure would have looked like their own mistake." },
+    { "n": 4, "title": "No transcript is published", "detail": "protocol.md:34 commits that every published count is traceable to a downloadable transcript. None is." },
+    { "n": 5, "title": "The sealed reference answers are not published", "detail": "Every adjudicated cell was settled against a key nobody outside can read. Its SHA-256 was verified against the pre-registration table and that check cannot be repeated while the file is withheld." },
+    { "n": 6, "title": "Transcripts were not de-identified before scoring", "detail": "Contrary to protocol.md:27. The sole scorer was the operator who ran the grid. Every filename carries its condition and model, and each carries an operator note stating the verdict." },
+    { "n": 7, "title": "The original scoring was mildly biased toward widening the gap", "detail": "Stricter than the rubric text inside Arm A, looser inside Arm B. Two cells were overturned on adjudication and both ran that way, both in the baseline's favour." },
+    { "n": 8, "title": "The single-scorer cross-check was never run", "detail": "protocol.md:30 makes an LLM cross-check the condition of falling back to one scorer. The fallback happened and the cross-check did not." },
+    { "n": 9, "title": "Baseline partial-pass counts are not published", "detail": "protocol.md:31 requires them prominently, per case, and the rubric calls the full-versus-partial distinction the core of the benchmark." },
+    { "n": 10, "title": "The rubric set no integration threshold", "detail": "Both scoring passes invented one and disagreed. The rule is now pre-committed: two of three facts with the third absent scores PARTIAL." },
+    { "n": 11, "title": "The published rationale for the one near-miss overstates it", "detail": "The record says two of three facts were integrated. The adjudication found one." },
+    { "n": 12, "title": "The sharpest discriminators in the sealed key went unused", "detail": "The Case C falsification element and the explicit NOT clauses in both cases were applied by neither scoring pass." },
+    { "n": 13, "title": "The GO case was published with the informed baseline removed", "detail": "The site showed 0 of 6 against 6 of 6 and omitted the middle column, which is also 6 of 6." },
+    { "n": 14, "title": "The case where the file adds least was never identified", "detail": "protocol.md:36 requires it. It is Case B, Larkfield." },
+    { "n": 15, "title": "Per-case, per-condition counts are not published", "detail": "The rubric names them as the headline unit. Direction is now split by case; the other seven checks are not." },
+    { "n": 16, "title": "The alternative reading of the options check was kept internal", "detail": "A more lenient reading credits further all-facts runs on the check the scorer calls load-bearing." },
+    { "n": 17, "title": "The question-only condition was contaminated on Case B", "detail": "ChatGPT invoked live web search unprompted during those runs. Those six runs carry the whole of the direction deficit reported anywhere on this site." },
+    { "n": 18, "title": "The 14-day refresh commitment lapsed", "detail": "No date-stamped history was published. The dates and the arithmetic are in the status section." }
+  ],
+
+  "clean": [
+    "Six inputs were hashed and frozen before the first scored run, and all six SHA-256 values match their files when read with LF line endings.",
+    "The reduction in planned sample size from 180 runs to 54 is logged exactly as the protocol required."
+  ],
+
+  "limitations": [
+    "No condition in this grid resembles a real operator. The question-only condition has nothing and the all-facts condition has everything. An operator who arrives with most of what matters and a blind spot they cannot see is the condition the product exists for, and it was not run.",
+    "One person ran the grid, scored it, held the sealed reference answers, and answered the file's questions during the runs. The re-score was carried out by three agents working from the published rubric, blind to the original scoring. Neither they nor the adjudication were independent of GreenSquare, and this page does not use that word.",
+    "Two published cells are definitional rather than empirical, and a third is partly so. A single-turn condition cannot ask before answering, and it cannot obtain three facts that are not in its prompt.",
+    "The three checks that separate most cleanly are the behaviours the file instructs the model to perform. A reasonable reading is that they measure whether the file was loaded, not whether the model reasoned better.",
+    "The all-facts condition was not information-equal between the two models on Case B. The Claude fact sheet carries two cross-reference pointers the ChatGPT one lacks.",
+    "n is 15 per condition, three repeats per cell. The grid is small and unbalanced, with Case A running on one model only.",
+    "The run inventory does not fully reconcile. Both directory counts were verified on disk, 45 and 10, and the arithmetic requires 9. The tenth file has not been opened.",
+    "What was tested is a file fixed by its published hash. Nothing here commits any later release to being that same file."
   ]
 }

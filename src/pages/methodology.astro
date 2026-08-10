@@ -4,7 +4,7 @@ import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 ---
 <BaseLayoutV2
   title="Methodology | GreenSquare"
-  description="How GreenSquare designed, ran and scored the current 54 run benchmark, including the completed grid, the limits of the evidence and the work still pending."
+  description="How GreenSquare designed, ran and scored the current 45 run pre-registered benchmark, including the completed grid, the limits of the evidence and the work still pending."
   current="methodology"
 >
   <section class="v-section v-off hero">
@@ -12,7 +12,7 @@ import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
       <div class="v-reveal">
         <h1 class="v-h1">How the current benchmark was run.</h1>
         <p class="v-lead" style="margin-top: var(--v-6);">
-          The current result covers 54 scored runs across two models, three cases and three test conditions. This
+          The current result covers 45 scored runs across two models, three cases and three test conditions. This
           page records what was tested, how it was scored, where the protocol changed, and which claims remain
           open.
         </p>
@@ -42,12 +42,13 @@ import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
           <li>Three fictional business cases.</li>
           <li>Three test conditions for every case and model.</li>
           <li>Three repeats in each cell.</li>
-          <li>54 runs in total, with 18 runs per condition.</li>
+          <li>45 runs in total, with 15 runs per condition.</li>
         </ul>
         <p>
           The pre-registered protocol targeted about 180 runs, including Gemini and more repeats. The completed
-          grid was reduced to 54 runs. Gemini remains pending. The current website reports the completed 54 run
-          result as an interim two model grid.
+          grid was reduced to 54 runs, and in August 2026 it was re-cut to 45 by removing nine design-phase
+          pilot runs that the protocol said would not be pooled with the pre-registered grid. Gemini was never
+          run. The site reports the 45 run pre-registered grid as an interim two model result.
         </p>
 
         <h2>The cases</h2>
@@ -108,13 +109,17 @@ import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
         </p>
 
         <h2>What the evidence supports today</h2>
-        <ul>
-          <li>The loaded file completed all five process checks in 18 of 18 runs.</li>
-          <li>It surfaced the underlying decision in 17 of 18 runs.</li>
-          <li>The question only condition surfaced the underlying decision in 0 of 18 runs.</li>
-          <li>The all facts condition surfaced it in 15 of 18 runs and matched the sealed direction in 18 of 18.</li>
-          <li>The loaded condition matched the sealed direction in 18 of 18.</li>
-        </ul>
+        <p>
+          Every count lives on the <a href={withBase('/benchmark/')}>benchmark page</a> and nowhere else. That is
+          deliberate. Figures repeated across several pages drift apart, and this site had that problem. There is
+          now one record to check.
+        </p>
+        <p>
+          Two things on that page matter more than any single count. The grid was re-cut in August 2026 to exclude
+          nine design-phase pilot runs that the protocol said would not be pooled, and five scoring cells that two
+          passes disagreed on were adjudicated against the sealed reference answers. Both are set out there, along
+          with every other departure from this protocol.
+        </p>
         <p>
           These results support a claim about process consistency and fact gathering across the two tested
           models. A blind senior reviewer study has yet to test which brief experienced operators would prefer to
@@ -123,10 +128,11 @@ import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 
         <h2>Transparency still pending</h2>
         <p>
-          The run transcripts are saved but are not yet published. GreenSquare plans to publish them when the
-          Gemini grid is complete. Until then, readers can inspect the cases, fact sheets, protocol, rubric and
-          pre-registration record, while the reported counts cannot be independently re-scored from the public
-          repository.
+          The run transcripts are saved and are not published. Neither are the sealed reference answers. Publication
+          was previously gated on completing the Gemini grid, which was never run, so that gate has been removed and
+          no date has replaced it. Readers can inspect the cases, fact sheets, protocol, rubric and pre-registration
+          record. Nobody outside GreenSquare can re-score a run or check an adjudicated cell, and the benchmark page
+          records both as departures from the protocol.
         </p>
 
         <h2>Limitations</h2>
@@ -134,16 +140,17 @@ import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
           <li>Three repeats per cell provide an early reliability signal and leave substantial uncertainty.</li>
           <li>GreenSquare wrote two of the three cases.</li>
           <li>The current grid covers two models. Gemini remains pending.</li>
-          <li>One person scored the current runs.</li>
+          <li>One person ran the grid, scored it and held the sealed answers. A later re-score and adjudication were also run inside GreenSquare, so neither is independent.</li>
           <li>The senior reviewer study and independent re-score remain planned work.</li>
           <li>AI models change frequently, so every result needs its model version and test date.</li>
         </ul>
 
         <h2>Current status</h2>
         <p>
-          The completed 54 run result is published on the <a href={withBase('/benchmark/')}>Benchmark page</a>. It is current
-          as at 14 July 2026. Claude Opus 4.8 and ChatGPT GPT-5.5 are complete. Gemini, the independent re-score,
-          the transcript release and the senior reviewer study remain pending.
+          The 45 run pre-registered result is published on the <a href={withBase('/benchmark/')}>Benchmark page</a>, which
+          carries the dates, the model versions and the refresh position. Both tested models have since been
+          superseded and the 14 day re-run commitment has lapsed on both legs. Gemini, the transcript release, a
+          scorer independent of GreenSquare and the senior reviewer study all remain outstanding.
         </p>
       </div>
     </div>
