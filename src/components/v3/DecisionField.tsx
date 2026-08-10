@@ -49,8 +49,8 @@ export function DecisionField({ compact = false }: { compact?: boolean }) {
         aria-describedby={descriptionId}
       >
         <div className="field-meta v3-field-stage v3-field-stage-base">
-          <span>Objective / break even by Q4 while protecting 25 strategic accounts</span>
-          <span>Context / FY27 planning closes 30 September</span>
+          <span><strong>Objective:</strong> break even by Q4 while protecting 25 strategic accounts</span>
+          <span><strong>Context:</strong> FY27 planning closes 30 September</span>
         </div>
 
         <figcaption className="field-intro v3-field-stage v3-field-stage-base">
@@ -63,9 +63,9 @@ export function DecisionField({ compact = false }: { compact?: boolean }) {
           </div>
           <div className="field-legend" aria-label="Outline and colour key">
             <strong>Outline grammar</strong>
-            <span><i className="field-key field-key--solid" /> Solid / confirmed structure</span>
-            <span><i className="field-key field-key--dashed" /> Dashed / assumption under test</span>
-            <span><i className="field-key field-key--open" /> Open / unresolved uncertainty</span>
+            <span><i className="field-key field-key--solid" /> Solid line — confirmed structure</span>
+            <span><i className="field-key field-key--dashed" /> Dashed line — assumption under test</span>
+            <span><i className="field-key field-key--open" /> Open marker — unresolved uncertainty</span>
           </div>
         </figcaption>
 
@@ -126,7 +126,7 @@ export function DecisionField({ compact = false }: { compact?: boolean }) {
                 <h4>Use two specialist partners. Keep strategic accounts in-house.</h4>
               </article>
               <article className="field-box field-box--action">
-                <div className="field-box-head"><span>Next action</span><em>Owner / Maya</em></div>
+                <div className="field-box-head"><span>Next action</span><em>Owner: Maya</em></div>
                 <h4>Validate transferred-account churn</h4>
                 <p>Due 18 August.</p>
               </article>
@@ -139,8 +139,8 @@ export function DecisionField({ compact = false }: { compact?: boolean }) {
         </div>
 
         <div className="field-footer v3-field-stage v3-field-stage-base">
-          <span>GreenSquare AI / Decision field</span>
-          <span>Open item / A-03</span>
+          <span>GreenSquare AI decision field</span>
+          <span>Open assumption: A-03</span>
         </div>
       </figure>
     </div>
