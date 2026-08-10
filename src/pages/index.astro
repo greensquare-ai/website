@@ -4,7 +4,7 @@ import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
 ---
 <BaseLayoutV2
-  title="GreenSquare | The brief that survives senior scrutiny"
+  title="GreenSquare AI | The brief that survives senior scrutiny"
   description="GreenSquare gives Claude, ChatGPT and Gemini a rigorous process for one consequential business decision, from the first question to a clear recommendation."
   current="home"
 >
@@ -54,7 +54,7 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
       <h2 class="v-h2" style="max-width: 24ch;">What The Decision adds to the model.</h2>
       <div class="v-caplist">
         <div class="v-caprow v-reveal">
-          <span class="v-index">/01</span>
+          <span class="v-index">Focus</span>
           <h3>Find the facts that matter</h3>
           <p class="v-small v-cap-body">
             Short, focused questions come before the recommendation. The file checks the framing, plays the
@@ -62,7 +62,7 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
           </p>
         </div>
         <div class="v-caprow v-reveal d1">
-          <span class="v-index">/02</span>
+          <span class="v-index">Options</span>
           <h3>Compare real options</h3>
           <p class="v-small v-cap-body">
             The model considers alternatives you may have missed, including keeping the current position, then
@@ -70,7 +70,7 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
           </p>
         </div>
         <div class="v-caprow v-reveal d2">
-          <span class="v-index">/03</span>
+          <span class="v-index">Evidence</span>
           <h3>Show the reasoning</h3>
           <p class="v-small v-cap-body">
             Important claims are marked as given, derived, inferred or unknown. The recommendation also states
@@ -94,22 +94,22 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
       </div>
       <div class="v-reveal d1">
         <div class="v-readout">
-          <div class="v-readout__bar"><span class="v-readout__dot"></span> HIDDEN DECISION / 18 RUNS PER CONDITION</div>
+          <div class="v-readout__bar"><span class="v-readout__dot"></span> Underlying decision surfaced</div>
           <div class="v-readout__body">
             <div class="v-run">
-              <div class="v-run__head"><span class="v-run__name">QUESTION ONLY</span><span class="v-run__val">0 / 18</span></div>
+              <div class="v-run__head"><span class="v-run__name">Question only</span><span class="v-run__val">0 of 18</span></div>
               <div class="v-meter"><div class="v-meter__fill is-muted" style="--w: 0%;"></div></div>
             </div>
             <div class="v-run">
-              <div class="v-run__head"><span class="v-run__name">ALL FACTS PROVIDED</span><span class="v-run__val">15 / 18</span></div>
+              <div class="v-run__head"><span class="v-run__name">All facts provided</span><span class="v-run__val">15 of 18</span></div>
               <div class="v-meter"><div class="v-meter__fill is-muted" style="--w: 83.3%;"></div></div>
             </div>
             <div class="v-run">
-              <div class="v-run__head"><span class="v-run__name">THE DECISION</span><span class="v-run__val"><b>17 / 18</b></span></div>
+              <div class="v-run__head"><span class="v-run__name">The Decision</span><span class="v-run__val"><b>17 of 18</b></span></div>
               <div class="v-meter"><div class="v-meter__fill" style="--w: 94.4%;"></div></div>
             </div>
           </div>
-          <div class="v-readout__foot">TWO MODELS / THREE CASES / JULY 2026</div>
+          <div class="v-readout__foot">Two models · three cases · July 2026</div>
         </div>
       </div>
     </div>
@@ -174,7 +174,7 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
     .hero-split__grid { grid-template-columns: 1fr; }
     .hero-split__media { position: static; }
     .hero-split__media::before { display: none; }
-    .hero-video { aspect-ratio: 16 / 9; height: auto; box-shadow: 0 1px 2px rgba(23,27,24,0.04), 0 24px 48px -16px rgba(11,35,24,0.35); }
+    .hero-video { aspect-ratio: 16 / 9; height: auto; border-top: 2px solid var(--v-ink); }
   }
   .home-next { padding-block: clamp(4.5rem, 8vw, 6.5rem); }
   .home-next__inner { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(25rem, 1.1fr); gap: clamp(3rem, 8vw, 7rem); align-items: center; }

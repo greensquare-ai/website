@@ -12,7 +12,7 @@ const stages = [
 ];
 ---
 <BaseLayoutV2
-  title="The Decision | GreenSquare"
+  title="The Decision | GreenSquare AI"
   description="The Decision is a plain markdown file that guides Claude, ChatGPT or Gemini through one consequential business decision and produces a clear, evidence marked brief."
   current="product"
 >
@@ -37,13 +37,13 @@ const stages = [
         </div>
         <div class="v-reveal d1">
           <div class="v-readout">
-            <div class="v-readout__bar"><span class="v-readout__dot"></span> THE DECISION / CHAT FLOW</div>
+            <div class="v-readout__bar"><span class="v-readout__dot"></span> The Decision workflow</div>
             <div class="v-readout__body">
               <ul class="v-spec__list">
-                {stages.map((stage) => <li><span class="n">/{stage.n}</span> {stage.name}</li>)}
+                {stages.map((stage) => <li><span class="n">{Number(stage.n)}</span> {stage.name}</li>)}
               </ul>
             </div>
-            <div class="v-readout__foot">ONE FILE / ONE DECISION / MARKDOWN OUTPUT</div>
+            <div class="v-readout__foot">One file · one decision · structured output</div>
           </div>
         </div>
       </div>
@@ -72,7 +72,7 @@ const stages = [
       <div class="v-caplist">
         {stages.map((stage, index) => (
           <div class={`v-caprow v-reveal${index > 0 ? ` d${Math.min(index, 3)}` : ''}`}>
-            <span class="v-index">/{stage.n}</span>
+            <span class="v-index">Step {Number(stage.n)}</span>
             <h3>{stage.name}</h3>
             <p class="v-small v-cap-body">{stage.body}</p>
           </div>
@@ -92,14 +92,14 @@ const stages = [
       </div>
       <div class="v-reveal d1">
         <div class="v-readout">
-          <div class="v-readout__bar"><span class="v-readout__dot"></span> DECISION_BRIEF.md</div>
+          <div class="v-readout__bar"><span class="v-readout__dot"></span> Decision Brief structure</div>
           <div class="v-readout__body">
             <ul class="v-spec__list">
-              <li><span class="n">/01</span> The decision and why it matters now</li>
-              <li><span class="n">/02</span> The options compared</li>
-              <li><span class="n">/03</span> The recommendation</li>
-              <li><span class="n">/04</span> The next actions</li>
-              <li><span class="n">/05</span> What would change the recommendation</li>
+              <li><span class="n">1</span> The decision and why it matters now</li>
+              <li><span class="n">2</span> The options compared</li>
+              <li><span class="n">3</span> The recommendation</li>
+              <li><span class="n">4</span> The next actions</li>
+              <li><span class="n">5</span> What would change the recommendation</li>
             </ul>
             <div class="spec-tags v-reveal">
               <span class="v-tag">given</span><span class="v-tag">derived</span><span class="v-tag">inferred</span><span class="v-tag">unknown</span>

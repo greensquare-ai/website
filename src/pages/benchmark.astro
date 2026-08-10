@@ -65,7 +65,7 @@ const artefacts = [
 ];
 ---
 <BaseLayoutV2
-  title="Benchmark | GreenSquare"
+  title="Benchmark | GreenSquare AI"
   description="A 54 run benchmark of The Decision across two AI models, three business cases and three test conditions, with the method, results and limitations stated plainly."
   current="benchmark"
 >
@@ -131,17 +131,17 @@ const artefacts = [
       </p>
       <div class="v-caplist">
         <div class="v-caprow v-reveal">
-          <span class="v-index">/A</span>
+          <span class="v-index">Condition A</span>
           <h3>Question only</h3>
           <p class="v-small v-cap-body">The short question a business user might type into a new chat. The model answered once with no further information.</p>
         </div>
         <div class="v-caprow v-reveal d1">
-          <span class="v-index">/B</span>
+          <span class="v-index">Condition B</span>
           <h3>All facts provided</h3>
           <p class="v-small v-cap-body">The same question with the full case fact sheet in the first message. The model answered once with all relevant information available.</p>
         </div>
         <div class="v-caprow v-reveal d2">
-          <span class="v-index">/C</span>
+          <span class="v-index">Condition C</span>
           <h3>The Decision loaded</h3>
           <p class="v-small v-cap-body">The file and the short question. The model asked its own questions, and the operator answered only from the same fact sheet used in condition B.</p>
         </div>
@@ -193,15 +193,15 @@ const artefacts = [
       </div>
       <div class="v-reveal d1">
         <div class="v-readout">
-          <div class="v-readout__bar"><span class="v-readout__dot"></span> PROCESS DISCIPLINE / LOADED RUNS</div>
+          <div class="v-readout__bar"><span class="v-readout__dot"></span> Process discipline in loaded runs</div>
           <div class="v-readout__body">
-            <div class="v-run"><div class="v-run__head"><span class="v-run__name">ASKED FIRST</span><span class="v-run__val"><b>18 / 18</b></span></div></div>
-            <div class="v-run"><div class="v-run__head"><span class="v-run__name">REAL OPTIONS COMPARED</span><span class="v-run__val"><b>18 / 18</b></span></div></div>
-            <div class="v-run"><div class="v-run__head"><span class="v-run__name">EVIDENCE MARKED</span><span class="v-run__val"><b>18 / 18</b></span></div></div>
-            <div class="v-run"><div class="v-run__head"><span class="v-run__name">ASSUMPTION NAMED</span><span class="v-run__val"><b>18 / 18</b></span></div></div>
-            <div class="v-run"><div class="v-run__head"><span class="v-run__name">CHANGE CRITERIA STATED</span><span class="v-run__val"><b>18 / 18</b></span></div></div>
+            <div class="v-run"><div class="v-run__head"><span class="v-run__name">Asked first</span><span class="v-run__val"><b>18 of 18</b></span></div></div>
+            <div class="v-run"><div class="v-run__head"><span class="v-run__name">Real options compared</span><span class="v-run__val"><b>18 of 18</b></span></div></div>
+            <div class="v-run"><div class="v-run__head"><span class="v-run__name">Evidence marked</span><span class="v-run__val"><b>18 of 18</b></span></div></div>
+            <div class="v-run"><div class="v-run__head"><span class="v-run__name">Assumption named</span><span class="v-run__val"><b>18 of 18</b></span></div></div>
+            <div class="v-run"><div class="v-run__head"><span class="v-run__name">Change criteria stated</span><span class="v-run__val"><b>18 of 18</b></span></div></div>
           </div>
-          <div class="v-readout__foot">TWO MODELS / THREE CASES / THREE REPEATS</div>
+          <div class="v-readout__foot">Two models · three cases · three repeats</div>
         </div>
       </div>
     </div>
@@ -331,23 +331,29 @@ const artefacts = [
 </BaseLayoutV2>
 
 <style>
-  .bm-hero { padding-top: clamp(3rem, 6vh, 5rem); }
-  .bm-status { display: flex; flex-wrap: wrap; gap: var(--v-2) var(--v-5); padding-top: var(--v-4); border-top: 1px solid var(--v-line-strong); color: var(--v-ink-soft); font-size: var(--vs-small); }
-  .bm-results { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--v-5); }
-  .bm-result-key { box-shadow: 0 3px 8px rgba(23,27,24,0.14); }
-  .bm-result-key .v-label { color: var(--v-green); }
-  .bm-result-number { font-family: var(--vf-display); font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1; letter-spacing: -0.02em; margin: var(--v-5) 0 var(--v-3); color: var(--v-green); }
+  .bm-hero { padding-top: clamp(3.5rem, 7vh, 5.5rem); border-bottom: 2px solid var(--v-ink); }
+  .bm-status { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border: 1px solid var(--v-ink); color: var(--v-ink); font-size: 0.88rem; }
+  .bm-status span { padding: 12px 14px; border-right: 1px solid var(--v-line); }
+  .bm-status span:last-child { border-right: 0; }
+  .bm-results { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border: 2px solid var(--v-ink); }
+  .bm-results .v-card { border: 0; border-right: 1px solid var(--v-ink); }
+  .bm-results .v-card:last-child { border-right: 0; }
+  .bm-result-key { background: var(--v-green); color: var(--v-cream); }
+  .bm-result-key .v-label, .bm-result-key .v-small, .bm-result-key .bm-result-number { color: var(--v-cream); }
+  .bm-result-number { font-family: var(--vf-display); font-weight: 600; font-size: clamp(2.2rem, 4vw, 3.5rem); line-height: 1; letter-spacing: -0.025em; margin: var(--v-5) 0 var(--v-3); color: var(--v-green); }
   .bm-results .v-h3 { margin-bottom: var(--v-4); }
-  .bm-quotes { display: grid; grid-template-columns: 1fr 1fr; gap: var(--v-6); }
-  .bm-quote-block { background: var(--v-fill); padding: var(--v-6); }
-  .bm-quote-block blockquote { margin: var(--v-4) 0 0; font-family: var(--vf-display); font-size: 1.08rem; line-height: 1.45; }
+  .bm-quotes { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 2px solid var(--v-ink); }
+  .bm-quote-block { background: var(--v-paper); padding: var(--v-6); }
+  .bm-quote-block + .bm-quote-block { border-left: 1px solid var(--v-ink); }
+  .bm-quote-block blockquote { margin: var(--v-4) 0 0; font-family: var(--vf-body); font-size: 1.1rem; line-height: 1.52; }
   .bm-table-scroll { overflow-x: auto; }
-  .bm-table { min-width: 720px; font-size: var(--vs-small); }
-  .bm-group-row td { padding-top: var(--v-6); color: var(--v-green); font-weight: 600; border-bottom: 1px solid var(--v-line-strong); }
+  .bm-table { min-width: 720px; border-top: 2px solid var(--v-ink); font-size: var(--vs-small); }
+  .bm-table th:last-child, .bm-table td:last-child { background: color-mix(in srgb, var(--v-green) 7%, var(--v-paper)); }
+  .bm-group-row td { padding-top: var(--v-6); color: var(--v-green); font-weight: 700; border-bottom: 1px solid var(--v-ink); }
   .bm-limitations { gap: var(--v-5); }
-  .bm-artefact-list { display: grid; gap: var(--v-3); }
-  .bm-artefact { display: flex; align-items: center; justify-content: space-between; gap: var(--v-6); padding: var(--v-4) var(--v-5); background: var(--v-fill); text-decoration: none; color: var(--v-ink); transition: transform var(--v-fast) var(--v-ease), background-color var(--v-fast) var(--v-ease); }
-  .bm-artefact:hover { transform: translateY(-2px); background: var(--v-fill-2); }
+  .bm-artefact-list { display: grid; gap: 0; border-top: 2px solid var(--v-ink); }
+  .bm-artefact { display: flex; align-items: center; justify-content: space-between; gap: var(--v-6); padding: var(--v-5) 0; border-bottom: 1px solid var(--v-line); text-decoration: none; color: var(--v-ink); transition: color var(--v-fast) var(--v-ease); }
+  .bm-artefact:hover { color: var(--v-green); }
   .bm-artefact-title, .bm-artefact-subtitle { display: block; }
   .bm-artefact-title { font-weight: 600; }
   .bm-artefact-subtitle { margin-top: var(--v-1); font-size: var(--vs-small); color: var(--v-ink-soft); }
@@ -362,8 +368,13 @@ const artefacts = [
   .bm-next__link { color: var(--v-cream); }
   @media (max-width: 900px) {
     .bm-results, .bm-quotes, .bm-next__inner { grid-template-columns: 1fr; }
+    .bm-results .v-card { border-right: 0; border-bottom: 1px solid var(--v-ink); }
+    .bm-results .v-card:last-child { border-bottom: 0; }
+    .bm-quote-block + .bm-quote-block { border-left: 0; border-top: 1px solid var(--v-ink); }
     .bm-next__inner { gap: var(--v-8); }
     .bm-next__action { justify-self: start; }
+    .bm-status { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .bm-status span { border-right: 1px solid var(--v-line); border-bottom: 1px solid var(--v-line); }
   }
   @media (max-width: 560px) {
     .bm-next__action, .bm-next__button { width: 100%; }

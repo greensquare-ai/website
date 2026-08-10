@@ -13,7 +13,7 @@ const questions = [
 ];
 ---
 <BaseLayoutV2
-  title="The Decision Frame | GreenSquare"
+  title="The Decision Frame | GreenSquare AI"
   description="A free one-page worksheet with six questions that helps you define the real decision, test assumptions and map the evidence before comparing options."
   current="frame"
 >
@@ -47,7 +47,7 @@ const questions = [
       <div class="v-caplist">
         {questions.map((item) => (
           <div class="v-caprow v-reveal">
-            <span class="v-index">/{item.n.padStart(2, '0')}</span>
+            <span class="v-index">Question {item.n}</span>
             <h3>{item.q}</h3>
             <p class="v-small v-cap-body">{item.body}</p>
           </div>
