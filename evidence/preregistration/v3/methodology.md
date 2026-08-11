@@ -2,6 +2,16 @@
 
 Current as at 14 July 2026.
 
+> **Superseded, 11 August 2026.** Every figure below describes the retired 54-run grid, which pooled
+> nine design-phase pilot runs that `protocol.md` line 23 excluded from the pre-registered grid. That
+> grid was re-cut to the 45 pre-registered runs, and five disputed cells were adjudicated on
+> 10 August 2026 against the sealed reference answers. The counts in the "Current result" section
+> below are out of 18 and are no longer the published result; the current figures are out of 15 and
+> are reported at https://www.greensquare.ai/benchmark/, which is the only current record.
+>
+> This file is left in place rather than rewritten because it is part of the disclosed record. It is
+> not one of the six hashed inputs listed in `PREREGISTRATION.md`, so this notice alters no hash.
+
 ## Completed grid
 
 The scored result currently covers two models, three cases, three conditions and three repeats per cell.
@@ -63,6 +73,11 @@ The five process checks measure behaviour directly requested by the product file
 The current grid has one scorer. Results are reported as raw counts with the number of runs shown. A second independent score has yet to be completed.
 
 ## Current result
+
+**Retired. Superseded on 10 August 2026 by the adjudicated 45-run grid. The five counts below are out
+of 18 because they pooled the excluded pilot runs. They are kept here as a record of what was
+published, not as a result. The current figures are out of 15 and are published at
+https://www.greensquare.ai/benchmark/.**
 
 1. The loaded file completed all five process checks in 18 of 18 runs.
 2. It surfaced the underlying decision in 17 of 18 runs.
