@@ -97,8 +97,8 @@ Retire bullet markers (no dashes, no dots, no squares). Use `.v-leadlist`: each 
 `<strong>` lead (Manrope 600, ink; cream on green) ending in a full stop, then the sentence continues in
 `--v-ink-soft` (`--v-cream-soft` on green). Example:
 
-> **Defensible, every run.** Only the loaded product produced a structured, evidence-tagged brief, 18 of 18
-> across both models.
+> **Defensible, every run.** Only the loaded product produced a structured, evidence-tagged brief, 15 of 15
+> across both models, on the composite of five process checks.
 
 Native prose lists (`.v-prose ul`) keep a simple green `::marker`, which is fine for long-form legal and
 methodology copy.
