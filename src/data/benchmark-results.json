@@ -124,7 +124,7 @@
     "prereg_commit": "3e5e46f1a7cc154e1b91120ec9336e3eb089fd2c",
     "prereg_commit_short": "3e5e46f",
     "prereg_authored_at": "2026-07-05T09:10:37+10:00",
-    "prereg_pushed_at": "2026-07-05T09:17:03+10:00",
+    "prereg_committed_at": "2026-07-05T09:17:03+10:00",
     "superseded_commit_ids": ["5e89de4842693444c27e893470efecb242486cd2"],
     "sealed_key_sha256": "7D1ED905C88B1288179B4892DE2D6251ED4350CC78CEBA860A1C8042E3B01FCA",
     "sealed_key_verified": true,
@@ -140,7 +140,7 @@
 
   "deviations": [
     { "n": 1, "title": "The composite is not the pre-registered headline", "detail": "rubric-operationalisations.md:23 pre-registers checks 6 and 7 as the primary result, and rubric:3 states a run's score is a vector, not a single number. Leading with a Group 1 composite is a primary-endpoint substitution." },
-    { "n": 2, "title": "Pilot runs were pooled and the promise not to pool them was deleted afterwards", "detail": "protocol.md:23 excluded them. Commit 85f8c71, 14 July 2026, removed that sentence and set the record to COMMITTED. Scoring finished 6 July 2026, eight days earlier. The original wording survives in commit 1dfeb6d. This page reports only the 45 pre-registered runs." },
+    { "n": 2, "title": "Pilot runs were pooled and the promise not to pool them was deleted afterwards", "detail": "protocol.md:23 excluded them, and still does. Commit 85f8c71, 14 July 2026, deleted the matching sentence from PREREGISTRATION.md and set that record to COMMITTED. Scoring finished 6 July 2026, eight days earlier. The original wording survives in commit 1dfeb6d. This page reports only the 45 pre-registered runs. The attribution in this entry was itself corrected on 11 August 2026: it previously named protocol.md as the file edited." },
     { "n": 3, "title": "The published pre-registration commit ID does not exist", "detail": "5e89de4842693444c27e893470efecb242486cd2 is in no ref. The real commit is 3e5e46f1a7cc154e1b91120ec9336e3eb089fd2c. Anyone who followed the published verification procedure failed at step 1, and the failure would have looked like their own mistake." },
     { "n": 4, "title": "No transcript is published", "detail": "protocol.md:34 commits that every published count is traceable to a downloadable transcript. None is." },
     { "n": 5, "title": "The sealed reference answers are not published", "detail": "Every adjudicated cell was settled against a key nobody outside can read. Its SHA-256 was verified against the pre-registration table and that check cannot be repeated while the file is withheld." },

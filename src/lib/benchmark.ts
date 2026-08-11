@@ -114,6 +114,12 @@ export const refresh = () => {
   };
 };
 
+/** "2026-07-05T09:10:37+10:00" becomes "5 July 2026 at 09:10:37 AEST". */
+export const formatDateTime = (iso: string): string => {
+  const [date, rest] = iso.split('T');
+  return `${formatDate(date)} at ${rest.slice(0, 8)} AEST`;
+};
+
 export const prereg = () => ({
   ...data.provenance,
   short: data.provenance.prereg_commit_short,
@@ -122,7 +128,21 @@ export const prereg = () => ({
   fileUrl: (path: string) =>
     `https://github.com/${data.provenance.repo}/blob/${data.provenance.prereg_commit}/${path}`,
   authoredAt: formatDate(data.provenance.prereg_authored_at.slice(0, 10)),
+  /* Git records an authored time and a committer time. Neither is evidence of when the commit was
+     pushed, so these are named for what they are and the page must not call either one a push. */
+  authoredAtTime: formatDateTime(data.provenance.prereg_authored_at),
+  committedAtTime: formatDateTime(data.provenance.prereg_committed_at),
+  superseded: data.provenance.superseded_commit_ids[0],
 });
+
+/** The key every adjudicated cell was settled against. Verified, and withheld. */
+export const sealedKey = () => ({
+  sha256: data.provenance.sealed_key_sha256,
+  verified: data.provenance.sealed_key_verified,
+  published: data.provenance.sealed_key_published,
+});
+
+export const transcriptsPublished = (): boolean => data.provenance.transcripts_published;
 
 /** Shared vocabulary. The live site used "hidden decision" and "underlying decision"
  *  for the same check on the same page; this stops that recurring. */
