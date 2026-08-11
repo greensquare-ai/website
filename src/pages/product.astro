@@ -4,31 +4,31 @@ import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
 
 const stages = [
-  { n: '01', name: 'Ask', body: 'The model asks three to six focused questions before offering advice. The number and depth of the questions scale with the stakes.' },
-  { n: '02', name: 'Frame', body: 'It checks whether the stated choice is the real decision and identifies any option that has been treated as fixed too early.' },
-  { n: '03', name: 'Confirm', body: 'It plays the situation back in a few lines and asks you to resolve contradictions, missing evidence and untested assumptions.' },
-  { n: '04', name: 'Compare', body: 'It generates genuine alternatives, including keeping the current position, and compares them against the criteria that matter.' },
-  { n: '05', name: 'Recommend', body: 'It produces the five part Decision Brief and checks the reasoning before handing it to you.' },
+  { n: '01', name: 'Ask', body: 'The model asks three to six focused questions before offering advice. The depth of the interrogation scales with the stakes.' },
+  { n: '02', name: 'Frame', body: 'It tests whether the stated question is the real decision and identifies choices that have been treated as fixed too early.' },
+  { n: '03', name: 'Confirm', body: 'It plays the situation back in a few lines, then asks you to resolve contradictions, missing evidence and untested assumptions.' },
+  { n: '04', name: 'Compare', body: 'It develops credible alternatives, including keeping the current position, and compares them against explicit criteria.' },
+  { n: '05', name: 'Recommend', body: 'It produces a five-part Decision Brief and checks whether the call follows from the evidence before handing it to you.' },
 ];
 ---
 <BaseLayoutV2
   title="The Decision | GreenSquare AI"
-  description="The Decision is a plain markdown file that guides Claude, ChatGPT or Gemini through one consequential business decision and produces a clear, evidence marked brief."
+  description="The Decision is a plain markdown instruction file that gives Claude, ChatGPT or Gemini a disciplined strategy process for one consequential business decision."
   current="product"
 >
   <section class="v-section v-off hero">
     <div class="v-container">
       <div class="v-split is-top">
         <div class="v-reveal">
-          <h1 class="v-display">The Decision.</h1>
+          <h1 class="v-display">Give your AI a strategy process, not another prompt.</h1>
           <p class="v-lead" style="margin-top: var(--v-6);">
-            A plain markdown file that guides Claude, ChatGPT or Gemini through one consequential business
-            decision. It asks first, checks the framing, compares real options, and produces a recommendation
-            with the assumptions and evidence behind it.
+            The Decision is a plain markdown instruction file that guides Claude, ChatGPT or Gemini through one
+            consequential business decision. It asks before advising, challenges the framing, compares credible
+            options and produces an evidence-marked recommendation ready for scrutiny.
           </p>
           <p class="v-small product-note">
-            Open a new chat, paste or upload the file, and describe the decision in your own words. The process
-            runs inside the AI account you already use.
+            Open a new chat, paste or upload The Decision, then describe the choice in your own words. The process
+            runs inside the AI account and workplace policy you already use.
           </p>
           <div class="hero-actions">
             <a class="v-btn v-btn--green" href={withBase('/decision-frame/')}>Get the free Decision Frame</a>
@@ -43,7 +43,7 @@ const stages = [
                 {stages.map((stage) => <li><span class="n">{Number(stage.n)}</span> {stage.name}</li>)}
               </ul>
             </div>
-            <div class="v-readout__foot">One file · one decision · structured output</div>
+            <div class="v-readout__foot">One instruction file · one consequential decision · one defensible brief</div>
           </div>
         </div>
       </div>
@@ -52,15 +52,15 @@ const stages = [
 
   <section class="v-section">
     <div class="v-container">
-      <h2 class="v-h2" style="max-width: 24ch;">Use it when the answer has consequences.</h2>
+      <h2 class="v-h2" style="max-width: 24ch;">Use it when a plausible answer is not enough.</h2>
       <div class="decision-grid" style="margin-top: var(--v-8);">
         <ul class="v-leadlist v-reveal">
           <li><strong>Investment and bids.</strong> Decide whether to approve, reshape or stop a material commitment.</li>
-          <li><strong>Build, buy or partner.</strong> Compare the real options and test the constraints behind them.</li>
+          <li><strong>Build, buy or partner.</strong> Compare credible options and test the constraints behind each one.</li>
         </ul>
         <ul class="v-leadlist v-reveal d1">
           <li><strong>Programs and projects.</strong> Decide whether to continue, restructure, pause or exit.</li>
-          <li><strong>Operating choices.</strong> Prepare a clear call on hiring, pricing, vendors, markets or capacity.</li>
+          <li><strong>Operating choices.</strong> Prepare a defensible call on hiring, pricing, vendors, markets or capacity.</li>
         </ul>
       </div>
     </div>
@@ -84,10 +84,11 @@ const stages = [
   <section class="v-section">
     <div class="v-container v-split is-top">
       <div class="v-reveal">
-        <h2 class="v-h2">The output is ready to review.</h2>
+        <h2 class="v-h2">The output is built for executive scrutiny.</h2>
         <p class="v-measure" style="margin-top: var(--v-5); color: var(--v-ink-soft);">
-          The Decision Brief is clean markdown that you can edit, challenge or move into your own document. It
-          gives a senior reader the call, the reasoning, the next actions, and the evidence that still needs work.
+          The Decision Brief is clean markdown you can edit, challenge or move into your own document. A senior
+          reader can see the call, the reasoning, the material trade-offs, the next action and the evidence that
+          still needs work.
         </p>
       </div>
       <div class="v-reveal d1">
@@ -95,14 +96,14 @@ const stages = [
           <div class="v-readout__bar"><span class="v-readout__dot"></span> Decision Brief structure</div>
           <div class="v-readout__body">
             <ul class="v-spec__list">
-              <li><span class="n">1</span> The decision and why it matters now</li>
-              <li><span class="n">2</span> The options compared</li>
+              <li><span class="n">1</span> The Decision and why it matters now</li>
+              <li><span class="n">2</span> The Options compared</li>
               <li><span class="n">3</span> The recommendation</li>
               <li><span class="n">4</span> The next actions</li>
-              <li><span class="n">5</span> What would change the recommendation</li>
+              <li><span class="n">5</span> The Assumptions and reversal conditions</li>
             </ul>
             <div class="spec-tags v-reveal">
-              <span class="v-tag">given</span><span class="v-tag">derived</span><span class="v-tag">inferred</span><span class="v-tag">unknown</span>
+              <span class="v-tag">GIVEN</span><span class="v-tag">DERIVED</span><span class="v-tag">INFERRED</span><span class="v-tag">UNKNOWN</span>
             </div>
           </div>
         </div>
@@ -113,15 +114,15 @@ const stages = [
   <section class="v-section v-green">
     <div class="v-container v-split">
       <div class="v-reveal">
-        <h2 class="v-h2">Your decision stays in your account.</h2>
+        <h2 class="v-h2">Your decision stays inside your AI account.</h2>
         <p class="v-lead" style="margin-top: var(--v-5);">
           The Decision contains plain text. It has no links, embedded code, macros or external connection.
-          GreenSquare cannot see your decision, your answers or the brief produced in your chat.
+          GreenSquare cannot see your question, your answers or the Decision Brief produced in your chat.
         </p>
       </div>
       <div class="v-reveal d1">
         <ul class="v-leadlist">
-          <li><strong>Nothing to install.</strong> Paste or upload one markdown file.</li>
+          <li><strong>Nothing to install.</strong> Paste or upload one plain markdown instruction file.</li>
           <li><strong>Your existing account.</strong> Use the AI service and workplace policy you already have.</li>
           <li><strong>Editable output.</strong> Keep the brief in markdown or move it into your normal workflow.</li>
         </ul>
@@ -131,24 +132,24 @@ const stages = [
 
   <section class="v-section v-fill">
     <div class="v-container v-container--narrow">
-      <h2 class="v-h2">What the public test shows.</h2>
+      <h2 class="v-h2">What the public benchmark supports.</h2>
       <p class="v-measure" style="margin-top: var(--v-5); color: var(--v-ink-soft);">
-        The Decision was tested against two baselines under a pre-registered protocol, on two frontier models and
-        three business cases. Every figure lives on the benchmark page and nowhere else, so there is one record to
-        check rather than several to reconcile. That page also carries every departure from the pre-registration
-        and everything the test cannot tell you.
+        In 45 pre-registered runs across two frontier models and three business cases, The Decision consistently
+        imposed the process it was designed to impose: ask first, compare real options and tag the evidence. The
+        benchmark does not yet prove that it improves an experienced operator's judgement. Every result,
+        departure and limitation is kept on one page so there is one evidence record to scrutinise.
       </p>
-      <a class="v-link" href={withBase('/benchmark/')} style="display:inline-block; margin-top: var(--v-5);">See the results and limitations</a>
+      <a class="v-link" href={withBase('/benchmark/')} style="display:inline-block; margin-top: var(--v-5);">Review the results and limitations</a>
     </div>
   </section>
 
   <section class="v-section v-green" id="get-started">
     <div class="v-container v-split is-top">
       <div class="v-reveal">
-        <h2 class="v-h2">Start with the free Decision Frame.</h2>
+        <h2 class="v-h2">Use the first six questions now.</h2>
         <p class="v-lead" style="margin-top: var(--v-5);">
-          The Decision is being prepared for launch. The free Frame gives you the first six questions now, on
-          one page, for a real decision you are facing.
+          The Decision is being prepared for launch. The free Decision Frame gives you the first six questions
+          now, on one page, for a live decision.
         </p>
       </div>
       <div class="v-reveal d1">
@@ -165,15 +166,15 @@ const stages = [
       <div style="margin-top: var(--v-8);">
         <details open>
           <summary>What exactly is The Decision?</summary>
-          <p class="v-small">A structured markdown instruction file for one decision. It guides the conversation and produces the Decision Brief inside your AI chat.</p>
+          <p class="v-small">A plain markdown instruction file for one consequential business decision. It guides the conversation and produces the Decision Brief inside your AI chat.</p>
         </details>
         <details>
           <summary>Do I need to install anything?</summary>
-          <p class="v-small">No installation is required. Open a new chat, paste or upload the file, then describe your decision.</p>
+          <p class="v-small">No installation is required. Open a new chat, paste or upload The Decision, then describe the choice in your own words.</p>
         </details>
         <details>
           <summary>Which AI services can I use?</summary>
-          <p class="v-small">The file is designed for Claude, ChatGPT and Gemini. The current public benchmark covers Claude and ChatGPT. The Gemini grid is pending.</p>
+          <p class="v-small">The Decision is designed for Claude, ChatGPT and Gemini. The current public benchmark covers Claude and ChatGPT; Gemini has not yet been run.</p>
         </details>
         <details>
           <summary>Will it build a financial model?</summary>
@@ -181,7 +182,7 @@ const stages = [
         </details>
         <details>
           <summary>When can I buy it?</summary>
-          <p class="v-small">The launch edition is in preparation. Get the free Decision Frame to use the first part of the method now.</p>
+          <p class="v-small">The launch edition is in preparation. Use the free Decision Frame to apply the first part of the method now.</p>
         </details>
       </div>
     </div>

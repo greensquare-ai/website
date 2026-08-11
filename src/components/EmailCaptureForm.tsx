@@ -15,7 +15,7 @@ type Status = 'idle' | 'loading' | 'success' | 'error';
 
 export default function EmailCaptureForm({
   buttonLabel = 'Email me the Decision Frame',
-  fineprint = 'Confirm by email to receive the PDF and occasional GreenSquare updates. Unsubscribe any time.',
+  fineprint = 'Confirm your address to receive the PDF and occasional GreenSquare updates. Unsubscribe at any time.',
   dark = false,
 }: Props) {
   const [email, setEmail] = useState('');
@@ -54,7 +54,7 @@ export default function EmailCaptureForm({
     return (
       <div className="field-row-wrapper" style={{ minHeight: '4.75rem' }}>
         <p className="form-status form-status--success" role="status">
-          Check your inbox and confirm your address. We will send the Decision Frame straight after.
+          Check your inbox and confirm your address. The Decision Frame will arrive immediately after.
         </p>
       </div>
     );
@@ -83,7 +83,7 @@ export default function EmailCaptureForm({
         </button>
         {status === 'error' && (
           <p className="form-status form-status--error" role="alert">
-            We could not send the form. Try again, or email hello@greensquare.ai.
+            The form could not be sent. Try again, or email hello@greensquare.ai.
           </p>
         )}
         <p className="form-note" style={{ width: '100%' }}>{fineprint}</p>

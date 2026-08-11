@@ -38,7 +38,7 @@ const headline = [
 
 const artefacts = [
   { title: 'Case A, Meridian', sub: 'The frozen prompt and fact sheet.', path: 'evidence/preregistration/v3/cases/case-A-anchor-client.md' },
-  { title: 'Case B, Larkfield', sub: 'The GO case, and the case where the file adds least.', path: 'evidence/preregistration/v3/cases/case-B-go-case.md' },
+  { title: 'Case B, Larkfield', sub: 'The GO case, and the case where The Decision adds least.', path: 'evidence/preregistration/v3/cases/case-B-go-case.md' },
   { title: 'Case C, Corvan', sub: 'Adapted from a documented Australian post mortem.', path: 'evidence/preregistration/v3/cases/case-C-disguised-real.md' },
   { title: 'Test protocol', sub: 'Conditions, the answering rule, the target grid and the scoring procedure.', path: 'evidence/preregistration/v3/protocol.md' },
   { title: 'Scoring rubric', sub: 'The pass criteria for each of the eight checks.', path: 'evidence/preregistration/v3/rubric-operationalisations.md' },
@@ -69,17 +69,18 @@ const limitationLeads = [
 ];
 ---
 <BaseLayoutV2
-  title="Benchmark | GreenSquare AI"
-  description={`A ${g.runs_total} run pre-registered benchmark of The Decision across two AI models, three business cases and three conditions, with the method, the results, every deviation and the limitations stated plainly.`}
+  title="Benchmarking AI judgement | GreenSquare AI"
+  description={`A ${g.runs_total}-run pre-registered benchmark of how The Decision changes AI process discipline and judgement across two models, three business cases and three conditions.`}
   current="benchmark"
 >
 
 <!-- 1. THE CLAIM AND THE CORE RESULT -->
 <section class="v-section bm-open">
   <div class="v-container v-container--narrow">
-    <h1 class="v-h1">The file asked its own questions, obtained the decisive facts, and surfaced the hidden decision in {fmt(c6.armC).text} runs.</h1>
+    <p class="v-label v-eyebrow">Benchmarking AI judgement</p>
+    <h1 class="v-h1">Starting from a short question, The Decision surfaced the hidden decision in {fmt(c6.armC).text} runs.</h1>
 
-    <p class="v-lead bm-mt5">It started from a short question with no facts supplied. The informed baseline reached {fmt(c6.armB).text} on the same check, and it was handed the complete fact sheet before it answered. Those two numbers are the finding, and what the file closes is the gap between typing a short question and holding a complete fact sheet.</p>
+    <p class="v-lead bm-mt5">The informed baseline reached {fmt(c6.armB).text} on the same check after receiving the complete fact sheet. The Decision had to ask for those facts itself. That is evidence of disciplined fact finding. It is not yet proof of better judgement than an informed operator.</p>
 
     <div class="v-readout bm-mt6">
       <div class="v-readout__bar"><span class="v-readout__dot"></span> The pre-registered result</div>
@@ -132,9 +133,9 @@ const limitationLeads = [
 <section class="v-section v-off">
   <div class="v-container v-container--narrow">
     <p class="v-label v-eyebrow">The comparison</p>
-    <h2 class="v-h2">The comparison is against an operator who has already pasted in every fact.</h2>
+    <h2 class="v-h2">The hardest comparison starts with an informed operator who has already supplied every fact.</h2>
 
-    <p class="v-lead bm-mt5">The objection this page has to answer is not someone typing one lazy question. It is you, doing your job, pasting in what you already know before you ask. That reader is the all-facts condition, and it is the condition this page reports hardest.</p>
+    <p class="v-lead bm-mt5">The relevant baseline is not a careless user typing one vague question. It is a competent operator who has assembled the material facts before asking for advice. That is the all-facts condition, and it is the comparison this page treats most seriously.</p>
 
     <ul class="v-caplist bm-caplist">
       {arms.map((a, i) => (
@@ -146,7 +147,7 @@ const limitationLeads = [
       ))}
     </ul>
 
-    <p class="v-small bm-mt5">The third condition is named for the file that was tested. The Decision is that file, plain markdown that you paste into the AI account you already use, so nothing is installed and the decision stays in your account. The Decision Brief is the output it produces. The Decision Frame, at the foot of this page, is a free one-page worksheet and a different thing again.</p>
+    <p class="v-small bm-mt5">The Decision is the plain markdown instruction file tested here. You paste it into the AI account you already use; nothing is installed and your decision stays in that account. It produces the Decision Brief. The Decision Frame, offered at the foot of this page, is a separate free one-page worksheet.</p>
 
     <div class="v-card v-card--fill bm-mt5">
       <p class="v-label">Why that is a fair comparison</p>
@@ -156,7 +157,7 @@ const limitationLeads = [
       <p class="v-small bm-mt3">Source: {parity().source}, hashed and frozen at commit {p.short}.</p>
     </div>
 
-    <p class="bm-mt5">The loaded condition and the question-only condition start from the same input. The all-facts condition does not. So the comparison that carries the product claim is the loaded condition against the all-facts condition on the result, and against the question-only condition on the starting position.</p>
+    <p class="bm-mt5">The Decision-loaded and question-only conditions start from the same short prompt. The all-facts condition does not. The product claim therefore depends on two comparisons: The Decision against all facts on the result, and The Decision against question only on the starting position.</p>
 
     <p class="bm-mt4">The question-only condition scored {fmt(c6.armA).text} on the hidden-decision check, and that zero is not evidence of anything. It is an artefact of the design, for the reason set out in the next section, and it is not a measurement of baseline judgement.</p>
   </div>
@@ -166,9 +167,9 @@ const limitationLeads = [
 <section class="v-section">
   <div class="v-container v-container--narrow">
     <p class="v-label v-eyebrow">The result</p>
-    <h2 class="v-h2">The pre-registered result is checks 6 and 7, and the informed baseline is above the loaded file on one of them.</h2>
+    <h2 class="v-h2">On the two pre-registered judgement checks, the evidence is mixed.</h2>
 
-    <p class="v-lead bm-mt5">The scoring rubric pre-registers those two checks as the primary result. On surfacing the hidden decision, the informed baseline scored {fmt(c6.armB).text} and the loaded file {fmt(c6.armC).text}. The informed baseline is above the loaded file, and it held the complete fact sheet before it answered.</p>
+    <p class="v-lead bm-mt5">The primary result is whether the model surfaced the hidden Decision and whether its recommendation matched the sealed direction. On the first check, the informed baseline scored {fmt(c6.armB).text} and The Decision scored {fmt(c6.armC).text}; the baseline was one run higher and held the complete fact sheet before answering.</p>
 
     <figure class="bm-fig">
       <figcaption class="bm-fig__read">Surfacing the hidden decision. The all-facts condition was handed the facts. The loaded condition had to ask for them.</figcaption>
@@ -200,7 +201,7 @@ const limitationLeads = [
 
     <div class="bm-note bm-mt5"><p class="v-small">{c6.definitional_note}</p></div>
 
-    <h3 class="v-h3 bm-mt6">The informed baseline against the loaded file, on all {cmp.total} checks</h3>
+    <h3 class="v-h3 bm-mt6">The informed baseline against The Decision, across all {cmp.total} checks</h3>
     <div class="bm-tw">
       <table class="v-table bm-t">
         <thead>
@@ -224,11 +225,11 @@ const limitationLeads = [
       </table>
     </div>
 
-    <p class="bm-mt5">The informed baseline returned the same count as the loaded file on {spell(cmp.tied.length)} of the {spell(cmp.total)} checks, and a higher count on {spell(cmp.baselineHigher.length)}. The loaded file is above it on {spell(cmp.loadedHigherMeasured.length)} measured checks: comparing real options including doing nothing, and tagging its evidence. The next section sets out what those are worth and what they are not.</p>
+    <p class="bm-mt5">The informed baseline returned the same count as The Decision on {spell(cmp.tied.length)} of the {spell(cmp.total)} checks, and a higher count on {spell(cmp.baselineHigher.length)}. The Decision was higher on {spell(cmp.loadedHigherMeasured.length)} measured checks: comparing real options, including doing nothing, and tagging the evidence. The next section explains what those differences establish and what they do not.</p>
 
     <p class="bm-mt4">The remaining check, asking before answering, also shows a gap, and it is deliberately not counted above. The all-facts condition is single-turn by construction and cannot pass it, so that gap restates the design of the test rather than measuring anything. Counting it as a win would repeat the error this page records as departure 1.</p>
 
-    <p class="bm-mt4">Some of these counts do not separate the conditions at all. Stating what would change the call sits at {fmt(check('c5').armA).text}, {fmt(check('c5').armB).text} and {fmt(check('c5').armC).text} across the three conditions, so it discriminates nowhere. Naming an untested constraint, direction, and catching the planted bias are all equal between the informed baseline and the loaded file.</p>
+    <p class="bm-mt4">Some counts do not separate the conditions at all. Stating what would change the call sits at {fmt(check('c5').armA).text}, {fmt(check('c5').armB).text} and {fmt(check('c5').armC).text} across the three conditions, so it discriminates nowhere. Naming an untested constraint, direction and catching the planted bias are all equal between the informed baseline and The Decision.</p>
 
     <p class="v-small bm-mt4">The full grid, every departure from the pre-registration, and the adjudication record for every disputed cell are further down this page.</p>
   </div>
@@ -238,7 +239,7 @@ const limitationLeads = [
 <section class="v-section v-off">
   <div class="v-container v-container--narrow">
     <p class="v-label v-eyebrow">What it buys</p>
-    <h2 class="v-h2">The file produced a complete brief from a short question, on every run, where the informed baseline produced none.</h2>
+    <h2 class="v-h2">The Decision produced a defensible brief on every run. The informed baseline produced none.</h2>
 
     <figure class="bm-fig bm-mt5">
       <figcaption class="bm-fig__read">{comp.label}, derived.</figcaption>
@@ -269,14 +270,14 @@ const limitationLeads = [
       <p class="v-small bm-mt3">{comp.recomputed_note}</p>
     </div>
 
-    <p class="bm-mt5">What the file changes is the input it can start from. The informed baseline reaches its results from a complete fact sheet. The loaded file reaches them from the short question, and it produced a brief with its options, evidence tags and change criteria attached in {fmt(comp.armC).text} runs, where the informed baseline produced one in {fmt(comp.armB).text}.</p>
+    <p class="bm-mt5">What The Decision changes is the input required to reach a structured output. The informed baseline starts with a complete fact sheet. The Decision starts with the short question and produced a brief with its Options, evidence tags and reversal conditions attached in {fmt(comp.armC).text} runs, where the informed baseline produced one in {fmt(comp.armB).text}.</p>
 
     <p class="bm-mt4">For a reader preparing a paper, that is the concrete difference: options that include doing nothing, compared on stated criteria; every fact carrying an evidence tag showing where it came from; and named criteria for what would change the call. From a short question, without first assembling the fact sheet.</p>
 
     <h3 class="v-h3 bm-mt6">The limit on that claim</h3>
-    <p class="bm-mt3">Asking first, comparing options and tagging evidence are the three behaviours the file instructs the model to perform, and they are the three that separate cleanly. They are evidence that the file was followed. They are not evidence that the model reasoned better.</p>
+    <p class="bm-mt3">Asking first, comparing Options and tagging evidence are the three behaviours The Decision explicitly requires, and they are the three that separate cleanly. They show that the process was followed. They do not show that the model reasoned better.</p>
 
-    <p class="bm-mt4">The grid ran the three conditions set out above. A fourth condition, in which a competent operator writes those instructions themselves and gets the same behaviour without the file, was not among them and has not been run.</p>
+    <p class="bm-mt4">The grid ran the three conditions set out above. A fourth condition, in which a competent operator writes equivalent instructions and gets the same behaviour without The Decision, was not among them and has not been run.</p>
   </div>
 </section>
 
@@ -284,7 +285,7 @@ const limitationLeads = [
 <section class="v-section">
   <div class="v-container v-container--narrow">
     <p class="v-label v-eyebrow">External knowledge</p>
-    <h2 class="v-h2">Outside Case B, direction did not separate a short question from the loaded file.</h2>
+    <h2 class="v-h2">Recommendation direction did not improve outside one contaminated case.</h2>
 
     <p class="v-lead bm-mt5">Check 7 asks whether the recommendation pointed the same way as the sealed key. Split by case, the aggregate figure comes apart. {dbc.note}</p>
 
@@ -320,8 +321,8 @@ const limitationLeads = [
 
     <p class="bm-mt4">Those question-only runs were not clean. ChatGPT invoked live web search unprompted during them, and they carry the whole of the direction deficit reported anywhere on this site. The departure is recorded in full as departure 17 below.</p>
 
-    <h3 class="v-h3 bm-mt6">Case B is also the case where the file adds least</h3>
-    <p class="bm-mt3">The protocol required that case to be identified and it never has been until now. With every fact supplied, the informed baseline matched the loaded file exactly, {fmt(gc.armB).text} on direction against {fmt(gc.armC).text}, on both models. The same qualifier applies here that this page applies to any favourable sentence: that is one case at n = {gc.armA.n} per condition, and the generalisation is weak in both directions.</p>
+    <h3 class="v-h3 bm-mt6">Case B is also where The Decision adds least</h3>
+    <p class="bm-mt3">The protocol required that case to be identified and it never has been until now. With every fact supplied, the informed baseline matched The Decision exactly, {fmt(gc.armB).text} on direction against {fmt(gc.armC).text}, on both models. The same qualifier applies here that this page applies to any favourable sentence: that is one case at n = {gc.armA.n} per condition, and the generalisation is weak in both directions.</p>
 
     <h3 class="v-h3 bm-mt6">Case design and the substrate</h3>
     <p class="bm-mt3">{pq.case_design.text} That is stated on the methodology page and it is the reason the answer key holds: search cannot retrieve the sealed case facts. It is not the same as saying the conditions were clean, and on Case B they were not. The question-only runs described above still reached live web search, so they were not the no-context condition the protocol describes. Both halves are true and neither stands alone.</p>
@@ -338,12 +339,12 @@ const limitationLeads = [
 <section class="v-section v-off">
   <div class="v-container v-container--narrow">
     <p class="v-label v-eyebrow">Limits</p>
-    <h2 class="v-h2">This benchmark cannot tell you whether the file helps a real operator.</h2>
+    <h2 class="v-h2">This benchmark does not yet answer the real-world question.</h2>
 
     <div class="v-card bm-mt5">
       <p class="v-label">The condition the product exists for, and the one that was not run</p>
-      <p class="bm-mt3">The first limitation below is the one that matters most, and it is the reason this page cannot tell you what you came to find out. The condition the product exists for, an operator holding most of what matters with a blind spot they cannot see, has not been run. It is the next required test, and it is what would settle the question this grid cannot.</p>
-      <p class="bm-mt3">A second condition is also missing. A competent operator writing the equivalent instructions themselves, without the file, was not one of the three conditions and has not been run. Until it is, this page cannot tell you whether the file is doing something an operator could not do for themselves.</p>
+      <p class="bm-mt3">The condition the product exists for — an operator who holds most of the relevant facts but has a blind spot they cannot see — has not been run. That is the next required test and the one that can establish whether The Decision improves real work.</p>
+      <p class="bm-mt3">A second condition is also missing: a competent operator writing equivalent instructions without The Decision. Until that comparison is run, this benchmark cannot show whether the product does something the operator could not reproduce themselves.</p>
     </div>
 
     <h3 class="v-h3 bm-mt6">What this benchmark cannot tell you</h3>
@@ -366,7 +367,7 @@ const limitationLeads = [
 <section class="v-section">
   <div class="v-container v-container--narrow">
     <p class="v-label v-eyebrow">Verify</p>
-    <h2 class="v-h2">Every input can be verified today, and no result can be re-scored outside GreenSquare AI.</h2>
+    <h2 class="v-h2">Every input can be verified. The scores cannot yet be reproduced independently.</h2>
 
     <p class="v-lead bm-mt5">The pre-registration commit is <code class="bm-hash">{p.full}</code>. It was authored at {p.authoredAtTime} and committed at {p.committedAtTime}. A committer timestamp is not proof of push time, and this page does not claim one.</p>
 
@@ -415,9 +416,9 @@ const limitationLeads = [
 <section class="v-section v-off">
   <div class="v-container v-container--narrow">
     <p class="v-label v-eyebrow">The record</p>
-    <h2 class="v-h2">The grid departed from the pre-registration and the published record in {deviations().length} places.</h2>
+    <h2 class="v-h2">The public record contains {deviations().length} departures from the pre-registration.</h2>
 
-    <p class="v-lead bm-mt5">All {deviations().length} are listed here in full, ranked by how much damage each does when someone hostile finds it. None is softened and none is omitted. They sit at this point in the page rather than above the result, which is a change from the previous version of this page, and the reason is that the result should be readable before the record of what went wrong with it.</p>
+    <p class="v-lead bm-mt5">All {deviations().length} are listed in full and ranked by their effect on the strength of the result. None is softened or omitted. The result comes first so the finding can be understood; the complete audit trail follows so it can be challenged.</p>
 
     <h3 class="v-h3 bm-mt6">The grid is not balanced across cases or models</h3>
     <p class="bm-mt3">{g.runs_total} runs, {g.n_per_arm} per condition. Case A ran on ChatGPT only, {g.cases[0].n_per_arm * 3} runs. Cases B and C ran on both models. Each condition’s n of {g.n_per_arm} is {caseSizes.join(', ')} across the three cases, and Case A carries no Claude leg.</p>
@@ -428,7 +429,7 @@ const limitationLeads = [
 
     <p class="bm-mt4">The rubric names per-case, per-condition counts as the headline unit. This page publishes two such cuts: Case B in full, and direction split by case. The other seven checks are still aggregate only, and the pre-registration required them per case. Until they are published, read every aggregate here as an average over an unbalanced grid.</p>
 
-    <p class="bm-mt4">No per-model split is published. The one per-model statement on this page is Case B, where the informed baseline and the loaded file tied on both.</p>
+    <p class="bm-mt4">No per-model split is published. The one per-model statement on this page is Case B, where the informed baseline and The Decision tied on both.</p>
 
     <h3 class="v-h3 bm-mt6">All {cmp.total} checks, with every disputed cell adjudicated</h3>
     <p class="bm-mt3">Counts are out of {g.n_per_arm} per condition, pooled across both models and all three cases. Five cells the two scoring passes disagreed on were adjudicated on {d.adjudicatedOn} against the sealed reference answers. No cell is withheld.</p>
@@ -481,7 +482,7 @@ const limitationLeads = [
         <p class="v-small"><span class="bm-nk">{c.page_label}, caveat.</span> {c.caveat}</p>
       ))}
       <p class="v-small"><span class="bm-nk">Partial passes.</span> This table shows full passes only. The protocol requires baseline partial counts reported prominently, per case, and the rubric describes the full versus partial distinction as the core of the benchmark. No partial count is published anywhere on this site, including here.</p>
-      <p class="v-small"><span class="bm-nk">What the first three checks measure.</span> The first three checks are behaviours the file mandates, which is why they separate cleanly. What that is worth, and what it is not evidence of, is set out with the result above and again in the limitations.</p>
+      <p class="v-small"><span class="bm-nk">What the first three checks measure.</span> The first three checks are behaviours The Decision mandates, which is why they separate cleanly. What that is worth, and what it is not evidence of, is set out with the result above and again in the limitations.</p>
       <p class="v-small"><span class="bm-nk">The zero that was once the headline.</span> The question-only condition’s {fmt(c6.armA).text} on the hidden-decision check is definitional, for the reason set out with the result above. It was previously the headline number of this benchmark and it should never have been used that way.</p>
     </div>
 
@@ -508,13 +509,13 @@ const limitationLeads = [
 <!-- 9. RUN IT YOURSELF -->
 <section class="v-section bm-cta">
   <div class="v-container v-container--narrow">
-    <h2 class="v-h2">Run the Decision Frame on a decision you are holding now.</h2>
+    <h2 class="v-h2">Test the first six questions on a decision you are holding now.</h2>
   </div>
   <div class="v-splitcta bm-mt6">
     <div class="v-splitcta__panel v-splitcta__panel--green">
       <div>
         <p class="v-label bm-onGreen">The free Decision Frame</p>
-        <p class="v-lead bm-mt3">A one-page worksheet of six questions, about ten minutes, delivered as a PDF by email. It is the first questions, in order, on one page. Run it against something live and see whether the questions change the call, which is a cheaper test of this page’s claim than reading the table again.</p>
+        <p class="v-lead bm-mt3">The free Decision Frame puts the first six questions on one page. It takes about ten minutes. Run it against a live decision and see whether the questions expose a missing fact, a weak Assumption or a better Option.</p>
       </div>
       <div class="v-splitcta__action">
         <a class="v-btn v-btn--on-green v-splitcta__btn" href={withBase('/decision-frame/')}>Get the free Decision Frame</a>
@@ -524,10 +525,10 @@ const limitationLeads = [
     <div class="v-splitcta__panel v-splitcta__panel--fill">
       <div>
         <p class="v-label">What was tested, and what happens next</p>
-        <p class="bm-mt3">The file this page benchmarks is The Decision, a plain markdown file that guides Claude, ChatGPT or Gemini through one consequential business decision and produces an evidence-marked brief. You open a new chat, paste or upload the file, and describe the decision in your own words. The process runs inside the AI account you already use, under the workplace policy you already have, and there is nothing to install.</p>
-        <p class="bm-mt3"><strong>The file benchmarked here is not on sale.</strong> The launch edition is in preparation. The only thing available from this page today is the free Decision Frame.</p>
+        <p class="bm-mt3">This page benchmarks The Decision, a plain markdown instruction file that guides Claude, ChatGPT or Gemini through one consequential business decision and produces an evidence-marked Decision Brief. You paste or upload it in a new chat, then describe the decision in your own words. The process runs inside the AI account and workplace policy you already use.</p>
+        <p class="bm-mt3"><strong>The Decision is not yet on sale.</strong> The launch edition is in preparation. The free Decision Frame is available now.</p>
       </div>
-      <p class="v-small">If you want to pressure-test this benchmark, run the file against a decision under a private arrangement, or tell us where the evidence falls short, the address is <a class="v-link" href="mailto:hello@greensquare.ai">hello@greensquare.ai</a>.</p>
+      <p class="v-small">To pressure-test this benchmark, run The Decision against a decision under a private arrangement or tell us where the evidence falls short: <a class="v-link" href="mailto:hello@greensquare.ai">hello@greensquare.ai</a>.</p>
     </div>
   </div>
 </section>

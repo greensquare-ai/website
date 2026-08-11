@@ -3,18 +3,18 @@ import { withBase } from '../lib/paths';
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 ---
 <BaseLayoutV2
-  title="Methodology | GreenSquare AI"
-  description="How GreenSquare AI designed, ran and scored the current 45 run pre-registered benchmark, including the completed grid, the limits of the evidence and the work still pending."
+  title="Benchmark methodology | GreenSquare AI"
+  description="How GreenSquare designed, ran and scored the current 45-run pre-registered benchmark of process discipline and AI judgement, including every limitation and open obligation."
   current="methodology"
 >
   <section class="v-section v-off hero">
     <div class="v-container v-container--narrow">
       <div class="v-reveal">
-        <h1 class="v-h1">How the current benchmark was run.</h1>
+        <h1 class="v-h1">How we tested process discipline and AI judgement.</h1>
         <p class="v-lead" style="margin-top: var(--v-6);">
-          The current result covers 45 scored runs across two models, three cases and three test conditions. This
-          page records what was tested, how it was scored, where the protocol changed, and which claims remain
-          open.
+          The current benchmark covers 45 scored runs across two models, three business cases and three test
+          conditions. This page explains the claim, the controls, the scorecard, every material limitation and
+          the work still required before GreenSquare can claim better judgement.
         </p>
       </div>
     </div>
@@ -25,14 +25,14 @@ import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
       <div class="v-prose v-reveal">
         <h2>The claim under test</h2>
         <p>
-          The Decision is designed to make an AI model follow a reliable process for one business decision. It
-          should ask for missing facts, test the framing, compare genuine options, mark the basis of important
-          claims, and state what would change the recommendation.
+          The Decision is designed to make an AI model follow a disciplined process for one consequential
+          business decision. It should ask for missing facts, test the framing, compare credible Options, mark
+          the basis of material claims and state what would change the recommendation.
         </p>
         <p>
-          The benchmark tests two related questions. First, does the process hold across models and repeated
+          The benchmark tests two related questions. First, does that process hold across models and repeated
           runs? Second, does asking before advising help the model connect the facts that reveal the underlying
-          decision?
+          Decision? It does not test whether experienced operators prefer the resulting brief.
         </p>
 
         <h2>The completed grid</h2>
@@ -74,7 +74,7 @@ import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
         </ul>
         <p>
           The all facts condition is the controlled comparison. It shows how well the model reasons when someone
-          already knows which information matters. The loaded condition tests whether the file can draw that
+          already knows which information matters. The loaded condition tests whether The Decision can draw that
           information out through questions and then produce the structured brief.
         </p>
 
@@ -89,7 +89,7 @@ import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
           <li>Named an untested constraint or assumption.</li>
           <li>Stated the conditions that would change the recommendation.</li>
         </ul>
-        <h3>Judgment checks</h3>
+        <h3>Judgement checks</h3>
         <p>These checks come from the sealed answer prepared for each case:</p>
         <ul>
           <li>Connected the three relevant facts and surfaced the underlying decision.</li>
@@ -121,9 +121,10 @@ import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
           with every other departure from this protocol.
         </p>
         <p>
-          These results support a claim about process consistency and fact gathering across the two tested
-          models. A blind senior reviewer study has yet to test which brief experienced operators would prefer to
-          send to an executive committee.
+          The current results support a claim about process consistency and fact gathering across the two tested
+          models. They do not support a claim that The Decision improves an experienced operator's judgement. A
+          blind senior-reviewer study has yet to test which brief operators would prefer to send to an executive
+          committee.
         </p>
 
         <h2>Transparency still pending</h2>
@@ -147,7 +148,7 @@ import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 
         <h2>Current status</h2>
         <p>
-          The 45 run pre-registered result is published on the <a href={withBase('/benchmark/')}>Benchmark page</a>, which
+          The 45-run pre-registered result is published on the <a href={withBase('/benchmark/')}>Benchmark page</a>, which
           carries the dates, the model versions and the refresh position. Both tested models have since been
           superseded and the 14 day re-run commitment has lapsed on both legs. Gemini, the transcript release, a
           scorer independent of GreenSquare and the senior reviewer study all remain outstanding.
