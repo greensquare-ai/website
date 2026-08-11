@@ -29,9 +29,17 @@ The sealed answer remains withheld until the full scored grid is complete. Its h
 
 ## Commit record
 
-Commit: `5e89de4842693444c27e893470efecb242486cd2`
+Commit: `3e5e46f1a7cc154e1b91120ec9336e3eb089fd2c`
 
-Pushed: 5 July 2026 at 09:17 AEST
+Authored: 5 July 2026 at 09:10:37 AEST. Committed: 5 July 2026 at 09:17:03 AEST.
+
+**Correction, 11 August 2026.** This entry previously recorded the commit as
+`5e89de4842693444c27e893470efecb242486cd2`. That identifier exists in no ref in this repository, so
+anyone who followed the verification procedure below failed at its first step, and the failure would
+have looked like their own mistake. The identifier above is the real pre-registration commit,
+verified with `git cat-file`. The error is reported as departure 3 on the benchmark page. The
+timestamps stated here are the commit's authored and committer times as recorded by git; they are not
+independent evidence of when the commit was pushed.
 
 Repository: `github.com/ks-projects-66/greensquare`
 
