@@ -3,21 +3,21 @@ import { TextButton } from "./V3Primitives";
 
 const VERSIONS = {
   v1: {
-    name: "V1 — design-language manual",
+    name: "V1: design-language manual",
     thesis: "Comprehensive and inspectable, but every rule competes at the same depth.",
     scores: [64, 38, 24, 34, 51, 46, 58, "75 sec"],
     strengths: "Evidence notation, complete foundations, accessible implementation.",
     weakness: "Container density and documentation posture obscure the governing decision.",
   },
   v2: {
-    name: "V2 — Decision Spine",
+    name: "V2: Decision Spine",
     thesis: "Lighter and more directional, but still describes a familiar linear process.",
     scores: [78, 66, 58, 55, 68, 61, 70, "42 sec"],
     strengths: "Variable density, negative space, clearer recommendation emphasis.",
     weakness: "Editorial SaaS rhythm and horizontal sequence remain the primary identity.",
   },
   v3: {
-    name: "V3 — Decision Field",
+    name: "V3: Decision Field",
     thesis: "A connected decision model whose identity survives without name or accent colour.",
     scores: [91, 82, 79, 86, 91, 88, 89, "18 sec"],
     strengths:

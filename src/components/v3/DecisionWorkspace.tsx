@@ -18,8 +18,8 @@ export function DecisionWorkspace() {
         <div>
           <p className="v3-workspace-stage">
             {challenge
-              ? "Test — recommendation reopened"
-              : "Compare — partner option under pressure"}
+              ? "Test: recommendation reopened"
+              : "Compare: partner option under pressure"}
           </p>
           <h2>{DECISION.question}</h2>
         </div>

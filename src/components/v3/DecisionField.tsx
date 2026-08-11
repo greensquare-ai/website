@@ -63,9 +63,9 @@ export function DecisionField({ compact = false }: { compact?: boolean }) {
           </div>
           <div className="field-legend" aria-label="Outline and colour key">
             <strong>Outline grammar</strong>
-            <span><i className="field-key field-key--solid" /> Solid line — confirmed structure</span>
-            <span><i className="field-key field-key--dashed" /> Dashed line — assumption under test</span>
-            <span><i className="field-key field-key--open" /> Open marker — unresolved uncertainty</span>
+            <span><i className="field-key field-key--solid" /> Solid line: confirmed structure</span>
+            <span><i className="field-key field-key--dashed" /> Dashed line: assumption under test</span>
+            <span><i className="field-key field-key--open" /> Open marker: unresolved uncertainty</span>
           </div>
         </figcaption>
 

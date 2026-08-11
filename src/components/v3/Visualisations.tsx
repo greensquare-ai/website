@@ -178,7 +178,7 @@ export function Visualisations() {
           +€1.2m
         </text>
         <text x="95" y="238" className="chart-note">
-          Ranges include ±3 pts churn and 8–20 week ramp.
+          Ranges include ±3 pts churn and an 8 to 20 week ramp.
         </text>
       </Chart>
 

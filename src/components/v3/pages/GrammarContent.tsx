@@ -42,15 +42,15 @@ export function GrammarContent() {
         </div>
         <div className="v3-type-test">
           <div className="v3-type-row v3-type-space">
-            <strong>Space Grotesk — H1 and H2</strong>
+            <strong>Space Grotesk: H1 and H2</strong>
             <p>Evidence before interpretation.</p>
           </div>
           <div className="v3-type-row v3-type-plex">
-            <strong>IBM Plex Sans — functional text</strong>
+            <strong>IBM Plex Sans: functional text</strong>
             <p>Transferred-account churn changes the call above 8%.</p>
           </div>
           <div className="v3-type-row v3-type-logo">
-            <strong>Manrope Semibold — logo only</strong>
+            <strong>Manrope Semibold: logo only</strong>
             <p>GreenSquare AI</p>
           </div>
         </div>

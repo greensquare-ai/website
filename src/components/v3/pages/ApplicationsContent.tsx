@@ -12,7 +12,7 @@ export function ApplicationsContent({ expanded = false }: { expanded?: boolean }
           </div>
           <p className="v3-lede">
             Every application preserves the governing question, recommendation, evidence state,
-            material uncertainty and owned next action. Format changes density—not meaning.
+            material uncertainty and owned next action. Format changes density, not meaning.
           </p>
         </div>
         <div className="application-template-table" role="table" aria-label="Application template requirements">
