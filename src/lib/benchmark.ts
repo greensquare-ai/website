@@ -142,7 +142,36 @@ export const sealedKey = () => ({
   published: data.provenance.sealed_key_published,
 });
 
-export const transcriptsPublished = (): boolean => data.provenance.transcripts_published;
+export const hashedInputs = () => data.hashed_inputs;
+export const transcripts = () => data.transcripts;
+export const protocolQuotes = () => data.protocol_quotes;
+
+/**
+ * How the informed baseline compares with the loaded file, check by check.
+ * Derived rather than written down, so the sentence in the copy cannot drift from
+ * the grid the way the retired "five checks" claim did.
+ */
+export const armBvsArmC = () => {
+  const all = checks();
+  const higher = all.filter((c) => c.armC.met > c.armB.met);
+  return {
+    tied: all.filter((c) => c.armB.met === c.armC.met).map((c) => c.id),
+    baselineHigher: all.filter((c) => c.armB.met > c.armC.met).map((c) => c.id),
+    /* A gap on a cell the baseline cannot pass by construction is not a gap the file
+       won. Splitting these keeps the page from doing to itself what deviation 1 records:
+       counting a definitional zero as a result. */
+    loadedHigherMeasured: higher.filter((c) => !isDefinitional(c, 'armB')).map((c) => c.id),
+    loadedHigherDefinitional: higher.filter((c) => isDefinitional(c, 'armB')).map((c) => c.id),
+    /** Checks whose count is identical across all three conditions, so they separate nothing. */
+    flat: all.filter((c) => c.armA.met === c.armB.met && c.armB.met === c.armC.met).map((c) => c.id),
+    total: all.length,
+  };
+};
+
+/** House style spells out one to nine and uses numerals from 10. Bound counts still
+ *  come from the data; this only chooses how the number is written. */
+const WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+export const spell = (n: number): string => (n >= 0 && n <= 9 ? WORDS[n] : String(n));
 
 /** Shared vocabulary. The live site used "hidden decision" and "underlying decision"
  *  for the same check on the same page; this stops that recurring. */

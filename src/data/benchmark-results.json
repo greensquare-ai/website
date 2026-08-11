@@ -132,6 +132,43 @@
     "transcripts_published": false
   },
 
+  "hashed_inputs": {
+    "note": "The six frozen inputs, hashed before the first scored run. Values transcribed from PREREGISTRATION.md at the pre-registration commit and verified against it.",
+    "line_endings": "LF",
+    "files": [
+      { "file": "cases/case-A-anchor-client.md", "sha256": "A4C362DC086D6FD9EE94D3F4CD53C6279ACD3C66D3148FE98F066544D5CF351C" },
+      { "file": "cases/case-B-go-case.md", "sha256": "3776F6C7A0C6C71B5E444411C3AFB8EEE5B5DE3A31E3C9EC6D1E6C330FD1C941" },
+      { "file": "cases/case-C-disguised-real.md", "sha256": "5D8FEB7A5F267A791455767EF89B55281B22D871F3148FBD862E5828B806C39E" },
+      { "file": "protocol.md", "sha256": "E003D94C64F207CF03EB79805830AA743939D3DB3F3457E1AA241318B7C32CE6" },
+      { "file": "rubric-operationalisations.md", "sha256": "9EC0DA0E97088B1584B0958798928ED3F72C10FCFB33392C254CC7FE4C400700" },
+      { "file": "reference-answers-SEALED.md", "sha256": "7D1ED905C88B1288179B4892DE2D6251ED4350CC78CEBA860A1C8042E3B01FCA" }
+    ],
+    "product_file": "decision-brief-v2.0.md",
+    "product_sha256": "3FF4672830AD1AB590AFD58F0D56DDC4B14E095588F730FACACD14CE3ABBE1E1",
+    "product_withheld_note": "The product file is deliberately not published; only its hash is. That hash proves nothing to a reader who does not hold the file. What it does is let anyone who has a copy confirm that theirs is the version benchmarked here."
+  },
+
+  "transcripts": {
+    "published": false,
+    "withdrawn_note": "The two transcript excerpts previously shown here are withdrawn. One tagged a figure DERIVED where the case file supplies it directly, which under the product's own scheme makes it GIVEN, and the case file is one click away. The replacement will show the model integrating a fact it obtained by asking, rather than restating one it was given."
+  },
+
+  "protocol_quotes": {
+    "answering_rule": {
+      "source": "protocol.md:13",
+      "text": "The answering rule (Arm C) is fixed and published so the interrogation phase is reproducible and the operator cannot feed the model convenient answers. Off-sheet questions are answered \"That has not been assessed\" so that how each condition handles a genuine unknown is itself measured."
+    },
+    "substrate": {
+      "source": "protocol.md:20",
+      "text": "Vanilla conditions: ChatGPT and Gemini verified to have no custom instructions; Claude custom style set to Normal for the run window, then restored (the restoration is logged). API with an empty system prompt is the preferred clean substrate if keys are available; browser automation is the fallback."
+    },
+    "substrate_actual": "Browser automation was the fallback used. The transcript header for the contaminated runs records the platform as chatgpt.com in a temporary chat under browser automation.",
+    "case_design": {
+      "source": "greensquare.ai/methodology",
+      "text": "The three cases are fictional and cannot be found through search."
+    }
+  },
+
   "parity": {
     "source": "protocol.md:10-13",
     "statement": "Arm B carries equal information to Arm C; the only difference is the product's discipline. The pre-registration names it the sceptic's controlled comparison. In Arm C the operator answers each question using only the fact sheet, verbatim in substance, and replies 'That has not been assessed' to anything off-sheet, so the operator cannot feed the model convenient answers.",
