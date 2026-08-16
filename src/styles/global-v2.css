@@ -279,6 +279,22 @@ a.v-card:hover, .v-card--hover:hover { background: var(--v-fill); }
 .v2 .v-green .form-status--success { color: var(--v-cream); }
 .v2 .v-green .form-status--error { color: var(--v-error-on-green); }
 
+/* A green section can host a white .v-card (see .v-green .v-card above), and the form
+   often sits inside one. The cream flips directly above are written for a form sitting
+   on the green itself, so inside a card they painted a white button and white status
+   text onto white paper: the button read as floating text, and the success message
+   disappeared entirely on submit. Restore the on-paper treatment. */
+.v2 .v-green .v-card .field-row .btn,
+.v2 .v-green .v-card .field-row button[type='submit'] { background: var(--v-green); color: var(--v-cream); border-color: var(--v-green); }
+.v2 .v-green .v-card .field-row .btn:hover,
+.v2 .v-green .v-card .field-row button[type='submit']:hover { background: var(--v-green-bright); }
+.v2 .v-green .v-card .field-row .btn:focus-visible,
+.v2 .v-green .v-card .field-row button[type='submit']:focus-visible { box-shadow: 0 0 0 2px var(--v-paper), 0 0 0 4px var(--v-green); }
+.v2 .v-green .v-card input[type='email']:focus-visible { box-shadow: 0 0 0 3px color-mix(in srgb, var(--v-green) 22%, transparent); }
+.v2 .v-green .v-card .form-note { color: var(--v-ink-faint); }
+.v2 .v-green .v-card .form-status--success { color: var(--v-green); }
+.v2 .v-green .v-card .form-status--error { color: var(--v-error); }
+
 @keyframes v-status-in {
   from { opacity: 0; transform: translateY(4px); }
   to { opacity: 1; transform: none; }
