@@ -5,7 +5,25 @@
 
 .v2 * { box-sizing: border-box; }
 .v2 { scrollbar-width: thin; scrollbar-color: var(--v-line-strong) transparent; }
-html:has(.v2) { scroll-behavior: smooth; }
+/* The site is light-only. Declaring it stops Windows and Android dark mode from
+   inverting native controls (the email input, scrollbars) against a white page. */
+html:has(.v2) { scroll-behavior: smooth; color-scheme: light; }
+
+/* The nav is sticky at 72px, so anything scrolled to by anchor lands underneath it. */
+.v2 :where(h1, h2, h3, h4, [id]) { scroll-margin-top: 88px; }
+
+/* Visible on keyboard focus only. Previously inline on the layout with no focus rule,
+   which left it permanently at left:-9999px and unreachable for sighted keyboard users. */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--v-green);
+  color: var(--v-cream);
+  padding: 10px 16px;
+  z-index: 100;
+}
+.skip-link:focus { left: 0; }
 
 .v2 {
   margin: 0;

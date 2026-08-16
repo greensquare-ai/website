@@ -6,7 +6,7 @@ description: How GreenSquare collects, uses and protects your personal informati
 
 # Privacy policy
 
-Last updated: 3 July 2026
+Last updated: 17 August 2026
 
 GreenSquare (the trading name of the operator of this site) runs www.greensquare.ai. This policy explains what personal information we collect, why we collect it, who we share it with, and the choices you have. It applies to everyone who visits the site, wherever you are.
 
@@ -16,39 +16,37 @@ We are based in Australia and handle personal information under the Australian P
 
 We keep collection to the minimum the site needs to work.
 
-- **Your email address.** You give us this when you request the Decision Frame, join the launch list, or buy a GreenSquare product. This is the only personal detail you enter on the site.
-- **Payment information.** If you buy the Decision, payment is processed by Stripe. We do not see or store your card details.
-- **Technical and usage data.** When you load a page, our hosting provider records standard information such as your IP address, browser type, device type, the pages you view, and the time of your visit.
+- **Your email address.** You give us this when you request the Decision Frame or join the launch list. This is the only personal detail you enter on the site.
+- **Technical and usage data.** When you load a page, our hosting provider records standard information such as your IP address, browser type, device type, the pages you view, and the time of your visit. We also collect aggregate page view counts through Vercel Web Analytics, which uses no cookies and does not identify you.
 
 We do not run advertising trackers. We do not build profiles of you for marketing.
 
 ## How we use your information
 
-- We use your email address to send you the Decision Frame, occasional product updates covered by the form, and any product you purchase. Every marketing email includes a one-click unsubscribe link.
+- We use your email address to send you the Decision Frame and occasional product updates covered by the form. Every marketing email includes a one-click unsubscribe link.
 - We use technical and usage data to keep the site running, to fix problems, and to understand which pages people find useful.
 
 We do not sell your personal information, and we never will.
 
 ## Our lawful basis
 
-For your email address and the messages we send you, we rely on your consent, given when you submit a form, and on the contract formed when you buy the Decision. For technical and usage data, we rely on our legitimate interest in running a working, secure website, balanced against your privacy.
+For your email address and the messages we send you, we rely on your consent, given when you submit a form. For technical and usage data, we rely on our legitimate interest in running a working, secure website, balanced against your privacy.
 
 ## Who we share it with
 
 - **Kit (ConvertKit LLC, United States)** stores the launch list and sends the Decision Frame and product updates.
-- **Stripe** processes payment for the Decision. Stripe handles your card details directly; we do not.
-- **Google Workspace (Google LLC)** carries email we send to you and email you send to us at our contact address.
-- Our hosting provider processes technical and usage data to serve the site.
+- **Google Workspace (Google LLC, United States)** carries email we send to you and email you send to us at our contact address.
+- **Vercel Inc. (United States)** hosts the site, processes technical and usage data to serve it, and provides the aggregate page view counts described above.
 
 We may also disclose personal information if the law requires it, or to protect our rights, safety, or property, or those of others.
 
 ## Sending information overseas
 
-Kit, Stripe and Google are based in the United States. This means your personal information is stored and processed outside Australia. We take reasonable steps to ensure these providers handle your information consistently with this policy and with the standards the Australian Privacy Principles require of overseas disclosure.
+Kit, Google and Vercel are based in the United States. This means your personal information is stored and processed outside Australia. We take reasonable steps to ensure these providers handle your information consistently with this policy and with the standards the Australian Privacy Principles require of overseas disclosure.
 
 ## How long we keep it
 
-We keep your email address for as long as you stay on the list or hold a purchase record. If you unsubscribe, we remove you from active sending, and we delete your record on request.
+We keep your email address for as long as you stay on the list. If you unsubscribe, we remove you from active sending, and we delete your record on request.
 
 ## Your rights
 

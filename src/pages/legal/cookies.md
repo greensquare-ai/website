@@ -6,7 +6,7 @@ description: How GreenSquare uses cookies and similar technologies.
 
 # Cookie notice
 
-Last updated: 3 July 2026
+Last updated: 17 August 2026
 
 This notice explains how www.greensquare.ai, run by GreenSquare (the trading name of the operator of this site), uses cookies and similar technologies. Read it alongside our privacy policy.
 
@@ -18,11 +18,10 @@ A cookie is a small text file that a website stores on your device. It lets the 
 
 We keep cookies to a minimum. We do not run advertising cookies, and we do not use trackers that follow you across other websites.
 
-- **Functional cookies.** Our hosting provider may set functional cookies so pages load and behave correctly.
-- **Payment.** When GreenSquare checkout is available, Stripe sets its own cookies to process your payment securely and prevent fraud. See Stripe's own privacy and cookie documentation.
-- **Analytics.** We may collect basic analytics about how pages are used, such as which pages are viewed. We use this to understand what is useful and to keep the site working. We do not use it to build a profile of you or to target advertising.
+- **Functional cookies.** Our hosting provider, Vercel, may set functional cookies so pages load and behave correctly.
+- **Analytics.** We use Vercel Web Analytics to count page views and see which sites link to us. It sets no cookies, stores no identifier on your device, and does not follow you to other websites. We use it to understand which pages are useful, never to build a profile of you or to target advertising.
 
-We do not set cookies to identify you personally. The only personal detail you give us is your email address, entered yourself on a form, and your payment details, entered directly with Stripe.
+We do not set cookies to identify you personally. The only personal detail you give us is your email address, entered yourself on a form.
 
 ## Managing cookies
 

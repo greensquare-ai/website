@@ -6,13 +6,13 @@ description: The terms governing use of the GreenSquare website and the Decision
 
 # Terms of use
 
-Last updated: 3 July 2026
+Last updated: 17 August 2026
 
-These terms govern your use of www.greensquare.ai and any GreenSquare product you purchase, run by GreenSquare (the trading name of the operator of this site). By using the site, joining the launch list, requesting the Decision Frame, or buying a product, you agree to them.
+These terms govern your use of www.greensquare.ai, run by GreenSquare (the trading name of the operator of this site). By using the site, joining the launch list, or requesting the Decision Frame, you agree to them.
 
 ## What the site is
 
-The site describes GreenSquare's products and lets you request the free Decision Frame. Purchase access will be shown when The Decision opens for sale. Stripe processes any payment made through GreenSquare checkout.
+The site describes GreenSquare's products and lets you request the free Decision Frame. Nothing is currently for sale. When The Decision opens for sale, these terms will be updated to cover purchase, payment and refunds before any checkout is available.
 
 ## The Decision and the Decision Frame
 
@@ -28,17 +28,13 @@ Please use the site as intended. You agree not to interfere with the site or its
 
 GreenSquare helps you think through a decision. You remain responsible for the decisions you make and the actions you take. Seek qualified legal, financial, tax, or other professional advice when the consequences require it.
 
-## Refunds
-
-If you buy The Decision, you can request a refund within 14 days of purchase. Write to hello@greensquare.ai.
-
 ## Availability
 
 We aim to keep the site available, but we do not guarantee it will always be reachable or free of faults. We may change, suspend, or withdraw any part of it at any time.
 
 ## Third-party services
 
-The site relies on third-party providers, including Kit and Stripe, to run its functions. We are not responsible for the content or practices of services we do not control.
+The site relies on third-party providers, including Kit for the launch list and Vercel for hosting, to run its functions. We are not responsible for the content or practices of services we do not control.
 
 ## Our responsibility to you
 
@@ -54,7 +50,7 @@ We may update these terms when the site or our practices change. The date at the
 
 ## Governing law
 
-These terms are governed by the laws of Australia. The courts of Australia have jurisdiction over any dispute, without affecting rights you may have under the law of the country where you live.
+These terms are governed by the laws of New South Wales, Australia. The courts of New South Wales have jurisdiction over any dispute, without affecting rights you may have under the law of the country where you live.
 
 ## Contact
 

@@ -24,3 +24,13 @@ Thumbs.db
 # Local AI tooling config (personal, not for the public repo)
 /.claude/
 /.codex/
+
+# claude.ai/design sync — generated output and machine state.
+# The durable inputs under .design-sync/ (config.json, NOTES.md, conventions.md,
+# entry.tsx, foundations/, previews/, docs/, brand-layer.css, build-css.mjs)
+# ARE tracked so a re-sync is reproducible.
+/.ds-sync/
+/ds-bundle/
+/.design-sync/.cache/
+/.design-sync/learnings/
+/.design-sync/node_modules

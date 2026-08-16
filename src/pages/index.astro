@@ -31,6 +31,8 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
     <div class="hero-split__media v-reveal d1">
       <video
         class="hero-video"
+        width="1920"
+        height="1080"
         autoplay
         muted
         loop
@@ -170,6 +172,17 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
     .hero-split__media { position: static; }
     .hero-split__media::before { display: none; }
     .hero-video { aspect-ratio: 16 / 9; height: auto; border-top: 2px solid var(--v-ink); }
+  }
+  /* On phones the headline plus lead fills the whole first screen, which left visitors
+     arriving from a link with nothing to act on. Promote the actions directly under the
+     headline; the lead and audience line follow. Only the actions are focusable here, so
+     visual order and focus order still agree. */
+  @media (max-width: 640px) {
+    .hero-split__text { display: flex; flex-direction: column; }
+    .hero-split__text h1 { order: 1; }
+    .hero-actions { order: 2; margin-top: var(--v-6); }
+    .hero-split__text .v-lead { order: 3; }
+    .hero-audience { order: 4; }
   }
   .home-next { padding-block: clamp(4.5rem, 8vw, 6.5rem); }
   .home-next__inner { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(25rem, 1.1fr); gap: clamp(3rem, 8vw, 7rem); align-items: center; }
