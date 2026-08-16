@@ -37,7 +37,8 @@ export default function EmailCaptureForm({
       const res = await fetch(KIT_FORM_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ api_key: KIT_PUBLIC_API_KEY, email_address: email }),
+        // v3 names this field `email`. Sending `email_address` (the v4 name) returns 406.
+        body: JSON.stringify({ api_key: KIT_PUBLIC_API_KEY, email: email }),
       });
       if (!res.ok) throw new Error('Request failed');
       setEmail('');
