@@ -11,7 +11,6 @@ const channels = [
     role: 'Primary authority',
     derivative: 'One 4:5 PDF carousel with an institutional post.',
     master: '4:5 carousel / PDF',
-    masterKey: 'four-five',
     format: 'carousel',
     utm: 'linkedin',
     guidance: 'https://www.linkedin.com/help/linkedin/answer/a518909/upload-and-share-documents-on-linkedin?lang=en',
@@ -22,7 +21,6 @@ const channels = [
     role: 'Visual recognition',
     derivative: 'One 4:5 carousel plus one 9:16 kinetic-text Reel.',
     master: '4:5 carousel + 9:16 motion',
-    masterKey: 'four-five',
     format: 'carousel',
     utm: 'instagram',
     guidance: 'https://www.facebook.com/business/ads/facebook-instagram-reels-ads',
@@ -33,7 +31,6 @@ const channels = [
     role: 'Fast decision education',
     derivative: 'One 21–34 second text-and-sound explainer; hook in the first three seconds.',
     master: '9:16 motion',
-    masterKey: 'vertical',
     format: 'video',
     utm: 'tiktok',
     guidance: 'https://ads.tiktok.com/help/article/creative-best-practices?lang=en',
@@ -44,7 +41,6 @@ const channels = [
     role: 'Compressed argument',
     derivative: 'One concise thread plus no more than two evidence or reversal cards.',
     master: '1:1 evidence or 16:9 demonstration',
-    masterKey: 'square',
     format: 'thread',
     utm: 'x',
     guidance: 'https://business.x.com/en/help/campaign-setup/creative-ad-specifications',
@@ -55,7 +51,6 @@ const channels = [
     role: 'Community usefulness',
     derivative: 'One community-specific contribution: plain text first, sources visible, links only where rules permit.',
     master: 'Weekly brief + plain-text draft',
-    masterKey: 'brief',
     format: 'post',
     utm: 'reddit',
     guidance: 'https://support.reddithelp.com/hc/en-us/articles/28012014962580-How-do-I-keep-spam-out-of-my-community',
@@ -66,7 +61,6 @@ const channels = [
     role: 'Substantive proof',
     derivative: 'A decision-frame example, product demo, release note, or repository update—only when the work is real.',
     master: '1280×640 social preview',
-    masterKey: 'github',
     format: 'preview',
     utm: 'github',
     guidance: 'https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/customizing-your-repositorys-social-media-preview',
@@ -74,10 +68,10 @@ const channels = [
 ] as const;
 
 const evidenceStates = [
-  { key: 'confirmed', label: 'Confirmed', notation: 'Filled leaf quadrant', colour: '#24553B', rule: 'Verified evidence' },
-  { key: 'assumption', label: 'Assumption', notation: 'Open leaf quadrant + dashed line', colour: '#745B2D', rule: 'Belief that still needs a test' },
-  { key: 'uncertainty', label: 'Uncertainty', notation: 'Open circle', colour: '#686B65', rule: 'Direction remains unresolved' },
-  { key: 'risk', label: 'Material risk', notation: 'Filled diamond', colour: '#77372F', rule: 'Downside that can alter the call' },
+  { key: 'confirmed', label: 'Confirmed', notation: 'Solid square', colour: '#24553B', rule: 'Verified evidence' },
+  { key: 'assumption', label: 'Assumption', notation: 'Outlined square', colour: '#745B2D', rule: 'Belief that still needs a test' },
+  { key: 'uncertainty', label: 'Uncertainty', notation: 'Outlined circle', colour: '#686B65', rule: 'Direction remains unresolved' },
+  { key: 'risk', label: 'Material risk', notation: 'Solid rule', colour: '#77372F', rule: 'Downside that can alter the call' },
 ] as const;
 
 const briefFields = [
@@ -94,12 +88,12 @@ const pillars = [
   ['Decision teardown', 'A sourced public decision, reconstructed from evidence to outcome.'],
 ] as const;
 
-const masters = [
-  { key: 'four-five', size: '1080 × 1350', name: 'Authority carousel', use: 'LinkedIn PDF and Instagram carousel', local: '/assets/social/canva/greensquare-4x5-carousel.html', canva: 'https://www.canva.com/d/s9skvwKGHWCWWRS' },
-  { key: 'vertical', size: '1080 × 1920', name: 'Kinetic explainer', use: 'Instagram Reel, Reel cover, and TikTok', local: '/assets/social/canva/greensquare-9x16-motion.html', canva: 'https://www.canva.com/d/k_6R5vTnYx8W-DK' },
-  { key: 'square', size: '1080 × 1080', name: 'Evidence card', use: 'Instagram and X evidence or reversal cards', local: '/assets/social/canva/greensquare-1x1-evidence.html', canva: 'https://www.canva.com/d/b5k-06CO_Ng89xB' },
-  { key: 'horizontal', size: '1920 × 1080', name: 'Product demonstration', use: 'Horizontal demo frame and X card', local: '/assets/social/canva/greensquare-16x9-demo.html', canva: 'https://www.canva.com/d/Q3WNMJpa5_KCER9' },
-  { key: 'github', size: '1280 × 640', name: 'Repository preview', use: 'Solid-background GitHub social preview', local: '/assets/social/canva/greensquare-github-preview.html', canva: 'https://www.canva.com/d/jo90l02Mj8sQmRP' },
+const formats = [
+  { ratio: '4:5', size: '1080 × 1350', name: 'Authority carousel', use: 'LinkedIn PDF and Instagram carousel', rule: 'Lead with one governing question; carry source, owner, and page position throughout.' },
+  { ratio: '9:16', size: '1080 × 1920', name: 'Kinetic explainer', use: 'Instagram Reel and TikTok', rule: 'Hook inside three seconds; captions and essential meaning remain visible without sound.' },
+  { ratio: '1:1', size: '1080 × 1080', name: 'Decision or evidence post', use: 'Instagram and X', rule: 'One idea per post; use quiet metadata and a single tonal field treatment.' },
+  { ratio: '16:9', size: '1920 × 1080', name: 'Product demonstration', use: 'Product walkthrough and X', rule: 'Show real UI or a labelled simulation in a flat crop; never use a decorative device frame.' },
+  { ratio: '2:1', size: '1280 × 640', name: 'Repository preview', use: 'GitHub social preview', rule: 'Use one repository promise on a solid field and keep the exported image below 1 MB.' },
 ] as const;
 
 const pilot = [
@@ -114,7 +108,7 @@ const pilot = [
   section="Applications / Social"
   title="Social system"
   focus="How does one source idea become six native proofs without losing the decision?"
-  description="GreenSquare AI social operating system: channel roles, evidence notation, Canva masters, QA and the four-week pilot."
+  description="GreenSquare AI social operating system: approved post direction, channel roles, evidence notation, format standards, QA and the four-week pilot."
   immersive
 >
   <section class="social-opening" aria-labelledby="social-title">
@@ -158,16 +152,34 @@ const pilot = [
         <small>Reverse after two rising exception-rate cycles.</small>
       </div>
       <small class="social-specimen-source">Source: simulated scenario; no observed data.</small>
-      <div class="social-motion-track" aria-hidden="true">
-        <span>Reveal</span><span>Inspect</span><span>Align</span><span>Resolve</span>
-        <i></i>
-      </div>
+    </div>
+  </section>
+
+  <section class="social-reference" aria-labelledby="reference-title">
+    <div class="social-section-head">
+      <h2 id="reference-title">Use the post as a disciplined field.</h2>
+      <p>These supplied references set the social application standard: flat composition, tonal forest geometry, clear white type, quiet metadata, and one idea at a time.</p>
+    </div>
+    <div class="reference-grid">
+      <figure>
+        <img src="/assets/social/reference/governing-question-square.png" alt="Square GreenSquare carousel slide asking which parts of the review cycle change the decision, with restrained tonal forest bands." />
+        <figcaption><strong>Governing question</strong><span>1:1 · carousel interior</span><p>Use the question as the visual centre. Owner and page position close the frame; tonal bands stay subordinate to the copy.</p></figcaption>
+      </figure>
+      <figure>
+        <img src="/assets/social/reference/research-launch-square.png" alt="Square GreenSquare research post titled The cost of a decision nobody owns, with a tonal crop of the brand mark." />
+        <figcaption><strong>Research launch</strong><span>1:1 · single post</span><p>One proposition, one supporting line, and one action. The cropped mark is tonal and reserved for already-branded posts.</p></figcaption>
+      </figure>
+    </div>
+    <div class="reference-rules" aria-label="Approved post composition rules">
+      <p><strong>Align:</strong> lockup, topic label, and footer metadata share the same inset.</p>
+      <p><strong>Restrain:</strong> one background device only—tonal bands or a tonal mark crop, never both.</p>
+      <p><strong>Read:</strong> test the headline at feed-thumbnail size before adding supporting copy.</p>
     </div>
   </section>
 
   <section class="social-publisher" id="publisher" aria-labelledby="publisher-title">
     <div class="social-section-head">
-      <h2 id="publisher-title">Choose the route before opening a template.</h2>
+      <h2 id="publisher-title">Choose the route before choosing a format.</h2>
       <p>The channel changes the delivery. The governing question, evidence state, source, owner, and reversal condition do not.</p>
     </div>
 
@@ -205,7 +217,7 @@ const pilot = [
             <div><dt>Campaign URL</dt><dd><code data-output-utm>utm_source=linkedin&amp;utm_medium=organic-social&amp;utm_campaign=decision-frame&amp;utm_content=&lt;weekly-slug&gt;-carousel</code></dd></div>
           </dl>
           <div class="publisher-output-actions">
-            <a class="social-button social-button--forest" href="#canva-masters" data-output-link>Open the Canva master</a>
+            <a class="social-button social-button--forest" href="#formats" data-output-link>Review format standards</a>
             <a class="social-text-link" href="https://www.linkedin.com/help/linkedin/answer/a518909/upload-and-share-documents-on-linkedin?lang=en" data-output-guidance>Read platform guidance</a>
           </div>
         </div>
@@ -260,7 +272,7 @@ const pilot = [
   <section class="social-evidence" aria-labelledby="evidence-title">
     <div class="social-section-head">
       <h2 id="evidence-title">Evidence must survive the crop.</h2>
-      <p>Colour supports recognition. The written label carries meaning in every format, compression state, and accessibility context.</p>
+      <p>Use restrained status geometry and a written label. Colour supports recognition; it never carries the meaning alone.</p>
     </div>
     <div class="evidence-table" role="table" aria-label="Canonical evidence notation">
       <div class="evidence-table-row evidence-table-head" role="row">
@@ -325,35 +337,32 @@ const pilot = [
     </div>
     <ol class="pillar-list">
       {pillars.map(([title, description]) => (
-        <li><span></span><div><strong>{title}</strong><p>{description}</p></div></li>
+        <li><strong>{title}</strong><p>{description}</p></li>
       ))}
     </ol>
   </section>
 
-  <section class="social-masters" id="canva-masters" aria-labelledby="masters-title">
+  <section class="social-masters" id="formats" aria-labelledby="formats-title">
     <div class="social-section-head">
-      <h2 id="masters-title">Open the master that matches the job.</h2>
-      <div><p>Every master carries editable content variables, safe-zone overlays, source and owner fields, reversal conditions, alt-text prompts, export notes, and a thumbnail check.</p><a class="social-text-link" href="https://www.canva.com/folder/FAHSnoQbeaY">Open the Canva master folder</a></div>
+      <h2 id="formats-title">Set the format before production.</h2>
+      <p>These ratios and composition rules are the approval baseline. Canva production remains on hold until this social direction is approved.</p>
     </div>
     <div class="master-register">
-      <div class="master-register-head"><span>Master</span><span>Canvas</span><span>Primary use</span><span>Open</span></div>
-      {masters.map((master) => (
-        <div class="master-register-row" data-master-key={master.key}>
-          <strong>{master.name}</strong>
-          <code>{master.size}</code>
-          <span>{master.use}</span>
-          <div>
-            <a class="master-canva-link" href={master.canva} data-canva-master={master.key}>Open Canva master</a>
-            <a href={master.local} download>Download HTML</a>
-          </div>
+      <div class="master-register-head"><span>Format</span><span>Canvas</span><span>Primary use</span><span>Composition rule</span></div>
+      {formats.map((format) => (
+        <div class="master-register-row">
+          <div><strong>{format.name}</strong><span>{format.ratio}</span></div>
+          <code>{format.size}</code>
+          <span>{format.use}</span>
+          <p>{format.rule}</p>
         </div>
       ))}
     </div>
     <div class="master-footnotes">
-      <p><strong>Lock:</strong> logo clear space, evidence geometry, type families, source/owner/reversal components, and safe zones.</p>
+      <p><strong>Lock:</strong> logo clear space, state labels, type families, source/owner/reversal components, and platform-safe zones.</p>
       <p><strong>Edit:</strong> governing question, claim, evidence, interpretation, recommendation, source, owner, reversal condition, and alt text.</p>
     </div>
-    <a class="social-text-link" href="/assets/social/canva-brand-kit-manifest.md" download>Download the Canva Brand Kit manifest</a>
+    <p class="production-hold"><strong>Production hold:</strong> do not build or revise Canva masters until the website direction is approved.</p>
   </section>
 
   <section class="social-motion" aria-labelledby="motion-title">
@@ -457,16 +466,14 @@ const pilot = [
         const selectedChannel = consoleElement.querySelector('input[name="channel"]:checked');
         const channel = channels.find((item) => item.id === selectedChannel?.value) ?? channels[0];
         const job = jobSelect?.value ?? 'authority';
-        const masterLink = document.querySelector(`[data-canva-master="${channel.masterKey}"]`);
-
         outputChannel.textContent = channel.name;
         outputRole.textContent = channel.role;
         outputDerivative.textContent = channel.derivative;
         outputMaster.textContent = channel.master;
         outputJob.textContent = jobChecks[job];
         outputUtm.textContent = `utm_source=${channel.utm}&utm_medium=organic-social&utm_campaign=decision-frame&utm_content=<weekly-slug>-${channel.format}`;
-        outputLink.href = channel.id === 'reddit' ? '/assets/social/weekly-content-brief.md' : (masterLink?.href ?? '#canva-masters');
-        outputLink.textContent = channel.id === 'reddit' ? 'Open the weekly brief' : 'Open the Canva master';
+        outputLink.href = channel.id === 'reddit' ? '/assets/social/weekly-content-brief.md' : '#formats';
+        outputLink.textContent = channel.id === 'reddit' ? 'Open the weekly brief' : 'Review format standards';
         outputGuidance.href = channel.guidance;
       };
 

@@ -14,7 +14,7 @@
       "mineral": { "role": "secondary", "displayName": "Mineral Divider", "canonical": "#c7cbc0", "tonalRamp": ["oklch(15% 0.012 125)", "oklch(26% 0.014 125)", "oklch(38% 0.016 125)", "oklch(50% 0.016 125)", "oklch(62% 0.015 125)", "oklch(74% 0.014 125)", "oklch(86% 0.012 125)", "oklch(95% 0.006 125)"] },
       "muted": { "role": "neutral", "displayName": "Muted Record", "canonical": "#63645c", "tonalRamp": ["oklch(15% 0.012 115)", "oklch(26% 0.014 115)", "oklch(38% 0.016 115)", "oklch(50% 0.017 115)", "oklch(62% 0.016 115)", "oklch(74% 0.014 115)", "oklch(86% 0.009 115)", "oklch(95% 0.004 115)"] },
       "line": { "role": "neutral", "displayName": "Structural Line", "canonical": "#dedad2", "tonalRamp": ["oklch(15% 0.008 90)", "oklch(26% 0.009 90)", "oklch(38% 0.01 90)", "oklch(50% 0.01 90)", "oklch(62% 0.009 90)", "oklch(74% 0.008 90)", "oklch(86% 0.006 90)", "oklch(95% 0.003 90)"] },
-      "confirmed": { "role": "tertiary", "displayName": "Confirmed Leaf", "canonical": "#24553b", "tonalRamp": ["oklch(15% 0.06 150)", "oklch(26% 0.075 150)", "oklch(38% 0.09 150)", "oklch(50% 0.1 150)", "oklch(62% 0.1 150)", "oklch(74% 0.085 150)", "oklch(86% 0.06 150)", "oklch(95% 0.025 150)"] },
+      "confirmed": { "role": "tertiary", "displayName": "Confirmed Forest", "canonical": "#24553b", "tonalRamp": ["oklch(15% 0.06 150)", "oklch(26% 0.075 150)", "oklch(38% 0.09 150)", "oklch(50% 0.1 150)", "oklch(62% 0.1 150)", "oklch(74% 0.085 150)", "oklch(86% 0.06 150)", "oklch(95% 0.025 150)"] },
       "assumption": { "role": "tertiary", "displayName": "Assumption Ochre", "canonical": "#745b2d", "tonalRamp": ["oklch(15% 0.045 85)", "oklch(26% 0.06 85)", "oklch(38% 0.075 85)", "oklch(50% 0.085 85)", "oklch(62% 0.085 85)", "oklch(74% 0.07 85)", "oklch(86% 0.045 85)", "oklch(95% 0.018 85)"] },
       "uncertainty": { "role": "tertiary", "displayName": "Uncertainty Mineral", "canonical": "#686b65", "tonalRamp": ["oklch(15% 0.008 125)", "oklch(26% 0.01 125)", "oklch(38% 0.012 125)", "oklch(50% 0.012 125)", "oklch(62% 0.012 125)", "oklch(74% 0.01 125)", "oklch(86% 0.006 125)", "oklch(95% 0.002 125)"] },
       "material-risk": { "role": "tertiary", "displayName": "Material Risk Oxide", "canonical": "#77372f", "tonalRamp": ["oklch(15% 0.05 35)", "oklch(26% 0.07 35)", "oklch(38% 0.09 35)", "oklch(50% 0.11 35)", "oklch(62% 0.11 35)", "oklch(74% 0.09 35)", "oklch(86% 0.06 35)", "oklch(95% 0.025 35)"] }
@@ -25,12 +25,9 @@
       "body": { "displayName": "Evidence Body", "purpose": "Explanations, source-aware records, and operational guidance." },
       "label": { "displayName": "Record Label", "purpose": "Metadata, field labels, table heads, and evidence states." }
     },
-    "shadows": [
-      { "name": "paper-specimen-lift", "value": "0 24px 54px rgba(11, 35, 19, 0.38)", "purpose": "Reserved for a paper decision record placed on a forest operating field." }
-    ],
+    "shadows": [],
     "motion": [
-      { "name": "rail-state", "value": "background-color 180ms ease-out, color 180ms ease-out", "purpose": "Navigation hover and current-state transition." },
-      { "name": "reduced-motion", "value": "prefers-reduced-motion: reduce", "purpose": "Stops the social motion-track animation while preserving all visible meaning." }
+      { "name": "rail-state", "value": "background-color 180ms ease-out, color 180ms ease-out", "purpose": "Navigation hover and current-state transition." }
     ],
     "breakpoints": [
       { "name": "tablet", "value": "1120px" },
@@ -44,8 +41,8 @@
       "kind": "button",
       "refersTo": "button-forest",
       "description": "Primary action on a light working sheet.",
-      "html": "<a class=\"ds-button-forest\" href=\"#\">OPEN THE MASTER</a>",
-      "css": ".ds-button-forest { display:inline-flex; min-height:2.75rem; align-items:center; justify-content:center; border:1px solid var(--design-forest,#133f26); background:var(--design-forest,#133f26); color:var(--design-white,#fff); padding:.75rem 1rem; font:700 .82rem/1.15 'IBM Plex Sans',Arial,sans-serif; text-decoration:none; } .ds-button-forest:hover { filter:brightness(.94); } .ds-button-forest:focus-visible { outline:3px solid #b8e549; outline-offset:4px; }"
+      "html": "<a class=\"ds-button-forest\" href=\"#\">REVIEW FORMAT STANDARDS</a>",
+      "css": ".ds-button-forest { display:inline-flex; min-height:2.75rem; align-items:center; justify-content:center; border:1px solid var(--design-forest,#133f26); background:var(--design-forest,#133f26); color:var(--design-white,#fff); padding:.75rem 1rem; font:700 .82rem/1.15 'IBM Plex Sans',Arial,sans-serif; text-decoration:none; } .ds-button-forest:hover { border-color:var(--design-deep,#0b2313); background:var(--design-deep,#0b2313); color:#fff; } .ds-button-forest:focus-visible { outline:3px solid #b8e549; outline-offset:4px; }"
     },
     {
       "name": "Light Action",
@@ -53,7 +50,7 @@
       "refersTo": "button-light",
       "description": "Primary action reversed into a forest or rail field.",
       "html": "<a class=\"ds-button-light\" href=\"#\">CHOOSE A CHANNEL</a>",
-      "css": ".ds-button-light { display:inline-flex; min-height:2.75rem; align-items:center; justify-content:center; border:1px solid var(--design-white,#fff); background:var(--design-white,#fff); color:var(--design-forest,#133f26); padding:.75rem 1rem; font:700 .82rem/1.15 'IBM Plex Sans',Arial,sans-serif; text-decoration:none; } .ds-button-light:hover { filter:brightness(.94); } .ds-button-light:focus-visible { outline:3px solid #b8e549; outline-offset:4px; }"
+      "css": ".ds-button-light { display:inline-flex; min-height:2.75rem; align-items:center; justify-content:center; border:1px solid var(--design-white,#fff); background:var(--design-white,#fff); color:var(--design-forest,#133f26); padding:.75rem 1rem; font:700 .82rem/1.15 'IBM Plex Sans',Arial,sans-serif; text-decoration:none; } .ds-button-light:hover { border-color:var(--social-paper,#fbf8f0); background:var(--social-paper,#fbf8f0); color:var(--design-deep,#0b2313); } .ds-button-light:focus-visible { outline:3px solid #b8e549; outline-offset:4px; }"
     },
     {
       "name": "Rail Navigation",
@@ -66,7 +63,7 @@
     {
       "name": "Channel Choice",
       "kind": "chip",
-      "description": "Native radio label for selecting a publication channel before opening a master.",
+      "description": "Native radio label for selecting a publication channel before choosing a format.",
       "html": "<label class=\"ds-channel\"><input type=\"radio\" name=\"channel\" checked> <span>LINKEDIN</span></label>",
       "css": ".ds-channel { display:inline-flex; min-height:2.75rem; align-items:center; border:1px solid var(--design-line,#dedad2); background:var(--design-white,#fff); color:var(--design-ink,#12140f); padding:0 .75rem; font:700 .78rem/1.15 'IBM Plex Sans',Arial,sans-serif; } .ds-channel input { accent-color:var(--design-forest,#133f26); } .ds-channel:has(input:checked) { border-color:var(--design-forest,#133f26); background:var(--design-forest,#133f26); color:#fff; } .ds-channel input:focus-visible { outline:3px solid #b8e549; outline-offset:4px; }"
     },
@@ -75,21 +72,21 @@
       "kind": "card",
       "description": "A compact decision record with explicit evidence, recommendation, and reversal condition.",
       "html": "<article class=\"ds-paper-sheet\"><small>SIMULATED DECISION NOTE</small><h3>What must be true before this rollout can scale?</h3><p class=\"ds-row\"><i></i><span><strong>CONFIRMED</strong><br>Draft time fell in the illustrative pilot.</span></p><div class=\"ds-resolution\"><small>RECOMMENDATION</small><strong>Scale after the review threshold is met.</strong><span>Reverse after two rising exception-rate cycles.</span></div></article>",
-      "css": ".ds-paper-sheet { width:min(100%,29rem); background:var(--social-paper,#fbf8f0); color:var(--design-ink,#12140f); padding:1.15rem; box-shadow:0 24px 54px rgba(11,35,19,.38); font-family:'IBM Plex Sans',Arial,sans-serif; } .ds-paper-sheet h3 { margin:1rem 0 1.15rem; font:600 1.5rem/1.05 'Space Grotesk',Arial,sans-serif; letter-spacing:-.025em; } .ds-paper-sheet small { color:var(--design-muted,#63645c); font-size:.72rem; font-weight:700; } .ds-row { display:grid; grid-template-columns:1.5rem 1fr; gap:.75rem; margin:0; border-block:1px solid var(--social-mineral,#c7cbc0); padding:.65rem 0; font-size:.82rem; line-height:1.4; } .ds-row i { width:1.35rem; height:1.35rem; border-radius:0 100% 0 100%; background:var(--social-confirmed,#24553b); } .ds-row strong { font-size:.75rem; } .ds-resolution { display:grid; gap:.45rem; margin-top:1rem; background:var(--design-forest,#133f26); color:#fff; padding:.9rem; } .ds-resolution small,.ds-resolution span { color:rgba(255,255,255,.72); } .ds-resolution strong { font:600 1rem/1.25 'Space Grotesk',Arial,sans-serif; }"
+      "css": ".ds-paper-sheet { width:min(100%,29rem); border:1px solid var(--social-mineral,#c7cbc0); background:var(--social-paper,#fbf8f0); color:var(--design-ink,#12140f); padding:1.15rem; font-family:'IBM Plex Sans',Arial,sans-serif; } .ds-paper-sheet h3 { margin:1rem 0 1.15rem; font:600 1.5rem/1.05 'Space Grotesk',Arial,sans-serif; letter-spacing:-.025em; } .ds-paper-sheet small { color:var(--design-muted,#63645c); font-size:.72rem; font-weight:700; } .ds-row { display:grid; grid-template-columns:1.5rem 1fr; gap:.75rem; margin:0; border-block:1px solid var(--social-mineral,#c7cbc0); padding:.65rem 0; font-size:.82rem; line-height:1.4; } .ds-row i { width:.85rem; height:.85rem; margin-top:.2rem; background:var(--social-confirmed,#24553b); } .ds-row strong { font-size:.75rem; } .ds-resolution { display:grid; gap:.45rem; margin-top:1rem; background:var(--design-forest,#133f26); color:#fff; padding:.9rem; } .ds-resolution small,.ds-resolution span { color:rgba(255,255,255,.72); } .ds-resolution strong { font:600 1rem/1.25 'Space Grotesk',Arial,sans-serif; }"
     },
     {
       "name": "Evidence Markers",
       "kind": "custom",
       "description": "Canonical evidence-state notation; always pair each marker with a written label.",
       "html": "<div class=\"ds-markers\"><span class=\"ds-marker confirmed\"></span><b>CONFIRMED</b><span class=\"ds-marker assumption\"></span><b>ASSUMPTION</b><span class=\"ds-marker uncertainty\"></span><b>UNCERTAINTY</b><span class=\"ds-marker risk\"></span><b>MATERIAL RISK</b></div>",
-      "css": ".ds-markers { display:grid; grid-template-columns:1.35rem max-content 1.35rem max-content; gap:.6rem .5rem; align-items:center; color:var(--design-ink,#12140f); font:700 .75rem/1.2 'IBM Plex Sans',Arial,sans-serif; } .ds-marker { position:relative; width:1.35rem; height:1.35rem; } .ds-marker.confirmed { border-radius:0 100% 0 100%; background:var(--social-confirmed,#24553b); } .ds-marker.assumption { border:2px solid var(--social-assumption,#745b2d); border-radius:0 100% 0 100%; } .ds-marker.assumption:after { position:absolute; top:calc(100% + .28rem); width:1.4rem; border-top:1px dashed var(--social-assumption,#745b2d); content:''; } .ds-marker.uncertainty { border:2px solid var(--social-uncertainty,#686b65); border-radius:50%; } .ds-marker.risk { width:1rem; height:1rem; margin:.18rem; background:var(--social-risk,#77372f); transform:rotate(45deg); }"
+      "css": ".ds-markers { display:grid; grid-template-columns:.85rem max-content .85rem max-content; gap:.75rem .65rem; align-items:center; color:var(--design-ink,#12140f); font:700 .75rem/1.2 'IBM Plex Sans',Arial,sans-serif; } .ds-marker { position:relative; width:.85rem; height:.85rem; } .ds-marker.confirmed { background:var(--social-confirmed,#24553b); } .ds-marker.assumption { border:2px solid var(--social-assumption,#745b2d); } .ds-marker.uncertainty { border:2px solid var(--social-uncertainty,#686b65); border-radius:50%; } .ds-marker.risk { width:.28rem; height:1rem; margin-inline:.285rem; background:var(--social-risk,#77372f); }"
     },
     {
       "name": "Operating Register",
       "kind": "card",
-      "description": "A rule-led list for master assets, guidance, QA, and planned operating records.",
-      "html": "<section class=\"ds-register\"><div><strong>AUTHORITY CAROUSEL</strong><span>1080 × 1350</span><a href=\"#\">OPEN MASTER</a></div><div><strong>KINETIC EXPLAINER</strong><span>1080 × 1920</span><a href=\"#\">OPEN MASTER</a></div></section>",
-      "css": ".ds-register { border-top:1px solid var(--design-ink,#12140f); color:var(--design-ink,#12140f); font-family:'IBM Plex Sans',Arial,sans-serif; } .ds-register div { display:grid; grid-template-columns:minmax(10rem,.8fr) 8rem minmax(8rem,.8fr); gap:1.25rem; align-items:center; border-bottom:1px solid var(--design-line,#dedad2); padding:.9rem 0; } .ds-register strong { font-size:.875rem; } .ds-register span { color:var(--design-muted,#63645c); font-size:.82rem; } .ds-register a { display:inline-flex; min-height:2.75rem; align-items:center; color:var(--design-forest,#133f26); font-size:.82rem; font-weight:700; text-underline-offset:.25em; } .ds-register a:focus-visible { outline:3px solid #b8e549; outline-offset:4px; } @media (max-width:620px) { .ds-register div { grid-template-columns:1fr; gap:.65rem; padding:1.25rem 0; } }"
+      "description": "A rule-led list for approved format ratios, composition guidance, QA, and planned operating records.",
+      "html": "<section class=\"ds-register\"><div><strong>AUTHORITY CAROUSEL</strong><span>4:5 · 1080 × 1350</span><p>Lead with one governing question.</p></div><div><strong>KINETIC EXPLAINER</strong><span>9:16 · 1080 × 1920</span><p>Hook inside three seconds.</p></div></section>",
+      "css": ".ds-register { border-top:1px solid var(--design-ink,#12140f); color:var(--design-ink,#12140f); font-family:'IBM Plex Sans',Arial,sans-serif; } .ds-register div { display:grid; grid-template-columns:minmax(10rem,.8fr) 10rem minmax(12rem,1fr); gap:1.25rem; align-items:center; border-bottom:1px solid var(--design-line,#dedad2); padding:.9rem 0; } .ds-register strong { font-size:.875rem; } .ds-register span,.ds-register p { color:var(--design-muted,#63645c); font-size:.82rem; } .ds-register p { margin:0; } @media (max-width:620px) { .ds-register div { grid-template-columns:1fr; gap:.65rem; padding:1.25rem 0; } }"
     }
   ],
   "narrative": {
@@ -101,8 +98,8 @@
       { "name": "The Paper Addition Rule", "body": "Paper and Mineral are the only social-application palette additions. Use them for work-in-progress documentation and separation, never as a new expressive accent system.", "section": "colors" },
       { "name": "The Decide / Explain Rule", "body": "Space Grotesk decides; IBM Plex Sans explains. Do not use display typography to make ordinary metadata perform.", "section": "typography" },
       { "name": "The Axis Rule", "body": "Align records and decisions to a visible vertical and horizontal rule before adding decoration. If a relationship cannot survive the grid, the content is not ready for ornament.", "section": "layout" },
-      { "name": "The Field-First Rule", "body": "Create hierarchy with surface colour and rules before shadow. Reserve physical lift for an inspectable artefact that benefits from reading as a sheet.", "section": "elevation" },
-      { "name": "The Semantic Shape Rule", "body": "Curves and rotations belong to evidence notation or a documented sheet specimen. Do not introduce pill controls, soft cards, or arbitrary rounded containers.", "section": "shapes" }
+      { "name": "The Field-First Rule", "body": "Create hierarchy with surface colour and rules before shadow. A working artefact earns authority from its structure, not simulated physical lift.", "section": "elevation" },
+      { "name": "The Semantic Shape Rule", "body": "Use the smallest conventional geometry that makes a state easier to scan. Do not introduce decorative rotations, pill controls, soft cards, or arbitrary rounded containers.", "section": "shapes" }
     ],
     "dos": ["Do lead consequential content with a governing question, then preserve evidence state, source, recommendation owner, and reversal condition through every derivative.", "Do use black rail containment, forest decision fields, paper working sheets, and mineral dividers as a restrained, legible material hierarchy.", "Do retain the supplied lockup when introducing GreenSquare; reserve the mark alone for recognised or explicitly labelled contexts.", "Do make controls keyboard-operable, visibly focused, and at least 44 by 44 CSS pixels where the source establishes an interactive target.", "Do make essential meaning survive without colour, sound, motion, or pointer interaction."],
     "donts": ["Don't turn the social extension into a generic gallery of templates or promote the current social page composition into a system-wide rule.", "Don't use evidence colours or marker shapes without their written state labels.", "Don't introduce soft rounded cards, pills, decorative terminal styling, presenter imagery, AI avatars, or synthetic voice as substitutes for institutional proof.", "Don't use monospace decoratively; limit it to literal GitHub or code content.", "Don't publish a recommendation without a visible owner and reversal condition, or claim observed evidence when a scenario is simulated."]

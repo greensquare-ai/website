@@ -98,10 +98,10 @@ The palette uses dark institutional fields for commitment, pale sheets for inspe
 
 ### Tertiary
 
-- **Confirmed Leaf:** the verified-evidence colour. Pair it with the filled leaf-quadrant marker and the written label “Confirmed.”
-- **Assumption Ochre:** the untested-belief colour. Pair it with the open leaf quadrant, dashed continuation, and the written label “Assumption.”
-- **Uncertainty Mineral:** the unresolved-direction colour. Pair it with the open-circle marker and the written label “Uncertainty.”
-- **Material Risk Oxide:** the downside colour. Pair it with the filled diamond marker and the written label “Material risk.”
+- **Confirmed Forest:** the verified-evidence colour. Pair it with a small solid square and the written label “Confirmed.”
+- **Assumption Ochre:** the untested-belief colour. Pair it with a small outlined square and the written label “Assumption.”
+- **Uncertainty Mineral:** the unresolved-direction colour. Pair it with a small outlined circle and the written label “Uncertainty.”
+- **Material Risk Oxide:** the downside colour. Pair it with a narrow solid rule and the written label “Material risk.”
 
 ### Neutral
 
@@ -148,15 +148,15 @@ At 860px, paired fields become single columns and multi-column registers reduce 
 
 ## Elevation & Depth
 
-The system is flat by default. Depth comes from field change, borders, document overlap, and contrast between rail, forest, paper, and white—not a general card-shadow vocabulary. The one observed lifted treatment is the paper decision specimen: it may use a deep forest shadow and a single offset outline to read as a working sheet placed on a decision field.
+The system is flat by default. Depth comes from field change, borders, document overlap, and contrast between rail, forest, paper, and white—not a card-shadow vocabulary. Social working records stay orthogonal and flat; they do not tilt, float, or use offset outlines.
 
-**The Field-First Rule.** Create hierarchy with surface colour and rules before shadow. Reserve physical lift for an inspectable artefact that benefits from reading as a sheet.
+**The Field-First Rule.** Create hierarchy with surface colour and rules before shadow. A working artefact earns authority from its structure, not simulated physical lift.
 
 ## Shapes
 
-The dominant language is square and rectilinear: buttons, rails, tables, sheets, fields, and borders are unrounded. The exception is semantic geometry. Confirmed and assumption markers use a leaf quadrant, uncertainty is an open circle, and material risk is a filled diamond. These silhouettes are notation, not decoration.
+The dominant language is square and rectilinear: buttons, rails, tables, sheets, fields, and borders are unrounded. Semantic notation stays deliberately plain: solid square for Confirmed, outlined square for Assumption, outlined circle for Uncertainty, and a narrow solid rule for Material risk.
 
-**The Semantic Shape Rule.** Curves and rotations belong to evidence notation or a documented sheet specimen. Do not introduce pill controls, soft cards, or arbitrary rounded containers.
+**The Semantic Shape Rule.** Use the smallest conventional geometry that makes a state easier to scan. Do not introduce decorative rotations, pill controls, soft cards, or arbitrary rounded containers.
 
 ## Components
 
@@ -172,7 +172,7 @@ The rail is a durable system boundary: white brand text over Rail Black, grouped
 - **Light:** White fill and Decision Forest text for action inside a dark field.
 - **Forest:** Decision Forest fill and White text for action on a light sheet.
 - **Padding:** the established 0.75rem × 1rem internal space with a 2.75rem minimum height.
-- **Hover / Focus:** hover darkens by a small brightness shift; focus is a 3px lime outline with a 4px offset. Do not remove the visible focus treatment.
+- **Hover / Focus:** hover changes the surface while preserving explicit foreground contrast; focus is a 3px lime outline with a 4px offset. Do not rely on inherited link colour or remove the visible focus treatment.
 
 ### Text Links
 
@@ -204,7 +204,7 @@ The rail is a durable system boundary: white brand text over Rail Black, grouped
 **Character:** a table or stacked record that makes interpretation inspectable at a glance.
 
 - **Rows:** one state marker, written state label, concise evidence text, and a structural divider.
-- **Markers:** use only the canonical confirmed leaf, assumption leaf with dashed continuation, uncertainty circle, and material-risk diamond.
+- **Markers:** use only the restrained confirmed square, assumption outline, uncertainty circle, and material-risk rule.
 - **Accessibility:** labels remain present at every crop, size, and export. Include a source note where the evidence is simulated or otherwise qualified.
 
 ### Registers and Tables
