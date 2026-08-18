@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { track } from '@vercel/analytics';
 
 const KIT_FORM_ENDPOINT = 'https://api.convertkit.com/v3/forms/9283111/subscribe';
 // Public site embed key for Kit form 9283111 (GreenSquare launch list). This is the
@@ -41,6 +42,13 @@ export default function EmailCaptureForm({
         body: JSON.stringify({ api_key: KIT_PUBLIC_API_KEY, email: email }),
       });
       if (!res.ok) throw new Error('Request failed');
+      const campaign = new URLSearchParams(window.location.search);
+      track('Decision Frame Signup', {
+        utm_source: campaign.get('utm_source') ?? 'direct',
+        utm_medium: campaign.get('utm_medium') ?? 'none',
+        utm_campaign: campaign.get('utm_campaign') ?? 'none',
+        utm_content: campaign.get('utm_content') ?? 'none',
+      });
       setEmail('');
       setLeaving(true);
       leaveTimeout.current = setTimeout(() => {

@@ -1,0 +1,477 @@
+---
+import DesignLayout from '../layouts/DesignLayout.astro';
+import '../styles/social.css';
+
+const decisionFrameBase = 'https://www.greensquare.ai/decision-frame/';
+
+const channels = [
+  {
+    id: 'linkedin',
+    name: 'LinkedIn',
+    role: 'Primary authority',
+    derivative: 'One 4:5 PDF carousel with an institutional post.',
+    master: '4:5 carousel / PDF',
+    masterKey: 'four-five',
+    format: 'carousel',
+    utm: 'linkedin',
+    guidance: 'https://www.linkedin.com/help/linkedin/answer/a518909/upload-and-share-documents-on-linkedin?lang=en',
+  },
+  {
+    id: 'instagram',
+    name: 'Instagram',
+    role: 'Visual recognition',
+    derivative: 'One 4:5 carousel plus one 9:16 kinetic-text Reel.',
+    master: '4:5 carousel + 9:16 motion',
+    masterKey: 'four-five',
+    format: 'carousel',
+    utm: 'instagram',
+    guidance: 'https://www.facebook.com/business/ads/facebook-instagram-reels-ads',
+  },
+  {
+    id: 'tiktok',
+    name: 'TikTok',
+    role: 'Fast decision education',
+    derivative: 'One 21–34 second text-and-sound explainer; hook in the first three seconds.',
+    master: '9:16 motion',
+    masterKey: 'vertical',
+    format: 'video',
+    utm: 'tiktok',
+    guidance: 'https://ads.tiktok.com/help/article/creative-best-practices?lang=en',
+  },
+  {
+    id: 'x',
+    name: 'X',
+    role: 'Compressed argument',
+    derivative: 'One concise thread plus no more than two evidence or reversal cards.',
+    master: '1:1 evidence or 16:9 demonstration',
+    masterKey: 'square',
+    format: 'thread',
+    utm: 'x',
+    guidance: 'https://business.x.com/en/help/campaign-setup/creative-ad-specifications',
+  },
+  {
+    id: 'reddit',
+    name: 'Reddit',
+    role: 'Community usefulness',
+    derivative: 'One community-specific contribution: plain text first, sources visible, links only where rules permit.',
+    master: 'Weekly brief + plain-text draft',
+    masterKey: 'brief',
+    format: 'post',
+    utm: 'reddit',
+    guidance: 'https://support.reddithelp.com/hc/en-us/articles/28012014962580-How-do-I-keep-spam-out-of-my-community',
+  },
+  {
+    id: 'github',
+    name: 'GitHub',
+    role: 'Substantive proof',
+    derivative: 'A decision-frame example, product demo, release note, or repository update—only when the work is real.',
+    master: '1280×640 social preview',
+    masterKey: 'github',
+    format: 'preview',
+    utm: 'github',
+    guidance: 'https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/customizing-your-repositorys-social-media-preview',
+  },
+] as const;
+
+const evidenceStates = [
+  { key: 'confirmed', label: 'Confirmed', notation: 'Filled leaf quadrant', colour: '#24553B', rule: 'Verified evidence' },
+  { key: 'assumption', label: 'Assumption', notation: 'Open leaf quadrant + dashed line', colour: '#745B2D', rule: 'Belief that still needs a test' },
+  { key: 'uncertainty', label: 'Uncertainty', notation: 'Open circle', colour: '#686B65', rule: 'Direction remains unresolved' },
+  { key: 'risk', label: 'Material risk', notation: 'Filled diamond', colour: '#77372F', rule: 'Downside that can alter the call' },
+] as const;
+
+const briefFields = [
+  'slug', 'governing_question', 'audience_trigger', 'claim', 'evidence', 'interpretation',
+  'assumptions', 'material_risk', 'recommendation', 'reversal_condition', 'product_demo_step',
+  'source_urls', 'cta', 'channel_notes',
+];
+
+const pillars = [
+  ['Decision friction', 'Costly failure modes that make a decision harder to defend.'],
+  ['Evidence versus interpretation', 'What is known, what it means, and where judgement enters.'],
+  ['Assumptions and reversal', 'The belief carrying the decision and the threshold that changes the call.'],
+  ['Product demonstration', 'GreenSquare at work on a real or clearly labelled simulated decision.'],
+  ['Decision teardown', 'A sourced public decision, reconstructed from evidence to outcome.'],
+] as const;
+
+const masters = [
+  { key: 'four-five', size: '1080 × 1350', name: 'Authority carousel', use: 'LinkedIn PDF and Instagram carousel', local: '/assets/social/canva/greensquare-4x5-carousel.html', canva: 'https://www.canva.com/d/s9skvwKGHWCWWRS' },
+  { key: 'vertical', size: '1080 × 1920', name: 'Kinetic explainer', use: 'Instagram Reel, Reel cover, and TikTok', local: '/assets/social/canva/greensquare-9x16-motion.html', canva: 'https://www.canva.com/d/k_6R5vTnYx8W-DK' },
+  { key: 'square', size: '1080 × 1080', name: 'Evidence card', use: 'Instagram and X evidence or reversal cards', local: '/assets/social/canva/greensquare-1x1-evidence.html', canva: 'https://www.canva.com/d/b5k-06CO_Ng89xB' },
+  { key: 'horizontal', size: '1920 × 1080', name: 'Product demonstration', use: 'Horizontal demo frame and X card', local: '/assets/social/canva/greensquare-16x9-demo.html', canva: 'https://www.canva.com/d/Q3WNMJpa5_KCER9' },
+  { key: 'github', size: '1280 × 640', name: 'Repository preview', use: 'Solid-background GitHub social preview', local: '/assets/social/canva/greensquare-github-preview.html', canva: 'https://www.canva.com/d/jo90l02Mj8sQmRP' },
+] as const;
+
+const pilot = [
+  ['Week 1', 'Decision friction', 'The decision is not “which AI tool?”', 'Authority carousel', 'Frame the buying situation before comparing tools.'],
+  ['Week 2', 'Evidence vs interpretation', 'Evidence does not recommend itself.', 'Evidence carousel + Reel', 'Show where judgement enters a recommendation.'],
+  ['Week 3', 'Assumptions and reversal', 'State what would change your mind.', 'Reversal card + thread', 'Make an AI recommendation safer to approve.'],
+  ['Week 4', 'Product demonstration', 'Turn a weak brief into a defensible call.', 'Product walkthrough', 'Show the Decision Frame becoming a Decision Brief.'],
+] as const;
+---
+
+<DesignLayout
+  section="Applications / Social"
+  title="Social system"
+  focus="How does one source idea become six native proofs without losing the decision?"
+  description="GreenSquare AI social operating system: channel roles, evidence notation, Canva masters, QA and the four-week pilot."
+  immersive
+>
+  <section class="social-opening" aria-labelledby="social-title">
+    <div class="social-opening-copy">
+      <h1 id="social-title" tabindex="-1">Make the source idea travel. Keep the decision intact.</h1>
+      <p>GreenSquare is the decision-intelligence system for making consequential decisions defensible. One sourced idea becomes six native contributions; evidence, ownership, and the reversal condition survive every adaptation.</p>
+      <div class="social-opening-actions">
+        <a class="social-button social-button--light" href="#publisher">Choose a channel</a>
+        <a class="social-text-link" href="/assets/social/weekly-content-brief.md" download>Download the weekly brief</a>
+      </div>
+      <dl class="social-opening-facts">
+        <div><dt>Primary action</dt><dd>Download the Decision Frame</dd></div>
+        <div><dt>Publishing model</dt><dd>One source idea each week</dd></div>
+        <div><dt>Brand posture</dt><dd>Faceless, sourced, demonstrable</dd></div>
+      </dl>
+    </div>
+
+    <div class="social-decision-specimen" aria-label="Example GreenSquare social decision frame">
+      <div class="social-specimen-head">
+        <img src="/assets/logo-lockup-light.svg" alt="GreenSquare AI" />
+        <span>Simulated decision note / 04</span>
+      </div>
+      <p class="social-specimen-question">What must be true before this AI rollout can scale?</p>
+      <div class="social-specimen-ledger">
+        <div class="social-ledger-row is-confirmed">
+          <span class="evidence-marker evidence-marker--confirmed" aria-hidden="true"><i></i></span>
+          <div><strong>Confirmed · simulated</strong><span>Draft time fell in this illustrative pilot.</span></div>
+        </div>
+        <div class="social-ledger-row is-assumption">
+          <span class="evidence-marker evidence-marker--assumption" aria-hidden="true"><i></i></span>
+          <div><strong>Assumption</strong><span>Quality controls hold at team scale.</span></div>
+        </div>
+        <div class="social-ledger-row is-risk">
+          <span class="evidence-marker evidence-marker--risk" aria-hidden="true"><i></i></span>
+          <div><strong>Material risk</strong><span>Review capacity becomes the constraint.</span></div>
+        </div>
+      </div>
+      <div class="social-specimen-resolution">
+        <span>Recommendation</span>
+        <strong>Scale after the review threshold is met.</strong>
+        <small>Reverse after two rising exception-rate cycles.</small>
+      </div>
+      <small class="social-specimen-source">Source: simulated scenario; no observed data.</small>
+      <div class="social-motion-track" aria-hidden="true">
+        <span>Reveal</span><span>Inspect</span><span>Align</span><span>Resolve</span>
+        <i></i>
+      </div>
+    </div>
+  </section>
+
+  <section class="social-publisher" id="publisher" aria-labelledby="publisher-title">
+    <div class="social-section-head">
+      <h2 id="publisher-title">Choose the route before opening a template.</h2>
+      <p>The channel changes the delivery. The governing question, evidence state, source, owner, and reversal condition do not.</p>
+    </div>
+
+    <form class="publisher-console" data-publisher-console>
+      <fieldset class="publisher-channels">
+        <legend>Choose channel</legend>
+        <div class="publisher-channel-options">
+          {channels.map((channel, index) => (
+            <label>
+              <input type="radio" name="channel" value={channel.id} checked={index === 0} />
+              <span>{channel.name}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
+      <div class="publisher-job">
+        <label for="content-job">Choose content job</label>
+        <select id="content-job" name="job">
+          <option value="authority">Build authority from sourced analysis</option>
+          <option value="evidence">Separate evidence from interpretation</option>
+          <option value="reversal">Expose an assumption or reversal threshold</option>
+          <option value="demonstration">Demonstrate the GreenSquare product</option>
+          <option value="teardown">Publish a sourced decision teardown</option>
+        </select>
+      </div>
+
+      <section class="publisher-output" aria-live="polite" aria-labelledby="output-title">
+        <div class="publisher-output-copy">
+          <h3 id="output-title"><span data-output-channel>LinkedIn</span> / <span data-output-role>Primary authority</span></h3>
+          <p data-output-derivative>One 4:5 PDF carousel with an institutional post.</p>
+          <dl>
+            <div><dt>Use</dt><dd data-output-master>4:5 carousel / PDF</dd></div>
+            <div><dt>Content check</dt><dd data-output-job>Lead with the source-backed decision, not a topic summary.</dd></div>
+            <div><dt>Campaign URL</dt><dd><code data-output-utm>utm_source=linkedin&amp;utm_medium=organic-social&amp;utm_campaign=decision-frame&amp;utm_content=&lt;weekly-slug&gt;-carousel</code></dd></div>
+          </dl>
+          <div class="publisher-output-actions">
+            <a class="social-button social-button--forest" href="#canva-masters" data-output-link>Open the Canva master</a>
+            <a class="social-text-link" href="https://www.linkedin.com/help/linkedin/answer/a518909/upload-and-share-documents-on-linkedin?lang=en" data-output-guidance>Read platform guidance</a>
+          </div>
+        </div>
+
+        <div class="publisher-sequence" aria-label="Required production sequence">
+          <ol>
+            <li><strong>Choose</strong><span>Channel + content job</span></li>
+            <li><strong>Add</strong><span>Claim + evidence + source</span></li>
+            <li><strong>Preview</strong><span>Thumbnail + safe zone</span></li>
+            <li><strong>QA</strong><span>Owner + reversal + alt text</span></li>
+            <li><strong>Export</strong><span>Native format + UTM</span></li>
+          </ol>
+        </div>
+      </section>
+    </form>
+  </section>
+
+  <section class="social-rule-field" aria-labelledby="invariants-title">
+    <div class="social-rule-intro">
+      <h2 id="invariants-title">Flex the channel. Do not flex the judgement.</h2>
+      <p>These two rule sets end the conflict between a recognisable institutional brand and genuinely native publishing.</p>
+    </div>
+    <div class="social-rule-columns">
+      <section>
+        <h3>Brand invariants</h3>
+        <ul>
+          <li>Use the supplied lockup to introduce GreenSquare.</li>
+          <li>Space Grotesk Semibold decides; IBM Plex Sans explains.</li>
+          <li>Write every evidence state that affects interpretation.</li>
+          <li>Retain source, recommendation owner, and reversal condition.</li>
+          <li>Preserve the decision arc from frame to resolve.</li>
+        </ul>
+      </section>
+      <section>
+        <h3>Channel flex</h3>
+        <ul>
+          <li>Hook and pacing.</li>
+          <li>Format, density, and interaction.</li>
+          <li>Call-to-action expression.</li>
+          <li>Export and safe-zone treatment.</li>
+          <li>Moderation and community etiquette.</li>
+        </ul>
+      </section>
+    </div>
+    <div class="social-token-strip" aria-label="Approved social application colours">
+      <div class="token token--paper"><span></span><strong>Paper</strong><code>#FBF8F0</code><small>Working sheets</small></div>
+      <div class="token token--mineral"><span></span><strong>Mineral</strong><code>#C7CBC0</code><small>Structural separation</small></div>
+      <p>Paper and Mineral are the only social-application additions. Cream and Chalk are retired.</p>
+    </div>
+  </section>
+
+  <section class="social-evidence" aria-labelledby="evidence-title">
+    <div class="social-section-head">
+      <h2 id="evidence-title">Evidence must survive the crop.</h2>
+      <p>Colour supports recognition. The written label carries meaning in every format, compression state, and accessibility context.</p>
+    </div>
+    <div class="evidence-table" role="table" aria-label="Canonical evidence notation">
+      <div class="evidence-table-row evidence-table-head" role="row">
+        <span role="columnheader">State</span><span role="columnheader">Notation</span><span role="columnheader">Colour</span><span role="columnheader">Meaning</span>
+      </div>
+      {evidenceStates.map((state) => (
+        <div class="evidence-table-row" role="row">
+          <span role="cell" class="evidence-state-name"><span class={`evidence-marker evidence-marker--${state.key}`} aria-hidden="true"><i></i></span><strong>{state.label}</strong></span>
+          <span role="cell">{state.notation}</span>
+          <code role="cell">{state.colour}</code>
+          <span role="cell">{state.rule}</span>
+        </div>
+      ))}
+    </div>
+    <div class="social-exception-note">
+      <strong>Mono exception</strong>
+      <p>Monospaced type is allowed only for literal GitHub or code content. Decorative terminal styling is still prohibited.</p>
+    </div>
+  </section>
+
+  <section class="social-channel-system" aria-labelledby="channels-title">
+    <div class="social-section-head">
+      <h2 id="channels-title">Give each channel one native job.</h2>
+      <p>A copied caption is not adaptation. Each derivative answers the same governing question in the behaviour the channel rewards.</p>
+    </div>
+    <div class="channel-ledger">
+      {channels.map((channel) => (
+        <article class="channel-ledger-row">
+          <div><h3>{channel.name}</h3><span>{channel.role}</span></div>
+          <p>{channel.derivative}</p>
+          <div class="channel-ledger-actions">
+            <span>{channel.master}</span>
+            <a href={channel.guidance}>Official guidance</a>
+          </div>
+        </article>
+      ))}
+    </div>
+    <div class="social-github-rule">
+      <strong>No update is better than a fake update.</strong>
+      <p>GitHub publishes only when there is a substantive example, demonstration, release note, or repository change.</p>
+    </div>
+  </section>
+
+  <section class="social-brief" aria-labelledby="brief-title">
+    <div class="social-section-head social-section-head--light">
+      <h2 id="brief-title">One weekly brief is the source of truth.</h2>
+      <p>Complete it before channel production begins. Missing source URLs block export; a missing reversal condition returns the recommendation for revision.</p>
+    </div>
+    <div class="brief-schema" aria-label="Required weekly content brief fields">
+      {briefFields.map((field, index) => <code><span>{String(index + 1).padStart(2, '0')}</span>{field}</code>)}
+    </div>
+    <div class="brief-actions">
+      <a class="social-button social-button--light" href="/assets/social/weekly-content-brief.md" download>Download Markdown brief</a>
+      <a class="social-text-link social-text-link--light" href="/assets/social/weekly-content-brief.schema.json" download>Download JSON schema</a>
+    </div>
+  </section>
+
+  <section class="social-pillars" aria-labelledby="pillars-title">
+    <div class="social-section-head">
+      <h2 id="pillars-title">Rotate the question, not the brand.</h2>
+      <p>Five pillars keep the system useful and repeatable without turning GreenSquare into a generic publishing machine.</p>
+    </div>
+    <ol class="pillar-list">
+      {pillars.map(([title, description]) => (
+        <li><span></span><div><strong>{title}</strong><p>{description}</p></div></li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="social-masters" id="canva-masters" aria-labelledby="masters-title">
+    <div class="social-section-head">
+      <h2 id="masters-title">Open the master that matches the job.</h2>
+      <div><p>Every master carries editable content variables, safe-zone overlays, source and owner fields, reversal conditions, alt-text prompts, export notes, and a thumbnail check.</p><a class="social-text-link" href="https://www.canva.com/folder/FAHSnoQbeaY">Open the Canva master folder</a></div>
+    </div>
+    <div class="master-register">
+      <div class="master-register-head"><span>Master</span><span>Canvas</span><span>Primary use</span><span>Open</span></div>
+      {masters.map((master) => (
+        <div class="master-register-row" data-master-key={master.key}>
+          <strong>{master.name}</strong>
+          <code>{master.size}</code>
+          <span>{master.use}</span>
+          <div>
+            <a class="master-canva-link" href={master.canva} data-canva-master={master.key}>Open Canva master</a>
+            <a href={master.local} download>Download HTML</a>
+          </div>
+        </div>
+      ))}
+    </div>
+    <div class="master-footnotes">
+      <p><strong>Lock:</strong> logo clear space, evidence geometry, type families, source/owner/reversal components, and safe zones.</p>
+      <p><strong>Edit:</strong> governing question, claim, evidence, interpretation, recommendation, source, owner, reversal condition, and alt text.</p>
+    </div>
+    <a class="social-text-link" href="/assets/social/canva-brand-kit-manifest.md" download>Download the Canva Brand Kit manifest</a>
+  </section>
+
+  <section class="social-motion" aria-labelledby="motion-title">
+    <div class="social-section-head social-section-head--light">
+      <h2 id="motion-title">Motion has four verbs.</h2>
+      <p>Use movement to expose the decision process. Sound may set pace or emphasis, but no essential information depends on it.</p>
+    </div>
+    <div class="motion-sequence">
+      <div><strong>Reveal</strong><span>Frame the governing question.</span></div>
+      <div><strong>Inspect</strong><span>Expose evidence and uncertainty.</span></div>
+      <div><strong>Align</strong><span>Set interpretation against risk.</span></div>
+      <div><strong>Resolve</strong><span>Make the call and reversal visible.</span></div>
+    </div>
+    <p class="motion-license">Use commercially licensed sound. Export captions and an accessible text equivalent with every video.</p>
+  </section>
+
+  <section class="social-conversion" aria-labelledby="conversion-title">
+    <div class="social-section-head">
+      <h2 id="conversion-title">One action closes the loop.</h2>
+      <p>The free Decision Frame is the primary social conversion. Every link records the channel, weekly idea, and format without changing the landing-page promise.</p>
+    </div>
+    <div class="conversion-builder">
+      <div>
+        <h3>Canonical campaign pattern</h3>
+        <code>{decisionFrameBase}?utm_source=&lt;channel&gt;&amp;utm_medium=organic-social&amp;utm_campaign=decision-frame&amp;utm_content=&lt;weekly-slug&gt;-&lt;format&gt;</code>
+      </div>
+      <a class="social-button social-button--forest" href={`${decisionFrameBase}?utm_source=brand-guideline&utm_medium=internal&utm_campaign=decision-frame&utm_content=social-system-v1-1`}>Verify the Decision Frame page</a>
+    </div>
+  </section>
+
+  <section class="social-qa" aria-labelledby="qa-title">
+    <div class="social-section-head">
+      <h2 id="qa-title">Export is permissioned by evidence.</h2>
+      <p>The template can be visually complete and still fail. The release gate checks interpretation, accessibility, platform fit, and conversion tracking.</p>
+    </div>
+    <div class="qa-matrix">
+      <section>
+        <h3>Block export</h3>
+        <ul>
+          <li>Source is missing or cannot support the claim.</li>
+          <li>Evidence and interpretation are merged.</li>
+          <li>Material assumption or risk is hidden.</li>
+          <li>Recommendation has no owner or reversal condition.</li>
+          <li>Essential meaning depends on colour, motion, or sound.</li>
+        </ul>
+      </section>
+      <section>
+        <h3>Release check</h3>
+        <ul>
+          <li>Readable at feed-thumbnail size after compression.</li>
+          <li>Safe zones hold on the target platform.</li>
+          <li>Alt text, captions, and long-source handling are complete.</li>
+          <li>Literal code is the only monospaced content.</li>
+          <li>UTM content matches weekly slug and format.</li>
+        </ul>
+      </section>
+    </div>
+    <a class="social-text-link" href="/assets/social/social-export-qa.md" download>Download the complete export checklist</a>
+  </section>
+
+  <section class="social-pilot" aria-labelledby="pilot-title">
+    <div class="social-section-head social-section-head--light">
+      <h2 id="pilot-title">Four weeks. Four source ideas. One decision.</h2>
+      <p>Retain the two strongest buying situations and formats after the pilot. Cadence may change; canonical brand invariants do not.</p>
+    </div>
+    <div class="pilot-table" role="table" aria-label="Four-week GreenSquare social pilot">
+      <div class="pilot-row pilot-head" role="row"><span>Week</span><span>Pillar</span><span>Source idea</span><span>Lead format</span><span>Buying situation</span></div>
+      {pilot.map((row) => <div class="pilot-row" role="row">{row.map((cell) => <span role="cell">{cell}</span>)}</div>)}
+    </div>
+    <div class="pilot-measures">
+      <p><strong>Primary:</strong> Decision Frame downloads and landing-page conversion.</p>
+      <p><strong>Authority:</strong> saves, completion, qualified comments, and profile/site visits.</p>
+      <p><strong>Community:</strong> useful discussion and rule compliance on Reddit; repository traffic and meaningful actions on GitHub.</p>
+    </div>
+    <a class="social-button social-button--light" href="/assets/social/four-week-pilot.md" download>Download the pilot pack</a>
+  </section>
+
+  <script define:vars={{ channels }}>
+    const jobChecks = {
+      authority: 'Lead with the source-backed decision, not a topic summary.',
+      evidence: 'Name the evidence state before explaining what it means.',
+      reversal: 'State the belief carrying the call and the threshold that reverses it.',
+      demonstration: 'Show a truthful product step; label simulated screens or data.',
+      teardown: 'Use public sources, separate reconstruction from known outcome, and avoid hindsight certainty.',
+    };
+
+    const consoleElement = document.querySelector('[data-publisher-console]');
+
+    if (consoleElement) {
+      const outputChannel = consoleElement.querySelector('[data-output-channel]');
+      const outputRole = consoleElement.querySelector('[data-output-role]');
+      const outputDerivative = consoleElement.querySelector('[data-output-derivative]');
+      const outputMaster = consoleElement.querySelector('[data-output-master]');
+      const outputJob = consoleElement.querySelector('[data-output-job]');
+      const outputUtm = consoleElement.querySelector('[data-output-utm]');
+      const outputLink = consoleElement.querySelector('[data-output-link]');
+      const outputGuidance = consoleElement.querySelector('[data-output-guidance]');
+      const jobSelect = consoleElement.querySelector('#content-job');
+
+      const updateOutput = () => {
+        const selectedChannel = consoleElement.querySelector('input[name="channel"]:checked');
+        const channel = channels.find((item) => item.id === selectedChannel?.value) ?? channels[0];
+        const job = jobSelect?.value ?? 'authority';
+        const masterLink = document.querySelector(`[data-canva-master="${channel.masterKey}"]`);
+
+        outputChannel.textContent = channel.name;
+        outputRole.textContent = channel.role;
+        outputDerivative.textContent = channel.derivative;
+        outputMaster.textContent = channel.master;
+        outputJob.textContent = jobChecks[job];
+        outputUtm.textContent = `utm_source=${channel.utm}&utm_medium=organic-social&utm_campaign=decision-frame&utm_content=<weekly-slug>-${channel.format}`;
+        outputLink.href = channel.id === 'reddit' ? '/assets/social/weekly-content-brief.md' : (masterLink?.href ?? '#canva-masters');
+        outputLink.textContent = channel.id === 'reddit' ? 'Open the weekly brief' : 'Open the Canva master';
+        outputGuidance.href = channel.guidance;
+      };
+
+      consoleElement.addEventListener('change', updateOutput);
+      updateOutput();
+    }
+  </script>
+</DesignLayout>

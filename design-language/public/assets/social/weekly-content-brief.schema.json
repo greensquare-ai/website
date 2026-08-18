@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://greensquare-brand-guideline.vercel.app/assets/social/weekly-content-brief.schema.json",
+  "title": "GreenSquare weekly source brief",
+  "description": "Canonical source record for one weekly GreenSquare social idea and its six native derivatives.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "slug",
+    "governing_question",
+    "audience_trigger",
+    "claim",
+    "evidence",
+    "interpretation",
+    "assumptions",
+    "material_risk",
+    "recommendation",
+    "reversal_condition",
+    "product_demo_step",
+    "source_urls",
+    "cta",
+    "channel_notes"
+  ],
+  "properties": {
+    "slug": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "governing_question": { "type": "string", "minLength": 12 },
+    "audience_trigger": { "type": "string", "minLength": 12 },
+    "claim": { "type": "string", "minLength": 12 },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["state", "statement", "source_url"],
+        "properties": {
+          "state": { "enum": ["confirmed", "assumption", "uncertainty", "material-risk"] },
+          "statement": { "type": "string", "minLength": 8 },
+          "source_url": { "type": "string", "format": "uri" }
+        }
+      }
+    },
+    "interpretation": { "type": "string", "minLength": 12 },
+    "assumptions": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 8 } },
+    "material_risk": { "type": "string", "minLength": 8 },
+    "recommendation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["action", "owner"],
+      "properties": {
+        "action": { "type": "string", "minLength": 8 },
+        "owner": { "type": "string", "minLength": 2 }
+      }
+    },
+    "reversal_condition": { "type": "string", "minLength": 8 },
+    "product_demo_step": { "type": "string", "minLength": 8 },
+    "source_urls": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "format": "uri" } },
+    "cta": { "type": "string", "minLength": 4 },
+    "channel_notes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["linkedin", "instagram", "tiktok", "x", "reddit", "github"],
+      "properties": {
+        "linkedin": { "type": "string" },
+        "instagram": { "type": "string" },
+        "tiktok": { "type": "string" },
+        "x": { "type": "string" },
+        "reddit": { "type": "string" },
+        "github": { "type": "string" }
+      }
+    }
+  }
+}

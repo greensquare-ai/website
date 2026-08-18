@@ -2,7 +2,7 @@ import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 
 export default defineConfig({
-  site: 'https://greensquare-design-language.vercel.app',
+  site: 'https://greensquare-brand-guideline.vercel.app',
   integrations: [react()],
   vite: {
     esbuild: {
