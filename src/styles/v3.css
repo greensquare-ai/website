@@ -5,10 +5,10 @@
   --v3-mid: oklch(0.43 0.018 249);
   --v3-faint: oklch(0.79 0.012 249);
   --v3-rule: oklch(0.86 0.01 249);
-  --v3-active: oklch(0.43 0.17 253);
-  --v3-evidence: oklch(0.43 0.085 186);
-  --v3-assumption: oklch(0.54 0.11 77);
-  --v3-risk: oklch(0.48 0.15 28);
+  --v3-active: #315f69;
+  --v3-evidence: #133f26;
+  --v3-assumption: #70877a;
+  --v3-risk: #315f69;
   --v3-wash: oklch(0.945 0.012 249);
   min-height: 100vh;
   background: var(--v3-ground);

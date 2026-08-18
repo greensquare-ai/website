@@ -8,10 +8,16 @@
   --design-white: #ffffff;
   --design-rail: #10110f;
   --design-black: #10110f;
-  --design-confirmed: #24553b;
-  --design-assumption: #745b2d;
-  --design-uncertainty: #686b65;
-  --design-risk: #77372f;
+  --design-confirmed: #133f26;
+  --design-assumption: #70877a;
+  --design-uncertainty: #56666f;
+  --design-risk: #315f69;
+  --chart-eucalyptus: #3f6f5a;
+  --chart-blue-green: #315f69;
+  --chart-slate: #56666f;
+  --chart-sage: #70877a;
+  --chart-mineral: #aab7ae;
+  --chart-mineral-pale: #d8ddd8;
 }
 
 html {
@@ -696,72 +702,10 @@ body.design-system {
 .palette-swatch--line > div { background: #dedad2; }
 .palette-swatch--muted > div { background: #63645c; }
 
-.state-notations {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  border-top: 2px solid var(--design-ink);
-}
-
-.state-notation {
-  display: grid;
-  grid-template-columns: minmax(8rem, 0.7fr) minmax(0, 1.3fr);
-  min-width: 0;
-  margin: 0;
-  border-bottom: 1px solid var(--design-line);
-  padding: 1.5rem 0;
-}
-
-.state-notation:nth-child(odd) {
-  border-right: 1px solid var(--design-line);
-  padding-right: 1.5rem;
-}
-
-.state-notation:nth-child(even) {
-  padding-left: 1.5rem;
-}
-
-.state-notation-sample {
-  display: flex;
-  gap: 0.75rem;
-  align-items: center;
-  padding-right: 1.5rem;
-}
-
-.state-notation-sample span {
-  flex: 0 0 auto;
-  width: 0.875rem;
-  height: 0.875rem;
-  border: 2px solid currentColor;
-}
-
-.state-notation-sample i {
-  display: block;
-  width: 100%;
-  border-top: 2px solid currentColor;
-}
-
-.state-notation figcaption {
-  display: grid;
-  gap: 0.3rem;
-}
-
-.state-notation figcaption strong { font-size: 0.9375rem; }
-.state-notation figcaption span,
-.state-notation figcaption em {
-  color: var(--design-muted);
-  font-size: 0.75rem;
-  font-style: normal;
-}
-
-.state-notation--confirmed { color: var(--design-confirmed); }
-.state-notation--confirmed .state-notation-sample span { background: currentColor; }
-.state-notation--assumption { color: var(--design-assumption); }
-.state-notation--assumption .state-notation-sample i { border-top-style: dashed; }
-.state-notation--uncertainty { color: var(--design-uncertainty); }
-.state-notation--uncertainty .state-notation-sample span { border-radius: 50%; }
-.state-notation--uncertainty .state-notation-sample i { border-top-style: dotted; }
-.state-notation--risk { color: var(--design-risk); }
-.state-notation--risk .state-notation-sample span { rotate: 45deg; background: currentColor; }
+.decision-state-register { border-top: 2px solid var(--design-ink); }
+.decision-state-row { display: grid; grid-template-columns: .65fr 1fr 1.35fr; gap: 2rem; border-bottom: 1px solid var(--design-line); padding: 1rem 0; }
+.decision-state-row > span { color: var(--design-muted); }
+.decision-state-row--head { color: var(--design-muted); font-size: .75rem; font-weight: 600; }
 
 .palette-pairings {
   display: grid;
@@ -845,6 +789,16 @@ body.design-system {
 .chart-rule-list { margin: 2rem 0 0; padding: 0; border-top: 2px solid var(--design-ink); list-style: none; }
 .chart-rule-list li { display: grid; grid-template-columns: minmax(12rem,.75fr) minmax(0,1.25fr); gap: 2rem; border-bottom: 1px solid var(--design-line); padding: 1rem 0; font-size: 1rem; }
 .chart-rule-list span { color: var(--design-muted); }
+.chart-palette-standard { background: var(--design-white) !important; }
+.chart-palette-swatches { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); border-top: 2px solid var(--design-ink); }
+.chart-palette-swatches figure { margin: 0; border-right: 1px solid var(--design-line); border-bottom: 1px solid var(--design-line); padding: 1rem; }
+.chart-palette-swatches figure:nth-child(4n) { border-right: 0; }
+.chart-palette-swatches i { display: block; width: 100%; aspect-ratio: 2.4; background: var(--chart-swatch); }
+.chart-palette-swatches figcaption { display: grid; gap: .35rem; padding-top: .8rem; }
+.chart-palette-swatches figcaption strong { font-size: .82rem; }
+.chart-palette-swatches figcaption span { color: var(--design-muted); font-family: "IBM Plex Sans",Arial,sans-serif; font-size: .72rem; }
+.chart-palette-swatches figcaption em { color: var(--design-muted); font-size: .72rem; font-style: normal; }
+.chart-pantone-note { margin: 1.5rem 0 0; border-top: 1px solid var(--design-line); padding-top: 1rem; color: var(--design-muted); font-size: .78rem; line-height: 1.5; }
 .chart-gallery { display: grid; gap: 1.25rem; background: var(--design-ground) !important; }
 .chart-gallery-pair { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1.25rem; }
 .chart-specimen { margin: 0; border-top: 2px solid var(--design-ink); background: white; padding: 1.5rem; }
@@ -855,14 +809,13 @@ body.design-system {
 .chart-specimen svg { display: block; width: 100%; height: auto; margin: 1.5rem 0 .5rem; overflow: visible; }
 .chart-specimen svg text { fill: var(--design-ink); font-family: "IBM Plex Sans", Arial, sans-serif; font-size: 16px; text-anchor: middle; }
 .chart-axis { stroke: var(--design-ink); stroke-width: 1.5; }
-.chart-target { stroke: var(--v3-assumption); stroke-width: 1.5; stroke-dasharray: 8 6; }
-.chart-threshold { stroke: var(--v3-risk); stroke-width: 1.5; stroke-dasharray: 7 6; }
+.chart-target,.chart-threshold { stroke: var(--chart-slate); stroke-width: 1.5; stroke-dasharray: 8 6; }
 .chart-annotation { fill: var(--design-muted) !important; font-size: 13px !important; text-anchor: start !important; }
-.chart-context { fill: #b8bbb5; }.chart-context-light { fill: #d9dcd7; }.chart-highlight { fill: var(--design-forest); }
+.chart-context { fill: var(--chart-sage); }.chart-context-light { fill: var(--chart-mineral-pale); }.chart-highlight { fill: var(--design-forest); }
 .chart-inside { fill: white !important; text-anchor: end !important; font-weight: 700; }
 .chart-series { fill: var(--design-muted) !important; font-size: 13px !important; }.chart-series--green,.chart-green-text { fill: var(--design-forest) !important; }
-.chart-line { fill: none; stroke-width: 4; }.chart-line--context { stroke: #888b85; }.chart-line--active { stroke: var(--design-forest); }
-.chart-connector { stroke: #91948e; stroke-width: 1; }.chart-positive { fill: var(--design-forest); }.chart-negative { fill: var(--v3-assumption); }.chart-total { fill: #8e928c; }.chart-total--active { fill: var(--design-forest); }
+.chart-line { fill: none; stroke-width: 4; }.chart-line--context { stroke: var(--chart-sage); }.chart-line--active { stroke: var(--design-forest); }
+.chart-connector { stroke: var(--chart-slate); stroke-width: 1; }.chart-positive { fill: var(--design-forest); }.chart-negative { fill: var(--chart-blue-green); }.chart-total { fill: var(--chart-slate); }.chart-total--active { fill: var(--design-forest); }
 .chart-source { margin: .5rem 0 0; border-top: 1px solid var(--design-line); padding-top: .75rem; color: var(--design-muted); font-family: "IBM Plex Sans", Arial, sans-serif; font-size: .75rem; line-height: 1.5; }
 .chart-choice-table,.application-template-table,.governance-roles { border-top: 2px solid var(--design-ink); }
 .chart-choice-row,.application-template-row,.governance-row { display: grid; grid-template-columns: .9fr .7fr 1fr; gap: 2rem; border-bottom: 1px solid var(--design-line); padding: 1.1rem 0; font-size: 1rem; }
@@ -1039,12 +992,12 @@ body.design-system {
   .palette-group,
   .palette-swatches--core,
   .palette-swatches--supporting,
-  .state-notations,
   .palette-pairings,
   .logo-placement-grid,
   .logo-clearspace,
   .language-comparison,
   .chart-gallery-pair,
+  .chart-palette-swatches,
   .chart-specimen figcaption,
   .chart-rule-list li,
   .chart-choice-row,
@@ -1057,9 +1010,8 @@ body.design-system {
 
   .palette-swatch { border-right: 1px solid var(--design-ink); border-bottom: 0; }
   .palette-swatch:last-child { border-bottom: 1px solid var(--design-ink); }
-  .state-notation,
-  .state-notation:nth-child(odd),
-  .state-notation:nth-child(even) { border-right: 0; padding-right: 0; padding-left: 0; }
+  .decision-state-row { grid-template-columns: 1fr; gap: .35rem; }
+  .decision-state-row--head { display: none; }
   .logo-placement-sheet { min-height: 20rem; }
   .language-example > header { display: block; }
   .language-comparison,

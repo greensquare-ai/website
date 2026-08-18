@@ -8,227 +8,155 @@ colors:
   rail: "#10110f"
   white: "#ffffff"
   ground: "#f5f5f5"
-  paper: "#fbf8f0"
-  mineral: "#c7cbc0"
+  mineral-mid: "#aab7ae"
+  mineral-pale: "#d8ddd8"
   muted: "#63645c"
   line: "#dedad2"
-  confirmed: "#24553b"
-  assumption: "#745b2d"
-  uncertainty: "#686b65"
-  material-risk: "#77372f"
+  confirmed: "#133f26"
+  assumption: "#70877a"
+  uncertainty: "#56666f"
+  material-risk: "#315f69"
+  chart-eucalyptus: "#3f6f5a"
+  chart-blue-green: "#315f69"
+  chart-slate: "#56666f"
+  chart-sage: "#70877a"
 typography:
   display:
     fontFamily: "Space Grotesk, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "clamp(3.15rem, 5.1vw, 4.8rem)"
     fontWeight: 600
-    lineHeight: 0.97
-    letterSpacing: "-0.03em"
-  headline:
-    fontFamily: "Space Grotesk, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "clamp(1.5rem, 2.2vw, 2.15rem)"
-    fontWeight: 600
-    lineHeight: 1.05
-    letterSpacing: "-0.025em"
   body:
     fontFamily: "IBM Plex Sans, Arial, sans-serif"
-    fontSize: "clamp(1.05rem, 1.35vw, 1.15rem)"
     fontWeight: 400
-    lineHeight: 1.55
-  label:
-    fontFamily: "IBM Plex Sans, Arial, sans-serif"
-    fontSize: "0.78rem"
-    fontWeight: 700
-    lineHeight: 1.45
-    letterSpacing: "0.02em"
 components:
   button-light:
     backgroundColor: "{colors.white}"
     textColor: "{colors.forest}"
-    padding: "0.75rem 1rem"
     height: "2.75rem"
   button-forest:
     backgroundColor: "{colors.forest}"
     textColor: "{colors.white}"
-    padding: "0.75rem 1rem"
     height: "2.75rem"
-  rail-nav-current:
-    backgroundColor: "{colors.forest}"
-    textColor: "{colors.white}"
-    padding: "0.55rem 1.25rem"
-    height: "2.75rem"
-  decision-resolution:
-    backgroundColor: "{colors.forest}"
-    textColor: "{colors.white}"
-    padding: "0.9rem"
 ---
 
 # Design System: GreenSquare Design Language
 
 ## Overview
 
-**Creative North Star: "The Decision Ledger"**
+**Creative North Star: The Decision Ledger**
 
-GreenSquare looks like an institutional working standard, not a content gallery. A stable black rail contains the system; forest fields carry governing questions and decisive calls; white, ground, and paper sheets hold inspectable working material. Mineral rules, strict axes, and tabular numerals make the page read as a document that can be audited.
+GreenSquare looks like an institutional working standard, not a content gallery. A stable black rail contains the system; forest fields carry governing questions and decisive calls; white and cool Ground fields hold inspectable working material. Mineral rules, strict axes, native grids, and tabular numerals make the work auditable.
 
-The social extension carries one source idea into native channel work without losing the decision. It adds paper working sheets and mineral dividers to the incumbent black/forest/paper world, then uses canonical markers and written labels to preserve evidence, assumption, uncertainty, material risk, owner, and reversal condition. This is a durable operating language, not a prescribed page composition.
+The social extension carries one source idea into native channel work without losing the decision. It uses the established black, forest, white, and Ground world with atmospheric tonal fields, aperture crops, evidence fields, and explicit source metadata. Evidence state, owner, and reversal condition remain written and inspectable.
 
-The system is code-led and deliberately established rather than decorative. Its authority comes from visible structure, source-aware evidence, and restrained contrast. It rejects generic template galleries, decorative terminal theatre, faces and presenter-led visual language, and any claim whose evidence state cannot be inspected.
-
-**Key Characteristics:**
+**Key characteristics**
 
 - Institutional, calm, direct, and faceless.
-- Strong field changes: black rail, forest decision fields, paper working sheets.
+- Strong field changes rather than decorative cards or tilted artefacts.
 - Hard horizontal and vertical rules establish the reading axis.
-- Evidence is both marked and written; colour never carries meaning alone.
-- Dense operational content stays legible through controlled type, generous section spacing, and responsive reflow.
+- Evidence states are written; icons and colour never substitute for language.
+- Product proof, sourced data, and real documents provide credibility.
 
 ## Colors
 
-The palette uses dark institutional fields for commitment, pale sheets for inspection, and restrained state colours for evidence—not decoration.
-
 ### Primary
 
-- **Decision Forest:** used for active navigation, decision fields, primary actions, and recommendation resolution. It is the visual signal that a governed decision is being made.
-- **Deep Forest:** used for the deepest dark range and forest-field depth when the base forest needs a denser companion.
+- **Decision Forest:** active navigation, governing questions, focal series, primary actions, and recommendations.
+- **Deep Forest:** atmospheric depth and the darkest forest range.
 
-### Secondary
+### Supporting chart palette
 
-- **Working Paper:** a warm off-white working surface reserved for social application sheets, records, and master-register material.
-- **Mineral Divider:** the social extension's muted structural rule. It separates evidence rows and working-sheet sections without competing with ink.
-
-### Tertiary
-
-- **Confirmed Forest:** the verified-evidence colour. Pair it with a small solid square and the written label “Confirmed.”
-- **Assumption Ochre:** the untested-belief colour. Pair it with a small outlined square and the written label “Assumption.”
-- **Uncertainty Mineral:** the unresolved-direction colour. Pair it with a small outlined circle and the written label “Uncertainty.”
-- **Material Risk Oxide:** the downside colour. Pair it with a narrow solid rule and the written label “Material risk.”
+- **Eucalyptus `#3F6F5A`:** secondary series and supporting comparison.
+- **Deep Blue-Green `#315F69`:** alternative scenarios and secondary highlights.
+- **Institutional Slate `#56666F`:** benchmarks, thresholds, and neutral comparison.
+- **Sage `#70877A`:** supporting comparators and assumptions.
+- **Mineral Mid `#AAB7AE`:** context series and subdued evidence.
+- **Mineral Pale `#D8DDD8`:** missing data, background context, and quiet separation.
 
 ### Neutral
 
-- **Rail Black:** the permanent containment field for the navigation rail and dark operating bands.
-- **Decision Ink:** primary reading colour and the strongest structural rule.
-- **Ground:** cool neutral page field for evidence tables and quieter inspection zones.
-- **White:** primary document surface and reversed-text companion.
-- **Muted Record:** secondary copy, labels, metadata, and low-priority supporting information.
-- **Structural Line:** the default divider for sheets, registers, tables, and section boundaries.
+- **Rail Black:** navigation containment and dark operating bands.
+- **Decision Ink:** primary reading colour and strongest structural rule.
+- **Ground:** cool neutral page field for evidence tables and quiet inspection zones.
+- **White:** primary light surface and reversed-text companion.
+- **Muted Record:** metadata and secondary copy.
+- **Structural Line:** tables, registers, grids, and section boundaries.
 
-**The Written-State Rule.** Every evidence state that changes interpretation must include its written label. Marker shape and colour reinforce the state; neither substitutes for the label.
+**The Written-State Rule.** Every evidence state that changes interpretation must be named in words. Do not introduce a status-icon key or rely on colour to convey that state.
 
-**The Paper Addition Rule.** Paper and Mineral are the only social-application palette additions. Use them for work-in-progress documentation and separation, never as a new expressive accent system.
+**The Institutional Chart Rule.** Charts use Forest, Eucalyptus, Deep Blue-Green, Slate, Sage, and Mineral values. Yellow, amber, orange, red, pink, neon, and rainbow palettes are prohibited. The lime brand accent is restricted to the lockup and focus treatment.
+
+Pantone references are family-level print-production directions only: Forest 5535 C–5605 C, Eucalyptus 5545 C–625 C, Deep Blue-Green 5483 C–7476 C, Slate 431 C–432 C, and Sage 5565 C–5575 C. Confirm any final coated or uncoated match with a current physical Pantone guide and press proof.
 
 ## Typography
 
-**Display Font:** Space Grotesk (with ui-sans-serif and system-ui fallbacks)
+**Display:** Space Grotesk Semibold makes the decision concise and deliberate.
 
-**Body Font:** IBM Plex Sans (with Arial fallback)
+**Functional:** IBM Plex Sans explains, labels, and records evidence with institutional clarity. Use tabular numerals for data.
 
-**Brand Font:** Manrope (with Arial fallback) for the rail wordmark only.
+**Brand:** Manrope is reserved for the supplied rail wordmark.
 
-**Character:** Space Grotesk makes the decision and its consequence feel concise and deliberate. IBM Plex Sans explains, labels, and records evidence with institutional clarity; its tabular numeral feature supports ledgers, IDs, and export-oriented fields.
-
-### Hierarchy
-
-- **Display:** Space Grotesk 600; governs primary promises and decision questions. Use the established large fluid display scale and tight tracking.
-- **Headline:** Space Grotesk 600; introduces sections, register calls, and compact decision statements without becoming promotional.
-- **Body:** IBM Plex Sans 400; explains evidence and operations. Keep explanatory text at a bounded readable measure (roughly 58–66ch where the source establishes one).
-- **Label:** IBM Plex Sans 700; names metadata, states, facts, and table heads at the established compact label size. Use modest tracking only where the source already does.
-- **Literal code:** IBM Plex Sans remains the default for literal URLs, UTM strings, and operating fields. Monospace is an exception for literal GitHub or code content only.
-
-**The Decide / Explain Rule.** Space Grotesk decides; IBM Plex Sans explains. Do not use display typography to make ordinary metadata perform.
+**The Decide / Explain Rule.** Space Grotesk decides; IBM Plex Sans explains. Monospace is allowed only for literal GitHub or code content.
 
 ## Layout
 
-The design language is built from a persistent 14.25rem black rail and a flexible document field. A 3.75rem sticky top bar maintains orientation while sections occupy full-width fields inside the main document. Large section blocks use fluid insets from 1.25rem to 6.5rem and a generous vertical cadence from 4.5rem to 8rem.
+The website retains its persistent black rail and flexible document field. Social compositions use a 12-column grid, a 72px design-safe perimeter at 1080px, and three zones: identity and series, governing argument or proof, and source/owner/sequence metadata.
 
-Use grids to show relationships: paired narrative-and-proof fields, split operational outputs, ledger rows, and register tables. Strong one-pixel rules are the default boundary. The social extension may use a promise beside a paper decision record when that comparison improves inspection, but the 62/38 opening composition is specific to the current social surface—not a global invariant.
+Native outputs support 1:1, 4:5, and 9:16. Relationships must survive responsive reflow and platform crops. The 62/38 opening composition is not a system-wide invariant.
 
-At 860px, paired fields become single columns and multi-column registers reduce to two-column reading paths. At 620px, dense grids collapse to one column, table headers can become visually hidden when row labels retain meaning, and controls retain a 2.75rem minimum height. The rail becomes a mobile navigation overlay rather than permanently consuming the viewport.
-
-**The Axis Rule.** Align records and decisions to a visible vertical and horizontal rule before adding decoration. If a relationship cannot survive the grid, the content is not ready for ornament.
+**The Axis Rule.** Align records and decisions to a visible vertical and horizontal rule before adding atmospheric treatment.
 
 ## Elevation & Depth
 
-The system is flat by default. Depth comes from field change, borders, document overlap, and contrast between rail, forest, paper, and white—not a card-shadow vocabulary. Social working records stay orthogonal and flat; they do not tilt, float, or use offset outlines.
+The system is flat by default. Depth comes from field changes, borders, edge light, translucent planes, aperture crops, and evidence density. Frames remain orthogonal; they do not tilt, float, or use offset outlines.
 
-**The Field-First Rule.** Create hierarchy with surface colour and rules before shadow. A working artefact earns authority from its structure, not simulated physical lift.
+**The Field-First Rule.** Create hierarchy with surface colour and rules before shadow.
 
 ## Shapes
 
-The dominant language is square and rectilinear: buttons, rails, tables, sheets, fields, and borders are unrounded. Semantic notation stays deliberately plain: solid square for Confirmed, outlined square for Assumption, outlined circle for Uncertainty, and a narrow solid rule for Material risk.
+The dominant language is square and rectilinear. The aperture derived from the GreenSquare mark may appear as a crop, cast-glass form, or data-derived evidence field. Evidence states remain written labels with no icon system.
 
-**The Semantic Shape Rule.** Use the smallest conventional geometry that makes a state easier to scan. Do not introduce decorative rotations, pill controls, soft cards, or arbitrary rounded containers.
+**The Semantic Shape Rule.** Use the aperture and grid only when they structure the argument. Do not introduce decorative rotations, status glyphs, soft cards, arbitrary rounded containers, or decorative terminal styling.
 
 ## Components
 
 ### Navigation
 
-The rail is a durable system boundary: white brand text over Rail Black, grouped links, quiet group labels, and one forest current state with a white inset axis. Links have a minimum 2.75rem interactive height. The sticky top bar repeats section context in muted record text and uses a translucent white field with blur only to retain reading position.
+The rail is a durable system boundary: white brand text over Rail Black, quiet group labels, and one forest current state. Controls remain keyboard-operable, visibly focused, and at least 44 by 44 CSS pixels.
 
 ### Buttons
 
-**Character:** firm, square, and document-like rather than promotional.
+Buttons are firm, square, and document-like. Light buttons use White fill with Forest text. Forest buttons use Forest fill with White text. Hover and focus must preserve explicit contrast.
 
-- **Shape:** square corners with a 1px current-colour border.
-- **Light:** White fill and Decision Forest text for action inside a dark field.
-- **Forest:** Decision Forest fill and White text for action on a light sheet.
-- **Padding:** the established 0.75rem × 1rem internal space with a 2.75rem minimum height.
-- **Hover / Focus:** hover changes the surface while preserving explicit foreground contrast; focus is a 3px lime outline with a 4px offset. Do not rely on inherited link colour or remove the visible focus treatment.
+### Native Social Frame
 
-### Text Links
-
-**Character:** operational references, not secondary buttons.
-
-- **Style:** bold IBM Plex Sans, underlined with a 0.3em offset, and a 2.75rem minimum interactive height.
-- **Colour:** Forest on light sheets and White inside dark fields.
-- **Use:** guidance, downloads, source destinations, and related records.
-
-### Choice Controls
-
-**Character:** a compact chooser that behaves like a labelled record, not a row of decorative pills.
-
-- **Channel choices:** use visible labels and native radio inputs; the selected state must remain legible without colour alone.
-- **Select fields:** retain a native, inspectable control with the same clear focus outline as buttons.
-- **Use:** choose a channel and content job before opening a master or beginning production.
-
-### Paper Decision Sheet
-
-**Character:** a readable, source-aware artefact placed inside a darker operating field.
-
-- **Surface:** Working Paper with Mineral row rules and Decision Ink reading text.
-- **Structure:** a compact head, governing question, evidence ledger, recommendation resolution, and a visible source note.
-- **Resolution:** a Decision Forest inset field with White recommendation text and muted supporting reversal language.
-- **Depth:** use the documented specimen lift only when the component needs to read as a placed sheet.
+A source-aware composition rendered natively at 1:1, 4:5, or 9:16. Identity occupies Zone A, governing question or proof occupies Zone B, and owner/source/sequence metadata occupies Zone C. Use Forest, White, or Ground surfaces with controlled atmospheric treatments; never tilt the frame.
 
 ### Evidence Ledger
 
-**Character:** a table or stacked record that makes interpretation inspectable at a glance.
+Rows contain a written state label, concise evidence text, and a structural divider. Write Confirmed, Assumption, Uncertainty, or Material risk in full. Do not prefix states with icons. Include a source note wherever evidence is simulated or qualified.
 
-- **Rows:** one state marker, written state label, concise evidence text, and a structural divider.
-- **Markers:** use only the restrained confirmed square, assumption outline, uncertainty circle, and material-risk rule.
-- **Accessibility:** labels remain present at every crop, size, and export. Include a source note where the evidence is simulated or otherwise qualified.
+### Data Graphics
+
+Direct labels are preferred. Forest carries the focal series; cool institutional colors carry comparisons. Use dashed Slate for targets or thresholds. Pair colour with direct labels, line style, position, or values so meaning survives without colour.
 
 ### Registers and Tables
 
-**Character:** working documentation with strict axes and no card treatment.
-
-- **Structure:** border-top opening, 1px row dividers, concise labels, and aligned columns.
-- **Responsive behaviour:** collapse toward labelled record rows; do not preserve a desktop table at the cost of horizontal overflow.
-- **Use:** channel guidance, master registers, QA lists, and scheduled operating records.
+Use strict axes, concise labels, aligned columns, and one-pixel rules. Collapse toward labelled record rows on narrow screens instead of preserving a desktop table through horizontal scrolling.
 
 ## Do's and Don'ts
 
-### Do:
+### Do
 
-- **Do** lead consequential content with a governing question, then preserve evidence state, source, recommendation owner, and reversal condition through every derivative.
-- **Do** use black rail containment, forest decision fields, paper working sheets, and mineral dividers as a restrained, legible material hierarchy.
-- **Do** retain the supplied lockup when introducing GreenSquare; reserve the mark alone for recognised or explicitly labelled contexts.
-- **Do** make controls keyboard-operable, visibly focused, and at least 44 by 44 CSS pixels where the source establishes an interactive target.
-- **Do** make essential meaning survive without colour, sound, motion, or pointer interaction.
+- Lead consequential content with a governing question.
+- Preserve source, recommendation owner, and reversal condition through every derivative.
+- Use native grid, atmospheric, aperture, and evidence-field elements from the GreenSquare visual language.
+- Retain the supplied lockup on standalone and introductory posts.
+- Make essential meaning survive without colour, sound, motion, or pointer interaction.
 
-### Don't:
+### Don't
 
-- **Don't** turn the social extension into a generic gallery of templates or promote the current social page composition into a system-wide rule.
-- **Don't** use evidence colours or marker shapes without their written state labels.
-- **Don't** introduce soft rounded cards, pills, decorative terminal styling, presenter imagery, AI avatars, or synthetic voice as substitutes for institutional proof.
-- **Don't** use monospace decoratively; limit it to literal GitHub or code content.
-- **Don't** publish a recommendation without a visible owner and reversal condition, or claim observed evidence when a scenario is simulated.
+- Use warm off-white surfaces.
+- Use evidence-state icons or colour-only status coding.
+- Use yellow, amber, orange, red, pink, neon, or rainbow chart palettes.
+- Introduce tilted hero artefacts, soft cards, decorative glyphs, presenter imagery, AI avatars, or synthetic voice.
+- Publish a recommendation without a visible owner and reversal condition, or claim observed evidence when a scenario is simulated.

@@ -62,15 +62,16 @@ export function GrammarContent() {
           <div className="v3-index-row">
             <h3>Active reasoning</h3>
             <p>
-              Cobalt sharpens the current question; position and weight carry the same meaning in
-              greyscale.
+              Deep Blue-Green sharpens the current question; position and weight carry the same
+              meaning in greyscale.
             </p>
           </div>
           <div className="v3-index-row">
-            <h3>Confirmed evidence</h3>
+            <h3>Written evidence states</h3>
             <p>
-              Teal uses a solid attachment. Assumptions use ochre and a broken join. Risk uses red
-              and a crossing cut.
+              Confirmed, Assumption, Uncertainty and Material risk are written in full. Forest,
+              Sage, Slate and Blue-Green may support the reading; no icon or colour substitutes
+              for the words.
             </p>
           </div>
           <div className="v3-index-row">

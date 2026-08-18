@@ -36,7 +36,7 @@ import DesignLayout from '../layouts/DesignLayout.astro';
         <figcaption><strong>Primary black</strong><span>Default for covers, headers and high-authority moments.</span></figcaption>
       </figure>
       <figure class="identity-variant identity-variant--forest">
-        <img src="/assets/logo-lockup-forest.svg" alt="GreenSquare AI in lime and cream on forest" />
+        <img src="/assets/logo-lockup-forest.svg" alt="GreenSquare AI in lime and white on forest" />
         <figcaption><strong>Forest</strong><span>Brand-colour alternative for owned digital surfaces.</span></figcaption>
       </figure>
       <figure class="identity-variant identity-variant--light">
@@ -78,24 +78,13 @@ import DesignLayout from '../layouts/DesignLayout.astro';
     </div>
 
     <div class="palette-group palette-group--state">
-      <div class="palette-group-label"><strong>Decision notation</strong><span>Small signals, never colour fields</span></div>
-      <div class="state-notations" aria-label="Decision notation colours">
-        <figure class="state-notation state-notation--confirmed">
-          <div class="state-notation-sample" aria-hidden="true"><span></span><i></i></div>
-          <figcaption><strong>Confirmed</strong><span>#24553B</span><em>Filled marker · verified evidence</em></figcaption>
-        </figure>
-        <figure class="state-notation state-notation--assumption">
-          <div class="state-notation-sample" aria-hidden="true"><span></span><i></i></div>
-          <figcaption><strong>Assumption</strong><span>#745B2D</span><em>Open marker · dashed test line</em></figcaption>
-        </figure>
-        <figure class="state-notation state-notation--uncertainty">
-          <div class="state-notation-sample" aria-hidden="true"><span></span><i></i></div>
-          <figcaption><strong>Uncertainty</strong><span>#686B65</span><em>Open circle · unresolved direction</em></figcaption>
-        </figure>
-        <figure class="state-notation state-notation--risk">
-          <div class="state-notation-sample" aria-hidden="true"><span></span><i></i></div>
-          <figcaption><strong>Material risk</strong><span>#77372F</span><em>Filled diamond · downside evidenced</em></figcaption>
-        </figure>
+      <div class="palette-group-label"><strong>Decision notation</strong><span>Written states; no icon key</span></div>
+      <div class="decision-state-register" role="table" aria-label="Written decision states">
+        <div class="decision-state-row decision-state-row--head" role="row"><span>State</span><span>Required wording</span><span>Rule</span></div>
+        <div class="decision-state-row" role="row"><strong role="cell">Confirmed</strong><span role="cell">Confirmed · source or sample</span><span role="cell">Name what was verified and its basis.</span></div>
+        <div class="decision-state-row" role="row"><strong role="cell">Assumption</strong><span role="cell">Assumption · test · date</span><span role="cell">Name the belief and how it will be tested.</span></div>
+        <div class="decision-state-row" role="row"><strong role="cell">Uncertainty</strong><span role="cell">Uncertainty · unresolved variable</span><span role="cell">State the gap without decorative signalling.</span></div>
+        <div class="decision-state-row" role="row"><strong role="cell">Material risk</strong><span role="cell">Material risk · effect on the call</span><span role="cell">Explain the downside and reversal consequence.</span></div>
       </div>
     </div>
 
@@ -118,7 +107,7 @@ import DesignLayout from '../layouts/DesignLayout.astro';
           <li><div><strong>Keep it lower-left.</strong><p>Changing the filled leaf creates a different symbol.</p></div></li>
           <li><div><strong>Keep the geometry intact.</strong><p>No rotation, mirroring, stretching or redrawing.</p></div></li>
           <li><div><strong>Use supplied lockups.</strong><p>Never retype, regroup or alter “GreenSquare AI”.</p></div></li>
-          <li><div><strong>Protect contrast.</strong><p>White on black, lime and cream on forest, forest and ink on light.</p></div></li>
+          <li><div><strong>Protect contrast.</strong><p>White on black, lime and white on forest, forest and ink on light.</p></div></li>
         </ol>
       </div>
     </div>

@@ -10,18 +10,18 @@
   --muted: #63645c;
   --line: #dedad2;
   --lime: #dff49f;
-  --cream: #fbf8f0;
+  --cream: #ffffff;
 
   /* accent hover (roughly 10% darker) */
   --accent-hover: #0e2f1c;
 
   /* cream on dark surfaces — one governed alpha ramp (replaces scattered rgba literals) */
-  --cream-04: rgba(251, 248, 240, 0.04);
-  --cream-12: rgba(251, 248, 240, 0.12);
-  --cream-18: rgba(251, 248, 240, 0.18);
-  --cream-30: rgba(251, 248, 240, 0.30);
-  --cream-60: rgba(251, 248, 240, 0.60);
-  --cream-75: rgba(251, 248, 240, 0.75);
+  --cream-04: rgba(255, 255, 255, 0.04);
+  --cream-12: rgba(255, 255, 255, 0.12);
+  --cream-18: rgba(255, 255, 255, 0.18);
+  --cream-30: rgba(255, 255, 255, 0.30);
+  --cream-60: rgba(255, 255, 255, 0.60);
+  --cream-75: rgba(255, 255, 255, 0.75);
 
   /* type */
   --font-display: 'Cormorant Garamond', Georgia, serif;
@@ -73,7 +73,7 @@
     0 6px 16px rgba(18, 20, 15, 0.05),
     0 20px 48px rgba(18, 20, 15, 0.06);
   --shadow-specimen-dark:
-    inset 0 1px 0 rgba(251, 248, 240, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
     0 24px 56px -24px rgba(0, 0, 0, 0.55);
 
   /* motion — fast, purposeful hover; a longer, quiet entrance. fade + rise only. */
