@@ -1,0 +1,59 @@
+---
+import DesignLayout from '../layouts/DesignLayout.astro';
+---
+<DesignLayout section="Operating System" title="Judgment OS" focus="How should GreenSquare reason before it produces an answer?">
+  <section class="ops-section ops-intro">
+    <p class="ops-kicker">Decision doctrine</p>
+    <h2>Decision system before artefact.</h2>
+    <p>The Judgment OS is the upstream doctrine for GreenSquare. It governs how an agent or operator understands a situation, frames the real decision, gathers evidence, creates options, recommends a course and tests whether the organisation can actually execute it.</p>
+  </section>
+
+  <section class="ops-section">
+    <div class="ops-heading"><span>01</span><h2>Core principles</h2></div>
+    <div class="ops-grid">
+      {[
+        ['01','Decision system before artefact','Map power, incentives, outcomes, constraints and standards before optimising the deliverable.'],
+        ['02','Strategy is choice under constraint','Surface the constraints and trade-offs, then make the best available choice.'],
+        ['03','Context determines quality','A technically strong answer can still fail if it ignores priorities, initiatives and decision dynamics.'],
+        ['04','Map who sets the standard','Identify who defines quality, holds influence or can block progress.'],
+        ['05','Frame before analysing','Clarify the real decision, material constraints and evidence that could change the answer.'],
+        ['06','Use hypotheses directionally','Use a hypothesis to focus investigation, never as a conclusion to defend.'],
+        ['07','Calibrate certainty','Separate facts, inference, assumptions and unknowns, then match confidence to evidence and reversibility.'],
+        ['08','Make trade-offs legible','Options must reveal consequences, opportunity costs, conditions and execution burden.'],
+        ['09','Recommend for the environment','Choose the best outcome under actual conditions, not the theoretically cleanest option.'],
+        ['10','Execution fitness is part of strategy','Test capacity, governance, dependencies, resistance, timing and blockers.'],
+        ['11','Design for easier decisions','Reduce noise and senior decision effort.'],
+        ['12','Learn from outcomes','Capture decisions, assumptions, results and lessons for future work.'],
+      ].map(([n,t,b]) => <article class="ops-card"><span>{n}</span><h3>{t}</h3><p>{b}</p></article>)}
+    </div>
+  </section>
+
+  <section class="ops-section">
+    <div class="ops-heading"><span>02</span><h2>Operating loop</h2></div>
+    <ol class="ops-flow">
+      {['Understand the decision environment','Map the decision architecture','Build the situation narrative','Frame the actual decision','Form a working hypothesis','Gather and classify evidence','Calibrate uncertainty','Generate meaningful options','Expose trade-offs','Select and articulate the recommendation','Test execution fitness','Define success and learn'].map((item,i) => <li><span>{String(i+1).padStart(2,'0')}</span><strong>{item}</strong></li>)}
+    </ol>
+  </section>
+
+  <section class="ops-section">
+    <div class="ops-heading"><span>03</span><h2>Evidence states</h2></div>
+    <div class="ops-grid ops-grid-four">
+      <article class="ops-card"><span>GIVEN</span><h3>Input</h3><p>Supplied directly and treated as an input.</p></article>
+      <article class="ops-card"><span>DERIVED</span><h3>Produced</h3><p>Calculated or logically produced from given information.</p></article>
+      <article class="ops-card"><span>INFERRED</span><h3>Judged</h3><p>A judgement supported by evidence but not proven.</p></article>
+      <article class="ops-card"><span>UNKNOWN</span><h3>Unresolved</h3><p>Material information that remains unresolved.</p></article>
+    </div>
+  </section>
+
+  <section class="ops-section ops-dark">
+    <p class="ops-kicker">Quality gate</p>
+    <h2>Before finalising, ask whether the decision is right, the trade-offs are real and the recommendation is executable.</h2>
+    <ul class="ops-checks">
+      <li>Are we solving the right decision?</li><li>Is the decision owner clear?</li><li>Are material constraints visible?</li><li>Have evidence and inference been separated?</li><li>Are the options genuinely different?</li><li>Is the recommendation executable?</li><li>Is there a clear next action?</li>
+    </ul>
+  </section>
+</DesignLayout>
+
+<style>
+.ops-section{padding:clamp(3rem,6vw,6rem);border-top:1px solid var(--design-line)}.ops-intro{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:4rem}.ops-intro h2,.ops-dark h2{font-size:clamp(2.3rem,4vw,4.5rem);line-height:1.03;letter-spacing:-.035em;margin:0;max-width:15ch}.ops-intro p:last-child{font-size:1.2rem;line-height:1.65;max-width:58ch}.ops-kicker{font-size:.75rem;font-weight:600;color:var(--design-muted);margin:0}.ops-heading{display:grid;grid-template-columns:4rem 1fr;align-items:end;margin-bottom:2.5rem}.ops-heading span,.ops-card>span,.ops-flow span{font-size:.72rem;color:var(--design-muted);font-weight:600}.ops-heading h2{margin:0;font-size:2.2rem}.ops-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--design-line);border-left:1px solid var(--design-line)}.ops-grid-four{grid-template-columns:repeat(4,minmax(0,1fr))}.ops-card{padding:1.5rem;min-height:13rem;border-right:1px solid var(--design-line);border-bottom:1px solid var(--design-line)}.ops-card h3{font-size:1.2rem;margin:2.8rem 0 .7rem}.ops-card p{color:var(--design-muted);line-height:1.55;margin:0}.ops-flow{list-style:none;margin:0;padding:0;border-top:1px solid var(--design-line)}.ops-flow li{display:grid;grid-template-columns:4rem 1fr;padding:1.2rem 0;border-bottom:1px solid var(--design-line);font-size:1.08rem}.ops-dark{background:var(--design-rail);color:white}.ops-dark .ops-kicker{color:rgba(255,255,255,.55)}.ops-checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;margin:3rem 0 0;padding:0;list-style:none;border-top:1px solid rgba(255,255,255,.22)}.ops-checks li{padding:1rem 0;border-bottom:1px solid rgba(255,255,255,.22)}@media(max-width:850px){.ops-intro,.ops-grid,.ops-grid-four,.ops-checks{grid-template-columns:1fr}.ops-intro{gap:2rem}.ops-card{min-height:0}}
+</style>
