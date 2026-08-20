@@ -1,6 +1,6 @@
 {
   "id":"GSIL.VALIDATORS",
-  "version":"1.0.0",
+  "version":"1.1.0",
   "universal":[
     {"id":"Q1","test":"actual_problem_or_decision_understood","required":true},
     {"id":"Q2","test":"correct_doctrine_retrieved","required":true},
@@ -25,6 +25,16 @@
     {"id":"S6","test":"visual_rules_match_design_communication_module"},
     {"id":"S7","test":"cta_is_earned_and_singular"},
     {"id":"S8","test":"distribution_action_within_authority"}
+  ],
+  "design_asset":[
+    {"id":"D1","test":"through_flow_v4_is_the_only_pattern_doctrine_used"},
+    {"id":"D2","test":"pattern_behaviour_and_colour_mode_are_explicit"},
+    {"id":"D3","test":"through_flow_geometry_and_clockwise_gap_rules_pass"},
+    {"id":"D4","test":"protected_content_and_photography_safe_areas_pass"},
+    {"id":"D5","test":"prominence_frequency_and_single_instance_rules_pass"},
+    {"id":"D6","test":"stroke_colour_logo_and_small_size_rules_pass"},
+    {"id":"D7","test":"format_specific_crop_and_edge_crossing_rules_pass"},
+    {"id":"D8","test":"motion_ends_as_a_valid_static_frame_and_respects_reduced_motion","required_when":"motion_present"}
   ],
   "completion_rule":"All applicable required validators must PASS. Failed validators trigger autonomous remediation unless remediation crosses ESCALATE or RESERVED."
 }

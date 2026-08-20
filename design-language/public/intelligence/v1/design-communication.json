@@ -1,46 +1,298 @@
 {
   "id": "GSIL.DESIGN_COMMUNICATION",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "authority_rank": 7,
-  "inheritance": ["GSIL.ROOT_AGENT_CONTRACT","GSIL.AUTHORITY_MODEL","GSIL.JUDGMENT_OS","GSIL.KNOWLEDGE"],
+  "inheritance": ["GSIL.ROOT_AGENT_CONTRACT", "GSIL.AUTHORITY_MODEL", "GSIL.JUDGMENT_OS", "GSIL.KNOWLEDGE"],
   "design_system": {
     "invariants": {
-      "brand_character": ["institutional","calm","direct","faceless","precise","restrained"],
-      "core_geometry": "Rectilinear and square. Use the GreenSquare mark or aperture only when it structures the argument.",
-      "palette": {"forest":"#133F26","deep_forest":"#0B2313","ink":"#12140F","rail":"#10110F","white":"#FFFFFF","ground":"#F5F5F5","muted":"#63645C","line":"#DEDAD2","eucalyptus":"#3F6F5A","blue_green":"#315F69","slate":"#56666F","sage":"#70877A","mineral_mid":"#AAB7AE","mineral_pale":"#D8DDD8"},
-      "typography": {"display":"Space Grotesk 600","body_ui":"IBM Plex Sans 400-700","brand_wordmark":"Manrope 600","mono":"literal code or GitHub content only"},
+      "brand_character": ["institutional", "clear", "direct", "faceless", "precise", "restrained", "editorial", "assured"],
+      "brand_balance": {
+        "established_professional_authority": 0.6,
+        "future_defining_ai_company": 0.4
+      },
+      "aesthetic_test": "Create elegance and a premium impression through proportion, negative space, typography, precision and restraint. The brand device must support the content before it attracts attention to itself.",
+      "reference_principles": {
+        "the_economist": "editorial hierarchy and confidence",
+        "ibm": "system clarity and disciplined application",
+        "stripe": "digital craft and controlled motion",
+        "bcg": "structured professional modernity",
+        "guardrail": "Use references as quality principles, never as visual templates. McKinsey is a consistency benchmark only, not a formal reference."
+      },
+      "core_geometry": "Rectilinear and square. Use the GreenSquare mark, aperture or Through-flow system only when it structures the argument or composition.",
+      "palette": {
+        "forest": "#133F26",
+        "deep_forest": "#0B2313",
+        "ink": "#12140F",
+        "rail": "#10110F",
+        "white": "#FFFFFF",
+        "ground": "#F5F5F5",
+        "muted": "#63645C",
+        "line": "#DEDAD2",
+        "soft_ink": "#B8B5AA",
+        "mist": "#C9D8CD",
+        "through_green": "#24553B",
+        "through_green_dark": "#5EA983",
+        "lime": "#DFF49F",
+        "eucalyptus": "#3F6F5A",
+        "blue_green": "#315F69",
+        "slate": "#56666F",
+        "sage": "#70877A",
+        "mineral_mid": "#AAB7AE",
+        "mineral_pale": "#D8DDD8"
+      },
+      "typography": {
+        "display": "Space Grotesk 600",
+        "body_ui": "IBM Plex Sans 400-700",
+        "brand_wordmark": "Manrope 600",
+        "mono": "literal code or GitHub content only"
+      },
       "semantic_rules": [
         "Evidence state must be written; colour or icons cannot substitute.",
         "Create hierarchy with field changes and rules before shadow.",
         "Align records and decisions to visible horizontal and vertical axes.",
         "Essential meaning must survive without colour, sound, motion or pointer interaction."
       ],
-      "prohibitions": ["warm_off_white","status_icons_for_evidence","yellow_amber_orange_red_pink_neon_rainbow_chart_palettes","tilted_artefacts","soft_decorative_cards","AI_avatars","synthetic_voice","decorative_technical_theatre"]
+      "prohibitions": [
+        "warm_off_white",
+        "status_icons_for_evidence",
+        "yellow_amber_orange_red_pink_neon_rainbow_chart_palettes",
+        "tilted_artefacts",
+        "soft_decorative_cards",
+        "AI_avatars",
+        "synthetic_voice",
+        "decorative_technical_theatre"
+      ]
+    },
+    "pattern_system": {
+      "id": "GSIL.DESIGN.THROUGH_FLOW_V4",
+      "canonical_name": "Through-flow",
+      "canonical_version": "V4",
+      "approval_state": "founder_approved_for_implementation",
+      "role": "A secondary structural signature that makes GreenSquare recognisable across web, social, presentations, reports and motion without competing with the material.",
+      "lineage": {
+        "supersedes": ["V2 Open square", "V3 Emphasis colour and frequency", "Resolution field", "Convergence", "Raster"],
+        "legacy_rule": "Earlier pattern explorations are historical references only. Do not combine their geometry with V4 or infer doctrine from them."
+      },
+      "construction": {
+        "module": "S is the side of the implied square.",
+        "grid": "Every coordinate sits on an S/4 grid.",
+        "stroke_character": "Equal-weight rectilinear hairlines; each path makes at most one 90-degree turn.",
+        "bounding_paths": "In the full Passage expression, four neutral paths establish the implied square without closing it. Each passes one corner and preserves an S/4 gap before the next; gaps rotate clockwise.",
+        "continuing_path": "Exactly one accent path crosses the implied square on its centreline, enters from beyond one frame edge and continues beyond another frame edge.",
+        "through_flow_rules": [
+          "Paths originate beyond the frame and continue past another edge.",
+          "No path terminates inward toward a corner.",
+          "Internal endpoints are rare and staggered.",
+          "The square remains implied and never becomes a closed box.",
+          "In portrait and A4 formats, at least two paths cross different page edges.",
+          "Never create a three-sided enclosure in a corner.",
+          "The open side faces the largest area of negative space."
+        ]
+      },
+      "behaviours": {
+        "passage": {
+          "prominence": "signature",
+          "definition": "The complete expression: the continuing path enters, crosses the implied square and exits another edge.",
+          "use_for": ["website_hero_or_final_cta", "campaign_opener", "presentation_cover", "presentation_closing", "report_cover", "major_social_opener"],
+          "avoid_for": ["routine_content", "dense_information", "adjacent_sections"]
+        },
+        "open_corner": {
+          "prominence": "ambient",
+          "definition": "A tight crop with substantial negative space that remains visibly connected beyond the frame.",
+          "use_for": ["website_content_section", "report_interior", "presentation_content_slide_when_needed", "routine_social"],
+          "avoid_for": ["hero_when_passage_is_available", "corner_enclosure", "decoration_behind_content"]
+        },
+        "horizon": {
+          "prominence": "transitional",
+          "definition": "One extended path leads while restrained geometry hints at the open square.",
+          "use_for": ["website_transition", "article_header", "presentation_divider", "report_section_opener", "linkedin_banner"],
+          "avoid_for": ["dense_body_copy", "repeated_rule_on_every_section"]
+        }
+      },
+      "selection_order": [
+        "Determine the content hierarchy and protected content area before selecting a pattern behaviour.",
+        "Choose Passage only for a true opening, closing or major campaign moment.",
+        "Choose Horizon for transitions and dividers.",
+        "Choose Open Corner only when an ambient structural cue materially improves the composition.",
+        "Use no pattern when the content is already dense or the pattern would narrow the content field."
+      ],
+      "prominence_and_frequency": {
+        "ambient": "Soft ink, tight crop and no more than 20 percent visual presence. It should be noticed after the content.",
+        "signature": "Fuller geometry and slightly greater contrast, while remaining secondary to the title.",
+        "long_web_page": "Use one Passage signature and at most two ambient instances; never place instances in adjacent sections. The signature may appear in the hero or final CTA, not both.",
+        "presentation_deck": "Use Passage on the cover and closing, Horizon on dividers, and keep content slides mostly clean. If Open Corner is used on a content slide, it remains ambient.",
+        "single_frame": "Never use more than one pattern instance in a frame."
+      },
+      "content_safety": {
+        "protected_elements": ["headline", "paragraph", "logo", "call_to_action", "chart", "table", "data", "photography"],
+        "rules": [
+          "The pattern never crosses, touches or sits behind a protected element.",
+          "Text columns are never narrowed to accommodate the pattern.",
+          "Numbers and labels may sit in the implied square's negative space but never on a line.",
+          "Photography and pattern occupy separate, clearly defined areas; the pattern never enters or overlays photography.",
+          "If safe separation is not possible, omit the pattern."
+        ]
+      },
+      "stroke_specification": {
+        "web": "1.5px at 1x; never below 1.25px.",
+        "presentations": "2px on a 1920px-wide master.",
+        "print": "0.75pt with a 0.5pt floor.",
+        "consistency": "Line weight is constant within one instance and never varies for emphasis."
+      },
+      "colour_logic": {
+        "global_rules": [
+          "Use no more than three colours in one composition, including the ground.",
+          "The continuing path carries the only accent colour.",
+          "Never use more than one green or lime accent element in the pattern.",
+          "Use lime rarely for high-value campaign or identity moments, never as a routine attention device."
+        ],
+        "modes": {
+          "paper": {
+            "grounds": ["#FFFFFF", "#F5F5F5"],
+            "text": "#12140F",
+            "neutral_signature": "#12140F",
+            "neutral_ambient": "#B8B5AA",
+            "continuing_path": "#24553B",
+            "default_use": "reports, web content, LinkedIn and presentation interiors"
+          },
+          "forest": {
+            "grounds": ["#133F26", "#0B2313"],
+            "text": "#FFFFFF",
+            "neutral_paths": "#C9D8CD",
+            "continuing_path": "#5EA983",
+            "default_use": "signature covers, campaign openers and premium dark sections"
+          },
+          "ink": {
+            "ground": "#12140F",
+            "text": "#FFFFFF",
+            "neutral_paths": "#C9D8CD",
+            "continuing_path": "#5EA983",
+            "optional_rare_accent": "#DFF49F",
+            "default_use": "high-contrast social, closing frames and selected presentation moments"
+          },
+          "sage": {
+            "ground": "#D8DDD8",
+            "text": "#12140F",
+            "neutral_paths": "#12140F",
+            "continuing_path": "#24553B",
+            "default_use": "quiet editorial variation, section openers and ambient social"
+          },
+          "lime_accent": {
+            "ground": "#DFF49F",
+            "text": "#12140F",
+            "neutral_paths": "#12140F",
+            "continuing_path": "#133F26",
+            "frequency": "rare",
+            "default_use": "major campaign accent or isolated identity moment only"
+          }
+        }
+      },
+      "logo_coordination": {
+        "asset_rule": "Use the supplied SVG asset that matches the ground. Never redraw, trace, distort, recolour individual parts or merge the logo with the pattern.",
+        "clear_space": "Clear space around the logo equals S, the side of the implied square.",
+        "small_size_rule": "Below 48px, use the logo mark alone and omit the pattern.",
+        "assets": {
+          "light_ground_primary": "/assets/logo-lockup-light.svg",
+          "light_ground_single_colour": "/assets/logo-lockup-ink.svg",
+          "forest_ground": "/assets/logo-lockup-forest.svg",
+          "ink_ground": "/assets/logo-lockup-primary.svg",
+          "mark_forest": "/assets/logo-mark-forest.svg",
+          "mark_lime": "/assets/logo-mark-lime.svg",
+          "mark_white": "/assets/logo-mark-white.svg"
+        }
+      },
+      "responsive_and_crop": {
+        "recognition_minimum": "Keep at least one corner, one passing line and one S/4 gap.",
+        "expansion_rule": "Every crop must imply expansion beyond the frame; never shrink a landscape construction into a closed portrait corner.",
+        "orientation": "Rotations in 90-degree steps are permitted. Mirroring is prohibited so the gaps always rotate clockwise.",
+        "portrait_rule": "Recompose from the grammar for the portrait frame; do not scale or squeeze a landscape instance.",
+        "safe_area_rule": "Resolve platform and format safe areas before positioning the geometry."
+      },
+      "motion": {
+        "principle": "Motion reveals the same static composition; it never becomes a separate effect.",
+        "web": {
+          "duration": "1.4s to 2.0s; reference timing 1.7s",
+          "sequence": ["neutral paths enter from their own frame edges", "the implied square establishes", "the continuing path enters last", "the composition settles"],
+          "easing": "controlled ease-out",
+          "playback": "once on load or viewport entry",
+          "content_rule": "Motion never delays content."
+        },
+        "social": {
+          "duration": "3s to 4s",
+          "sequence": ["logo mark", "neutral geometry", "continuing path", "headline"],
+          "end_state": "Hold on a fully resolved static composition."
+        },
+        "accessibility": "Respect reduced-motion preferences by showing the final static frame immediately.",
+        "prohibitions": ["looping_on_content_pages", "loading_indicator_draw", "bounce", "elastic_easing", "pulsing", "glow", "three_dimensional_motion"]
+      },
+      "channel_application": {
+        "website": {
+          "hero": "Passage or no pattern; preserve the primary text field.",
+          "content": "Open Corner at ambient prominence only when it improves structure.",
+          "transition": "Horizon.",
+          "final_cta": "Passage only when the hero did not use Passage."
+        },
+        "social": {
+          "supported_ratios": ["1:1", "4:5", "9:16", "channel_banner"],
+          "opener": "Passage for a major series or campaign; otherwise use Open Corner.",
+          "interior_carousel": "Predominantly clean; use Open Corner sparingly and never on every slide.",
+          "video": "Use the social motion sequence, protect platform UI areas and hold on a static end frame.",
+          "linkedin_banner": "Horizon with full logo clear space."
+        },
+        "presentations": {
+          "cover": "Passage.",
+          "divider": "Horizon; part numbers sit in negative space and never on a line.",
+          "content": "Mostly pattern-free; optional ambient Open Corner only when it supports hierarchy.",
+          "closing": "Passage using a different crop from the cover, never a mirrored copy."
+        },
+        "a4_publishing": {
+          "cover": "Portrait Passage with paths crossing all four page edges; the open side faces the title's negative space.",
+          "section_opener": "Horizon with numbers in negative space.",
+          "interior": "Mostly clean; optional ambient Open Corner in a separate field from body content or photography.",
+          "prohibition": "Never collect the lines into a bottom-right enclosure."
+        }
+      },
+      "prohibitions": [
+        "closed_square",
+        "three_sided_corner_enclosure",
+        "pattern_over_or_inside_photography",
+        "pattern_behind_text_logo_cta_chart_table_or_data",
+        "gradients",
+        "glows",
+        "particles",
+        "three_dimensional_effects",
+        "procedural_texture",
+        "tiling",
+        "multiple_instances_in_one_frame",
+        "mirroring",
+        "decoration_without_structural_role",
+        "generic_ai_visual_language"
+      ]
     },
     "contextual_rules": {
-      "web_report_interface":"Use persistent structure, strict grids, inspectable working fields and explicit decision/evidence notation.",
-      "social":"Use native 1:1, 4:5 or 9:16 compositions; preserve source and decision logic; one visual task per frame or slide.",
-      "charts":"Direct labels preferred; Forest focal series; institutional cool comparison palette; pair colour with labels, position, line style or values.",
-      "presentations":"Use short titles, decision-led narrative and exhibits that reduce senior decision effort. Never use styling to hide weak logic."
+      "web_report_interface": "Use persistent structure, strict grids, inspectable working fields and explicit decision/evidence notation.",
+      "social": "Use native 1:1, 4:5 or 9:16 compositions; preserve source and decision logic; one visual task per frame or slide.",
+      "charts": "Direct labels preferred; Forest focal series; institutional cool comparison palette; pair colour with labels, position, line style or values.",
+      "presentations": "Use short titles, decision-led narrative and exhibits that reduce senior decision effort. Never use styling to hide weak logic."
     },
     "component_specs": {
-      "navigation":"Black rail, white brand text, quiet group labels, one forest current state, keyboard operable.",
-      "buttons":"Square document-like controls, white/forest or forest/white, explicit focus.",
-      "evidence_ledger":"Written state label plus concise evidence text plus source or derivation when material.",
-      "tables":"Strict axes, aligned columns, one-pixel rules, responsive labelled rows.",
-      "social_frame":"Identity or series plus governing argument or proof plus source-owner-sequence metadata."
+      "navigation": "Black rail, white brand text, quiet group labels, one forest current state, keyboard operable.",
+      "buttons": "Square document-like controls, white/forest or forest/white, explicit focus.",
+      "evidence_ledger": "Written state label plus concise evidence text plus source or derivation when material.",
+      "tables": "Strict axes, aligned columns, one-pixel rules, responsive labelled rows.",
+      "social_frame": "Identity or series plus governing argument or proof plus source-owner-sequence metadata. Resolve the Through-flow behaviour, colour mode and protected content area before rendering."
     },
     "examples_are_non_doctrinal": true
   },
   "communication_system": {
-    "voice": ["calm","precise","useful","direct","non_hyped"],
+    "voice": ["clear", "precise", "useful", "direct", "non_hyped"],
     "rules": [
       "Lead with the decision or useful distinction, not performance theatre.",
       "State claims at the level supported by evidence.",
       "Do not use false certainty or invented specificity.",
       "Make options and trade-offs explicit when consequential.",
       "Prefer concise professional Australian English for internal system output unless channel or audience requires another variant.",
-      "Avoid generic AI clichés and consulting stiffness."
+      "Avoid generic AI cliches and consulting stiffness."
     ]
   }
 }
