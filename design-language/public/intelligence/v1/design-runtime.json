@@ -1,6 +1,6 @@
 {
   "id": "GSIL.DESIGN_RUNTIME",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "status": "candidate_runtime",
   "role": "Executable instantiation layer for canonical GreenSquare design doctrine.",
   "doctrine_authority": false,
@@ -14,13 +14,14 @@
     "implementation_root": "/runtime/",
     "renderer": "design-language/runtime/render.mjs",
     "carousel_orchestrator": "design-language/runtime/carousel.mjs",
+    "content_components": "design-language/runtime/components.mjs",
     "through_flow_generator": "design-language/runtime/through-flow.mjs",
     "tokens": "design-language/runtime/tokens.mjs",
     "qa": "design-language/runtime/qa.mjs",
     "build_validation": "design-language/runtime/validate.mjs"
   },
   "supported_formats": {
-    "instagram_4x5": {"width":1080,"height":1350,"status":"implemented_and_proven_for_single_frame_and_carousel"},
+    "instagram_4x5": {"width":1080,"height":1350,"status":"implemented_and_proven_for_single_frame_carousel_and_content_components"},
     "linkedin_square": {"width":1200,"height":1200,"status":"tokenised_not_yet_proven"}
   },
   "supported_components": [
@@ -32,8 +33,22 @@
     "source_metadata",
     "evidence_state",
     "rule",
-    "through_flow"
+    "through_flow",
+    "evidence_ledger",
+    "options_comparison",
+    "assumption_risk",
+    "recommendation",
+    "bar_exhibit"
   ],
+  "content_native_components": {
+    "status": "implemented",
+    "evidence_ledger": "Requires one or more records using only GIVEN, DERIVED, INFERRED or UNKNOWN.",
+    "options_comparison": "Requires at least two options, each with an explicit trade-off.",
+    "assumption_risk": "Requires a critical assumption, downside if wrong and reversal signal.",
+    "recommendation": "Requires recommendation, rationale, owner and next action.",
+    "bar_exhibit": "Simple directly-labelled comparative exhibit with at least two numeric observations.",
+    "validation_rule": "Malformed decision content fails the build; renderer must not beautify incomplete logic."
+  },
   "carousel_orchestration": {
     "status": "implemented",
     "slide_count": {"minimum":5,"maximum":8},
@@ -54,5 +69,6 @@
   "first_proving_specimen": "/intelligence/v1/specimens/design-runtime/decision-frame-carousel-opener.svg",
   "first_proving_specimen_qa": "/intelligence/v1/specimens/design-runtime/decision-frame-carousel-opener.qa.json",
   "first_carousel_specimen_manifest": "/intelligence/v1/specimens/design-runtime/decision-frame-carousel.manifest.json",
+  "content_component_specimen_manifest": "/intelligence/v1/specimens/design-runtime/content-components.manifest.json",
   "promotion_rule": "Runtime defaults become canonical doctrine only through the RESERVED doctrine-promotion process."
 }
