@@ -1,0 +1,25 @@
+{
+  "id": "GSIL.AUDIT",
+  "version": "1.0.0",
+  "scope": "Current GreenSquare design-language and operating-system implementation on agent/greensquare-operating-system-v1-1",
+  "classifications": [
+    {"component":"Judgment OS content","paths":["/judgment-os/"],"classification":"RESTRUCTURE","reason":"Strong doctrine, but canonical logic was embedded in a rendered page rather than a machine-addressable authority layer.","canonical_destination":"/intelligence/v1/judgment-os.json"},
+    {"component":"Knowledge Base page","paths":["/knowledge-base/"],"classification":"REWRITE","reason":"Useful source-hierarchy concept, but too prose-led and incomplete for deterministic retrieval.","canonical_destination":"/intelligence/v1/manifest.json and /intelligence/v1/knowledge.json"},
+    {"component":"Social System","paths":["/social/","/assets/social/"],"classification":"KEEP","reason":"Strong application and production intelligence. Retained as execution doctrine, templates and examples, subordinated to higher-authority modules."},
+    {"component":"Weekly social content brief schema","paths":["/assets/social/weekly-content-brief.schema.json"],"classification":"RESTRUCTURE","reason":"Useful deterministic schema, but its confirmed/assumption/uncertainty/material-risk taxonomy conflicts with the canonical Judgment OS evidence taxonomy.","action":"Retain as legacy production schema until mapped to GIVEN/DERIVED/INFERRED/UNKNOWN."},
+    {"component":"Content Engine page","paths":["/content-engine/"],"classification":"RESTRUCTURE","reason":"Useful workflow, moved into execution.json so agents can retrieve it without page parsing."},
+    {"component":"Launch System page","paths":["/launch-system/"],"classification":"RESTRUCTURE","reason":"Useful dependency and readiness logic, moved into execution.json."},
+    {"component":"PRODUCT.md","paths":["/PRODUCT.md"],"classification":"DEMOTE","reason":"Strong product context but previously carried ambiguous canonical authority. Retained as supporting material; canonical facts now live in knowledge.json."},
+    {"component":"DESIGN.md","paths":["/DESIGN.md"],"classification":"RESTRUCTURE","reason":"Strong design intelligence. Invariant, contextual and component rules moved into machine-readable design-communication.json; markdown remains supporting context."},
+    {"component":"Identity, typography, iconography, grammar, data graphics, interface and application pages","paths":["/identity/","/typography/","/iconography/","/grammar/","/data-graphics/","/interface/","/applications/"],"classification":"DEMOTE","reason":"Valuable inspection and application references, but pages must not silently carry doctrinal authority."},
+    {"component":"Governance and audit pages","paths":["/governance/","/audit/"],"classification":"RESTRUCTURE","reason":"Governance concepts retained, but doctrine promotion and quality validation now governed by core.json."},
+    {"component":"Benchmark and preregistration evidence","paths":["/benchmark/","/evidence/"],"classification":"KEEP","reason":"Claim-specific evidence remains valuable and is explicitly separated from doctrine."},
+    {"component":"Decision Frame public surface","paths":["/decision-frame/"],"classification":"KEEP","reason":"Primary public entry product. Product role and minimum contract are registered canonically in knowledge.json."},
+    {"component":"Legacy directory","paths":["/legacy/"],"classification":"DEMOTE","reason":"Historical artefacts retained for traceability only, with zero doctrinal authority."},
+    {"component":"Rendered design-language site as a whole","paths":["/"],"classification":"DEMOTE","reason":"Useful for inspection/debugging and examples, but no longer the canonical consumption model."},
+    {"component":"Duplicate human-oriented operating pages","paths":["/judgment-os/","/knowledge-base/","/content-engine/","/launch-system/"],"classification":"DEMOTE","reason":"Preserved to avoid destructive churn, but canonical doctrine is now the Intelligence Layer JSON. Future cleanup may replace these with generated inspection views."}
+  ],
+  "delete_now": [],
+  "delete_policy": "Do not delete evidence or historical material solely to simplify the tree. Delete only when duplication creates retrieval ambiguity after canonical routing is proven.",
+  "material_gap_remaining": "Legacy weekly social brief evidence labels require migration to the canonical four-state evidence model."
+}

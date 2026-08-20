@@ -1,0 +1,53 @@
+{
+  "id": "GSIL.EXECUTION",
+  "version": "1.0.0",
+  "authority_rank": 6,
+  "inheritance": ["GSIL.ROOT_AGENT_CONTRACT","GSIL.AUTHORITY_MODEL","GSIL.JUDGMENT_OS","GSIL.KNOWLEDGE","GSIL.PRODUCT"],
+  "social_system": {
+    "id": "GSIL.EXECUTION.SOCIAL",
+    "objective": "Build authority around better judgment and convert relevant readers into Decision Frame users without weakening evidence discipline.",
+    "pipeline": ["source_evidence","insight","judgment","content_thesis","format","greensquare_asset","qa","distribution"],
+    "pillars": [
+      {"id":"P1","name":"Frame the real decision"},
+      {"id":"P2","name":"Widen the option set"},
+      {"id":"P3","name":"Find the critical assumption"},
+      {"id":"P4","name":"Separate evidence from belief"},
+      {"id":"P5","name":"Compare what matters"},
+      {"id":"P6","name":"Move to action"}
+    ],
+    "channel_roles": {
+      "linkedin":"explain logic and professional consequence",
+      "instagram":"make one method memorable visually",
+      "tiktok_reels":"demonstrate the method without presenter dependency",
+      "x":"sharpen a single decision insight",
+      "reddit":"participate usefully where context and evidence matter",
+      "github":"substantive proof, methods and reusable artefacts only"
+    },
+    "non_negotiables": [
+      "Adapt format by channel without changing underlying judgment.",
+      "Preserve source, recommendation owner and reversal condition through derivatives when consequential.",
+      "No generic AI language, hype or invented precision.",
+      "Essential video meaning cannot depend on sound.",
+      "No presenters, faces, personal-brand posting, AI avatars or synthetic voice under current brand doctrine.",
+      "GitHub activity must be substantive."
+    ]
+  },
+  "content_engine": {
+    "id": "GSIL.EXECUTION.CONTENT",
+    "input_contract": ["source_principle","target_audience","decision_tension","channel","desired_action","evidence_available","cta_if_any"],
+    "pipeline": ["select_one_judgment_principle","translate_to_recognisable_operator_tension","reframe_as_decision_problem","give_one_usable_method","show_decision_consequence","adapt_to_channel","apply_evidence_discipline","apply_conversion_only_when_earned","run_quality_gate"],
+    "learning_rule": "Performance data may improve hooks, examples and formats. It must not rewrite doctrine merely to chase engagement."
+  },
+  "launch_system": {
+    "id": "GSIL.EXECUTION.LAUNCH",
+    "dependency_order": ["Judgment_OS","Knowledge_Base","Social_System","Content_Engine","Launch"],
+    "first_campaign": "Decision Frame extracts and methods driving sign-ups to the free Decision Frame.",
+    "readiness_checks": ["conversion_path_works","claims_are_evidenced","analytics_ready","first_two_weeks_content_prepared","channel_assets_qa_pass","ownership_and_schedule_clear"],
+    "initial_month_themes": ["frame_real_decision","widen_option_set","find_critical_assumption","separate_evidence_and_move_to_action"]
+  },
+  "templates": {
+    "weekly_source_brief": {"existing_schema":"/assets/social/weekly-content-brief.schema.json","status":"RESTRUCTURE","rule":"Use as production input after mapping its legacy evidence labels to canonical GIVEN/DERIVED/INFERRED/UNKNOWN."},
+    "social_export_qa": {"existing":"/assets/social/social-export-qa.md","status":"KEEP_AS_TEMPLATE"},
+    "four_week_pilot": {"existing":"/assets/social/four-week-pilot.md","status":"DEMOTE_TO_EXAMPLE"}
+  }
+}

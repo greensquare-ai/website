@@ -1,0 +1,41 @@
+{
+  "id": "GSIL.MANIFEST",
+  "name": "GreenSquare Intelligence Layer",
+  "version": "1.0.0",
+  "effective_date": "2026-08-20",
+  "status": "candidate_canonical",
+  "purpose": "Canonical machine-operable source of truth and execution doctrine for AI agents acting for GreenSquare.",
+  "primary_consumer": "AI agents and LLMs",
+  "human_rendering_priority": "secondary",
+  "bootstrap": "/.well-known/greensquare-intelligence.json",
+  "authority_precedence": [
+    "GSIL.ROOT_AGENT_CONTRACT",
+    "GSIL.AUTHORITY_MODEL",
+    "GSIL.JUDGMENT_OS",
+    "GSIL.KNOWLEDGE",
+    "GSIL.PRODUCT",
+    "GSIL.EXECUTION",
+    "GSIL.DESIGN_COMMUNICATION",
+    "GSIL.TEMPLATES",
+    "GSIL.EXAMPLES"
+  ],
+  "conflict_rule": "Higher-authority canonical modules override lower-authority material. Examples are application evidence, never doctrine.",
+  "evidence_states": ["GIVEN", "DERIVED", "INFERRED", "UNKNOWN"],
+  "modules": [
+    {"id":"GSIL.ROOT_AGENT_CONTRACT","authority_rank":1,"file":"/intelligence/v1/core.json","pointer":"/root_agent_contract","required_for":["all_tasks"]},
+    {"id":"GSIL.AUTHORITY_MODEL","authority_rank":2,"file":"/intelligence/v1/core.json","pointer":"/authority_model","required_for":["all_tasks"]},
+    {"id":"GSIL.JUDGMENT_OS","authority_rank":3,"file":"/intelligence/v1/judgment-os.json","pointer":"","required_for":["reasoning","decision","analysis","recommendation","strategy"]},
+    {"id":"GSIL.KNOWLEDGE","authority_rank":4,"file":"/intelligence/v1/knowledge.json","pointer":"/knowledge_base","required_for":["all_green_square_tasks"]},
+    {"id":"GSIL.PRODUCT","authority_rank":5,"file":"/intelligence/v1/knowledge.json","pointer":"/product","required_for":["product","methodology","decision_frame","marketing_claims"]},
+    {"id":"GSIL.EXECUTION","authority_rank":6,"file":"/intelligence/v1/execution.json","pointer":"","required_for":["social","content","launch","distribution"]},
+    {"id":"GSIL.DESIGN_COMMUNICATION","authority_rank":7,"file":"/intelligence/v1/design-communication.json","pointer":"","required_for":["write","design","web","report","chart","presentation","social_asset","interface"]},
+    {"id":"GSIL.TEMPLATES","authority_rank":8,"file":"/intelligence/v1/execution.json","pointer":"/templates","required_for":["repeatable_outputs"]},
+    {"id":"GSIL.EXAMPLES","authority_rank":9,"file":"/intelligence/v1/knowledge.json","pointer":"/examples_registry","required_for":["reference_only"]}
+  ],
+  "routing": "/intelligence/v1/router.json",
+  "validation": "/intelligence/v1/core.json#/quality_gates",
+  "continuous_improvement": "/intelligence/v1/core.json#/learning_governance",
+  "audit": "/intelligence/v1/audit.json",
+  "schema": "/intelligence/v1/schema.json",
+  "rendered_inspection": "/intelligence/"
+}

@@ -1,0 +1,24 @@
+{
+  "id": "GSIL.ROUTER",
+  "version": "1.0.0",
+  "bootstrap_sequence": ["GSIL.ROOT_AGENT_CONTRACT","GSIL.AUTHORITY_MODEL"],
+  "algorithm": ["classify_task","determine_consequence_and_authority_class","retrieve_required_modules","retrieve_task_specific_knowledge","retrieve_output_specification","execute_under_judgment_os","validate_against_quality_gates","record_learning_without_mutating_doctrine"],
+  "task_routes": {
+    "strategy_decision": {"required":["GSIL.JUDGMENT_OS","GSIL.KNOWLEDGE"],"optional":["GSIL.PRODUCT"],"output":"decision_recommendation"},
+    "product_methodology": {"required":["GSIL.JUDGMENT_OS","GSIL.KNOWLEDGE","GSIL.PRODUCT"],"output":"product_or_method_spec"},
+    "marketing_copy": {"required":["GSIL.KNOWLEDGE","GSIL.PRODUCT","GSIL.DESIGN_COMMUNICATION"],"conditional":["GSIL.JUDGMENT_OS"],"output":"communication_asset"},
+    "social_content": {"required":["GSIL.JUDGMENT_OS","GSIL.KNOWLEDGE","GSIL.PRODUCT","GSIL.EXECUTION","GSIL.DESIGN_COMMUNICATION"],"output":"channel_native_asset"},
+    "design_asset": {"required":["GSIL.KNOWLEDGE","GSIL.DESIGN_COMMUNICATION"],"conditional":["GSIL.PRODUCT","GSIL.EXECUTION"],"output":"design_spec_or_asset"},
+    "web_build": {"required":["GSIL.KNOWLEDGE","GSIL.DESIGN_COMMUNICATION"],"conditional":["GSIL.PRODUCT","GSIL.EXECUTION"],"output":"implemented_surface"},
+    "analysis_research": {"required":["GSIL.JUDGMENT_OS","GSIL.KNOWLEDGE"],"output":"evidence_backed_analysis"},
+    "launch_distribution": {"required":["GSIL.JUDGMENT_OS","GSIL.KNOWLEDGE","GSIL.PRODUCT","GSIL.EXECUTION","GSIL.DESIGN_COMMUNICATION"],"output":"launch_action"},
+    "example_lookup": {"required":["GSIL.KNOWLEDGE"],"restriction":"examples_do_not_override_doctrine"}
+  },
+  "authority_resolution": {
+    "low_consequence_reversible_doctrine_complete":"AUTONOMOUS",
+    "reasonable_judgment_material_inference_but_not_reserved":"AUTONOMOUS_WITH_DISCLOSURE",
+    "material_strategy_positioning_economics_architecture_evidence_or_commitment_ambiguity":"ESCALATE",
+    "core_doctrine_strategic_commitment_risk_appetite_canonical_fact_founder_reserved":"RESERVED"
+  },
+  "unknown_task_rule": "Retrieve GSIL.KNOWLEDGE plus the narrowest plausible domain module. Do not ingest the entire repository by default."
+}

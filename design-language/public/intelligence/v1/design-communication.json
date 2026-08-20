@@ -1,0 +1,46 @@
+{
+  "id": "GSIL.DESIGN_COMMUNICATION",
+  "version": "1.0.0",
+  "authority_rank": 7,
+  "inheritance": ["GSIL.ROOT_AGENT_CONTRACT","GSIL.AUTHORITY_MODEL","GSIL.JUDGMENT_OS","GSIL.KNOWLEDGE"],
+  "design_system": {
+    "invariants": {
+      "brand_character": ["institutional","calm","direct","faceless","precise","restrained"],
+      "core_geometry": "Rectilinear and square. Use the GreenSquare mark or aperture only when it structures the argument.",
+      "palette": {"forest":"#133F26","deep_forest":"#0B2313","ink":"#12140F","rail":"#10110F","white":"#FFFFFF","ground":"#F5F5F5","muted":"#63645C","line":"#DEDAD2","eucalyptus":"#3F6F5A","blue_green":"#315F69","slate":"#56666F","sage":"#70877A","mineral_mid":"#AAB7AE","mineral_pale":"#D8DDD8"},
+      "typography": {"display":"Space Grotesk 600","body_ui":"IBM Plex Sans 400-700","brand_wordmark":"Manrope 600","mono":"literal code or GitHub content only"},
+      "semantic_rules": [
+        "Evidence state must be written; colour or icons cannot substitute.",
+        "Create hierarchy with field changes and rules before shadow.",
+        "Align records and decisions to visible horizontal and vertical axes.",
+        "Essential meaning must survive without colour, sound, motion or pointer interaction."
+      ],
+      "prohibitions": ["warm_off_white","status_icons_for_evidence","yellow_amber_orange_red_pink_neon_rainbow_chart_palettes","tilted_artefacts","soft_decorative_cards","AI_avatars","synthetic_voice","decorative_technical_theatre"]
+    },
+    "contextual_rules": {
+      "web_report_interface":"Use persistent structure, strict grids, inspectable working fields and explicit decision/evidence notation.",
+      "social":"Use native 1:1, 4:5 or 9:16 compositions; preserve source and decision logic; one visual task per frame or slide.",
+      "charts":"Direct labels preferred; Forest focal series; institutional cool comparison palette; pair colour with labels, position, line style or values.",
+      "presentations":"Use short titles, decision-led narrative and exhibits that reduce senior decision effort. Never use styling to hide weak logic."
+    },
+    "component_specs": {
+      "navigation":"Black rail, white brand text, quiet group labels, one forest current state, keyboard operable.",
+      "buttons":"Square document-like controls, white/forest or forest/white, explicit focus.",
+      "evidence_ledger":"Written state label plus concise evidence text plus source or derivation when material.",
+      "tables":"Strict axes, aligned columns, one-pixel rules, responsive labelled rows.",
+      "social_frame":"Identity or series plus governing argument or proof plus source-owner-sequence metadata."
+    },
+    "examples_are_non_doctrinal": true
+  },
+  "communication_system": {
+    "voice": ["calm","precise","useful","direct","non_hyped"],
+    "rules": [
+      "Lead with the decision or useful distinction, not performance theatre.",
+      "State claims at the level supported by evidence.",
+      "Do not use false certainty or invented specificity.",
+      "Make options and trade-offs explicit when consequential.",
+      "Prefer concise professional Australian English for internal system output unless channel or audience requires another variant.",
+      "Avoid generic AI clichés and consulting stiffness."
+    ]
+  }
+}

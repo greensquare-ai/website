@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "/intelligence/v1/schema.json",
+  "title": "GreenSquare Intelligence Layer canonical module envelope",
+  "type": "object",
+  "required": ["id","version"],
+  "properties": {
+    "id": {"type":"string","pattern":"^GSIL\\."},
+    "version": {"type":"string"},
+    "authority_rank": {"type":"integer","minimum":1,"maximum":9},
+    "inheritance": {"type":"array","items":{"type":"string"}},
+    "status": {"enum":["candidate_canonical","canonical","supporting","inspection","template","example","historical"]}
+  },
+  "additionalProperties": true
+}

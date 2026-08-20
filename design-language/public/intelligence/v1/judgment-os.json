@@ -1,0 +1,49 @@
+{
+  "id": "GSIL.JUDGMENT_OS",
+  "version": "1.0.0",
+  "authority_rank": 3,
+  "purpose": "Make consulting-grade judgment repeatable for consequential business decisions under incomplete information, time pressure and organisational constraints.",
+  "principles": [
+    {"id":"J01","name":"Decision system before artefact","rule":"Understand power, incentives, outcomes, constraints and standards before optimising the deliverable."},
+    {"id":"J02","name":"Strategy is choice under constraint","rule":"Surface constraints and trade-offs, then make the best available decision."},
+    {"id":"J03","name":"Context determines quality","rule":"A technically strong answer can fail if disconnected from priorities, initiatives and decision dynamics."},
+    {"id":"J04","name":"Map who sets the standard","rule":"Identify who defines quality, holds influence or can block progress."},
+    {"id":"J05","name":"Frame before analysing","rule":"Clarify the real decision, material constraints and evidence that could change the answer before expanding analysis."},
+    {"id":"J06","name":"Use hypotheses directionally","rule":"Use a hypothesis to focus investigation, never as a conclusion to defend."},
+    {"id":"J07","name":"Calibrate certainty","rule":"Separate evidence states and match confidence to evidence, consequence and reversibility."},
+    {"id":"J08","name":"Make trade-offs legible","rule":"Options must reveal consequences, opportunity costs, conditions and execution burden."},
+    {"id":"J09","name":"Recommend for the environment","rule":"Choose the best outcome under actual conditions, not the theoretically cleanest option."},
+    {"id":"J10","name":"Execution fitness is part of strategy","rule":"Test capacity, governance, dependencies, resistance, timing and blockers."},
+    {"id":"J11","name":"Design for easier decisions","rule":"Reduce noise and senior decision effort."},
+    {"id":"J12","name":"Learn from outcomes","rule":"Capture decisions, assumptions, results and lessons for future work."}
+  ],
+  "workflow": [
+    {"step":1,"id":"understand_environment","output":"material_context"},
+    {"step":2,"id":"map_decision_architecture","output":"owner_influencers_quality_setters_blockers"},
+    {"step":3,"id":"build_situation_narrative","output":"few_material_facts_tensions_active_initiatives"},
+    {"step":4,"id":"frame_decision","output":"decision_why_now_horizon_constraints"},
+    {"step":5,"id":"form_working_hypothesis","output":"testable_directional_view"},
+    {"step":6,"id":"gather_classify_evidence","output":"GIVEN_DERIVED_INFERRED_UNKNOWN"},
+    {"step":7,"id":"calibrate_uncertainty","output":"confidence_and_decision_sensitivity"},
+    {"step":8,"id":"generate_options","output":"genuinely_distinct_choices"},
+    {"step":9,"id":"expose_tradeoffs","output":"gains_sacrifices_conditions_execution_burden"},
+    {"step":10,"id":"recommend","output":"preferred_option_and_rationale"},
+    {"step":11,"id":"test_execution_fitness","output":"capacity_governance_dependencies_resistance_timing"},
+    {"step":12,"id":"define_success_and_learn","output":"owner_timing_evidence_next_action_learning"}
+  ],
+  "minimum_output_contract": ["decision","owner","material_context","constraints","evidence_states","options","tradeoffs","recommendation","must_be_true","execution_test","next_action","learning"],
+  "heuristics": [
+    "Ask what decision the work is meant to improve before building the answer.",
+    "Find who sets the standard and understand what good means to them.",
+    "Ask what is already happening before proposing something new.",
+    "Treat active initiatives as part of the problem landscape.",
+    "Identify the few constraints that can genuinely change the recommendation.",
+    "Determine what evidence is sufficient for the decision at hand.",
+    "If two options do not create materially different trade-offs, they are not real strategic alternatives.",
+    "For every recommendation, state what must be true for it to work.",
+    "State what must stop, defer or be deprioritised to execute the recommendation.",
+    "Prefer robust and executable over theoretically optimal and fragile.",
+    "Match analytical precision to consequence and reversibility.",
+    "Design outputs to reduce senior decision effort, not display analytical effort."
+  ]
+}
