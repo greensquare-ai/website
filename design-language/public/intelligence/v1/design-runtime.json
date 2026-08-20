@@ -1,0 +1,40 @@
+{
+  "id": "GSIL.DESIGN_RUNTIME",
+  "version": "1.0.0",
+  "status": "candidate_runtime",
+  "role": "Executable instantiation layer for canonical GreenSquare design doctrine.",
+  "doctrine_authority": false,
+  "governed_by": ["GSIL.DESIGN_COMMUNICATION", "GSIL.AGENT_EXECUTION_HARNESS"],
+  "must_not": [
+    "reinterpret_or_override_design_doctrine",
+    "promote_runtime_defaults_to_doctrine",
+    "use_examples_as_authority"
+  ],
+  "runtime": {
+    "implementation_root": "/runtime/",
+    "renderer": "design-language/runtime/render.mjs",
+    "through_flow_generator": "design-language/runtime/through-flow.mjs",
+    "tokens": "design-language/runtime/tokens.mjs",
+    "qa": "design-language/runtime/qa.mjs",
+    "build_validation": "design-language/runtime/validate.mjs"
+  },
+  "supported_formats": {
+    "instagram_4x5": {"width":1080,"height":1350,"status":"implemented"},
+    "linkedin_square": {"width":1200,"height":1200,"status":"tokenised_not_yet_proven"}
+  },
+  "supported_components": [
+    "frame",
+    "eyebrow",
+    "headline",
+    "body_copy",
+    "source_metadata",
+    "evidence_state",
+    "rule",
+    "through_flow"
+  ],
+  "through_flow_behaviours": ["passage", "horizon", "open_corner", "none"],
+  "composition_schema": "/intelligence/v1/schemas/design-composition.schema.json",
+  "first_proving_specimen": "/intelligence/v1/specimens/design-runtime/decision-frame-carousel-opener.svg",
+  "first_proving_specimen_qa": "/intelligence/v1/specimens/design-runtime/decision-frame-carousel-opener.qa.json",
+  "promotion_rule": "Runtime defaults become canonical doctrine only through the RESERVED doctrine-promotion process."
+}
