@@ -2,6 +2,7 @@
 import { withBase } from '../lib/paths';
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
+import ThroughFlowHero from '../components/ThroughFlowHero.astro';
 ---
 <BaseLayoutV2
   title="GreenSquare AI | Turn capable AI into a disciplined strategy partner"
@@ -29,20 +30,7 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
       </div>
     </div>
     <div class="hero-split__media v-reveal d1">
-      <video
-        class="hero-video"
-        width="1920"
-        height="1080"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="metadata"
-        poster={withBase('/assets/hero-poster.jpg')}
-        src={withBase('/assets/hero-loop.mp4')}
-        aria-hidden="true"
-        disablepictureinpicture
-      ></video>
+      <ThroughFlowHero />
     </div>
   </section>
 
@@ -130,12 +118,12 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
 </BaseLayoutV2>
 
 <style>
-  /* Full-bleed split-screen hero: text left (aligned to page gutter), video right (bleeds to edge). */
+  /* Full-bleed split-screen hero: text left, Through-flow Passage right. */
   .hero-split-section {
     position: relative;
     min-height: clamp(480px, 62vh, 680px);
     display: flex;             /* stretch the container to full band height */
-    overflow: hidden;          /* clip the bleeding video */
+    overflow: hidden;
   }
   .hero-split__grid {
     display: grid;
@@ -158,20 +146,10 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
     left: 50%;                        /* meets the text column's right edge exactly */
     right: 0;                         /* full-bleed to the right viewport edge */
   }
-  .hero-split__media::before {        /* Palantir-style hairline at the split */
-    content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 1px;
-    background: var(--v-line); z-index: 1;
-  }
-  .hero-video {
-    display: block; width: 100%; height: 100%;
-    object-fit: cover; border-radius: 0; box-shadow: none;
-  }
   @media (max-width: 900px) {
     .hero-split-section { min-height: 0; display: block; }
     .hero-split__grid { grid-template-columns: 1fr; }
-    .hero-split__media { position: static; }
-    .hero-split__media::before { display: none; }
-    .hero-video { aspect-ratio: 16 / 9; height: auto; border-top: 2px solid var(--v-ink); }
+    .hero-split__media { position: static; aspect-ratio: 16 / 9; }
   }
   /* On phones the headline plus lead fills the whole first screen, which left visitors
      arriving from a link with nothing to act on. Promote the actions directly under the
@@ -183,6 +161,7 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
     .hero-actions { order: 2; margin-top: var(--v-6); }
     .hero-split__text .v-lead { order: 3; }
     .hero-audience { order: 4; }
+    .hero-split__media { aspect-ratio: 1 / 1; }
   }
   .home-next { padding-block: clamp(4.5rem, 8vw, 6.5rem); }
   .home-next__inner { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(25rem, 1.1fr); gap: clamp(3rem, 8vw, 7rem); align-items: center; }
@@ -195,11 +174,3 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
     .home-next__action { justify-self: start; }
   }
 </style>
-
-<script>
-  const heroVideo = document.querySelector<HTMLVideoElement>('.hero-video');
-  if (heroVideo && matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    heroVideo.pause();
-    heroVideo.removeAttribute('autoplay');
-  }
-</script>
