@@ -20,7 +20,7 @@ function writeCarousel(specimenFile, outputPrefix) {
   for (const slide of rendered) fs.writeFileSync(path.join(outDir, `${outputPrefix}-${String(slide.index).padStart(2,'0')}.svg`), slide.svg);
   fs.writeFileSync(path.join(outDir, `${outputPrefix}.manifest.json`), JSON.stringify({
     runtime:'GSIL.DESIGN_RUNTIME', runtime_version:'1.3.0', doctrine:'GSIL.DESIGN.THROUGH_FLOW_V4', specimen:spec.id, format:spec.format, slide_count:rendered.length,
-    slides: rendered.map(s => ({ index:s.index, id:s.id, role:s.role, component:s.component, component_selection_reason:s.component_selection_reason, file:`${outputPrefix}-${String(s.index).padStart(2,'0')}.svg` })),
+    slides: rendered.map(s => ({ index:s.index, id:s.id, role:s.role, component:s.component, component_selection_reason:s.component_selection_reason, layout_resolution:s.layout_resolution, file:`${outputPrefix}-${String(s.index).padStart(2,'0')}.svg` })),
     qa:{pass:qa.pass,failures:qa.failures}
   }, null, 2));
   return { spec, rendered };
