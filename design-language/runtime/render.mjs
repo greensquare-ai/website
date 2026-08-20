@@ -24,6 +24,7 @@ export function renderComposition(spec) {
     S: spec.pattern.S,
     prominence: spec.pattern.prominence || 'ambient'
   });
+  const cta = spec.content.cta ? `<g><rect x="${safe}" y="${spec.content.cta_y || 1000}" width="420" height="74" fill="${c.text}"/><text x="${safe+28}" y="${(spec.content.cta_y || 1000)+47}" fill="${c.ground}" font-family="${tokens.typography.body}" font-size="${tokens.typography.bodySize}" font-weight="600">${esc(spec.content.cta)}</text></g>` : '';
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${format.width}" height="${format.height}" viewBox="0 0 ${format.width} ${format.height}" role="img" aria-labelledby="title desc">
 <title id="title">${esc(spec.content.headline)}</title><desc id="desc">GreenSquare ${esc(spec.role)} composition generated from GSIL Design Runtime.</desc>
@@ -32,6 +33,7 @@ ${pattern}
 <text x="${safe}" y="${safe+18}" fill="${c.text}" font-family="${tokens.typography.body}" font-size="${tokens.typography.eyebrow}" font-weight="600" letter-spacing="1.2">${esc(spec.content.eyebrow || 'GREENSQUARE')}</text>
 ${textLines(lines,{x:safe,y:spec.content.headline_y || 330,size:tokens.typography.headline,leading:tokens.typography.headlineLeading,family:tokens.typography.display,fill:c.text})}
 ${spec.content.body ? textLines(spec.content.body_lines || [spec.content.body],{x:safe,y:spec.content.body_y || 770,size:tokens.typography.bodySize,leading:tokens.typography.bodyLeading,family:tokens.typography.body,weight:400,fill:c.text}) : ''}
+${cta}
 <line x1="${safe}" y1="${format.height-safe-72}" x2="${format.width-safe}" y2="${format.height-safe-72}" stroke="${c.neutral}" stroke-width="1"/>
 <text x="${safe}" y="${format.height-safe-30}" fill="${c.text}" font-family="${tokens.typography.body}" font-size="${tokens.typography.meta}">${esc(spec.content.source || '')}</text>
 <text x="${format.width-safe}" y="${format.height-safe-30}" text-anchor="end" fill="${c.text}" font-family="${tokens.typography.body}" font-size="${tokens.typography.meta}">${esc(spec.content.source_state || '')}</text>
