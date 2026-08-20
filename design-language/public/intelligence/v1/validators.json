@@ -1,0 +1,30 @@
+{
+  "id":"GSIL.VALIDATORS",
+  "version":"1.0.0",
+  "universal":[
+    {"id":"Q1","test":"actual_problem_or_decision_understood","required":true},
+    {"id":"Q2","test":"correct_doctrine_retrieved","required":true},
+    {"id":"Q3","test":"canonical_facts_distinguished_from_inference","required":true},
+    {"id":"Q4","test":"material_assumptions_visible","required":true},
+    {"id":"Q5","test":"meaningful_tradeoffs_exposed","required_when":"recommendation_or_choice_present"},
+    {"id":"Q6","test":"recommendation_fits_actual_conditions","required_when":"recommendation_present"},
+    {"id":"Q7","test":"execution_fitness_tested","required_when":"execution_or_recommendation_present"},
+    {"id":"Q8","test":"applicable_communication_and_design_spec_complied","required_when":"artefact_created"},
+    {"id":"Q9","test":"agent_authority_not_exceeded","required":true},
+    {"id":"Q10","test":"escalation_only_when_genuinely_required","required":true},
+    {"id":"Q11","test":"next_action_clear","required":true},
+    {"id":"Q12","test":"execution_record_complete","required":true},
+    {"id":"Q13","test":"learning_did_not_mutate_doctrine","required":true}
+  ],
+  "social_production":[
+    {"id":"S1","test":"source_claims_traceable"},
+    {"id":"S2","test":"evidence_states_use_given_derived_inferred_unknown"},
+    {"id":"S3","test":"one_clear_content_thesis"},
+    {"id":"S4","test":"judgment_precedes_format_selection"},
+    {"id":"S5","test":"channel_adaptation_preserves_underlying_judgment"},
+    {"id":"S6","test":"visual_rules_match_design_communication_module"},
+    {"id":"S7","test":"cta_is_earned_and_singular"},
+    {"id":"S8","test":"distribution_action_within_authority"}
+  ],
+  "completion_rule":"All applicable required validators must PASS. Failed validators trigger autonomous remediation unless remediation crosses ESCALATE or RESERVED."
+}

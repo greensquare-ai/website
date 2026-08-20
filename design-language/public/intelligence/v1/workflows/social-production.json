@@ -1,0 +1,44 @@
+{
+  "id":"GSIL.WORKFLOW.SOCIAL_PRODUCTION",
+  "version":"1.0.0",
+  "status":"reference_production_workflow",
+  "purpose":"Prove the harness end to end using a real GreenSquare content workflow.",
+  "input_contract":{
+    "required":["source_or_evidence"],
+    "infer_when_missing":["audience","decision_tension","channel","desired_action","cta"],
+    "escalate_only_if":"missing information could materially change a consequential claim or reserved decision"
+  },
+  "required_modules":[
+    "GSIL.ROOT_AGENT_CONTRACT",
+    "GSIL.AUTHORITY_MODEL",
+    "GSIL.JUDGMENT_OS",
+    "GSIL.KNOWLEDGE",
+    "GSIL.PRODUCT",
+    "GSIL.EXECUTION",
+    "GSIL.DESIGN_COMMUNICATION",
+    "GSIL.AGENT_EXECUTION_HARNESS"
+  ],
+  "pipeline":[
+    {"step":1,"id":"SOURCE","output":"traceable source set with GIVEN/DERIVED/INFERRED/UNKNOWN states"},
+    {"step":2,"id":"INSIGHT","output":"single useful distinction or observation grounded in the source"},
+    {"step":3,"id":"JUDGMENT","output":"GreenSquare interpretation, implication, trade-off or decision principle"},
+    {"step":4,"id":"THESIS","output":"one content thesis that can survive channel adaptation"},
+    {"step":5,"id":"LINKEDIN","output":"120-350 word native post with one complete idea"},
+    {"step":6,"id":"INSTAGRAM","output":"5-8 slide 1080x1350 carousel specification with one visual task per slide"},
+    {"step":7,"id":"DESIGN_EXECUTION","output":"asset or exact design-production specification using GSIL.DESIGN_COMMUNICATION"},
+    {"step":8,"id":"QA","output":"universal and social validator results"},
+    {"step":9,"id":"DISTRIBUTION_PACKAGE","output":"copy, assets, source notes, alt text/captions where applicable, CTA and proposed publish actions"},
+    {"step":10,"id":"DISTRIBUTION","output":"execute connected-system draft/schedule/publish actions only when authorised"},
+    {"step":11,"id":"RECORD","output":"execution record conforming to execution-record.schema.json"}
+  ],
+  "content_rules":[
+    "Judgment must be resolved before format.",
+    "Do not create engagement bait that weakens truth or usefulness.",
+    "Never invent evidence, numbers, product capability or performance claims.",
+    "Use the canonical evidence taxonomy even if a legacy social template uses different labels.",
+    "Channel adaptation may change expression but not the underlying judgment.",
+    "The reader should leave more capable, not merely more impressed.",
+    "Default launch CTA is the free Decision Frame only when the content earns a CTA."
+  ],
+  "reference_outputs":["linkedin_post","instagram_carousel","design_spec_or_asset","distribution_package","execution_record"]
+}

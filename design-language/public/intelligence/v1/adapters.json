@@ -1,0 +1,27 @@
+{
+  "id":"GSIL.ADAPTER_CONTRACT",
+  "version":"1.0.0",
+  "purpose":"Keep the execution core independent of any specific AI platform or connected application.",
+  "required_capabilities":["discover","read","write","validate_result","return_trace"],
+  "adapter_rules":[
+    "The harness owns reasoning, routing, authority and QA. Adapters only expose system capabilities.",
+    "An adapter must never elevate its own defaults above GreenSquare doctrine.",
+    "Writes require an authority decision before invocation.",
+    "Every write must return a traceable identifier, location or error.",
+    "If an adapter cannot verify success, record the action as blocked or uncertain rather than successful."
+  ],
+  "supported_adapter_classes":{
+    "repository":{"examples":["GitHub"],"actions":["read","branch","commit","pull_request"]},
+    "deployment":{"examples":["Vercel"],"actions":["inspect","deploy","validate"]},
+    "design":{"examples":["Canva","Figma"],"actions":["read","create","edit","export"]},
+    "work_management":{"examples":["Linear"],"actions":["read","create","update"]},
+    "publishing":{"examples":["social_platform_or_scheduler"],"actions":["draft","schedule","publish"]},
+    "research":{"examples":["web","connected_sources"],"actions":["search","read","cite"]}
+  },
+  "external_write_policy":{
+    "AUTONOMOUS":"allowed when low consequence, reversible and within explicit workflow intent",
+    "AUTONOMOUS_WITH_DISCLOSURE":"allowed with execution-record disclosure",
+    "ESCALATE":"blocked pending human judgment for the consequential element",
+    "RESERVED":"blocked, proposal only"
+  }
+}
