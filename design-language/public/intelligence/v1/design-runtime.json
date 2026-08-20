@@ -1,19 +1,16 @@
 {
   "id": "GSIL.DESIGN_RUNTIME",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "status": "candidate_runtime",
   "role": "Executable instantiation layer for canonical GreenSquare design doctrine.",
   "doctrine_authority": false,
   "governed_by": ["GSIL.DESIGN_COMMUNICATION", "GSIL.AGENT_EXECUTION_HARNESS"],
-  "must_not": [
-    "reinterpret_or_override_design_doctrine",
-    "promote_runtime_defaults_to_doctrine",
-    "use_examples_as_authority"
-  ],
+  "must_not": ["reinterpret_or_override_design_doctrine","promote_runtime_defaults_to_doctrine","use_examples_as_authority"],
   "runtime": {
     "implementation_root": "/runtime/",
     "renderer": "design-language/runtime/render.mjs",
     "carousel_orchestrator": "design-language/runtime/carousel.mjs",
+    "component_selector": "design-language/runtime/component-selector.mjs",
     "content_components": "design-language/runtime/components.mjs",
     "through_flow_generator": "design-language/runtime/through-flow.mjs",
     "tokens": "design-language/runtime/tokens.mjs",
@@ -21,25 +18,10 @@
     "build_validation": "design-language/runtime/validate.mjs"
   },
   "supported_formats": {
-    "instagram_4x5": {"width":1080,"height":1350,"status":"implemented_and_proven_for_single_frame_carousel_and_content_components"},
+    "instagram_4x5": {"width":1080,"height":1350,"status":"implemented_and_proven_for_single_frame_carousel_content_components_and_semantic_selection"},
     "linkedin_square": {"width":1200,"height":1200,"status":"tokenised_not_yet_proven"}
   },
-  "supported_components": [
-    "frame",
-    "eyebrow",
-    "headline",
-    "body_copy",
-    "call_to_action",
-    "source_metadata",
-    "evidence_state",
-    "rule",
-    "through_flow",
-    "evidence_ledger",
-    "options_comparison",
-    "assumption_risk",
-    "recommendation",
-    "bar_exhibit"
-  ],
+  "supported_components": ["frame","eyebrow","headline","body_copy","call_to_action","source_metadata","evidence_state","rule","through_flow","evidence_ledger","options_comparison","assumption_risk","recommendation","bar_exhibit"],
   "content_native_components": {
     "status": "implemented",
     "evidence_ledger": "Requires one or more records using only GIVEN, DERIVED, INFERRED or UNKNOWN.",
@@ -49,26 +31,33 @@
     "bar_exhibit": "Simple directly-labelled comparative exhibit with at least two numeric observations.",
     "validation_rule": "Malformed decision content fails the build; renderer must not beautify incomplete logic."
   },
+  "semantic_component_selection": {
+    "status": "implemented",
+    "principle": "Choose the visual component from structured decision meaning, never from decorative preference.",
+    "signals": {
+      "evidence_items": "evidence_ledger",
+      "options": "options_comparison",
+      "assumption+risk+reversal": "assumption_risk",
+      "recommendation+owner+next_action": "recommendation",
+      "exhibit_items": "bar_exhibit"
+    },
+    "precedence": "An explicit valid component remains allowed; otherwise the runtime selects from semantic signals.",
+    "traceability": "Every automatic selection records component type and selection reason in the carousel manifest.",
+    "failure_rule": "A selected component must pass its own decision-content contract before rendering."
+  },
   "carousel_orchestration": {
     "status": "implemented",
     "slide_count": {"minimum":5,"maximum":8},
     "canonical_role_order": ["carousel_opener","problem","reframe","method","example","implication","cta"],
     "required_roles": ["carousel_opener","reframe","method","cta"],
-    "cross_slide_qa": [
-      "consistent_format",
-      "narrative_role_order",
-      "single_signature_passage_maximum",
-      "no_adjacent_pattern_instances",
-      "cta_only_at_close",
-      "per_slide_design_qa"
-    ]
+    "cross_slide_qa": ["consistent_format","narrative_role_order","single_signature_passage_maximum","no_adjacent_pattern_instances","cta_only_at_close","per_slide_design_qa","semantic_component_contracts"]
   },
   "through_flow_behaviours": ["passage", "horizon", "open_corner", "none"],
   "composition_schema": "/intelligence/v1/schemas/design-composition.schema.json",
   "carousel_schema": "/intelligence/v1/schemas/carousel-composition.schema.json",
   "first_proving_specimen": "/intelligence/v1/specimens/design-runtime/decision-frame-carousel-opener.svg",
-  "first_proving_specimen_qa": "/intelligence/v1/specimens/design-runtime/decision-frame-carousel-opener.qa.json",
   "first_carousel_specimen_manifest": "/intelligence/v1/specimens/design-runtime/decision-frame-carousel.manifest.json",
+  "auto_component_specimen_manifest": "/intelligence/v1/specimens/design-runtime/decision-frame-carousel-auto.manifest.json",
   "content_component_specimen_manifest": "/intelligence/v1/specimens/design-runtime/content-components.manifest.json",
   "promotion_rule": "Runtime defaults become canonical doctrine only through the RESERVED doctrine-promotion process."
 }
