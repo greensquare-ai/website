@@ -1,6 +1,6 @@
 {
   "id": "GSIL.DESIGN_RUNTIME",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "status": "candidate_runtime",
   "role": "Executable instantiation layer for canonical GreenSquare design doctrine.",
   "doctrine_authority": false,
@@ -11,6 +11,8 @@
     "renderer": "design-language/runtime/render.mjs",
     "carousel_orchestrator": "design-language/runtime/carousel.mjs",
     "component_selector": "design-language/runtime/component-selector.mjs",
+    "layout_resolver": "design-language/runtime/layout.mjs",
+    "format_adapter": "design-language/runtime/format-adapter.mjs",
     "content_components": "design-language/runtime/components.mjs",
     "through_flow_generator": "design-language/runtime/through-flow.mjs",
     "tokens": "design-language/runtime/tokens.mjs",
@@ -18,8 +20,8 @@
     "build_validation": "design-language/runtime/validate.mjs"
   },
   "supported_formats": {
-    "instagram_4x5": {"width":1080,"height":1350,"status":"implemented_and_proven_for_single_frame_carousel_content_components_and_semantic_selection"},
-    "linkedin_square": {"width":1200,"height":1200,"status":"tokenised_not_yet_proven"}
+    "instagram_4x5": {"width":1080,"height":1350,"status":"implemented_and_proven"},
+    "linkedin_square": {"width":1200,"height":1200,"status":"implemented_and_proven_by_recomposition"}
   },
   "supported_components": ["frame","eyebrow","headline","body_copy","call_to_action","source_metadata","evidence_state","rule","through_flow","evidence_ledger","options_comparison","assumption_risk","recommendation","bar_exhibit"],
   "content_native_components": {
@@ -34,16 +36,22 @@
   "semantic_component_selection": {
     "status": "implemented",
     "principle": "Choose the visual component from structured decision meaning, never from decorative preference.",
-    "signals": {
-      "evidence_items": "evidence_ledger",
-      "options": "options_comparison",
-      "assumption+risk+reversal": "assumption_risk",
-      "recommendation+owner+next_action": "recommendation",
-      "exhibit_items": "bar_exhibit"
-    },
+    "signals": {"evidence_items":"evidence_ledger","options":"options_comparison","assumption+risk+reversal":"assumption_risk","recommendation+owner+next_action":"recommendation","exhibit_items":"bar_exhibit"},
     "precedence": "An explicit valid component remains allowed; otherwise the runtime selects from semantic signals.",
     "traceability": "Every automatic selection records component type and selection reason in the carousel manifest.",
     "failure_rule": "A selected component must pass its own decision-content contract before rendering."
+  },
+  "layout_resolution": {
+    "status": "implemented",
+    "principle": "Resolve headline, body and component geometry from format plus semantic component type.",
+    "manual_override": "Explicit component compositions retain their authored layout; automatically selected components use runtime layout resolution.",
+    "traceability": "Resolved format, component and automatic/manual status are recorded in the manifest."
+  },
+  "format_adaptation": {
+    "status": "implemented_for_instagram_4x5_to_linkedin_square",
+    "principle": "Recompose from the runtime grammar for the destination frame; never scale or squeeze the source artwork.",
+    "actions": ["resolve_destination_safe_area","recompose_through_flow_region","recalculate_protected_content_region","resolve_component_layout","rerun_design_and_component_qa"],
+    "proving_output": "/intelligence/v1/specimens/design-runtime/decision-frame-linkedin-square.manifest.json"
   },
   "carousel_orchestration": {
     "status": "implemented",
