@@ -14,11 +14,17 @@ const {
   title,
   focus,
   section,
-  description = 'The GreenSquare AI system for representing, navigating and improving consequential decisions.',
+  description = 'The GreenSquare Intelligence Layer inspection surface for machine-operable doctrine, knowledge and execution systems.',
   immersive = false,
 } = Astro.props;
 
 const navGroups = [
+  {
+    label: 'Intelligence',
+    items: [
+      ['Machine index', '/intelligence/'],
+    ],
+  },
   {
     label: 'Foundations',
     items: [
@@ -82,7 +88,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title} · GreenSquare AI design language</title>
+    <title>{title} · GreenSquare Intelligence Layer</title>
     <meta name="description" content={description} />
     <meta name="robots" content="noindex, nofollow" />
     <link rel="canonical" href={canonical} />
@@ -98,15 +104,15 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
     <Fragment set:html={socialDirectionContract} />
     <a class="design-skip" href="#design-main">Skip to content</a>
     <div class="design-shell">
-      <aside class="design-rail" aria-label="Design language navigation">
-        <a href="/" class="design-brand" aria-label="GreenSquare AI design language home">
+      <aside class="design-rail" aria-label="Intelligence Layer inspection navigation">
+        <a href="/intelligence/" class="design-brand" aria-label="GreenSquare Intelligence Layer home">
           <img src="/assets/logo.svg" alt="" width="34" height="34" />
           <span>GreenSquare AI</span>
         </a>
 
         <div class="design-rail-label">
-          <span>Design language</span>
-          <span>Internal working standard</span>
+          <span>Intelligence Layer</span>
+          <span>Machine-first operating specification</span>
         </div>
 
         <nav class="design-nav">
@@ -135,22 +141,22 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
         </nav>
 
         <div class="design-rail-footer">
-          <span>GreenSquare AI</span>
-          <span>August 2026</span>
+          <span>GreenSquare Intelligence Layer</span>
+          <span>Inspection surface only</span>
         </div>
       </aside>
 
       <main id="design-main" class="design-main">
         <header class="design-topbar">
           <span>{section}</span>
-          <span>GreenSquare AI</span>
+          <span>Machine-first</span>
         </header>
 
         <article class="v3-page" data-route-title={title}>
           {!immersive && (
             <header class="v3-page-head">
               <div class="design-page-meta">
-                <span>Governing question</span>
+                <span>Inspection view</span>
               </div>
               <div class="design-hero-copy">
                 <h1 tabindex="-1">{title}</h1>
@@ -162,9 +168,9 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
         </article>
 
         <footer class="design-footer">
-          <strong>GreenSquare AI</strong>
-          <span>Structure that turns uncertainty into deliberate action.</span>
-          <span>Internal design language</span>
+          <strong>GreenSquare Intelligence Layer</strong>
+          <span>Canonical doctrine lives in /intelligence/v1/.</span>
+          <span>Rendered pages are secondary inspection surfaces.</span>
         </footer>
       </main>
     </div>
