@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
-    "build": "node ./scripts/link-shared-dependencies.mjs && astro build",
+    "design:validate": "node ./runtime/validate.mjs",
+    "build": "node ./runtime/validate.mjs && node ./scripts/link-shared-dependencies.mjs && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
