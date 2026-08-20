@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "GSIL.SCHEMA.CAROUSEL_COMPOSITION",
+  "title": "GreenSquare Carousel Composition",
+  "type": "object",
+  "required": ["id", "format", "slides"],
+  "properties": {
+    "id": {"type":"string","minLength":1},
+    "format": {"enum":["instagram_4x5"]},
+    "slides": {
+      "type":"array",
+      "minItems":5,
+      "maxItems":8,
+      "items": {"$ref":"design-composition.schema.json"}
+    }
+  },
+  "additionalProperties": false
+}
