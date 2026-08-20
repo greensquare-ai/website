@@ -1,6 +1,6 @@
 {
   "id": "GSIL.DESIGN_RUNTIME",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "status": "candidate_runtime",
   "role": "Executable instantiation layer for canonical GreenSquare design doctrine.",
   "doctrine_authority": false,
@@ -13,13 +13,14 @@
   "runtime": {
     "implementation_root": "/runtime/",
     "renderer": "design-language/runtime/render.mjs",
+    "carousel_orchestrator": "design-language/runtime/carousel.mjs",
     "through_flow_generator": "design-language/runtime/through-flow.mjs",
     "tokens": "design-language/runtime/tokens.mjs",
     "qa": "design-language/runtime/qa.mjs",
     "build_validation": "design-language/runtime/validate.mjs"
   },
   "supported_formats": {
-    "instagram_4x5": {"width":1080,"height":1350,"status":"implemented"},
+    "instagram_4x5": {"width":1080,"height":1350,"status":"implemented_and_proven_for_single_frame_and_carousel"},
     "linkedin_square": {"width":1200,"height":1200,"status":"tokenised_not_yet_proven"}
   },
   "supported_components": [
@@ -27,14 +28,31 @@
     "eyebrow",
     "headline",
     "body_copy",
+    "call_to_action",
     "source_metadata",
     "evidence_state",
     "rule",
     "through_flow"
   ],
+  "carousel_orchestration": {
+    "status": "implemented",
+    "slide_count": {"minimum":5,"maximum":8},
+    "canonical_role_order": ["carousel_opener","problem","reframe","method","example","implication","cta"],
+    "required_roles": ["carousel_opener","reframe","method","cta"],
+    "cross_slide_qa": [
+      "consistent_format",
+      "narrative_role_order",
+      "single_signature_passage_maximum",
+      "no_adjacent_pattern_instances",
+      "cta_only_at_close",
+      "per_slide_design_qa"
+    ]
+  },
   "through_flow_behaviours": ["passage", "horizon", "open_corner", "none"],
   "composition_schema": "/intelligence/v1/schemas/design-composition.schema.json",
+  "carousel_schema": "/intelligence/v1/schemas/carousel-composition.schema.json",
   "first_proving_specimen": "/intelligence/v1/specimens/design-runtime/decision-frame-carousel-opener.svg",
   "first_proving_specimen_qa": "/intelligence/v1/specimens/design-runtime/decision-frame-carousel-opener.qa.json",
+  "first_carousel_specimen_manifest": "/intelligence/v1/specimens/design-runtime/decision-frame-carousel.manifest.json",
   "promotion_rule": "Runtime defaults become canonical doctrine only through the RESERVED doctrine-promotion process."
 }
