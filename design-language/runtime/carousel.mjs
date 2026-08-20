@@ -1,6 +1,7 @@
 import { renderComposition } from './render.mjs';
 import { validateComposition } from './qa.mjs';
 import { selectNativeComponent, validateSelectedComponent } from './component-selector.mjs';
+import { resolveSlideLayout } from './layout.mjs';
 
 const ROLE_ORDER = ['carousel_opener','problem','reframe','method','example','implication','cta'];
 
@@ -9,7 +10,7 @@ export function resolveCarouselComponents(spec) {
     ...spec,
     slides: (spec.slides || []).map(slide => {
       const selection = selectNativeComponent(slide);
-      return {
+      const selected = {
         ...slide,
         component: selection.component || slide.component || null,
         runtime_trace: {
@@ -17,6 +18,7 @@ export function resolveCarouselComponents(spec) {
           component_selection: { type: selection.component?.type || null, reason: selection.reason }
         }
       };
+      return resolveSlideLayout(selected, { automatic: selection.reason !== 'explicit_component' });
     })
   };
 }
@@ -62,6 +64,7 @@ export function renderCarousel(spec) {
     role: slide.role,
     component: slide.component?.type || null,
     component_selection_reason: slide.runtime_trace?.component_selection?.reason || null,
+    layout_resolution: slide.runtime_trace?.layout_resolution || null,
     svg: renderComposition(slide)
   }));
 }
