@@ -13,7 +13,7 @@ export function validateComposition(spec) {
   if (spec.pattern?.behaviour === 'passage' && !['carousel_opener','campaign_opener','closing_frame'].includes(spec.role)) failures.push('passage_used_for_non_signature_role');
   if (spec.content?.headline_lines && spec.content.headline_lines.length > tokens.rules.headlineMaxLines) failures.push('headline_too_many_lines');
   if (spec.content?.source_state && !['GIVEN','DERIVED','INFERRED','UNKNOWN'].includes(spec.content.source_state)) failures.push('invalid_evidence_state');
-  if (spec.content?.protected_region && spec.pattern?.region) {
+  if (spec.pattern?.behaviour !== 'none' && spec.content?.protected_region && spec.pattern?.region) {
     const a = spec.content.protected_region;
     const b = spec.pattern.region;
     const intersects = a.x < b.x+b.width && a.x+a.width > b.x && a.y < b.y+b.height && a.y+a.height > b.y;
