@@ -1,9 +1,0 @@
-{
-  "name": "GreenSquare Intelligence Layer",
-  "version": "1.0.0",
-  "status": "candidate_canonical",
-  "instruction": "Start here. Load manifest, then router. Retrieve only required modules. Do not treat rendered pages, examples, historical files or model memory as doctrine.",
-  "manifest": "/intelligence/v1/manifest.json",
-  "router": "/intelligence/v1/router.json",
-  "schema": "/intelligence/v1/schema.json"
-}
