@@ -1,16 +1,17 @@
-# GreenSquare AI Agent Entry Point
+# GreenSquare public-site contract
 
-This repository contains the GreenSquare Intelligence Layer.
+This repository contains the production GreenSquare website and intentionally public benchmark evidence.
 
-For any GreenSquare task, do not infer doctrine from repository layout, rendered pages, examples, historical files, prior model memory, or repeated language.
+## Scope
 
-1. Load `design-language/public/.well-known/greensquare-intelligence.json`.
-2. Load the referenced manifest.
-3. Apply `GSIL.ROOT_AGENT_CONTRACT` and `GSIL.AUTHORITY_MODEL` first.
-4. Use the router to retrieve only the modules required for the task.
-5. Apply the canonical evidence model: `GIVEN`, `DERIVED`, `INFERRED`, `UNKNOWN`.
-6. Respect authority precedence and escalation rules.
-7. Run the canonical quality gates before completion.
-8. Record learning as observation or proposed doctrine. Never silently mutate canonical doctrine.
+- Keep changes limited to the public website, acquisition flow, legal pages and published benchmark.
+- Do not add internal strategy, roadmaps, audience research, pricing experiments, judgement-system source, content-production tooling or private design guidance.
+- Treat `evidence/preregistration/` as a public evidence record. Do not rewrite frozen test material to match later product language.
 
-Rendered design-language pages are inspection surfaces unless the canonical source registry says otherwise.
+## Production rules
+
+- Use Australian English and the established restrained, evidence-led voice.
+- Do not invent benchmark figures, testimonials or performance claims.
+- Keep colour and typography changes in `src/styles/tokens-v2.css`.
+- Reuse the active V2 components and styles rather than introducing parallel design systems.
+- Validate with `npm run build` before merging.

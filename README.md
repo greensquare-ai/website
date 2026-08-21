@@ -1,16 +1,10 @@
-# GreenSquare
+# GreenSquare website
 
-The public GreenSquare website and Decision Operating System.
+Production source for [greensquare.ai](https://www.greensquare.ai/).
 
-- Marketing site: `/`
-- Decision OS v3: `/v3/`
-- Live site: <https://www.greensquare.ai/>
+The site is built with Astro and uses a small React island for email capture. It includes the public marketing pages, the free Decision Frame acquisition flow and the published benchmark evidence.
 
-The project is built with Astro and uses small React islands for interactive decision models.
-
-The access-controlled design-language site is a separate Astro app in `design-language/`. The
-Vercel project `greensquare-design-language` must use that folder as its Root Directory. This keeps
-the design deployment separate from the public website deployment.
+Internal product strategy, commercial planning, judgement IP, brand-system source and content-production tooling belong in the private `greensquare-ops` repository.
 
 ## Run locally
 
@@ -19,7 +13,7 @@ npm ci
 npm run dev
 ```
 
-Astro serves the project at `http://localhost:4321/`.
+Astro serves the site at `http://localhost:4321/`.
 
 ## Validate
 
@@ -30,26 +24,17 @@ npm run preview
 
 The production build is written to `dist/`.
 
-Validate the design-language app separately:
-
-```bash
-cd design-language
-npm ci
-npm run build
-```
-
 ## Structure
 
-- `src/pages/` — Astro routes, including the complete `/v3/` system
-- `src/components/v3/` — Decision Field, Decision Model, workspace and application specimens
-- `src/styles/v3.css` — the v3 visual and interaction language
-- `public/assets/` — public logos, video, poster and sharing image
-- `design-language/` — dedicated app for the protected Vercel design-language project
+- `src/pages/` contains the public routes and legal pages.
+- `src/components/` contains the active navigation, footer, email form and hero animation.
+- `src/data/` and `src/lib/benchmark.ts` contain the published benchmark results and presentation logic.
+- `src/styles/` contains the active design tokens and global site styles.
+- `public/assets/` contains production logos, icons and sharing imagery.
+- `evidence/preregistration/` contains the public benchmark protocol, cases and methodology.
 
 ## Deploy
 
-Vercel builds and deploys `main` to production at <https://www.greensquare.ai/>. Pull requests get
-their own preview deployment.
+Vercel deploys `main` to [greensquare.ai](https://www.greensquare.ai/). Pull requests receive preview deployments.
 
-This is a public repository. Internal strategy, commercial material and working documentation stay
-in the private `ks-projects-66/greensquare-ops` repository.
+This repository is public. Add only production website source and material intentionally published as evidence.
