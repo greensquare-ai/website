@@ -5,6 +5,8 @@ const KIT_FORM_ENDPOINT = 'https://api.convertkit.com/v3/forms/9283111/subscribe
 // Public site embed key for Kit form 9283111 (GreenSquare launch list). This is the
 // same key ConvertKit browser embeds include in page source.
 const KIT_PUBLIC_API_KEY = 'm707fr5_cPA1bExcvMKoEQ';
+const DECISION_FRAME_CAMPAIGN = 'decision-frame-v2';
+const DECISION_FRAME_VERSION = '2.0';
 
 export interface Props {
   buttonLabel?: string;
@@ -13,6 +15,18 @@ export interface Props {
 }
 
 type Status = 'idle' | 'loading' | 'success' | 'error';
+
+function campaignMetadata() {
+  const campaign = new URLSearchParams(window.location.search);
+  return {
+    utm_source: campaign.get('utm_source') ?? 'direct',
+    utm_medium: campaign.get('utm_medium') ?? 'none',
+    utm_campaign: campaign.get('utm_campaign') ?? DECISION_FRAME_CAMPAIGN,
+    utm_content: campaign.get('utm_content') ?? 'none',
+    product_campaign: DECISION_FRAME_CAMPAIGN,
+    product_version: DECISION_FRAME_VERSION,
+  };
+}
 
 export default function EmailCaptureForm({
   buttonLabel = 'Email me the Decision Frame',
@@ -33,7 +47,11 @@ export default function EmailCaptureForm({
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!email) return;
+
+    const metadata = campaignMetadata();
+    track('Decision Frame Form Attempt', metadata);
     setStatus('loading');
+
     try {
       const res = await fetch(KIT_FORM_ENDPOINT, {
         method: 'POST',
@@ -42,19 +60,15 @@ export default function EmailCaptureForm({
         body: JSON.stringify({ api_key: KIT_PUBLIC_API_KEY, email: email }),
       });
       if (!res.ok) throw new Error('Request failed');
-      const campaign = new URLSearchParams(window.location.search);
-      track('Decision Frame Signup', {
-        utm_source: campaign.get('utm_source') ?? 'direct',
-        utm_medium: campaign.get('utm_medium') ?? 'none',
-        utm_campaign: campaign.get('utm_campaign') ?? 'none',
-        utm_content: campaign.get('utm_content') ?? 'none',
-      });
+
+      track('Decision Frame Signup', metadata);
       setEmail('');
       setLeaving(true);
       leaveTimeout.current = setTimeout(() => {
         setStatus('success');
       }, 150);
     } catch (err) {
+      track('Decision Frame Form Error', metadata);
       setStatus('error');
     }
   }
