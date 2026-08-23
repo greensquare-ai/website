@@ -4,47 +4,43 @@ import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
 
 const stages = [
-  { n: '01', name: 'Ask', body: 'The model asks three to six focused questions before offering advice. The depth of the interrogation scales with the stakes.' },
-  { n: '02', name: 'Frame', body: 'It tests whether the stated question is the real decision and identifies choices that have been treated as fixed too early.' },
-  { n: '03', name: 'Confirm', body: 'It plays the situation back in a few lines, then asks you to resolve contradictions, missing evidence and untested assumptions.' },
-  { n: '04', name: 'Compare', body: 'It develops credible alternatives, including keeping the current position, and compares them against explicit criteria.' },
-  { n: '05', name: 'Recommend', body: 'It produces a five-part Decision Brief and checks whether the call follows from the evidence before handing it to you.' },
+  { n: '01', name: 'Frame', body: 'Clarify the actual mandate, decision owner, stakes, desired outcome and criteria for a good call.' },
+  { n: '02', name: 'Inspect', body: 'Separate evidence from interpretation, surface contradictions and identify the assumptions or unknowns carrying the decision.' },
+  { n: '03', name: 'Test', body: 'Form a working hypothesis, challenge it against alternatives and make explicit what evidence could change the view.' },
+  { n: '04', name: 'Compare', body: 'Develop genuinely distinct options and assess them consistently against the decision scorecard.' },
+  { n: '05', name: 'Decide', body: 'Make a traceable recommendation when the evidence permits, or define the evidence-producing decision required before committing.' },
+  { n: '06', name: 'Execute', body: 'Translate the call into proportionate action, ownership, measures, decision thresholds and review conditions.' },
 ];
 ---
 <BaseLayoutV2
-  title="The Decision | GreenSquare AI"
-  description="The Decision gives Claude, ChatGPT or Gemini a disciplined strategy process for one consequential business decision, inside the AI account you already use."
+  title="How GreenSquare works | Professional judgement for AI"
+  description="GreenSquare gives capable AI a disciplined professional judgement process: frame the mandate, inspect evidence, test assumptions, compare options, decide and execute."
   current="product"
 >
   <section class="v-section v-off hero">
     <div class="v-container">
       <div class="v-split is-top">
         <div class="v-reveal">
-          <h1 class="v-display">A disciplined strategy process for the AI you already use.</h1>
+          <h1 class="v-display">The model provides intelligence. GreenSquare controls how it is applied.</h1>
           <p class="v-lead" style="margin-top: var(--v-6);">
-            AI models can research, analyse and write at speed. They do not automatically know which questions
-            matter, which Assumptions need to be challenged or what evidence would change the call. The Decision
-            is a plain markdown instruction file that gives Claude, ChatGPT or Gemini that discipline for one
-            consequential business decision.
-          </p>
-          <p class="v-small product-note">
-            Open a new chat, paste or upload The Decision, then describe the choice in your own words. The process
-            runs inside the AI account and workplace policy you already use.
+            Capable AI can research, analyse and write at speed. GreenSquare adds the professional judgement layer:
+            what should be clarified first, what evidence is sufficient, which assumptions deserve challenge, which
+            options are real and when the work is ready for a call.
           </p>
           <div class="hero-actions">
             <a class="v-btn v-btn--green" href={withBase('/decision-frame/')}>Get the free Decision Frame</a>
-            <a class="v-btn v-btn--grey" href={withBase('/benchmark/')}>Read the benchmark</a>
+            <a class="v-btn v-btn--grey" href={withBase('/benchmark/')}>Review the evidence</a>
           </div>
         </div>
         <div class="v-reveal d1">
           <div class="v-readout">
-            <div class="v-readout__bar"><span class="v-readout__dot"></span> The Decision workflow</div>
+            <div class="v-readout__bar"><span class="v-readout__dot"></span> Decision Frame V2</div>
             <div class="v-readout__body">
               <ul class="v-spec__list">
                 {stages.map((stage) => <li><span class="n">{Number(stage.n)}</span> {stage.name}</li>)}
               </ul>
             </div>
-            <div class="v-readout__foot">One instruction file, one consequential decision, one defensible brief</div>
+            <div class="v-readout__foot">One portable method / depth scales with the stakes</div>
           </div>
         </div>
       </div>
@@ -53,15 +49,15 @@ const stages = [
 
   <section class="v-section">
     <div class="v-container">
-      <h2 class="v-h2" style="max-width: 24ch;">Use it when a plausible answer is not enough.</h2>
+      <h2 class="v-h2" style="max-width: 25ch;">Give the AI the problem, not a carefully engineered prompt.</h2>
       <div class="decision-grid" style="margin-top: var(--v-8);">
         <ul class="v-leadlist v-reveal">
-          <li><strong>Investment and bids.</strong> Decide whether to approve, reshape or stop a material commitment.</li>
-          <li><strong>Build, buy or partner.</strong> Compare credible options and test the constraints behind each one.</li>
+          <li><strong>Strategic choices.</strong> Markets, investments, partnerships and material operating-model decisions.</li>
+          <li><strong>Portfolio choices.</strong> Prioritisation, funding, sequencing and trade-offs across competing initiatives.</li>
         </ul>
         <ul class="v-leadlist v-reveal d1">
-          <li><strong>Programs and projects.</strong> Decide whether to continue, restructure, pause or exit.</li>
-          <li><strong>Operating choices.</strong> Prepare a defensible call on hiring, pricing, vendors, markets or capacity.</li>
+          <li><strong>Transformation decisions.</strong> Scope, vendors, timing, capability, benefits and course correction.</li>
+          <li><strong>Operating decisions.</strong> Hiring, pricing, capacity, process, products and other calls where plausible advice is not enough.</li>
         </ul>
       </div>
     </div>
@@ -69,11 +65,11 @@ const stages = [
 
   <section class="v-section v-fill">
     <div class="v-container">
-      <h2 class="v-h2">The process changes what happens before the recommendation.</h2>
+      <h2 class="v-h2">A repeatable reasoning loop, not a fixed questionnaire.</h2>
       <div class="v-caplist">
         {stages.map((stage, index) => (
           <div class={`v-caprow v-reveal${index > 0 ? ` d${Math.min(index, 3)}` : ''}`}>
-            <span class="v-index">Step {Number(stage.n)}</span>
+            <span class="v-index">State {Number(stage.n)}</span>
             <h3>{stage.name}</h3>
             <p class="v-small v-cap-body">{stage.body}</p>
           </div>
@@ -85,27 +81,22 @@ const stages = [
   <section class="v-section">
     <div class="v-container v-split is-top">
       <div class="v-reveal">
-        <h2 class="v-h2">The Decision Brief shows its working.</h2>
+        <h2 class="v-h2">The decision remains inspectable.</h2>
         <p class="v-measure" style="margin-top: var(--v-5); color: var(--v-ink-soft);">
-          The output is clean markdown that you can edit, challenge or move into your own document. A senior
-          reader can see the call, the reasoning, the material trade-offs, the next action and the evidence that
-          remains unresolved.
+          GreenSquare does not ask the user to trust a polished answer. Material evidence, assumptions, unresolved
+          gaps, decision criteria, trade-offs and conditions for changing course stay visible through the process.
         </p>
       </div>
       <div class="v-reveal d1">
         <div class="v-readout">
-          <div class="v-readout__bar"><span class="v-readout__dot"></span> Decision Brief structure</div>
+          <div class="v-readout__bar"><span class="v-readout__dot"></span> Evidence state</div>
           <div class="v-readout__body">
             <ul class="v-spec__list">
-              <li><span class="n">1</span> The Decision and why it matters now</li>
-              <li><span class="n">2</span> The Options compared</li>
-              <li><span class="n">3</span> The recommendation</li>
-              <li><span class="n">4</span> The next actions</li>
-              <li><span class="n">5</span> The Assumptions and reversal conditions</li>
+              <li><span class="n">1</span> GIVEN</li>
+              <li><span class="n">2</span> DERIVED</li>
+              <li><span class="n">3</span> INFERRED</li>
+              <li><span class="n">4</span> UNKNOWN</li>
             </ul>
-            <div class="spec-tags v-reveal">
-              <span class="v-tag">GIVEN</span><span class="v-tag">DERIVED</span><span class="v-tag">INFERRED</span><span class="v-tag">UNKNOWN</span>
-            </div>
           </div>
         </div>
       </div>
@@ -115,17 +106,17 @@ const stages = [
   <section class="v-section v-green">
     <div class="v-container v-split">
       <div class="v-reveal">
-        <h2 class="v-h2">Your decision stays inside your AI account.</h2>
+        <h2 class="v-h2">Use the AI environment you already have.</h2>
         <p class="v-lead" style="margin-top: var(--v-5);">
-          The Decision contains plain text. It has no links, embedded code, macros or external connection.
-          GreenSquare cannot see your question, your answers or the Decision Brief produced in your chat.
+          The Decision Frame is a portable file. GreenSquare does not need access to the decision in order for the
+          method to run inside the user's chosen AI environment.
         </p>
       </div>
       <div class="v-reveal d1">
         <ul class="v-leadlist">
-          <li><strong>Nothing to install.</strong> Paste or upload one plain markdown instruction file.</li>
-          <li><strong>Your existing account.</strong> Use the AI service and workplace policy you already have.</li>
-          <li><strong>Editable output.</strong> Keep the brief in markdown or move it into your normal workflow.</li>
+          <li><strong>Nothing to install.</strong> Upload the file and give the model the business problem.</li>
+          <li><strong>Model-agnostic direction.</strong> The method is designed to sit above changing foundation models.</li>
+          <li><strong>User accountability.</strong> Assumptions, evidence and uncertainty remain available for professional challenge.</li>
         </ul>
       </div>
     </div>
@@ -133,12 +124,11 @@ const stages = [
 
   <section class="v-section v-fill">
     <div class="v-container v-container--narrow">
-      <h2 class="v-h2">The evidence is strongest on how the model works.</h2>
+      <h2 class="v-h2">The evidence boundary is explicit.</h2>
       <p class="v-measure" style="margin-top: var(--v-5); color: var(--v-ink-soft);">
-        In 45 pre-registered runs across two frontier models and three business cases, The Decision consistently
-        asked before advising, compared real Options and tagged its evidence. Those results show that the process
-        was followed. They do not yet show that The Decision improves an experienced operator's judgement. Every
-        result, departure and limitation remains on one page so there is one evidence record to inspect.
+        GreenSquare publishes its current benchmark because process compliance and better judgement are not the same
+        claim. The existing evidence shows where the method changes model behaviour and where further real-user
+        evidence is still required.
       </p>
       <a class="v-link" href={withBase('/benchmark/')} style="display:inline-block; margin-top: var(--v-5);">Review the results and limitations</a>
     </div>
@@ -147,10 +137,10 @@ const stages = [
   <section class="v-section v-green" id="get-started">
     <div class="v-container v-split is-top">
       <div class="v-reveal">
-        <h2 class="v-h2">The complete product is in preparation. The first six questions are available now.</h2>
+        <h2 class="v-h2">Use the current GreenSquare decision system free.</h2>
         <p class="v-lead" style="margin-top: var(--v-5);">
-          The free Decision Frame puts the opening part of the method on one page. Use it to test the framing,
-          surface the critical Assumption and map the evidence behind a live decision.
+          Decision Frame V2 is the current free product candidate: a complete adaptive decision experience designed
+          to take a capable model from the mandate through evidence, options, recommendation and proportionate execution.
         </p>
       </div>
       <div class="v-reveal d1">
@@ -166,24 +156,24 @@ const stages = [
       <h2 class="v-h2">Common questions.</h2>
       <div style="margin-top: var(--v-8);">
         <details open>
-          <summary>What exactly is The Decision?</summary>
-          <p class="v-small">A plain markdown instruction file for one consequential business decision. It guides the conversation and produces the Decision Brief inside your AI chat.</p>
+          <summary>What exactly is the Decision Frame?</summary>
+          <p class="v-small">A portable operating method for a capable AI model. It controls how the conversation frames, interrogates, tests and advances a business decision.</p>
         </details>
         <details>
           <summary>Do I need to install anything?</summary>
-          <p class="v-small">No installation is required. Open a new chat, paste or upload The Decision, then describe the choice in your own words.</p>
+          <p class="v-small">No. Upload the file to your chosen capable AI model and describe the decision or business problem in your own words.</p>
         </details>
         <details>
           <summary>Which AI services can I use?</summary>
-          <p class="v-small">The Decision is designed for Claude, ChatGPT and Gemini. The current public benchmark covers Claude and ChatGPT; Gemini has not yet been run.</p>
+          <p class="v-small">The product is designed for capable versions of ChatGPT, Claude and Gemini. The launch compatibility note will identify the versions actually tested for the locked release.</p>
         </details>
         <details>
-          <summary>Will it build a financial model?</summary>
-          <p class="v-small">It can work with numbers you provide and show the calculation. Dedicated financial modelling sits outside this product.</p>
+          <summary>Does GreenSquare make the decision for me?</summary>
+          <p class="v-small">No. It improves the process by which the call is reached and makes the evidence, assumptions, uncertainty and trade-offs more inspectable. The user remains accountable for the decision.</p>
         </details>
         <details>
-          <summary>When can I buy it?</summary>
-          <p class="v-small">The launch edition is in preparation. Use the free Decision Frame to apply the first part of the method now.</p>
+          <summary>What will GreenSquare charge for next?</summary>
+          <p class="v-small">The next paid professional job will be determined from how people use the free product and what repeated work they value. GreenSquare is not withholding arbitrary parts of the current method to manufacture an upgrade.</p>
         </details>
       </div>
     </div>
@@ -192,9 +182,7 @@ const stages = [
 
 <style>
   .hero { padding-top: clamp(3rem, 6vh, 5rem); }
-  .product-note { margin-top: var(--v-5); max-width: 58ch; }
   .hero-actions { display: flex; gap: var(--v-4); align-items: center; flex-wrap: wrap; margin-top: var(--v-8); }
   .decision-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--v-8); }
-  .spec-tags { display: flex; gap: var(--v-2); flex-wrap: wrap; margin-top: var(--v-2); }
   @media (max-width: 760px) { .decision-grid { grid-template-columns: 1fr; gap: var(--v-4); } }
 </style>
