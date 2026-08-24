@@ -2,9 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { track } from '@vercel/analytics';
 
 const KIT_FORM_ENDPOINT = 'https://api.convertkit.com/v3/forms/9283111/subscribe';
-// Public site embed key for Kit form 9283111 (GreenSquare launch list). This is the
-// same key ConvertKit browser embeds include in page source.
 const KIT_PUBLIC_API_KEY = 'm707fr5_cPA1bExcvMKoEQ';
+const ATTRIBUTION_KEY = 'gs_first_1000_attribution';
 
 export interface Props {
   buttonLabel?: string;
@@ -13,6 +12,44 @@ export interface Props {
 }
 
 type Status = 'idle' | 'loading' | 'success' | 'error';
+
+type Attribution = {
+  source: string;
+  medium: string;
+  campaignId: string;
+  contentId: string;
+  experimentId: string;
+  channel: string;
+  community: string;
+  cta: string;
+  landingVariant: string;
+  firstLandingPath: string;
+};
+
+function readAttribution(): Attribution {
+  const params = new URLSearchParams(window.location.search);
+  const stored = window.localStorage.getItem(ATTRIBUTION_KEY);
+  let previous: Partial<Attribution> = {};
+  if (stored) {
+    try { previous = JSON.parse(stored); } catch { previous = {}; }
+  }
+
+  const attribution: Attribution = {
+    source: params.get('utm_source') ?? previous.source ?? 'direct',
+    medium: params.get('utm_medium') ?? previous.medium ?? 'none',
+    campaignId: params.get('utm_campaign') ?? previous.campaignId ?? 'none',
+    contentId: params.get('utm_content') ?? previous.contentId ?? 'none',
+    experimentId: params.get('gs_experiment') ?? previous.experimentId ?? 'none',
+    channel: params.get('gs_channel') ?? previous.channel ?? params.get('utm_medium') ?? 'unknown',
+    community: params.get('gs_community') ?? previous.community ?? 'none',
+    cta: params.get('gs_cta') ?? previous.cta ?? 'decision_frame_email',
+    landingVariant: params.get('gs_variant') ?? previous.landingVariant ?? 'decision-frame-v1',
+    firstLandingPath: previous.firstLandingPath ?? window.location.pathname,
+  };
+
+  window.localStorage.setItem(ATTRIBUTION_KEY, JSON.stringify(attribution));
+  return attribution;
+}
 
 export default function EmailCaptureForm({
   buttonLabel = 'Email me the Decision Frame',
@@ -25,6 +62,17 @@ export default function EmailCaptureForm({
   const leaveTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
+    const attribution = readAttribution();
+    track('Decision Frame Product Visit', {
+      source: attribution.source,
+      medium: attribution.medium,
+      campaign_id: attribution.campaignId,
+      content_id: attribution.contentId,
+      experiment_id: attribution.experimentId,
+      channel: attribution.channel,
+      community: attribution.community,
+      landing_variant: attribution.landingVariant,
+    });
     return () => {
       if (leaveTimeout.current) clearTimeout(leaveTimeout.current);
     };
@@ -38,23 +86,26 @@ export default function EmailCaptureForm({
       const res = await fetch(KIT_FORM_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        // v3 names this field `email`. Sending `email_address` (the v4 name) returns 406.
-        body: JSON.stringify({ api_key: KIT_PUBLIC_API_KEY, email: email }),
+        body: JSON.stringify({ api_key: KIT_PUBLIC_API_KEY, email }),
       });
       if (!res.ok) throw new Error('Request failed');
-      const campaign = new URLSearchParams(window.location.search);
+
+      const attribution = readAttribution();
       track('Decision Frame Signup', {
-        utm_source: campaign.get('utm_source') ?? 'direct',
-        utm_medium: campaign.get('utm_medium') ?? 'none',
-        utm_campaign: campaign.get('utm_campaign') ?? 'none',
-        utm_content: campaign.get('utm_content') ?? 'none',
+        source: attribution.source,
+        medium: attribution.medium,
+        campaign_id: attribution.campaignId,
+        content_id: attribution.contentId,
+        experiment_id: attribution.experimentId,
+        channel: attribution.channel,
+        community: attribution.community,
+        cta: attribution.cta,
+        landing_variant: attribution.landingVariant,
       });
       setEmail('');
       setLeaving(true);
-      leaveTimeout.current = setTimeout(() => {
-        setStatus('success');
-      }, 150);
-    } catch (err) {
+      leaveTimeout.current = setTimeout(() => setStatus('success'), 150);
+    } catch {
       setStatus('error');
     }
   }
@@ -71,30 +122,13 @@ export default function EmailCaptureForm({
 
   return (
     <div className="field-row-wrapper" style={{ minHeight: '4.75rem' }}>
-      <form
-        className={`field-row ${leaving ? 'is-leaving' : ''}`}
-        onSubmit={handleSubmit}
-        aria-label="Get the free Decision Frame"
-      >
+      <form className={`field-row ${leaving ? 'is-leaving' : ''}`} onSubmit={handleSubmit} aria-label="Get the free Decision Frame">
         <label htmlFor="email_address" className="sr-only">Email address</label>
-        <input
-          id="email_address"
-          name="email_address"
-          type="email"
-          required
-          autoComplete="email"
-          placeholder="you@company.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        <input id="email_address" name="email_address" type="email" required autoComplete="email" placeholder="you@company.com" value={email} onChange={(e) => setEmail(e.target.value)} />
         <button className={dark ? 'btn btn-on-dark' : 'btn btn-primary'} type="submit" disabled={status === 'loading'}>
           {status === 'loading' ? 'Sending...' : buttonLabel}
         </button>
-        {status === 'error' && (
-          <p className="form-status form-status--error" role="alert">
-            The form could not be sent. Try again, or email hello@greensquare.ai.
-          </p>
-        )}
+        {status === 'error' && <p className="form-status form-status--error" role="alert">The form could not be sent. Try again, or email hello@greensquare.ai.</p>}
         <p className="form-note" style={{ width: '100%' }}>{fineprint}</p>
       </form>
     </div>
