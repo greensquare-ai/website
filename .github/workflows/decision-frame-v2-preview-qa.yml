@@ -52,9 +52,7 @@ jobs:
           npm run preview -- --host 127.0.0.1 --port 4321 > /tmp/greensquare-preview.log 2>&1 &
           echo $! > /tmp/greensquare-preview.pid
           for i in $(seq 1 30); do
-            if curl -fsS http://127.0.0.1:4321/ >/dev/null; then
-              exit 0
-            fi
+            if curl -fsS http://127.0.0.1:4321/ >/dev/null; then exit 0; fi
             sleep 1
           done
           cat /tmp/greensquare-preview.log
@@ -62,7 +60,8 @@ jobs:
 
       - name: Browser and responsive QA
         run: |
-          cat > /tmp/decision-frame-v2-qa.mjs <<'EOF'
+          mkdir -p qa/decision-frame-v2
+          cat > qa/decision-frame-v2/run.mjs <<'EOF'
           import { chromium } from 'playwright';
           import fs from 'node:fs';
           import path from 'node:path';
@@ -75,7 +74,6 @@ jobs:
           ];
           const output = 'qa/decision-frame-v2';
           fs.mkdirSync(output, { recursive: true });
-
           const browser = await chromium.launch();
           const results = [];
           let failed = false;
@@ -86,7 +84,6 @@ jobs:
               const page = await context.newPage();
               const pageErrors = [];
               page.on('pageerror', error => pageErrors.push(String(error)));
-
               const response = await page.goto(base + route, { waitUntil: 'networkidle' });
               const status = response?.status() ?? 0;
               const h1Count = await page.locator('h1').count();
@@ -99,31 +96,19 @@ jobs:
               }));
               const horizontalOverflow = geometry.scrollWidth > geometry.clientWidth + 2;
               const bodyText = await page.locator('body').innerText();
-
               if (route === '/decision-frame/' || route === '/product/' || route === '/') {
-                if (!/beta/i.test(bodyText)) {
-                  pageErrors.push('Public V2 launch surface does not visibly identify the product as beta');
-                }
+                if (!/beta/i.test(bodyText)) pageErrors.push('Public V2 launch surface does not visibly identify the product as beta');
               }
-
               if (route === '/decision-frame/' || route === '/product/') {
-                if (/one-page six-question|opening six questions/i.test(bodyText)) {
-                  pageErrors.push('Obsolete Decision Frame V1 positioning detected');
-                }
-                const email = page.locator('input[type="email"]');
-                if (await email.count() < 1) pageErrors.push('Email acquisition input missing');
+                if (/one-page six-question|opening six questions/i.test(bodyText)) pageErrors.push('Obsolete Decision Frame V1 positioning detected');
+                if (await page.locator('input[type="email"]').count() < 1) pageErrors.push('Email acquisition input missing');
               }
-
-              if (route === '/decision-frame/') {
-                if (!/historical|earlier GreenSquare|earlier.*method/i.test(bodyText)) {
-                  pageErrors.push('Historical benchmark boundary is not visible on Decision Frame page');
-                }
+              if (route === '/decision-frame/' && !/historical|earlier GreenSquare|earlier.*method/i.test(bodyText)) {
+                pageErrors.push('Historical benchmark boundary is not visible on Decision Frame page');
               }
-
               const safeRoute = route === '/' ? 'home' : route.replaceAll('/', '-').replace(/^-|-$/g, '');
               const screenshot = path.join(output, `${safeRoute}-${viewport.name}.png`);
               await page.screenshot({ path: screenshot, fullPage: true });
-
               const passed = status === 200 && h1Visible && !horizontalOverflow && pageErrors.length === 0;
               if (!passed) failed = true;
               results.push({ route, viewport: viewport.name, status, h1Visible, horizontalOverflow, pageErrors, screenshot, ...geometry, passed });
@@ -131,60 +116,41 @@ jobs:
             }
             await context.close();
           }
-
           await browser.close();
           fs.writeFileSync(path.join(output, 'report.json'), JSON.stringify({ passed: !failed, results }, null, 2));
           console.log(JSON.stringify({ passed: !failed, results }, null, 2));
           if (failed) process.exit(1);
           EOF
-          node /tmp/decision-frame-v2-qa.mjs
+          node qa/decision-frame-v2/run.mjs
 
       - name: Check internal links
         run: |
           python - <<'PY'
-          import pathlib
-          import urllib.request
+          import pathlib, urllib.request
           from html.parser import HTMLParser
           from urllib.parse import urljoin, urlparse
-
-          base = 'http://127.0.0.1:4321/'
-          seeds = ['/', '/decision-frame/', '/product/', '/benchmark/']
-
+          base='http://127.0.0.1:4321/'; seeds=['/','/decision-frame/','/product/','/benchmark/']
           class Links(HTMLParser):
-              def __init__(self):
-                  super().__init__(); self.links=[]
-              def handle_starttag(self, tag, attrs):
-                  if tag == 'a':
-                      href = dict(attrs).get('href')
-                      if href: self.links.append(href)
-
+              def __init__(self): super().__init__(); self.links=[]
+              def handle_starttag(self,tag,attrs):
+                  if tag=='a':
+                      href=dict(attrs).get('href')
+                      if href:self.links.append(href)
           targets=set()
           for seed in seeds:
-              with urllib.request.urlopen(urljoin(base, seed), timeout=10) as r:
-                  html=r.read().decode('utf-8','replace')
-              parser=Links(); parser.feed(html)
-              for href in parser.links:
-                  absolute=urljoin(urljoin(base, seed), href)
-                  parsed=urlparse(absolute)
-                  if parsed.netloc == '127.0.0.1:4321':
-                      targets.add(parsed.path or '/')
-
+              with urllib.request.urlopen(urljoin(base,seed),timeout=10) as r: html=r.read().decode('utf-8','replace')
+              p=Links();p.feed(html)
+              for href in p.links:
+                  parsed=urlparse(urljoin(urljoin(base,seed),href))
+                  if parsed.netloc=='127.0.0.1:4321':targets.add(parsed.path or '/')
           failures=[]
           for target in sorted(targets):
               try:
-                  req=urllib.request.Request(urljoin(base,target), method='GET')
-                  with urllib.request.urlopen(req, timeout=10) as r:
-                      status=r.status
-                  if status >= 400: failures.append((target,status))
-              except Exception as exc:
-                  failures.append((target,str(exc)))
-
-          pathlib.Path('qa/decision-frame-v2/internal-links.txt').write_text(
-              '\n'.join(f'{target}\t{status}' for target,status in failures) if failures else 'PASS\n',
-              encoding='utf-8'
-          )
-          if failures:
-              raise SystemExit(f'Broken internal links: {failures}')
+                  with urllib.request.urlopen(urljoin(base,target),timeout=10) as r:status=r.status
+                  if status>=400:failures.append((target,status))
+              except Exception as exc:failures.append((target,str(exc)))
+          pathlib.Path('qa/decision-frame-v2/internal-links.txt').write_text('\n'.join(f'{t}\t{s}' for t,s in failures) if failures else 'PASS\n',encoding='utf-8')
+          if failures:raise SystemExit(f'Broken internal links: {failures}')
           print(f'PASS internal_links={len(targets)}')
           PY
 
