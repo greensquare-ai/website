@@ -1,0 +1,54 @@
+name: Astro 7 security upgrade
+
+on:
+  push:
+    branches:
+      - launch/decision-frame-v2
+    paths:
+      - '.github/workflows/astro7-security-upgrade.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: astro7-security-upgrade
+  cancel-in-progress: true
+
+jobs:
+  upgrade-test-commit:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout launch branch
+        uses: actions/checkout@v4
+        with:
+          ref: launch/decision-frame-v2
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install current patched Astro stack
+        run: npm install --save-exact astro@7.2.4 @astrojs/mdx@7.0.7 @astrojs/react@6.0.4 @astrojs/sitemap@3.7.3
+
+      - name: Build with upgraded stack
+        run: npm run build
+
+      - name: Production dependency security gate
+        run: npm audit --omit=dev --audit-level=high
+
+      - name: Commit tested dependency upgrade
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json
+          if git diff --cached --quiet; then
+            echo 'Dependency files already current'
+          else
+            git commit -m 'Upgrade Astro stack to patched current releases [skip ci]'
+            git push origin HEAD:launch/decision-frame-v2
+          fi
