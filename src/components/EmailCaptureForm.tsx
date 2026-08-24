@@ -30,7 +30,7 @@ function campaignMetadata() {
 
 export default function EmailCaptureForm({
   buttonLabel = 'Email me the Decision Frame beta',
-  fineprint = 'Confirm your address to receive the PDF and occasional GreenSquare updates. Unsubscribe at any time.',
+  fineprint = 'Confirm your address to receive Decision Frame V2 beta and occasional GreenSquare updates. Unsubscribe at any time.',
   dark = false,
 }: Props) {
   const [email, setEmail] = useState('');
