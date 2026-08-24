@@ -6,7 +6,7 @@ const KIT_FORM_ENDPOINT = 'https://api.convertkit.com/v3/forms/9283111/subscribe
 // same key ConvertKit browser embeds include in page source.
 const KIT_PUBLIC_API_KEY = 'm707fr5_cPA1bExcvMKoEQ';
 const DECISION_FRAME_CAMPAIGN = 'decision-frame-v2';
-const DECISION_FRAME_VERSION = '2.0';
+const DECISION_FRAME_VERSION = '2.0-beta.2';
 
 export interface Props {
   buttonLabel?: string;
@@ -29,7 +29,7 @@ function campaignMetadata() {
 }
 
 export default function EmailCaptureForm({
-  buttonLabel = 'Email me the Decision Frame',
+  buttonLabel = 'Email me the Decision Frame beta',
   fineprint = 'Confirm your address to receive the PDF and occasional GreenSquare updates. Unsubscribe at any time.',
   dark = false,
 }: Props) {
@@ -77,7 +77,7 @@ export default function EmailCaptureForm({
     return (
       <div className="field-row-wrapper" style={{ minHeight: '4.75rem' }}>
         <p className="form-status form-status--success" role="status">
-          Check your inbox and confirm your address. The Decision Frame will arrive immediately after.
+          Check your inbox and confirm your address. Decision Frame V2 beta will arrive immediately after.
         </p>
       </div>
     );
@@ -88,7 +88,7 @@ export default function EmailCaptureForm({
       <form
         className={`field-row ${leaving ? 'is-leaving' : ''}`}
         onSubmit={handleSubmit}
-        aria-label="Get the free Decision Frame"
+        aria-label="Get the free Decision Frame V2 beta"
       >
         <label htmlFor="email_address" className="sr-only">Email address</label>
         <input
