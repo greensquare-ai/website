@@ -2,6 +2,7 @@
 import { withBase } from '../lib/paths';
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
+import ThroughFlowHero from '../components/ThroughFlowHero.astro';
 import MethodFigure from '../components/research-figures/MethodFigure.astro';
 ---
 <BaseLayoutV2
@@ -9,32 +10,22 @@ import MethodFigure from '../components/research-figures/MethodFigure.astro';
   description="GreenSquare gives capable AI a disciplined professional judgement process for consequential business decisions, from the first material question to a traceable recommendation and execution path."
   current="home"
 >
-  <section class="v-masthead">
-    <div class="v-container v-masthead__grid">
-      <div class="v-masthead__copy v-reveal">
+  <section class="hero-split-section v-off hero">
+    <div class="v-container hero-split__grid">
+      <div class="hero-split__text v-reveal">
         <h1 class="v-display">Turn capable AI into a disciplined strategy partner.</h1>
-        <p class="v-lead">
+        <p class="v-lead" style="margin-top: var(--v-6);">
           GreenSquare gives capable AI a disciplined process for consequential business decisions. It frames the real
           choice, interrogates evidence, tests credible options and shows what supports the call.
         </p>
         <div class="hero-actions">
           <a class="v-btn v-btn--green" href={withBase('/decision-frame/')}>Get the free beta</a>
-          <a class="v-link v-masthead__secondary" href={withBase('/benchmark/')}>Read the benchmark</a>
+          <a class="v-btn v-btn--grey" href={withBase('/benchmark/')}>Read the benchmark</a>
         </div>
       </div>
-
-      <aside class="v-system-ledger v-reveal d1" aria-label="GreenSquare system summary">
-        <div class="v-system-ledger__head">
-          <span>System note / current release</span>
-          <span class="v-system-ledger__mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
-        </div>
-        <dl>
-          <div class="v-system-ledger__row"><dt>Product</dt><dd>Decision Frame V2</dd></div>
-          <div class="v-system-ledger__row"><dt>Method</dt><dd>Six adaptive decision states</dd></div>
-          <div class="v-system-ledger__row"><dt>Evidence</dt><dd>GIVEN · DERIVED · INFERRED · UNKNOWN</dd></div>
-          <div class="v-system-ledger__row"><dt>Accountability</dt><dd>The professional owns the call</dd></div>
-        </dl>
-      </aside>
+    </div>
+    <div class="hero-split__media v-reveal d1">
+      <ThroughFlowHero />
     </div>
   </section>
 
@@ -53,7 +44,7 @@ import MethodFigure from '../components/research-figures/MethodFigure.astro';
     </div>
   </section>
 
-  <section class="v-section v-editorial-quote">
+  <section class="v-section v-fill">
     <div class="v-container">
       <p class="v-quote v-reveal">The quality of a recommendation depends on the questions asked before it, the evidence beneath it and the conditions that could change it.</p>
     </div>
@@ -119,7 +110,7 @@ import MethodFigure from '../components/research-figures/MethodFigure.astro';
     </div>
   </section>
 
-  <section class="home-next v-off" aria-label="Get started">
+  <section class="home-next v-fill-2" aria-label="Get started">
     <div class="v-container home-next__inner">
       <div class="home-next__copy v-reveal">
         <h2 class="v-h2">Give it the problem. Let the method work out what to ask next.</h2>
@@ -137,16 +128,53 @@ import MethodFigure from '../components/research-figures/MethodFigure.astro';
 </BaseLayoutV2>
 
 <style>
-  .figure-section { padding-top: clamp(4rem, 7vw, 6rem); }
-  .figure-intro { max-width: 52rem; margin-bottom: clamp(2rem, 4vw, 3.25rem); }
+  .hero-split-section {
+    position: relative;
+    min-height: clamp(480px, 62vh, 680px);
+    display: flex;
+    overflow: hidden;
+  }
+  .hero-split__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    width: 100%;
+  }
+  .hero-split__text {
+    grid-column: 1;
+    max-width: 34rem;
+    padding-right: clamp(1.5rem, 4vw, 3.5rem);
+    padding-block: clamp(2.5rem, 5vh, 4rem);
+    position: relative;
+    z-index: 1;
+  }
+  .hero-actions { display: flex; gap: var(--v-4); align-items: center; flex-wrap: wrap; margin-top: var(--v-8); }
+  .hero-split__media {
+    position: absolute; top: 0; bottom: 0;
+    left: 50%;
+    right: 0;
+  }
+  .figure-section { padding-top: clamp(4rem, 7vw, 6.5rem); }
+  .figure-intro { max-width: 52rem; margin-bottom: clamp(2rem, 4vw, 3.5rem); }
   .figure-intro .v-h2 { margin-top: var(--v-3); }
   .figure-intro .v-measure { margin-top: var(--v-4); color: var(--v-ink-soft); }
-  .figure-frame { max-width: 1240px; }
-  .home-next { padding-block: clamp(4.5rem, 7vw, 6rem); border-top: 1px solid var(--v-line); }
-  .home-next__inner { display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(25rem, 1.05fr); gap: clamp(3rem, 8vw, 7rem); align-items: start; }
+  .figure-frame { max-width: 1320px; }
+  @media (max-width: 900px) {
+    .hero-split-section { min-height: 0; display: block; }
+    .hero-split__grid { grid-template-columns: 1fr; }
+    .hero-split__media { position: static; aspect-ratio: 16 / 9; }
+  }
+  @media (max-width: 640px) {
+    .hero-split__text { padding-block: var(--v-8); }
+    .hero-split__text .v-lead { margin-top: var(--v-4) !important; }
+    .hero-actions { margin-top: var(--v-6); }
+    .hero-split__media { aspect-ratio: 4 / 3; }
+  }
+  .home-next { padding-block: clamp(4.5rem, 8vw, 6.5rem); }
+  .home-next__inner { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(25rem, 1.1fr); gap: clamp(3rem, 8vw, 7rem); align-items: center; }
   .home-next__copy { max-width: 40rem; }
   .home-next__copy .v-lead { max-width: 48ch; margin-top: var(--v-4); color: var(--v-ink-soft); }
-  .home-next__action { width: min(100%, 35rem); justify-self: end; padding-top: 0.35rem; }
+  .home-next__action { width: min(100%, 35rem); justify-self: end; }
   .home-next__benchmark { display: inline-block; margin-top: var(--v-4); color: var(--v-green); }
   @media (max-width: 900px) {
     .home-next__inner { grid-template-columns: 1fr; gap: var(--v-8); }
