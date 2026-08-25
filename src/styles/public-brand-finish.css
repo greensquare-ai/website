@@ -59,11 +59,19 @@
 }
 
 .hero-actions {
-  gap: 10px;
+  gap: 14px;
 }
 
 .hero-actions .v-btn {
   min-width: 0;
+}
+
+.v-masthead__secondary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 9px 2px;
+  flex: 0 0 auto;
 }
 
 /* ---------- research masthead ---------- */
@@ -96,10 +104,7 @@
 
 .v-system-ledger {
   grid-column: 10 / -1;
-  align-self: stretch;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  align-self: end;
   min-width: 0;
   border-top: 1px solid var(--v-ink);
 }
@@ -481,6 +486,10 @@
 @media (max-width: 560px) {
   .v-masthead {
     padding-block: var(--v-8);
+  }
+
+  .v-masthead__copy .hero-actions {
+    align-items: flex-start;
   }
 
   .v-system-ledger__row {
