@@ -1,6 +1,8 @@
 ---
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
+import AdaptiveDecisionDemo from '../components/product-demo/AdaptiveDecisionDemo.tsx';
+import ExecutionPathDemo from '../components/product-demo/ExecutionPathDemo.tsx';
 
 const capabilities = [
   { n: '01', name: 'Frame', body: 'Clarifies the actual mandate, why the decision is active and what a good outcome means before moving to advice.' },
@@ -40,6 +42,17 @@ const capabilities = [
         happens before the answer. It controls how the model interrogates the situation, advances the reasoning and
         decides whether the evidence is strong enough to make the call.
       </p>
+    </div>
+  </section>
+
+  <section class="v-section demo-band">
+    <div class="v-container">
+      <div class="demo-intro v-reveal">
+        <p class="v-index">See the behaviour / illustrative scenario</p>
+        <h2 class="v-h2">The next question changes with the state of the decision.</h2>
+        <p class="v-measure">This is the product experience the file is designed to activate inside a capable model.</p>
+      </div>
+      <div class="v-reveal d1"><AdaptiveDecisionDemo client:visible /></div>
     </div>
   </section>
 
@@ -96,18 +109,13 @@ const capabilities = [
   </section>
 
   <section class="v-section">
-    <div class="v-container v-container--narrow">
-      <h2 class="v-h2">The output shows the state of the decision.</h2>
-      <div class="v-card v-reveal" style="margin-top: var(--v-6);">
-        <ul class="v-leadlist">
-          <li><strong>The mandate.</strong> What is actually being decided, why it is active and what success means.</li>
-          <li><strong>The evidence state.</strong> What is GIVEN, DERIVED, INFERRED and still UNKNOWN.</li>
-          <li><strong>The working view.</strong> The hypothesis, alternatives and assumption carrying the most risk.</li>
-          <li><strong>The options and scorecard.</strong> Relevant paths compared against the same decision criteria.</li>
-          <li><strong>The recommendation.</strong> The call, confidence, accepted trade-offs and what would change it.</li>
-          <li><strong>The execution path.</strong> The next action, owner, measures, evidence thresholds and review trigger.</li>
-        </ul>
+    <div class="v-container">
+      <div class="demo-intro v-reveal">
+        <p class="v-index">From recommendation to action</p>
+        <h2 class="v-h2">The decision carries its evidence threshold into execution.</h2>
+        <p class="v-measure">A material evidence gap becomes an owned action and a condition for committing or reopening the call.</p>
       </div>
+      <div class="v-reveal d1"><ExecutionPathDemo client:visible /></div>
     </div>
   </section>
 
@@ -133,4 +141,8 @@ const capabilities = [
   .hero-actions { display: flex; gap: var(--v-4); align-items: center; flex-wrap: wrap; margin-top: var(--v-8); }
   .evidence-boundary .v-quote { color: var(--v-white); }
   .evidence-boundary .v-small { color: var(--v-mist, #C9D8CD); }
+  .demo-band { padding-top: clamp(2rem, 4vw, 4rem); }
+  .demo-intro { max-width: 48rem; margin-bottom: clamp(2rem, 4vw, 3.5rem); }
+  .demo-intro .v-h2 { margin-top: var(--v-3); }
+  .demo-intro .v-measure { margin-top: var(--v-4); color: var(--v-ink-soft); }
 </style>

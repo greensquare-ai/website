@@ -1,0 +1,84 @@
+name: Public brand quality gate
+
+on:
+  pull_request:
+    branches:
+      - main
+      - launch/decision-frame-v2
+    paths:
+      - 'src/**'
+      - 'qa/public-brand/**'
+      - 'eslint.config.mjs'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/public-brand-quality-gate.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: public-brand-quality-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  engineering-and-brand-evidence:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install production project
+        run: npm ci
+
+      - name: Production build
+        run: npm run build
+
+      - name: Production dependency security gate
+        run: npm audit --omit=dev --audit-level=high
+
+      - name: Install QA-only React tooling
+        run: npm install --no-save --package-lock=false eslint@latest eslint-plugin-react-hooks@latest typescript-eslint@latest playwright@1.55.0
+
+      - name: React hooks lint gate
+        run: npx eslint "src/**/*.{ts,tsx}"
+
+      - name: React Doctor changed-code gate
+        run: npx -y react-doctor@latest --verbose --scope changed
+
+      - name: React Doctor design gate
+        run: npx -y react-doctor@latest design --verbose --scope changed
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Start Astro preview
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4321 > /tmp/greensquare-preview.log 2>&1 &
+          echo $! > /tmp/greensquare-preview.pid
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4321/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/greensquare-preview.log
+          exit 1
+
+      - name: Responsive product demo QA
+        run: node qa/public-brand/run.mjs
+
+      - name: Upload brand-gate evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-brand-quality-evidence
+          path: qa/public-brand/artifacts/
+          if-no-files-found: warn
+          retention-days: 14
