@@ -25,7 +25,7 @@ export default function EvidenceStateDemo() {
         <h3>A polished claim is not the same thing as a known fact.</h3>
         <p>GreenSquare keeps the provenance of material claims visible so an operator can inspect what the recommendation actually rests on.</p>
       </div>
-      <table className="pd-table">
+      <table className="pd-table pd-evidence__table">
         <thead>
           <tr>
             <th style={{ width: '32%' }}>Material claim</th>
@@ -45,6 +45,21 @@ export default function EvidenceStateDemo() {
           ))}
         </tbody>
       </table>
+      <div className="pd-evidence-mobile" aria-live="polite">
+        {rows.map((row, index) => (
+          <article className={`pd-evidence-mobile__record${index > step ? ' is-pending' : ''}${index === rows.length - 1 && step === rows.length - 1 ? ' is-load-bearing' : ''}`} key={row.claim}>
+            <div className="pd-evidence-mobile__head">
+              <span>Claim 0{index + 1}</span>
+              <strong>{index <= step ? row.state : 'Awaiting'}</strong>
+            </div>
+            <p className="pd-evidence-mobile__claim">{row.claim}</p>
+            <dl className="pd-evidence-mobile__detail">
+              <div><dt>Basis</dt><dd>{index <= step ? row.source : 'Awaiting classification'}</dd></div>
+              <div><dt>Implication</dt><dd>{index <= step ? row.implication : 'Not yet assessed'}</dd></div>
+            </dl>
+          </article>
+        ))}
+      </div>
       <div className="pd__footer-note">
         <p><strong>Decision condition:</strong> validate Customer 3 before an unconditional commitment.</p>
         <div className="pd__steps" aria-label="Evidence sequence">
