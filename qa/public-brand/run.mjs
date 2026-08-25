@@ -93,11 +93,14 @@ for (const viewport of viewports) {
       if (!visible || !sized) pageErrors.push(`Product demo not visibly sized: ${demoId}`);
       demoChecks.push({ demoId, present: true, visible, sized, box });
 
+      await page.addStyleTag({ content: '.v-nav { visibility: hidden !important; }' });
       await locator.screenshot({ path: path.join(output, `${route.name}-${demoId}-${viewport.name}.png`) });
+      await page.locator('style').last().evaluate((node) => node.remove());
     }
 
     await page.evaluate(() => window.scrollTo(0, 0));
     await page.waitForTimeout(100);
+    await page.addStyleTag({ content: '.v-nav { position: absolute !important; top: 0 !important; left: 0 !important; right: 0 !important; }' });
     const screenshot = path.join(output, `${route.name}-${viewport.name}.png`);
     await page.screenshot({ path: screenshot, fullPage: true });
 
