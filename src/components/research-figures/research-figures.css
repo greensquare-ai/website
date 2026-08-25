@@ -1,0 +1,423 @@
+.rf {
+  --rf-ink: var(--v-ink, #12140f);
+  --rf-soft: var(--v-ink-soft, #4f514b);
+  --rf-line: var(--v-line-strong, #a7a59d);
+  --rf-faint: var(--v-line, #dedad2);
+  --rf-green: var(--v-green, #133f26);
+  --rf-paper: var(--v-paper, #fff);
+  margin: 0;
+  color: var(--rf-ink);
+  font-family: var(--vf-body, 'IBM Plex Sans', Arial, sans-serif);
+}
+
+.rf * { box-sizing: border-box; }
+
+.rf__canvas {
+  position: relative;
+  min-height: 390px;
+  padding: clamp(2rem, 5vw, 4.5rem);
+  border: 1px solid var(--rf-faint);
+  background: #f7f8f8;
+  overflow: hidden;
+}
+
+.rf figcaption {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  gap: 1.25rem;
+  max-width: 74rem;
+  padding-top: 1rem;
+  color: var(--rf-soft);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.rf__fig-number {
+  color: var(--rf-ink);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.rf__kicker {
+  color: var(--rf-soft);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Figure 01 — method */
+.rf-method__human {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+  color: var(--rf-soft);
+  font-size: 0.86rem;
+}
+
+.rf-method__human strong {
+  display: block;
+  margin-top: 0.28rem;
+  color: var(--rf-ink);
+  font-weight: 600;
+}
+
+.rf-method__track {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0;
+}
+
+.rf-method__track::before {
+  content: '';
+  position: absolute;
+  top: 17px;
+  left: 4%;
+  right: 4%;
+  height: 1px;
+  background: var(--rf-line);
+}
+
+.rf-method__stage {
+  position: relative;
+  min-width: 0;
+  padding-right: 1rem;
+}
+
+.rf-method__node {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--rf-ink);
+  background: var(--rf-paper);
+}
+
+.rf-method__stage:nth-child(5) .rf-method__node {
+  border-color: var(--rf-green);
+  background: var(--rf-green);
+}
+
+.rf-method__index {
+  display: block;
+  margin-top: 1rem;
+  color: var(--rf-soft);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+}
+
+.rf-method__stage strong {
+  display: block;
+  margin-top: 0.35rem;
+  font-family: var(--vf-display, 'Space Grotesk', Arial, sans-serif);
+  font-size: clamp(0.98rem, 1.4vw, 1.15rem);
+  font-weight: 600;
+}
+
+.rf-method__stage p {
+  max-width: 18ch;
+  margin: 0.45rem 0 0;
+  color: var(--rf-soft);
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
+/* Figure 02 — adaptive questioning */
+.rf-adaptive__flow {
+  max-width: 64rem;
+  margin-inline: auto;
+}
+
+.rf-adaptive__question {
+  width: min(100%, 34rem);
+  margin-inline: auto;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--rf-line);
+  background: var(--rf-paper);
+  text-align: center;
+  font-family: var(--vf-display, 'Space Grotesk', Arial, sans-serif);
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.rf-adaptive__question--focus {
+  border-color: var(--rf-ink);
+}
+
+.rf-adaptive__stem {
+  width: 1px;
+  height: 42px;
+  margin-inline: auto;
+  background: var(--rf-line);
+}
+
+.rf-adaptive__branches {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(2rem, 7vw, 6rem);
+  padding-top: 30px;
+}
+
+.rf-adaptive__branches::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 25%;
+  right: 25%;
+  height: 1px;
+  background: var(--rf-line);
+}
+
+.rf-adaptive__branch {
+  position: relative;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--rf-faint);
+}
+
+.rf-adaptive__branch::before {
+  content: '';
+  position: absolute;
+  top: -31px;
+  left: 50%;
+  width: 1px;
+  height: 30px;
+  background: var(--rf-line);
+}
+
+.rf-adaptive__branch span {
+  display: block;
+  color: var(--rf-soft);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.rf-adaptive__branch strong {
+  display: block;
+  margin-top: 0.45rem;
+  max-width: 28ch;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.rf-adaptive__branch--signal {
+  border-top: 2px solid var(--rf-green);
+}
+
+.rf-adaptive__next {
+  width: min(100%, 36rem);
+  margin: clamp(2.5rem, 6vw, 4rem) auto 0;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--rf-ink);
+}
+
+.rf-adaptive__next span {
+  color: var(--rf-soft);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.rf-adaptive__next strong {
+  display: block;
+  margin-top: 0.45rem;
+  font-family: var(--vf-display, 'Space Grotesk', Arial, sans-serif);
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  line-height: 1.3;
+}
+
+/* Figure 03 — evidence discipline */
+.rf-evidence__header,
+.rf-evidence__row {
+  display: grid;
+  grid-template-columns: 8.5rem minmax(0, 1.25fr) minmax(0, 0.8fr);
+  gap: clamp(1rem, 3vw, 2.5rem);
+  align-items: start;
+}
+
+.rf-evidence__header {
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--rf-ink);
+  color: var(--rf-soft);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.rf-evidence__row {
+  padding: 1.15rem 0;
+  border-bottom: 1px solid var(--rf-faint);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.rf-evidence__state {
+  font-size: 0.73rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.rf-evidence__claim { font-weight: 500; }
+.rf-evidence__implication { color: var(--rf-soft); }
+
+.rf-evidence__row--signal {
+  position: relative;
+}
+
+.rf-evidence__row--signal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -1rem;
+  width: 3px;
+  background: var(--rf-green);
+}
+
+.rf-evidence__note {
+  max-width: 46rem;
+  margin: 1.4rem 0 0 auto;
+  color: var(--rf-soft);
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+.rf-evidence__note strong { color: var(--rf-ink); }
+
+/* Figure 04 — decision to action */
+.rf-action__path {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(1rem, 3vw, 2.5rem);
+}
+
+.rf-action__path::before {
+  content: '';
+  position: absolute;
+  top: 15px;
+  left: 4%;
+  right: 4%;
+  height: 1px;
+  background: var(--rf-line);
+}
+
+.rf-action__node {
+  position: relative;
+  z-index: 1;
+}
+
+.rf-action__marker {
+  display: block;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--rf-ink);
+  background: var(--rf-paper);
+}
+
+.rf-action__node:nth-child(3) .rf-action__marker {
+  border-color: var(--rf-green);
+  background: var(--rf-green);
+}
+
+.rf-action__node span:not(.rf-action__marker) {
+  display: block;
+  margin-top: 1rem;
+  color: var(--rf-soft);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.rf-action__node strong {
+  display: block;
+  margin-top: 0.35rem;
+  font-family: var(--vf-display, 'Space Grotesk', Arial, sans-serif);
+  font-size: clamp(1rem, 1.8vw, 1.25rem);
+  line-height: 1.25;
+}
+
+.rf-action__node p {
+  max-width: 24ch;
+  margin: 0.5rem 0 0;
+  color: var(--rf-soft);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.rf-action__reversal {
+  width: min(100%, 40rem);
+  margin: clamp(2.5rem, 6vw, 4rem) 0 0 auto;
+  padding-top: 0.9rem;
+  border-top: 2px solid var(--rf-green);
+  color: var(--rf-soft);
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+.rf-action__reversal strong { color: var(--rf-ink); }
+
+@media (max-width: 760px) {
+  .rf__canvas { min-height: 0; padding: 1.5rem 1.1rem; }
+  .rf figcaption { grid-template-columns: 1fr; gap: 0.35rem; }
+
+  .rf-method__human { display: grid; gap: 1rem; margin-bottom: 2rem; }
+  .rf-method__track { grid-template-columns: 1fr; gap: 0; }
+  .rf-method__track::before {
+    top: 16px;
+    bottom: 16px;
+    left: 16px;
+    right: auto;
+    width: 1px;
+    height: auto;
+  }
+  .rf-method__stage { min-height: 92px; padding: 0 0 1.2rem 3.4rem; }
+  .rf-method__node { position: absolute; left: 0; top: 0; }
+  .rf-method__index { margin-top: 0; }
+  .rf-method__stage p { max-width: 32ch; }
+
+  .rf-adaptive__branches { grid-template-columns: 1fr; gap: 1.5rem; padding-top: 0; }
+  .rf-adaptive__branches::before,
+  .rf-adaptive__branch::before { display: none; }
+  .rf-adaptive__branch { padding-left: 1rem; border-top: 0; border-left: 1px solid var(--rf-line); }
+  .rf-adaptive__branch--signal { border-left: 3px solid var(--rf-green); }
+  .rf-adaptive__next { margin-top: 2.25rem; }
+
+  .rf-evidence__header { display: none; }
+  .rf-evidence__row { grid-template-columns: 1fr; gap: 0.35rem; padding: 1rem 0; }
+  .rf-evidence__row--signal::before { left: -0.7rem; }
+  .rf-evidence__note { margin-left: 0; }
+
+  .rf-action__path { grid-template-columns: 1fr; gap: 0; }
+  .rf-action__path::before {
+    top: 15px;
+    bottom: 15px;
+    left: 15px;
+    right: auto;
+    width: 1px;
+    height: auto;
+  }
+  .rf-action__node { min-height: 116px; padding: 0 0 1.5rem 3.3rem; }
+  .rf-action__marker { position: absolute; left: 0; top: 0; }
+  .rf-action__node span:not(.rf-action__marker) { margin-top: 0; }
+  .rf-action__node p { max-width: 34ch; }
+  .rf-action__reversal { margin-left: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rf *, .rf *::before, .rf *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

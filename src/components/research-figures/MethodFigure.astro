@@ -1,0 +1,34 @@
+---
+import './research-figures.css';
+
+const stages = [
+  { n: '01', name: 'Mandate', body: 'Clarify what is actually being decided.' },
+  { n: '02', name: 'Evidence', body: 'Separate facts, derivations, inference and unknowns.' },
+  { n: '03', name: 'Hypothesis', body: 'Form a working view and identify what could change it.' },
+  { n: '04', name: 'Options', body: 'Compare genuinely distinct paths on the same criteria.' },
+  { n: '05', name: 'Decision', body: 'Make the call only when the evidence permits.' },
+  { n: '06', name: 'Execution', body: 'Carry thresholds and review conditions into action.' },
+];
+---
+<figure class="rf rf-method" data-research-figure="method" data-product-demo="method">
+  <div class="rf__canvas">
+    <div class="rf-method__human">
+      <div><span class="rf__kicker">Professional input</span><strong>A consequential business problem</strong></div>
+      <div><span class="rf__kicker">Professional accountability</span><strong>An inspectable decision and action path</strong></div>
+    </div>
+    <div class="rf-method__track" aria-label="GreenSquare decision method from mandate to execution">
+      {stages.map((stage) => (
+        <div class="rf-method__stage">
+          <span class="rf-method__node" aria-hidden="true"></span>
+          <span class="rf-method__index">{stage.n}</span>
+          <strong>{stage.name}</strong>
+          <p>{stage.body}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+  <figcaption>
+    <span class="rf__fig-number">Figure 01</span>
+    <span>GreenSquare structures the work between a problem and an accountable professional decision. The method is designed to improve the reasoning process, not replace the person who owns the call.</span>
+  </figcaption>
+</figure>

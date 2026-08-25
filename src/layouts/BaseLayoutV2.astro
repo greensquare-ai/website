@@ -24,7 +24,6 @@ const ogImage = new URL(withBase('/assets/og-image.png'), Astro.site).toString()
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <!-- Matches the sticky nav, which is what the browser chrome abuts, not the white page body. -->
     <meta name="theme-color" content="#10110f" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -39,8 +38,6 @@ const ogImage = new URL(withBase('/assets/og-image.png'), Astro.site).toString()
     <link rel="apple-touch-icon" href={withBase('/assets/apple-touch-icon.png')} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Manrope 400/500 and IBM Plex Mono carry the benchmark page's design language
-         (see benchmark.astro --f / --m). Without them that page falls back to system faces. -->
     <link
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap"
       rel="stylesheet"
@@ -55,6 +52,9 @@ const ogImage = new URL(withBase('/assets/og-image.png'), Astro.site).toString()
     <FooterV2 />
     <Analytics />
     <script>
+      import { track } from '@vercel/analytics';
+      import { readAttribution, attributionAnalyticsProperties } from '../lib/acquisitionAttribution';
+
       const io = new IntersectionObserver(
         (entries) => {
           for (const entry of entries) {
@@ -67,6 +67,26 @@ const ogImage = new URL(withBase('/assets/og-image.png'), Astro.site).toString()
         { threshold: 0.12 }
       );
       document.querySelectorAll('.v-reveal').forEach((el) => io.observe(el));
+
+      const figureIo = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            const figure = entry.target;
+            const figureId = figure.getAttribute('data-research-figure');
+            if (figureId) {
+              const attribution = readAttribution();
+              track('Research Figure Viewed', {
+                ...attributionAnalyticsProperties(attribution),
+                figure_id: figureId,
+              });
+            }
+            figureIo.unobserve(figure);
+          }
+        },
+        { threshold: 0.45 }
+      );
+      document.querySelectorAll('[data-research-figure]').forEach((figure) => figureIo.observe(figure));
 
       const nav = document.querySelector('.v-nav');
       if (nav) {

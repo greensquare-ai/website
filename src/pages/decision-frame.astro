@@ -1,55 +1,69 @@
 ---
-import { withBase } from '../lib/paths';
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
+import AdaptiveQuestioningFigure from '../components/research-figures/AdaptiveQuestioningFigure.astro';
+import DecisionToActionFigure from '../components/research-figures/DecisionToActionFigure.astro';
 
-const questions = [
-  { n: '1', q: 'What exactly are you deciding, and why now?', body: 'State the Decision in one sentence. Then name the event, deadline or pressure that made it active now.' },
-  { n: '2', q: 'What larger decision sits underneath it?', body: 'If the immediate choice disappeared, which bigger question would still need an answer?' },
-  { n: '3', q: 'Which option is missing?', body: 'Add a genuine third path. It may be a smaller commitment, a different sequence or keeping the current position.' },
-  { n: '4', q: 'Which assumption carries the decision?', body: 'Find the single Assumption that would change the recommendation if it proved wrong.' },
-  { n: '5', q: 'Which constraints have you verified?', body: 'Check the deadline, budget, policy, capacity and stakeholder positions you have been treating as fixed.' },
-  { n: '6', q: 'What do you know?', body: 'Mark each material claim as GIVEN, INFERRED or UNKNOWN. Keep the gaps visible.' },
+const capabilities = [
+  { n: '01', name: 'Frame', body: 'Clarifies the actual mandate, why the decision is active and what a good outcome means before moving to advice.' },
+  { n: '02', name: 'Inspect', body: 'Separates GIVEN, DERIVED, INFERRED and UNKNOWN, then exposes contradictions, inherited constraints and load-bearing assumptions.' },
+  { n: '03', name: 'Test', body: 'Forms a working view, asks what evidence could change it and keeps unresolved uncertainty visible instead of smoothing it away.' },
+  { n: '04', name: 'Compare', body: 'Develops genuinely relevant options and tests them against criteria established for the decision rather than the preferred answer.' },
+  { n: '05', name: 'Decide', body: 'Makes the call when the evidence permits. When it does not, it specifies the next evidence-producing decision and what result would change the call.' },
+  { n: '06', name: 'Execute', body: 'Turns the decision into proportionate actions, ownership, measures, evidence thresholds and review conditions.' },
 ];
 ---
 <BaseLayoutV2
-  title="The Decision Frame | Six questions before AI answers"
-  description="A free one-page worksheet with six questions to expose the real decision, test the assumption carrying the most risk and separate evidence from interpretation."
+  title="The Decision Frame beta | A portable decision system for AI"
+  description="The free Decision Frame V2 beta gives a capable AI model a disciplined method to interrogate a business decision, inspect evidence, compare options and make a traceable call."
   current="frame"
 >
   <section class="v-section v-off hero">
     <div class="v-container v-container--narrow v-reveal">
-      <h1 class="v-display">Frame the decision before AI answers it.</h1>
+      <p class="v-index">Decision Frame V2 / Free beta</p>
+      <h1 class="v-display" style="margin-top: var(--v-4);">Give it the problem. It works out what to ask next.</h1>
       <p class="v-lead" style="margin-top: var(--v-6);">
-        Many weak recommendations begin before the analysis. The decision is framed too narrowly, an Option is
-        treated as fixed or an Assumption goes untested. The Decision Frame is a free, one-page worksheet that
-        exposes those problems before you compare options.
+        The Decision Frame turns a capable AI model into a disciplined thinking partner. It clarifies the mandate,
+        interrogates evidence and assumptions, compares relevant options, makes the call when possible and turns it
+        into action.
       </p>
       <div class="hero-actions">
-        <a class="v-btn v-btn--green" href="#get-it">Get the one-page PDF</a>
-        <a class="v-btn v-btn--grey" href={withBase('/product/')}>See the complete process</a>
+        <a class="v-btn v-btn--green" href="#get-it">Get the free Decision Frame beta</a>
+        <a class="v-btn v-btn--grey" href="#how-it-works">See how it works</a>
       </div>
     </div>
   </section>
 
-  <section class="v-section">
+  <section class="v-section" id="how-it-works">
     <div class="v-container v-container--narrow v-reveal">
-      <h2 class="v-h2">The question you would rather skip is often the one that matters.</h2>
+      <h2 class="v-h2">Ordinary AI can answer the wrong decision very well.</h2>
       <p class="v-measure" style="margin-top: var(--v-5); color: var(--v-ink-soft);">
-        Work through the questions by hand, or paste them into Claude, ChatGPT or Gemini with the decision.
-        Answer in order. Resist smoothing over uncertainty or treating an unverified constraint as fixed.
+        A model will often accept the question, constraints and options it is given. The Decision Frame changes what
+        happens before the answer. It controls how the model interrogates the situation, advances the reasoning and
+        decides whether the evidence is strong enough to make the call.
       </p>
+    </div>
+  </section>
+
+  <section class="v-section figure-band">
+    <div class="v-container">
+      <div class="figure-intro v-reveal">
+        <p class="v-index">Figure 02 / Adaptive questioning</p>
+        <h2 class="v-h2">The method follows the decision, not a questionnaire.</h2>
+        <p class="v-measure">A single answer can change what the model needs to establish next. The point is not more questions; it is better sequencing of the questions that matter.</p>
+      </div>
+      <div class="v-reveal d1"><AdaptiveQuestioningFigure /></div>
     </div>
   </section>
 
   <section class="v-section v-fill">
     <div class="v-container">
-      <h2 class="v-h2">The six questions.</h2>
+      <h2 class="v-h2">A decision process that adapts to the problem.</h2>
       <div class="v-caplist">
-        {questions.map((item) => (
-          <div class="v-caprow v-reveal">
-            <span class="v-index">Question {item.n}</span>
-            <h3>{item.q}</h3>
+        {capabilities.map((item, index) => (
+          <div class={`v-caprow v-reveal${index > 0 ? ` d${Math.min(index, 3)}` : ''}`}>
+            <span class="v-index">State {item.n}</span>
+            <h3>{item.name}</h3>
             <p class="v-small v-cap-body">{item.body}</p>
           </div>
         ))}
@@ -58,34 +72,64 @@ const questions = [
   </section>
 
   <section class="v-section">
-    <div class="v-container v-container--narrow">
-      <h2 class="v-h2">The output is a clearer decision, not a longer document.</h2>
-      <div class="v-card v-reveal" style="margin-top: var(--v-6);">
-        <ul class="v-leadlist">
-          <li><strong>The Decision.</strong> One clear sentence that names the choice and why it must be made now.</li>
-          <li><strong>A wider option set.</strong> At least one credible path beyond the choices you started with.</li>
-          <li><strong>The critical Assumption.</strong> The belief that deserves the fastest test.</li>
-          <li><strong>An evidence map.</strong> A simple view of what is GIVEN, INFERRED and still UNKNOWN.</li>
-        </ul>
+    <div class="v-container v-split is-top">
+      <div class="v-reveal">
+        <h2 class="v-h2">One file. One conversation. No prompt engineering.</h2>
+        <p class="v-measure" style="margin-top: var(--v-5); color: var(--v-ink-soft);">
+          Download the Decision Frame, upload it to a capable AI model and give it the decision or business problem.
+          It should explain the method briefly, then begin with one focused question and adapt from there.
+        </p>
       </div>
-      <p class="v-measure" style="margin-top: var(--v-8); color: var(--v-ink-soft);">
-        The Decision Frame prepares the choice. <a href={withBase('/product/')}>The Decision</a> then interrogates
-        the context, compares the Options and produces the complete Decision Brief.
+      <div class="v-reveal d1">
+        <div class="v-readout">
+          <div class="v-readout__bar"><span class="v-readout__dot"></span> How to use it</div>
+          <div class="v-readout__body">
+            <ul class="v-spec__list">
+              <li><span class="n">1</span> Download the file</li>
+              <li><span class="n">2</span> Upload it to your AI</li>
+              <li><span class="n">3</span> Give it the problem</li>
+              <li><span class="n">4</span> Answer one focused question at a time</li>
+              <li><span class="n">5</span> Receive a traceable decision and execution path</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="v-section v-green evidence-boundary">
+    <div class="v-container v-container--narrow v-reveal">
+      <p class="v-quote">The moment to look for is simple: it knew what to ask next.</p>
+      <p class="v-small" style="margin-top: var(--v-5); max-width: 72ch;">
+        V2 is launching as a beta. The statement above describes the intended experience, not a quantified
+        performance result. The published 45-run benchmark covers an earlier GreenSquare decision method; fresh V2
+        cross-model validation and professional beta testing continue after launch.
       </p>
+    </div>
+  </section>
+
+  <section class="v-section">
+    <div class="v-container">
+      <div class="figure-intro v-reveal">
+        <p class="v-index">Figure 04 / Decision to action</p>
+        <h2 class="v-h2">A recommendation is not finished until its conditions are operational.</h2>
+        <p class="v-measure">The method carries the evidence threshold, next action and reversal condition forward so the user can act without losing the reasoning behind the call.</p>
+      </div>
+      <div class="v-reveal d1"><DecisionToActionFigure /></div>
     </div>
   </section>
 
   <section class="v-section v-green" id="get-it">
     <div class="v-container v-split is-top">
       <div class="v-reveal">
-        <h2 class="v-h2">Put the six questions beside your next decision.</h2>
+        <h2 class="v-h2">Put a stronger judgement process behind your next decision.</h2>
         <p class="v-lead" style="margin-top: var(--v-5);">
-          Enter your email and confirm the address. The one-page Decision Frame will arrive immediately after.
+          Enter your email and confirm the address. The free Decision Frame V2 beta will arrive immediately after confirmation.
         </p>
       </div>
       <div class="v-reveal d1">
         <div class="v-card">
-          <EmailCaptureForm client:visible buttonLabel="Email me the Decision Frame" />
+          <EmailCaptureForm client:visible buttonLabel="Email me the free beta" />
         </div>
       </div>
     </div>
@@ -95,4 +139,10 @@ const questions = [
 <style>
   .hero { padding-top: clamp(3rem, 6vh, 5rem); }
   .hero-actions { display: flex; gap: var(--v-4); align-items: center; flex-wrap: wrap; margin-top: var(--v-8); }
+  .evidence-boundary .v-quote { color: var(--v-white); }
+  .evidence-boundary .v-small { color: var(--v-mist, #C9D8CD); }
+  .figure-band { padding-top: clamp(2rem, 4vw, 4rem); }
+  .figure-intro { max-width: 52rem; margin-bottom: clamp(2rem, 4vw, 3.5rem); }
+  .figure-intro .v-h2 { margin-top: var(--v-3); }
+  .figure-intro .v-measure { margin-top: var(--v-4); color: var(--v-ink-soft); }
 </style>

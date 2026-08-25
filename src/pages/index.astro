@@ -3,10 +3,11 @@ import { withBase } from '../lib/paths';
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
 import ThroughFlowHero from '../components/ThroughFlowHero.astro';
+import MethodFigure from '../components/research-figures/MethodFigure.astro';
 ---
 <BaseLayoutV2
-  title="GreenSquare AI | Turn capable AI into a disciplined strategy partner"
-  description="GreenSquare gives Claude, ChatGPT and Gemini a disciplined strategy process for consequential business decisions, from the first material question to a defensible recommendation."
+  title="GreenSquare AI | Professional judgement for capable AI"
+  description="GreenSquare gives capable AI a disciplined professional judgement process for consequential business decisions, from the first material question to a traceable recommendation and execution path."
   current="home"
 >
   <section class="hero-split-section v-off hero">
@@ -14,17 +15,32 @@ import ThroughFlowHero from '../components/ThroughFlowHero.astro';
       <div class="hero-split__text v-reveal">
         <h1 class="v-display">Turn capable AI into a disciplined strategy partner.</h1>
         <p class="v-lead" style="margin-top: var(--v-6);">
-          GreenSquare gives Claude, ChatGPT and Gemini a disciplined process for consequential business decisions.
-          It frames the real choice, tests credible options and shows the evidence behind the call.
+          GreenSquare gives capable AI a disciplined process for consequential business decisions. It frames the real
+          choice, interrogates evidence, tests credible options and shows what supports the call.
         </p>
         <div class="hero-actions">
-          <a class="v-btn v-btn--green" href={withBase('/decision-frame/')}>Get the free Decision Frame</a>
+          <a class="v-btn v-btn--green" href={withBase('/decision-frame/')}>Get the free beta</a>
           <a class="v-btn v-btn--grey" href={withBase('/benchmark/')}>Read the benchmark</a>
         </div>
       </div>
     </div>
     <div class="hero-split__media v-reveal d1">
       <ThroughFlowHero />
+    </div>
+  </section>
+
+  <section class="v-section figure-section" aria-labelledby="method-figure-title">
+    <div class="v-container">
+      <div class="figure-intro v-reveal">
+        <p class="v-index">Research figure / decision method</p>
+        <h2 class="v-h2" id="method-figure-title">A judgement process designed around the professional who owns the call.</h2>
+        <p class="v-measure">
+          GreenSquare structures the work between a business problem and an accountable decision. The model supplies intelligence; the method determines what should be established before that intelligence becomes advice.
+        </p>
+      </div>
+      <div class="v-reveal d1 figure-frame">
+        <MethodFigure />
+      </div>
     </div>
   </section>
 
@@ -42,7 +58,7 @@ import ThroughFlowHero from '../components/ThroughFlowHero.astro';
           <span class="v-index">Frame</span>
           <h3>Find the question behind the question</h3>
           <p class="v-small v-cap-body">
-            The Decision asks for missing facts before offering advice. It checks whether the stated question is
+            The Decision Frame asks for missing facts before offering advice. It checks whether the stated question is
             the real decision and makes contradictions visible while they can still change the work.
           </p>
         </div>
@@ -50,16 +66,16 @@ import ThroughFlowHero from '../components/ThroughFlowHero.astro';
           <span class="v-index">Compare</span>
           <h3>Test credible options against the same criteria</h3>
           <p class="v-small v-cap-body">
-            It develops genuine alternatives, including keeping the current position. Each Option is then tested
-            against criteria fixed before the preferred answer is known.
+            It develops genuine alternatives, including keeping the current position. Each option is tested against
+            criteria fixed for the decision rather than criteria introduced to justify a preferred answer.
           </p>
         </div>
         <div class="v-caprow v-reveal d2">
           <span class="v-index">Substantiate</span>
-          <h3>Let a senior reader inspect the call</h3>
+          <h3>Keep the evidence and uncertainty inspectable</h3>
           <p class="v-small v-cap-body">
-            Material claims are marked GIVEN, DERIVED, INFERRED or UNKNOWN. The Decision Brief states the
-            Assumptions, trade-offs and conditions that would change the recommendation.
+            Material claims are marked GIVEN, DERIVED, INFERRED or UNKNOWN. The final synthesis keeps the assumptions,
+            trade-offs, evidence thresholds and conditions that would change the recommendation visible.
           </p>
         </div>
       </div>
@@ -71,10 +87,10 @@ import ThroughFlowHero from '../components/ThroughFlowHero.astro';
       <div class="v-reveal">
         <h2 class="v-h2">The current evidence is strongest on process discipline.</h2>
         <p class="v-lead" style="margin-top: var(--v-5);">
-          In a 45-run pre-registered test across two frontier models and three business cases, The Decision
-          consistently asked before advising, compared real Options and tagged its evidence. The benchmark does
-          not yet prove better judgement than an informed operator. The cases, protocol, scoring rubric and every
-          departure from the plan are published so readers can inspect that boundary for themselves.
+          In a 45-run pre-registered test across two frontier models and three business cases, the earlier GreenSquare
+          decision method consistently asked before advising, compared real options and tagged its evidence. Decision
+          Frame V2 is now launching separately as a beta; the historical benchmark is not a fresh quantitative test of
+          V2. Cross-model V2 validation continues after launch.
         </p>
         <a class="v-link" href={withBase('/benchmark/')} style="display:inline-block; margin-top: var(--v-6);">See what the benchmark supports, and what it does not</a>
       </div>
@@ -88,7 +104,7 @@ import ThroughFlowHero from '../components/ThroughFlowHero.astro';
             <div class="v-run"><div class="v-run__head"><span class="v-run__name">Transcripts</span><span class="v-run__val">Withheld</span></div></div>
             <div class="v-run"><div class="v-run__head"><span class="v-run__name">Results</span><span class="v-run__val">See benchmark</span></div></div>
           </div>
-          <div class="v-readout__foot">One evidence record / results and limitations on the benchmark page</div>
+          <div class="v-readout__foot">Historical benchmark / V2 beta validation continues after launch</div>
         </div>
       </div>
     </div>
@@ -97,14 +113,14 @@ import ThroughFlowHero from '../components/ThroughFlowHero.astro';
   <section class="home-next v-fill-2" aria-label="Get started">
     <div class="v-container home-next__inner">
       <div class="home-next__copy v-reveal">
-        <h2 class="v-h2">Start with the decision beneath the question.</h2>
+        <h2 class="v-h2">Give it the problem. Let the method work out what to ask next.</h2>
         <p class="v-lead">
-          Use the free Decision Frame to name the real choice, surface the assumption carrying the most risk and
-          separate evidence from interpretation in about ten minutes.
+          The free Decision Frame V2 beta is a portable decision system for a capable AI model. It moves from the
+          mandate through evidence, hypotheses and options to a traceable recommendation and proportionate execution path.
         </p>
       </div>
       <div class="home-next__action v-reveal d1">
-        <EmailCaptureForm client:visible buttonLabel="Email me the Decision Frame" />
+        <EmailCaptureForm client:visible buttonLabel="Email me the free beta" />
         <a class="v-link home-next__benchmark" href={withBase('/benchmark/')}>Review the evidence and limitations</a>
       </div>
     </div>
@@ -112,21 +128,20 @@ import ThroughFlowHero from '../components/ThroughFlowHero.astro';
 </BaseLayoutV2>
 
 <style>
-  /* Full-bleed split-screen hero: text left, Through-flow Passage right. */
   .hero-split-section {
     position: relative;
     min-height: clamp(480px, 62vh, 680px);
-    display: flex;             /* stretch the container to full band height */
+    display: flex;
     overflow: hidden;
   }
   .hero-split__grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;   /* divider sits at container centre = screen centre */
-    align-items: center;              /* vertically centre the text */
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
     width: 100%;
   }
   .hero-split__text {
-    grid-column: 1;                   /* text occupies the left half only */
+    grid-column: 1;
     max-width: 34rem;
     padding-right: clamp(1.5rem, 4vw, 3.5rem);
     padding-block: clamp(2.5rem, 5vh, 4rem);
@@ -136,9 +151,14 @@ import ThroughFlowHero from '../components/ThroughFlowHero.astro';
   .hero-actions { display: flex; gap: var(--v-4); align-items: center; flex-wrap: wrap; margin-top: var(--v-8); }
   .hero-split__media {
     position: absolute; top: 0; bottom: 0;
-    left: 50%;                        /* meets the text column's right edge exactly */
-    right: 0;                         /* full-bleed to the right viewport edge */
+    left: 50%;
+    right: 0;
   }
+  .figure-section { padding-top: clamp(4rem, 7vw, 6.5rem); }
+  .figure-intro { max-width: 52rem; margin-bottom: clamp(2rem, 4vw, 3.5rem); }
+  .figure-intro .v-h2 { margin-top: var(--v-3); }
+  .figure-intro .v-measure { margin-top: var(--v-4); color: var(--v-ink-soft); }
+  .figure-frame { max-width: 1320px; }
   @media (max-width: 900px) {
     .hero-split-section { min-height: 0; display: block; }
     .hero-split__grid { grid-template-columns: 1fr; }
