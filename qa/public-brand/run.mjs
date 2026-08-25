@@ -18,6 +18,15 @@ const viewports = [
   { name: 'mobile', width: 390, height: 844 },
 ];
 
+function isExpectedLocalPreviewMiss(url) {
+  try {
+    const parsed = new URL(url);
+    return parsed.pathname.startsWith('/_vercel/insights/');
+  } catch {
+    return false;
+  }
+}
+
 const browser = await chromium.launch();
 const results = [];
 let failed = false;
@@ -28,9 +37,17 @@ for (const viewport of viewports) {
   for (const route of routes) {
     const page = await context.newPage();
     const pageErrors = [];
+
     page.on('pageerror', (error) => pageErrors.push(`pageerror: ${String(error)}`));
     page.on('console', (message) => {
-      if (message.type() === 'error') pageErrors.push(`console: ${message.text()}`);
+      if (message.type() === 'error' && !/^Failed to load resource:/i.test(message.text())) {
+        pageErrors.push(`console: ${message.text()}`);
+      }
+    });
+    page.on('response', (response) => {
+      if (response.status() >= 400 && !isExpectedLocalPreviewMiss(response.url())) {
+        pageErrors.push(`response ${response.status()}: ${response.url()}`);
+      }
     });
 
     const response = await page.goto(`${base}${route.path}`, { waitUntil: 'networkidle' });
@@ -51,34 +68,36 @@ for (const viewport of viewports) {
         pageErrors.push(`Missing product demo: ${demoId}`);
         continue;
       }
+
       await locator.scrollIntoViewIfNeeded();
-      await page.waitForTimeout(120);
+      await page.waitForTimeout(100);
+
+      const stepButtons = locator.locator('.pd__step');
+      const stepCount = await stepButtons.count();
+      if (stepCount > 0) await stepButtons.nth(stepCount - 1).click();
+
+      if (demoId === 'option-scorecard') {
+        await locator.getByRole('button', { name: 'Retention confirmed' }).click();
+        const recommendation = await locator.locator('.pd-recommendation').innerText();
+        if (!/Preferred: Acquire now/i.test(recommendation)) pageErrors.push('Option scorecard did not react to changed evidence');
+      }
+
+      if (demoId === 'adaptive-decision') {
+        const question = await locator.locator('.pd__question').innerText();
+        if (!/what result would be strong enough/i.test(question)) pageErrors.push('Adaptive demo did not reach the selected decision state');
+      }
+
       const box = await locator.boundingBox();
       const visible = await locator.isVisible();
       const sized = Boolean(box && box.width >= Math.min(300, viewport.width - 32) && box.height >= 160);
       if (!visible || !sized) pageErrors.push(`Product demo not visibly sized: ${demoId}`);
       demoChecks.push({ demoId, present: true, visible, sized, box });
+
+      await locator.screenshot({ path: path.join(output, `${route.name}-${demoId}-${viewport.name}.png`) });
     }
 
-    if (route.name === 'home') {
-      const demo = page.locator('[data-product-demo="adaptive-decision"]');
-      await demo.scrollIntoViewIfNeeded();
-      const steps = demo.locator('.pd__step');
-      if (await steps.count() >= 5) {
-        await steps.nth(4).click();
-        const question = await demo.locator('.pd__question').innerText();
-        if (!/what result would be strong enough/i.test(question)) pageErrors.push('Adaptive demo did not reach the selected decision state');
-      }
-    }
-
-    if (route.name === 'product') {
-      const scorecard = page.locator('[data-product-demo="option-scorecard"]');
-      await scorecard.scrollIntoViewIfNeeded();
-      await scorecard.getByRole('button', { name: 'Retention confirmed' }).click();
-      const recommendation = await scorecard.locator('.pd-recommendation').innerText();
-      if (!/Preferred: Acquire now/i.test(recommendation)) pageErrors.push('Option scorecard did not react to changed evidence');
-    }
-
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await page.waitForTimeout(100);
     const screenshot = path.join(output, `${route.name}-${viewport.name}.png`);
     await page.screenshot({ path: screenshot, fullPage: true });
 
