@@ -3,7 +3,7 @@ import { withBase } from '../lib/paths';
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
 import ThroughFlowHero from '../components/ThroughFlowHero.astro';
-import AdaptiveDecisionDemo from '../components/product-demo/AdaptiveDecisionDemo.tsx';
+import MethodFigure from '../components/research-figures/MethodFigure.astro';
 ---
 <BaseLayoutV2
   title="GreenSquare AI | Professional judgement for capable AI"
@@ -29,17 +29,17 @@ import AdaptiveDecisionDemo from '../components/product-demo/AdaptiveDecisionDem
     </div>
   </section>
 
-  <section class="v-section demo-section" aria-labelledby="adaptive-demo-title">
+  <section class="v-section figure-section" aria-labelledby="method-figure-title">
     <div class="v-container">
-      <div class="demo-intro v-reveal">
-        <p class="v-index">Product demonstration / illustrative scenario</p>
-        <h2 class="v-h2" id="adaptive-demo-title">The difference is visible before the answer.</h2>
+      <div class="figure-intro v-reveal">
+        <p class="v-index">Research figure / decision method</p>
+        <h2 class="v-h2" id="method-figure-title">A judgement process designed around the professional who owns the call.</h2>
         <p class="v-measure">
-          Watch the same acquisition decision become better defined as each answer changes what GreenSquare needs to ask next.
+          GreenSquare structures the work between a business problem and an accountable decision. The model supplies intelligence; the method determines what should be established before that intelligence becomes advice.
         </p>
       </div>
-      <div class="v-reveal d1 demo-frame">
-        <AdaptiveDecisionDemo client:visible />
+      <div class="v-reveal d1 figure-frame">
+        <MethodFigure />
       </div>
     </div>
   </section>
@@ -154,11 +154,11 @@ import AdaptiveDecisionDemo from '../components/product-demo/AdaptiveDecisionDem
     left: 50%;
     right: 0;
   }
-  .demo-section { padding-top: clamp(4rem, 7vw, 6.5rem); }
-  .demo-intro { max-width: 48rem; margin-bottom: clamp(2rem, 4vw, 3.5rem); }
-  .demo-intro .v-h2 { margin-top: var(--v-3); }
-  .demo-intro .v-measure { margin-top: var(--v-4); color: var(--v-ink-soft); }
-  .demo-frame { max-width: 1320px; }
+  .figure-section { padding-top: clamp(4rem, 7vw, 6.5rem); }
+  .figure-intro { max-width: 52rem; margin-bottom: clamp(2rem, 4vw, 3.5rem); }
+  .figure-intro .v-h2 { margin-top: var(--v-3); }
+  .figure-intro .v-measure { margin-top: var(--v-4); color: var(--v-ink-soft); }
+  .figure-frame { max-width: 1320px; }
   @media (max-width: 900px) {
     .hero-split-section { min-height: 0; display: block; }
     .hero-split__grid { grid-template-columns: 1fr; }
