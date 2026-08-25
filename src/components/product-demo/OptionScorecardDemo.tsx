@@ -54,7 +54,7 @@ export default function OptionScorecardDemo() {
           </div>
         </div>
       </div>
-      <div className="pd-score" aria-live="polite">
+      <div className="pd-score pd-score-desktop" aria-live="polite">
         <div className="pd-score__grid">
           <div className="pd-score__cell is-head is-label">Criterion / weight</div>
           {options.map((option, index) => <div className={`pd-score__cell is-head${index === outcome.preferred ? ' is-preferred' : ''}`} key={option}>{option}</div>)}
@@ -71,6 +71,31 @@ export default function OptionScorecardDemo() {
             ];
           })}
         </div>
+      </div>
+      <div className="pd-score-mobile" aria-live="polite">
+        {options.map((option, optionIndex) => {
+          const preferred = optionIndex === outcome.preferred;
+          return (
+            <section className={`pd-score-mobile__option${preferred ? ' is-preferred' : ''}`} key={option}>
+              <div className="pd-score-mobile__head">
+                <span>Option 0{optionIndex + 1}</span>
+                <strong>{option}</strong>
+                <span>{preferred ? 'Preferred' : 'Compared'}</span>
+              </div>
+              <div className="pd-score-mobile__criteria">
+                {criteria.map((criterion) => {
+                  const values = scenario === 'current' ? criterion.current : criterion.confirmed;
+                  return (
+                    <div className="pd-score-mobile__criterion" key={criterion.label}>
+                      <span>{criterion.label} · {criterion.weight}</span>
+                      <strong>{values[optionIndex]}</strong>
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+          );
+        })}
       </div>
       <div className="pd-recommendation">
         <strong>Preferred: {outcome.label}</strong>
