@@ -85,13 +85,13 @@ export default function AdaptiveDecisionDemo() {
                 key={stage}
               >
                 <span className="pd__stage-index">0{index + 1}</span>
-                {stage}
+                <span className="pd__stage-name">{stage}</span>
               </div>
             ))}
           </div>
 
           <div className="pd__conversation">
-            <p className="pd__label">GreenSquare asks next</p>
+            <p className="pd__label">State 0{state.stage + 1} / {stages[state.stage]} · GreenSquare asks next</p>
             <p className="pd__question" aria-live="polite">{state.question}</p>
             <p className="pd__answer"><strong>Operator:</strong> {state.answer}</p>
             <div className="pd__finding">
