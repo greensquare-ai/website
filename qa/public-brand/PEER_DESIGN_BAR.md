@@ -1,27 +1,103 @@
-# GreenSquare peer design bar
+# GreenSquare peer design reference brief
 
-**Status:** governing reference for the public website visual finish.
+**Status:** saved reference brief only. Not an implemented visual direction.
 
-This file supplements `BRAND_CAPITAL_GATE.md`. It does not create a second design system. It defines the external quality bar and the role each reference is allowed to play.
+This document records the validated quality bar and source library for a future GreenSquare website design pass. It does not authorise the rejected 25 August 2026 implementation and must not be treated as a visual template.
 
 ## Objective
 
 GreenSquare should be credible beside Google DeepMind, Linear, Stripe, ElevenLabs, Anthropic and IBM research/product surfaces without imitating any of them.
 
-The target is not visual novelty. It is clarity, beautiful execution, evidence-led communication and the finish expected from a globally credible technology and professional organisation.
+The target is not visual novelty or “premium AI” styling. It is clarity, beautiful execution, evidence-led communication and the finish expected from a globally credible technology and professional organisation.
 
-## Reference hierarchy
+The core principle is:
 
-### 1. GreenSquare V4: identity and semantics
+> The design should be a consequence of what GreenSquare makes. Evidence, judgement structure, research, product behaviour and professional accountability should supply the visual material. Brand devices frame that substance rather than replace it.
+
+## Validated peer set
+
+Primary benchmark set:
+
+- Google DeepMind / Google Research
+- Linear
+- Stripe
+- ElevenLabs
+- Anthropic
+- IBM / Carbon
+
+These are quality references, not visual templates.
+
+## GitHub source library
+
+### Design-system discovery
+
+- Awesome Design Systems: https://github.com/alexpate/awesome-design-systems
+- MUI / Material UI: https://github.com/mui/material-ui
+
+Use these to understand the breadth, maturity and completeness expected of established design systems. Do not inherit their visual language by default.
+
+### Agent-readable brand analysis
+
+- Awesome Design MD: https://github.com/VoltAgent/awesome-design-md
+- Linear analysis: https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/linear.app/DESIGN.md
+- Stripe analysis: https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/stripe/DESIGN.md
+- ElevenLabs analysis: https://github.com/VoltAgent/awesome-design-md/blob/main/design-md/elevenlabs/DESIGN.md
+- IBM analysis: https://github.com/VoltAgent/awesome-design-md/tree/main/design-md/ibm
+- Resend analysis: https://github.com/VoltAgent/awesome-design-md/tree/main/design-md/resend
+- Mistral analysis: https://github.com/VoltAgent/awesome-design-md/tree/main/design-md/mistral.ai
+
+These files are valuable because they encode typography, spacing, colour, surface hierarchy and component behaviour in a form an agent can inspect. They are reference analyses, not licences to clone another company's identity.
+
+### Enterprise design-system discipline
+
+- IBM Carbon: https://github.com/carbon-design-system/carbon
+- GitHub Primer React: https://github.com/primer/react
+- Radix Primitives: https://github.com/radix-ui/primitives
+
+Use Carbon for system discipline, grid thinking, semantic colour, accessibility and data-heavy clarity. Use Primer as another example of an institutional system built for real product complexity. Use Radix as an interaction/accessibility foundation that imposes minimal visual identity.
+
+### Implementation and QA
+
+- Vercel Agent Skills: https://github.com/vercel-labs/agent-skills
+- Vercel Web Design Guidelines skill: https://github.com/vercel-labs/agent-skills/tree/main/skills/web-design-guidelines
+- Microsoft Skills: https://github.com/microsoft/skills
+- Microsoft frontend design review skill: https://github.com/microsoft/skills/tree/main/.github/skills/frontend-design-review
+- shadcn/ui: https://github.com/shadcn-ui/ui
+
+Use Vercel and Microsoft primarily for implementation quality, accessibility, craft and QA. shadcn is an implementation reference only. Its default aesthetic is explicitly not a GreenSquare visual reference.
+
+### Anthropic boundary
+
+- Anthropic Skills: https://github.com/anthropics/skills
+- Frontend design skill: https://github.com/anthropics/skills/tree/main/skills/frontend-design
+
+The Anthropic frontend-design skill may be used only as a **critic**, not as GreenSquare art direction.
+
+Useful principles include:
+
+- structure is information;
+- decorative elements should encode something true;
+- critique before shipping;
+- typography and spacing require deliberate choices;
+- remove an unnecessary visual element before adding one.
+
+Do **not** use the skill's aesthetic suggestions, font recommendations, layout tendencies, signature motifs or generic anti-template responses as design inputs. Many agents use the same skill. Following its aesthetics risks the same generative-design convergence GreenSquare is trying to avoid.
+
+## What to learn from each peer
+
+### GreenSquare V4: identity and semantics
 
 GreenSquare V4 remains authoritative for identity, typography, colour, evidence semantics and the Through-flow visual grammar.
 
-The V4 system must carry meaning. Pattern is secondary to information. Do not repeat Through-flow geometry as ambient decoration.
+The strongest idea in V4 is not decorative linework. It is that visual treatment can express epistemic and decision state. Evidence states, thresholds, assumptions, uncertainty, recommendation conditions and reversal logic are more valuable brand material than ambient pattern.
 
-### 2. Google DeepMind / Google Research: research clarity
+Through-flow should remain a secondary signature, used only where passage, boundary, movement or state genuinely matters.
+
+### Google DeepMind / Google Research: research clarity
 
 Learn from:
-- real research or product mechanisms as the visual material;
+
+- real research, mechanisms and outputs as the visual material;
 - sparse figures with one idea per figure;
 - strong captions and annotations;
 - generous but purposeful negative space;
@@ -30,107 +106,108 @@ Learn from:
 
 Do not copy Google typography, colour or illustration.
 
-### 3. Linear: precision and restraint
-
-Reference: `VoltAgent/awesome-design-md/design-md/linear.app/DESIGN.md`.
+### Linear: precision and restraint
 
 Learn from:
+
 - disciplined spacing and typography;
 - quiet surface hierarchy;
-- hairlines rather than shadows;
+- hairlines rather than effects;
 - one chromatic accent used sparingly;
 - product/evidence doing the visual work;
 - minimal marketing chrome.
 
-Do not copy Linear's dark theme or lavender accent.
+Do not copy Linear's dark theme, lavender accent or product UI conventions.
 
-### 4. Stripe: infrastructure credibility
-
-Reference: `VoltAgent/awesome-design-md/design-md/stripe/DESIGN.md`.
+### Stripe: infrastructure credibility
 
 Learn from:
+
 - confidence in dense information;
-- tabular/numeric discipline;
+- tabular and numeric discipline;
 - product proof and evidence integrated into the page;
-- a clear hierarchy between editorial content and technical detail;
+- hierarchy between editorial content and technical detail;
 - selective brand moments rather than continuous visual signalling.
 
-Do not copy Stripe's gradient mesh or colour system.
+Do not copy Stripe's gradients or colour system.
 
-### 5. ElevenLabs: content supplies the voltage
-
-Reference: `VoltAgent/awesome-design-md/design-md/elevenlabs/DESIGN.md`.
+### ElevenLabs: content supplies the voltage
 
 Learn from:
+
 - neutral architecture;
-- light editorial hierarchy;
+- editorial hierarchy;
 - quiet controls;
-- letting the actual product/output provide interest rather than decorating the shell.
+- allowing actual product/output to provide interest instead of decorating the shell.
 
-Do not copy its serif/editorial aesthetic or gradient orbs.
+Do not copy its gradient-orb or editorial-brand aesthetic.
 
-### 6. IBM Carbon: system discipline
+### Anthropic: institutional confidence
 
-Reference: `carbon-design-system/carbon` and the IBM analysis in `VoltAgent/awesome-design-md`.
+Learn from the public product/research posture:
+
+- confidence without SaaS gloss;
+- research and ideas before marketing decoration;
+- restraint around claims;
+- institutional rather than “AI startup” framing.
+
+Do not allow the widely used Anthropic frontend-design skill to determine GreenSquare's visual look.
+
+### IBM Carbon: system discipline
 
 Learn from:
+
 - explicit grids and spacing systems;
 - semantic colour;
 - accessible information hierarchy;
 - data-heavy clarity;
-- repeatable system behaviour.
+- repeatable behaviour across a large system.
 
 Do not make GreenSquare look like an IBM product.
 
-## Implementation references
+## Website references
 
-Use these as engineering and QA references, not as visual templates:
+Use the live sites as art-direction references alongside the GitHub source library:
 
-- `radix-ui/primitives`: accessible behaviour and interaction primitives.
-- `vercel-labs/agent-skills/skills/web-design-guidelines/SKILL.md`: interface QA and implementation correctness.
-- `microsoft/skills/.github/skills/frontend-design-review/SKILL.md`: final craft, friction and trust review.
-- `shadcn-ui/ui`: implementation examples only. Its default visual language is not a GreenSquare reference.
+- Google DeepMind Research: https://deepmind.google/research/
+- Google Labs Science: https://labs.google/science/
+- Linear: https://linear.app/
+- Stripe: https://stripe.com/
+- ElevenLabs: https://elevenlabs.io/
+- Anthropic: https://www.anthropic.com/
+- Resend: https://resend.com/
+- Mistral: https://mistral.ai/
+- Cursor: https://cursor.com/
 
-## Anthropic skill boundary
+## GreenSquare website composition principles
 
-`anthropics/skills/skills/frontend-design/SKILL.md` may be used only as a critic for principles such as:
-
-- structure is information;
-- decorative elements must encode something true;
-- self-critique before shipping;
-- typography and spacing require deliberate choices;
-- remove an unnecessary visual element before adding one.
-
-**Do not use the Anthropic skill as GreenSquare art direction.**
-
-Its aesthetic suggestions, font recommendations, layout tendencies, signature motifs and generic anti-template responses are not visual inputs. Many agents use the same skill, so following its aesthetics risks the same generative-design convergence GreenSquare is trying to avoid.
-
-## Website composition rules
-
-1. Evidence, product behaviour and reasoning structure are the primary visual material.
-2. A page should normally have one dominant visual idea, not one visual idea per section.
-3. Prefer typography, rules, alignment and whitespace before cards, containers or illustration.
+1. Evidence, product behaviour and reasoning structure should be the primary visual material.
+2. A page should usually have one governing visual idea, not a new visual trick in every section.
+3. Prefer typography, rules, alignment, imagery, real artefacts and whitespace before cards or decorative containers.
 4. Use cards only when the information is genuinely a bounded object.
 5. Avoid equal-sized panels for information of unequal importance.
-6. Do not use abstract AI imagery, glowing geometry, gradient meshes, floating cards, faux product windows or decorative technical complexity.
-7. Through-flow geometry is a signature, not wallpaper. Use it sparingly and only where it communicates passage, boundary, movement or state.
+6. Do not use abstract AI imagery, glowing geometry, gradient meshes, floating cards, faux product windows or decorative technical complexity to manufacture sophistication.
+7. Through-flow geometry is a signature, not wallpaper.
 8. Colour carries identity or semantics. It does not fill space because a composition feels empty.
-9. Motion is exceptional. Static-first is the default.
-10. The professional remains visibly accountable for the decision.
+9. Motion must explain something. Static-first is the default.
+10. Professional accountability should remain structurally visible.
+11. Real screenshots, outputs, research figures, data and artefacts should carry more visual authority than invented interface theatre.
+12. The site must be excellent before it is distinctive. Clarity, hierarchy, optical balance and craft are prerequisites.
 
-## Visual proportion
+## Visual proportion heuristic
 
-For public GreenSquare surfaces, use this as a judgement heuristic rather than a mechanical formula:
+Use this as a judgement heuristic, not a formula:
 
 - **80%** typography, information architecture, evidence and real product structure;
 - **15%** GreenSquare spatial/line grammar;
 - **5%** explicit brand signalling.
 
-If a page still looks distinctive after the logo, decorative geometry and colour are removed, the system is doing its job.
+The intent is to stop the brand layer from overpowering the substance.
 
 ## Explicit anti-patterns
 
 Reject:
+
 - abstract animated hero geometry as the primary value signal;
 - bento layouts without semantic need;
 - chunky paired CTAs with equal emphasis;
@@ -140,14 +217,22 @@ Reject:
 - boxed diagrams that would be clearer as editorial figures;
 - generic progress rails and numbered pills;
 - large empty areas created by fixed templates rather than content rhythm;
-- gradients, glows, blur or parallax used to signal AI;
+- gradients, glows, blur or parallax used merely to signal AI;
 - decorative motion;
-- any composition that looks recognisably generated from a common AI design prompt.
+- arbitrary dark-mode sections added for drama;
+- a page assembled from individually attractive components without one coherent composition;
+- any composition that looks recognisably generated from a common AI design prompt or shared agent skill.
 
-## Release question
+## Quality test
 
-Before release, ask:
+The website should pass three tests simultaneously:
 
-> If the GreenSquare logo were removed, would the typography, evidence treatment, figure design, hierarchy and spatial discipline still feel like one serious professional institution?
+1. **Clarity:** a sceptical professional immediately understands what GreenSquare is showing and why it matters.
+2. **Craft:** typography, spacing, imagery, interaction, responsiveness and micro-details are executed at the level of a well-funded global product company.
+3. **Ownability:** once the fundamentals are excellent, the evidence semantics, V4 language and content choices make the experience recognisably GreenSquare without decorative over-signalling.
 
-If not, the public Brand Capital Gate fails.
+Final question:
+
+> If the logo and obvious brand colour were removed, would the quality of the typography, information architecture, evidence treatment, imagery, interaction and composition still make this feel like the work of a serious design-literate institution?
+
+If not, it is not ready.
