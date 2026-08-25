@@ -18,34 +18,19 @@ const capabilities = [
   description="The free Decision Frame V2 beta gives a capable AI model a disciplined method to interrogate a business decision, inspect evidence, compare options and make a traceable call."
   current="frame"
 >
-  <section class="v-masthead">
-    <div class="v-container v-masthead__grid">
-      <div class="v-masthead__copy v-reveal">
-        <p class="v-index">Decision Frame V2 / Free beta</p>
-        <h1 class="v-display" style="margin-top: var(--v-4);">Give it the problem. It works out what to ask next.</h1>
-        <p class="v-lead">
-          The Decision Frame turns a capable AI model into a disciplined thinking partner. It clarifies the mandate,
-          interrogates evidence and assumptions, compares relevant options, makes the call when possible and turns it
-          into action.
-        </p>
-        <div class="hero-actions">
-          <a class="v-btn v-btn--green" href="#get-it">Get the free Decision Frame beta</a>
-          <a class="v-link v-masthead__secondary" href="#how-it-works">See how it works</a>
-        </div>
+  <section class="v-section v-off hero">
+    <div class="v-container v-container--narrow v-reveal">
+      <p class="v-index">Decision Frame V2 / Free beta</p>
+      <h1 class="v-display" style="margin-top: var(--v-4);">Give it the problem. It works out what to ask next.</h1>
+      <p class="v-lead" style="margin-top: var(--v-6);">
+        The Decision Frame turns a capable AI model into a disciplined thinking partner. It clarifies the mandate,
+        interrogates evidence and assumptions, compares relevant options, makes the call when possible and turns it
+        into action.
+      </p>
+      <div class="hero-actions">
+        <a class="v-btn v-btn--green" href="#get-it">Get the free Decision Frame beta</a>
+        <a class="v-btn v-btn--grey" href="#how-it-works">See how it works</a>
       </div>
-
-      <aside class="v-system-ledger v-reveal d1" aria-label="Decision Frame release summary">
-        <div class="v-system-ledger__head">
-          <span>Portable method / beta</span>
-          <span class="v-system-ledger__mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
-        </div>
-        <dl>
-          <div class="v-system-ledger__row"><dt>Input</dt><dd>A real business decision or problem</dd></div>
-          <div class="v-system-ledger__row"><dt>Interaction</dt><dd>One focused question at a time</dd></div>
-          <div class="v-system-ledger__row"><dt>Output</dt><dd>A traceable recommendation and action path</dd></div>
-          <div class="v-system-ledger__row"><dt>Control</dt><dd>Evidence, uncertainty and reversal conditions remain visible</dd></div>
-        </dl>
-      </aside>
     </div>
   </section>
 
@@ -152,10 +137,12 @@ const capabilities = [
 </BaseLayoutV2>
 
 <style>
-  .evidence-boundary .v-quote { color: var(--v-cream); }
-  .evidence-boundary .v-small { color: var(--v-cream-soft); }
-  .figure-band { padding-top: clamp(2.5rem, 4vw, 4rem); }
-  .figure-intro { max-width: 52rem; margin-bottom: clamp(2rem, 4vw, 3.25rem); }
+  .hero { padding-top: clamp(3rem, 6vh, 5rem); }
+  .hero-actions { display: flex; gap: var(--v-4); align-items: center; flex-wrap: wrap; margin-top: var(--v-8); }
+  .evidence-boundary .v-quote { color: var(--v-white); }
+  .evidence-boundary .v-small { color: var(--v-mist, #C9D8CD); }
+  .figure-band { padding-top: clamp(2rem, 4vw, 4rem); }
+  .figure-intro { max-width: 52rem; margin-bottom: clamp(2rem, 4vw, 3.5rem); }
   .figure-intro .v-h2 { margin-top: var(--v-3); }
   .figure-intro .v-measure { margin-top: var(--v-4); color: var(--v-ink-soft); }
 </style>
