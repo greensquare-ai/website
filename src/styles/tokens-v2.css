@@ -1,14 +1,12 @@
-/* GreenSquare AI public-site tokens.
-   Mirrors the approved design language: Space Grotesk headings, IBM Plex Sans
-   reading text, Manrope Semibold for the supplied wordmark, and a restrained
-   forest / black / white palette. */
+/* GreenSquare public-site tokens.
+   V4 identity with a research-led, editorial implementation layer. */
 :root {
   /* surfaces */
   --v-paper: #ffffff;
-  --v-off: #f5f5f5;
-  --v-fill: #efefec;
-  --v-fill-2: #e7e7e2;
-  --v-fill-3: #d8d8d1;
+  --v-off: #f7f7f4;
+  --v-fill: #f3f3ef;
+  --v-fill-2: #ecece6;
+  --v-fill-3: #deded6;
 
   /* identity */
   --v-green: #133f26;
@@ -26,14 +24,15 @@
   /* type and rules */
   --v-ink: #12140f;
   --v-ink-soft: #4f514b;
-  --v-ink-faint: #686b65;
+  --v-ink-faint: #696b65;
   --v-cream: #ffffff;
   --v-cream-soft: rgba(255, 255, 255, 0.82);
   --v-cream-faint: rgba(255, 255, 255, 0.62);
-  --v-line: #dedad2;
-  --v-line-strong: #a7a59d;
-  --v-line-green: rgba(255, 255, 255, 0.22);
-  --v-line-green-strong: rgba(255, 255, 255, 0.42);
+  --v-line: #deded7;
+  --v-line-strong: #9f9f96;
+  --v-line-ink: #2f312d;
+  --v-line-green: rgba(255, 255, 255, 0.2);
+  --v-line-green-strong: rgba(255, 255, 255, 0.4);
   --v-signal: var(--v-confirmed);
   --v-signal-on-green: #dff49f;
   --v-error: var(--v-risk);
@@ -42,23 +41,24 @@
   /* typography */
   --vf-display: 'Space Grotesk', Arial, sans-serif;
   --vf-body: 'IBM Plex Sans', Arial, sans-serif;
+  --vf-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   --vf-brand: 'Manrope', Arial, sans-serif;
 
-  /* larger reading text, quieter headings */
-  --vs-display: clamp(2.65rem, 4.5vw, 4.5rem);
-  --vs-h1: clamp(2.15rem, 3.5vw, 3.35rem);
-  --vs-h2: clamp(1.65rem, 2.5vw, 2.45rem);
-  --vs-h3: 1.25rem;
-  --vs-h4: 1.0625rem;
-  --vs-lead: clamp(1.18rem, 1.55vw, 1.4rem);
-  --vs-body: 1.075rem;
-  --vs-small: 0.98rem;
-  --vs-label: 0.82rem;
+  /* editorial scale: confident display, generous reading text */
+  --vs-display: clamp(2.8rem, 4.65vw, 4.7rem);
+  --vs-h1: clamp(2.2rem, 3.5vw, 3.4rem);
+  --vs-h2: clamp(1.7rem, 2.45vw, 2.4rem);
+  --vs-h3: 1.22rem;
+  --vs-h4: 1.05rem;
+  --vs-lead: clamp(1.18rem, 1.5vw, 1.38rem);
+  --vs-body: 1.04rem;
+  --vs-small: 0.95rem;
+  --vs-label: 0.78rem;
 
   /* layout */
-  --v-max: 1400px;
-  --v-gutter: clamp(22px, 4vw, 52px);
-  --v-section: clamp(4.5rem, 7vw, 7rem);
+  --v-max: 1280px;
+  --v-gutter: clamp(22px, 4vw, 56px);
+  --v-section: clamp(4rem, 6.5vw, 6.25rem);
 
   /* spacing */
   --v-1: 4px;
@@ -73,7 +73,7 @@
 
   /* motion */
   --v-ease: cubic-bezier(0.16, 1, 0.3, 1);
-  --v-fast: 150ms;
-  --v-mid: 280ms;
-  --v-slow: 560ms;
+  --v-fast: 140ms;
+  --v-mid: 220ms;
+  --v-slow: 420ms;
 }
