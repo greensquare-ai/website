@@ -18,33 +18,32 @@ const stages = [
   description="GreenSquare gives capable AI a disciplined professional judgement process: frame the mandate, inspect evidence, test assumptions, compare options, decide and execute."
   current="product"
 >
-  <section class="v-section v-off hero">
-    <div class="v-container">
-      <div class="v-split is-top">
-        <div class="v-reveal">
-          <h1 class="v-display">The model provides intelligence. GreenSquare controls how it is applied.</h1>
-          <p class="v-lead" style="margin-top: var(--v-6);">
-            Capable AI can research, analyse and write at speed. GreenSquare adds the professional judgement layer:
-            what should be clarified first, what evidence is sufficient, which assumptions deserve challenge, which
-            options are real and when the work is ready for a call.
-          </p>
-          <div class="hero-actions">
-            <a class="v-btn v-btn--green" href={withBase('/decision-frame/')}>Get the free beta</a>
-            <a class="v-btn v-btn--grey" href={withBase('/benchmark/')}>Review the evidence</a>
-          </div>
-        </div>
-        <div class="v-reveal d1">
-          <div class="v-readout">
-            <div class="v-readout__bar"><span class="v-readout__dot"></span> Decision Frame V2 / beta</div>
-            <div class="v-readout__body">
-              <ul class="v-spec__list">
-                {stages.map((stage) => <li><span class="n">{Number(stage.n)}</span> {stage.name}</li>)}
-              </ul>
-            </div>
-            <div class="v-readout__foot">One portable method / depth scales with the stakes</div>
-          </div>
+  <section class="v-masthead">
+    <div class="v-container v-masthead__grid">
+      <div class="v-masthead__copy v-reveal">
+        <h1 class="v-display">The model provides intelligence. GreenSquare controls how it is applied.</h1>
+        <p class="v-lead">
+          Capable AI can research, analyse and write at speed. GreenSquare adds the professional judgement layer:
+          what should be clarified first, what evidence is sufficient, which assumptions deserve challenge, which
+          options are real and when the work is ready for a call.
+        </p>
+        <div class="hero-actions">
+          <a class="v-btn v-btn--green" href={withBase('/decision-frame/')}>Get the free beta</a>
+          <a class="v-btn v-btn--grey" href={withBase('/benchmark/')}>Review the evidence</a>
         </div>
       </div>
+
+      <aside class="v-system-ledger v-reveal d1" aria-label="Decision Frame method summary">
+        <div class="v-system-ledger__head">
+          <span>Method note / Decision Frame V2</span>
+          <span class="v-system-ledger__mark" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+        </div>
+        <dl>
+          {stages.map((stage) => (
+            <div class="v-system-ledger__row"><dt>{stage.n}</dt><dd>{stage.name}</dd></div>
+          ))}
+        </dl>
+      </aside>
     </div>
   </section>
 
@@ -168,10 +167,8 @@ const stages = [
 </BaseLayoutV2>
 
 <style>
-  .hero { padding-top: clamp(3rem, 6vh, 5rem); }
-  .hero-actions { display: flex; gap: var(--v-4); align-items: center; flex-wrap: wrap; margin-top: var(--v-8); }
   .decision-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--v-8); }
-  .figure-intro { max-width: 52rem; margin-bottom: clamp(2rem, 4vw, 3.5rem); }
+  .figure-intro { max-width: 52rem; margin-bottom: clamp(2rem, 4vw, 3.25rem); }
   .figure-intro .v-h2 { margin-top: var(--v-3); }
   .figure-intro .v-measure { margin-top: var(--v-4); color: var(--v-ink-soft); }
   @media (max-width: 760px) { .decision-grid { grid-template-columns: 1fr; gap: var(--v-4); } }
