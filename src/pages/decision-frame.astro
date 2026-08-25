@@ -1,8 +1,8 @@
 ---
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
-import AdaptiveDecisionDemo from '../components/product-demo/AdaptiveDecisionDemo.tsx';
-import ExecutionPathDemo from '../components/product-demo/ExecutionPathDemo.tsx';
+import AdaptiveQuestioningFigure from '../components/research-figures/AdaptiveQuestioningFigure.astro';
+import DecisionToActionFigure from '../components/research-figures/DecisionToActionFigure.astro';
 
 const capabilities = [
   { n: '01', name: 'Frame', body: 'Clarifies the actual mandate, why the decision is active and what a good outcome means before moving to advice.' },
@@ -45,14 +45,14 @@ const capabilities = [
     </div>
   </section>
 
-  <section class="v-section demo-band">
+  <section class="v-section figure-band">
     <div class="v-container">
-      <div class="demo-intro v-reveal">
-        <p class="v-index">See the behaviour / illustrative scenario</p>
-        <h2 class="v-h2">The next question changes with the state of the decision.</h2>
-        <p class="v-measure">This is the product experience the file is designed to activate inside a capable model.</p>
+      <div class="figure-intro v-reveal">
+        <p class="v-index">Figure 02 / Adaptive questioning</p>
+        <h2 class="v-h2">The method follows the decision, not a questionnaire.</h2>
+        <p class="v-measure">A single answer can change what the model needs to establish next. The point is not more questions; it is better sequencing of the questions that matter.</p>
       </div>
-      <div class="v-reveal d1"><AdaptiveDecisionDemo client:visible /></div>
+      <div class="v-reveal d1"><AdaptiveQuestioningFigure /></div>
     </div>
   </section>
 
@@ -110,12 +110,12 @@ const capabilities = [
 
   <section class="v-section">
     <div class="v-container">
-      <div class="demo-intro v-reveal">
-        <p class="v-index">From recommendation to action</p>
-        <h2 class="v-h2">The decision carries its evidence threshold into execution.</h2>
-        <p class="v-measure">A material evidence gap becomes an owned action and a condition for committing or reopening the call.</p>
+      <div class="figure-intro v-reveal">
+        <p class="v-index">Figure 04 / Decision to action</p>
+        <h2 class="v-h2">A recommendation is not finished until its conditions are operational.</h2>
+        <p class="v-measure">The method carries the evidence threshold, next action and reversal condition forward so the user can act without losing the reasoning behind the call.</p>
       </div>
-      <div class="v-reveal d1"><ExecutionPathDemo client:visible /></div>
+      <div class="v-reveal d1"><DecisionToActionFigure /></div>
     </div>
   </section>
 
@@ -141,8 +141,8 @@ const capabilities = [
   .hero-actions { display: flex; gap: var(--v-4); align-items: center; flex-wrap: wrap; margin-top: var(--v-8); }
   .evidence-boundary .v-quote { color: var(--v-white); }
   .evidence-boundary .v-small { color: var(--v-mist, #C9D8CD); }
-  .demo-band { padding-top: clamp(2rem, 4vw, 4rem); }
-  .demo-intro { max-width: 48rem; margin-bottom: clamp(2rem, 4vw, 3.5rem); }
-  .demo-intro .v-h2 { margin-top: var(--v-3); }
-  .demo-intro .v-measure { margin-top: var(--v-4); color: var(--v-ink-soft); }
+  .figure-band { padding-top: clamp(2rem, 4vw, 4rem); }
+  .figure-intro { max-width: 52rem; margin-bottom: clamp(2rem, 4vw, 3.5rem); }
+  .figure-intro .v-h2 { margin-top: var(--v-3); }
+  .figure-intro .v-measure { margin-top: var(--v-4); color: var(--v-ink-soft); }
 </style>

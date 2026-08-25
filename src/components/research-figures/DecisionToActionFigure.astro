@@ -1,0 +1,29 @@
+---
+import './research-figures.css';
+
+const nodes = [
+  { label: 'Decision', title: 'Pursue a structured offer', body: 'Do not pay the full value case before retention is evidenced.' },
+  { label: 'Action', title: 'Obtain direct customer evidence', body: 'Test the three accounts carrying the majority of the value case.' },
+  { label: 'Threshold', title: '≥85% retained revenue', body: 'Commit only when year-one retention is contractually supported.' },
+  { label: 'Review', title: 'Reopen before signing', body: 'If the threshold fails, reprice, restructure or stop.' },
+];
+---
+<figure class="rf rf-action" data-research-figure="decision-to-action" data-product-demo="execution-path">
+  <div class="rf__canvas">
+    <div class="rf-action__path" aria-label="Decision carried into execution">
+      {nodes.map((node) => (
+        <div class="rf-action__node">
+          <span class="rf-action__marker" aria-hidden="true"></span>
+          <span>{node.label}</span>
+          <strong>{node.title}</strong>
+          <p>{node.body}</p>
+        </div>
+      ))}
+    </div>
+    <p class="rf-action__reversal"><strong>Reversal condition:</strong> if retained top-three revenue is below 85%, the current recommendation expires and the deal is reconsidered before signing.</p>
+  </div>
+  <figcaption>
+    <span class="rf__fig-number">Figure 04</span>
+    <span>A recommendation carries its evidence threshold into execution. The user can see what must happen next, what is sufficient, and what would reopen the call.</span>
+  </figcaption>
+</figure>

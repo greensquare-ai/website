@@ -22,15 +22,24 @@ Every public-facing change must satisfy `qa/public-brand/BRAND_CAPITAL_GATE.md` 
 
 Technical correctness is necessary but insufficient. Do not merge a public surface that looks like a generic AI-generated landing page, an indie SaaS starter or merely competent template-based design. The required standard is the craft, restraint and systems coherence expected from a globally credible, well-capitalised technology and professional organisation.
 
+For explanatory product visuals, GreenSquare uses a **research-grade, static-first visual language**. The governing principle is:
+
+> Explain the method. Show the evidence. Centre the human. Remove the interface.
+
+Use sparse figures, diagrams, annotations, charts and captions to make the reasoning architecture legible. One figure should communicate one mechanism or finding. Prefer white/light neutral grounds, thin rules, disciplined typography, generous negative space and GreenSquare green only where it carries meaning.
+
+Do not depict fictional GreenSquare software interfaces simply to make the product look technological. Avoid faux windows, dashboards, chat simulations, toolbars, progress rails, looping demos, decorative technical complexity and motion that does not explain causality. Human professional accountability must remain structurally visible in how the product is described and visualised.
+
 The gate is release blocking across:
 
 - art direction;
-- product fidelity;
+- research clarity;
+- product fidelity and human agency;
 - typography and composition;
 - motion and interaction; and
 - system consistency.
 
-All five dimensions must pass. Do not average away a design failure.
+All dimensions must pass. Do not average away a design failure.
 
 ## React quality controls
 

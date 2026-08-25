@@ -7,9 +7,9 @@ const output = 'qa/public-brand/artifacts';
 fs.mkdirSync(output, { recursive: true });
 
 const routes = [
-  { path: '/', name: 'home', demos: ['adaptive-decision'] },
-  { path: '/decision-frame/', name: 'decision-frame', demos: ['adaptive-decision', 'execution-path'] },
-  { path: '/product/', name: 'product', demos: ['evidence-state', 'option-scorecard'] },
+  { path: '/', name: 'home', figures: ['method'] },
+  { path: '/decision-frame/', name: 'decision-frame', figures: ['adaptive-questioning', 'decision-to-action'] },
+  { path: '/product/', name: 'product', figures: ['evidence-discipline'] },
 ];
 
 const viewports = [
@@ -59,42 +59,28 @@ for (const viewport of viewports) {
     }));
     const horizontalOverflow = geometry.scrollWidth > geometry.clientWidth + 2;
 
-    const demoChecks = [];
-    for (const demoId of route.demos) {
-      const locator = page.locator(`[data-product-demo="${demoId}"]`).first();
+    const figureChecks = [];
+    for (const figureId of route.figures) {
+      const locator = page.locator(`[data-research-figure="${figureId}"]`).first();
       const count = await locator.count();
       if (!count) {
-        demoChecks.push({ demoId, present: false });
-        pageErrors.push(`Missing product demo: ${demoId}`);
+        figureChecks.push({ figureId, present: false });
+        pageErrors.push(`Missing research figure: ${figureId}`);
         continue;
       }
 
       await locator.scrollIntoViewIfNeeded();
       await page.waitForTimeout(100);
-
-      const stepButtons = locator.locator('.pd__step');
-      const stepCount = await stepButtons.count();
-      if (stepCount > 0) await stepButtons.nth(stepCount - 1).click();
-
-      if (demoId === 'option-scorecard') {
-        await locator.getByRole('button', { name: 'Retention confirmed' }).click();
-        const recommendation = await locator.locator('.pd-recommendation').innerText();
-        if (!/Preferred: Acquire now/i.test(recommendation)) pageErrors.push('Option scorecard did not react to changed evidence');
-      }
-
-      if (demoId === 'adaptive-decision') {
-        const question = await locator.locator('.pd__question').innerText();
-        if (!/what result would be strong enough/i.test(question)) pageErrors.push('Adaptive demo did not reach the selected decision state');
-      }
-
       const box = await locator.boundingBox();
       const visible = await locator.isVisible();
-      const sized = Boolean(box && box.width >= Math.min(300, viewport.width - 32) && box.height >= 160);
-      if (!visible || !sized) pageErrors.push(`Product demo not visibly sized: ${demoId}`);
-      demoChecks.push({ demoId, present: true, visible, sized, box });
+      const sized = Boolean(box && box.width >= Math.min(300, viewport.width - 32) && box.height >= 180);
+      const captionVisible = await locator.locator('figcaption').isVisible().catch(() => false);
+      if (!visible || !sized) pageErrors.push(`Research figure not visibly sized: ${figureId}`);
+      if (!captionVisible) pageErrors.push(`Research figure caption missing: ${figureId}`);
+      figureChecks.push({ figureId, present: true, visible, sized, captionVisible, box });
 
       await page.addStyleTag({ content: '.v-nav { visibility: hidden !important; }' });
-      await locator.screenshot({ path: path.join(output, `${route.name}-${demoId}-${viewport.name}.png`) });
+      await locator.screenshot({ path: path.join(output, `${route.name}-${figureId}-${viewport.name}.png`) });
       await page.locator('style').last().evaluate((node) => node.remove());
     }
 
@@ -106,25 +92,23 @@ for (const viewport of viewports) {
 
     const passed = status === 200 && h1Visible && !horizontalOverflow && pageErrors.length === 0;
     if (!passed) failed = true;
-    results.push({ route: route.path, viewport: viewport.name, status, h1Visible, horizontalOverflow, demoChecks, pageErrors, passed });
+    results.push({ route: route.path, viewport: viewport.name, status, h1Visible, horizontalOverflow, figureChecks, pageErrors, passed });
     await page.close();
   }
 
   await context.close();
 }
 
-const reducedContext = await browser.newContext({ viewport: { width: 1440, height: 1000 }, reducedMotion: 'reduce' });
+const reducedContext = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' });
 const reducedPage = await reducedContext.newPage();
-await reducedPage.goto(`${base}/`, { waitUntil: 'networkidle' });
-const adaptive = reducedPage.locator('[data-product-demo="adaptive-decision"]');
-await adaptive.scrollIntoViewIfNeeded();
-await reducedPage.waitForTimeout(150);
-const reducedFinalStep = await adaptive.locator('.pd__step.is-active').innerText().catch(() => '');
-if (reducedFinalStep !== '05') {
+await reducedPage.goto(`${base}/decision-frame/`, { waitUntil: 'networkidle' });
+const reducedFigures = await reducedPage.locator('[data-research-figure]').count();
+const reducedOverflow = await reducedPage.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 2);
+if (reducedFigures < 2 || reducedOverflow) {
   failed = true;
-  results.push({ route: '/', viewport: 'reduced-motion', passed: false, pageErrors: [`Reduced-motion final state expected 05, received ${reducedFinalStep || 'none'}`] });
+  results.push({ route: '/decision-frame/', viewport: 'reduced-motion', passed: false, pageErrors: [`Expected 2 research figures with no overflow; received ${reducedFigures} figure(s), overflow=${reducedOverflow}`] });
 } else {
-  results.push({ route: '/', viewport: 'reduced-motion', passed: true, pageErrors: [] });
+  results.push({ route: '/decision-frame/', viewport: 'reduced-motion', passed: true, pageErrors: [] });
 }
 await reducedContext.close();
 await browser.close();

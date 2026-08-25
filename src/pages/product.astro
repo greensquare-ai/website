@@ -2,8 +2,7 @@
 import { withBase } from '../lib/paths';
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
-import EvidenceStateDemo from '../components/product-demo/EvidenceStateDemo.tsx';
-import OptionScorecardDemo from '../components/product-demo/OptionScorecardDemo.tsx';
+import EvidenceDisciplineFigure from '../components/research-figures/EvidenceDisciplineFigure.astro';
 
 const stages = [
   { n: '01', name: 'Frame', body: 'Clarify the actual mandate, decision owner, stakes, desired outcome and criteria for a good call.' },
@@ -82,23 +81,12 @@ const stages = [
 
   <section class="v-section">
     <div class="v-container">
-      <div class="demo-intro v-reveal">
-        <p class="v-index">Evidence discipline</p>
-        <h2 class="v-h2">The decision remains inspectable.</h2>
-        <p class="v-measure">GreenSquare does not ask the user to trust a polished answer. It keeps material evidence, assumptions and unresolved gaps visible.</p>
+      <div class="figure-intro v-reveal">
+        <p class="v-index">Figure 03 / Evidence discipline</p>
+        <h2 class="v-h2">The recommendation remains inspectable.</h2>
+        <p class="v-measure">GreenSquare does not ask the user to trust a polished answer. Material claims remain attached to their evidence state so the professional can see what is known, what is inferred and what still needs to be established.</p>
       </div>
-      <div class="v-reveal d1"><EvidenceStateDemo client:visible /></div>
-    </div>
-  </section>
-
-  <section class="v-section v-fill-2">
-    <div class="v-container">
-      <div class="demo-intro v-reveal">
-        <p class="v-index">Option discipline</p>
-        <h2 class="v-h2">The recommendation should change when the evidence changes.</h2>
-        <p class="v-measure">The options and criteria remain stable. Change one load-bearing fact and see whether the preferred call still survives.</p>
-      </div>
-      <div class="v-reveal d1"><OptionScorecardDemo client:visible /></div>
+      <div class="v-reveal d1"><EvidenceDisciplineFigure /></div>
     </div>
   </section>
 
@@ -183,8 +171,8 @@ const stages = [
   .hero { padding-top: clamp(3rem, 6vh, 5rem); }
   .hero-actions { display: flex; gap: var(--v-4); align-items: center; flex-wrap: wrap; margin-top: var(--v-8); }
   .decision-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--v-8); }
-  .demo-intro { max-width: 48rem; margin-bottom: clamp(2rem, 4vw, 3.5rem); }
-  .demo-intro .v-h2 { margin-top: var(--v-3); }
-  .demo-intro .v-measure { margin-top: var(--v-4); color: var(--v-ink-soft); }
+  .figure-intro { max-width: 52rem; margin-bottom: clamp(2rem, 4vw, 3.5rem); }
+  .figure-intro .v-h2 { margin-top: var(--v-3); }
+  .figure-intro .v-measure { margin-top: var(--v-4); color: var(--v-ink-soft); }
   @media (max-width: 760px) { .decision-grid { grid-template-columns: 1fr; gap: var(--v-4); } }
 </style>

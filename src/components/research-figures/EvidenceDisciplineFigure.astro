@@ -1,0 +1,29 @@
+---
+import './research-figures.css';
+
+const rows = [
+  { state: 'GIVEN', claim: 'Top three customers represent 41% of target revenue.', implication: 'Customer concentration is evidenced.' },
+  { state: 'DERIVED', claim: 'FY29 synergy case contributes $6.2m EBITDA.', implication: 'Value is modelled, not observed.' },
+  { state: 'INFERRED', claim: 'Key customers will remain after change of control.', implication: 'Confidence exceeds the evidence available.' },
+  { state: 'UNKNOWN', claim: 'Customer 3 intends to remain through year one.', implication: 'The decision still carries a material evidence gap.' },
+];
+---
+<figure class="rf rf-evidence" data-research-figure="evidence-discipline" data-product-demo="evidence-state">
+  <div class="rf__canvas">
+    <div class="rf-evidence__header" aria-hidden="true">
+      <span>Evidence state</span><span>Material claim</span><span>Decision implication</span>
+    </div>
+    {rows.map((row, index) => (
+      <div class={`rf-evidence__row${index === rows.length - 1 ? ' rf-evidence__row--signal' : ''}`}>
+        <span class="rf-evidence__state">{row.state}</span>
+        <span class="rf-evidence__claim">{row.claim}</span>
+        <span class="rf-evidence__implication">{row.implication}</span>
+      </div>
+    ))}
+    <p class="rf-evidence__note"><strong>Decision condition:</strong> validate Customer 3 before an unconditional commitment.</p>
+  </div>
+  <figcaption>
+    <span class="rf__fig-number">Figure 03</span>
+    <span>Material claims remain traceable to their evidence state. The method keeps uncertainty visible where it can still change the decision.</span>
+  </figcaption>
+</figure>
