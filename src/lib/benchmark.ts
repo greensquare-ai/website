@@ -207,6 +207,17 @@ function assertInvariants(): void {
   if (comp.armC.met !== grid().n_per_arm)
     bad(`composite armC is ${comp.armC.met}, expected ${grid().n_per_arm}`);
 
+  // The transcript inventory is a verified count, so it must agree with the grid
+  // it claims to reconcile against, and its per-case split must sum to the total.
+  const inv = transcripts().inventory;
+  if (inv.grid_files !== grid().runs_total)
+    bad(`transcript inventory is ${inv.grid_files} files, grid is ${grid().runs_total} runs`);
+  const byCase = inv.grid_by_case.reduce((t, c) => t + c.files, 0);
+  if (byCase !== inv.grid_files)
+    bad(`transcript inventory by case sums to ${byCase}, total is ${inv.grid_files}`);
+  if (inv.pilot_files !== grid().excluded.pilot_runs + 1)
+    bad(`pilot files ${inv.pilot_files} is not ${grid().excluded.pilot_runs} runs plus one writeup`);
+
   // A retired figure must never reappear, as a count or bare in published prose.
   const retired = grid().retired.runs_total;
   if (grid().runs_total === retired) bad(`runs_total is the retired ${retired}`);

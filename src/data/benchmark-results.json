@@ -19,7 +19,8 @@
     "excluded": {
       "pilot_runs": 9,
       "transcript_files_on_disk": 10,
-      "reconciled": false,
+      "reconciled": true,
+      "reconciliation_note": "The 10 files are the 9 excluded run transcripts plus pilot-results.md, the scoring writeup for them. Verified 30 August 2026.",
       "reason": "Design-phase pilot, Case A on Claude, all three arms. protocol.md:23 excludes pilot runs from the pre-registered grid."
     },
     "retired": {
@@ -150,6 +151,13 @@
 
   "transcripts": {
     "published": false,
+    "inventory": {
+      "verified_on": "2026-08-30",
+      "grid_files": 45,
+      "grid_by_case": [{ "case_id": "A", "files": 9 }, { "case_id": "B", "files": 18 }, { "case_id": "C", "files": 18 }],
+      "pilot_files": 10,
+      "pilot_note": "Nine excluded run transcripts plus pilot-results.md, the scoring writeup for them."
+    },
     "withdrawn_note": "The two transcript excerpts previously shown here are withdrawn. One tagged a figure DERIVED where the case file supplies it directly, which under the product's own scheme makes it GIVEN, and the case file is one click away. The replacement will show the model integrating a fact it obtained by asking, rather than restating one it was given."
   },
 
@@ -208,7 +216,7 @@
     "The three checks that separate most cleanly are the behaviours the file instructs the model to perform. A reasonable reading is that they measure whether the file was loaded, not whether the model reasoned better.",
     "The all-facts condition was not information-equal between the two models on Case B. The Claude fact sheet carries two cross-reference pointers the ChatGPT one lacks.",
     "n is 15 per condition, three repeats per cell. The grid is small and unbalanced, with Case A running on one model only.",
-    "The run inventory does not fully reconcile. Both directory counts were verified on disk, 45 and 10, and the arithmetic requires 9. The tenth file has not been opened.",
+    "The run inventory reconciles. Both directory counts were verified on disk, 45 grid transcripts and 10 pilot files, and the arithmetic requires 9. The tenth file was opened on 30 August 2026: it is the scoring writeup for the nine excluded pilot runs, and it states in its own opening paragraph that they are not pooled with the pre-registered grid. This entry previously reported the inventory as unreconciled and the tenth file as unopened.",
     "What was tested is a file fixed by its published hash. Nothing here commits any later release to being that same file."
   ]
 }
