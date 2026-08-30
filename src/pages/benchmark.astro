@@ -109,7 +109,7 @@ const materialLimitations = [
     <div class="bm-hero__copy">
       <h1 class="v-h1">The Decision changed process discipline. It did not improve judgement against an informed baseline.</h1>
       <p class="v-lead bm-mt5">Across {g.runs_total} pre-registered runs, two frontier models worked through three synthetic business cases. The Decision consistently changed how they approached the problem, but did not outperform an equally informed baseline on the two pre-registered judgement checks.</p>
-      <p class="bm-status bm-mt5"><span aria-hidden="true"></span><strong>Historical benchmark.</strong> Both tested models have since been superseded{r.anyLapsed ? ', and the published refresh commitment has lapsed.' : '.'}</p>
+      <p class="bm-status bm-mt5"><strong>Historical benchmark.</strong> Both tested models have since been superseded{r.anyLapsed ? ', and the published refresh commitment has lapsed.' : '.'}</p>
     </div>
 
     <dl class="bm-meta" aria-label="Study at a glance">
@@ -142,12 +142,7 @@ const materialLimitations = [
       </div>
     </div>
 
-    <figure class="bm-comparison bm-mt7" aria-labelledby="comparison-title">
-      <figcaption id="comparison-title" class="bm-comparison__legend">
-        <span><i class="bm-dot bm-dot--baseline" aria-hidden="true"></i>All facts</span>
-        <span><i class="bm-dot bm-dot--loaded" aria-hidden="true"></i>The Decision</span>
-      </figcaption>
-
+    <figure class="bm-comparison bm-mt7" aria-label="Paired comparison of the informed baseline and The Decision across two process measures and two judgement measures">
       <div class="bm-comparison__axis" aria-hidden="true"><span>0</span><span>{g.n_per_arm} of {g.n_per_arm}</span></div>
 
       {comparisonMetrics.map((metric, index) => (
@@ -166,13 +161,13 @@ const materialLimitations = [
             </div>
           </div>
           <div class="bm-compare-row__values">
-            <span>{fmt(metric.baseline).text}</span>
-            <strong>{fmt(metric.loaded).text}</strong>
+            <span><small>All facts</small>{fmt(metric.baseline).text}</span>
+            <strong><small>The Decision</small>{fmt(metric.loaded).text}</strong>
           </div>
         </div>
       ))}
 
-      <p class="v-small bm-comparison__note">The behavioural gaps show that the prescribed process was followed. They do not establish that the models reasoned better. On the two pre-registered judgement checks, the informed baseline was one run higher on surfacing the hidden decision and equal on recommendation direction.</p>
+      <figcaption class="v-small bm-comparison__note">The behavioural gaps show that the prescribed process was followed. They do not establish that the models reasoned better. On the two pre-registered judgement checks, the informed baseline was one run higher on surfacing the hidden decision and equal on recommendation direction.</figcaption>
     </figure>
   </div>
 </section>
@@ -470,8 +465,7 @@ const materialLimitations = [
   .bm-hero__inner { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(18rem, .4fr); gap: clamp(3rem, 8vw, 8rem); align-items: end; }
   .bm-hero__copy { max-width: 68rem; }
   .v2 .bm-hero .v-h1 { max-width: 22ch; font-size: clamp(2.5rem, 5vw, 5rem); line-height: .98; letter-spacing: -.045em; }
-  .bm-status { display: flex; align-items: flex-start; gap: var(--v-3); max-width: 68ch; color: var(--v-ink-soft); font-size: var(--vs-small); }
-  .bm-status > span { width: .7rem; height: .7rem; margin-top: .38em; flex: 0 0 auto; background: var(--v-lime); border: 1px solid var(--v-green); }
+  .bm-status { max-width: 68ch; padding-top: var(--v-3); border-top: 1px solid var(--v-line); color: var(--v-ink-soft); font-size: var(--vs-small); }
   .bm-meta { margin: 0; border-top: 2px solid var(--v-ink); }
   .bm-meta div { display: flex; justify-content: space-between; gap: var(--v-5); padding: .8rem 0; border-bottom: 1px solid var(--v-line); }
   .bm-meta dt { color: var(--v-ink-soft); }
@@ -485,27 +479,24 @@ const materialLimitations = [
   .bm-section-head { display: grid; grid-template-columns: minmax(0, .9fr) minmax(22rem, 1.1fr); gap: clamp(3rem, 8vw, 8rem); align-items: start; }
 
   .bm-comparison { margin-left: 0; margin-right: 0; }
-  .bm-comparison__legend { display: flex; justify-content: flex-end; gap: var(--v-6); padding-bottom: var(--v-4); border-bottom: 1px solid var(--v-ink); color: var(--v-ink-soft); font-size: var(--vs-small); }
-  .bm-comparison__legend span { display: inline-flex; align-items: center; gap: var(--v-2); }
-  .bm-dot { width: .65rem; height: .65rem; display: inline-block; border-radius: 50%; }
-  .bm-dot--baseline { background: var(--v-line-strong); }
-  .bm-dot--loaded { background: var(--v-green); }
-  .bm-comparison__axis { display: grid; grid-template-columns: minmax(13rem, .8fr) minmax(18rem, 1.2fr) 10rem; padding-top: var(--v-3); color: var(--v-ink-faint); font-size: .8rem; }
+  .bm-comparison__axis { display: grid; grid-template-columns: minmax(13rem, .8fr) minmax(18rem, 1.2fr) 12rem; padding: var(--v-3) 0; border-bottom: 1px solid var(--v-ink); color: var(--v-ink-faint); font-size: .8rem; }
   .bm-comparison__axis span:first-child { grid-column: 2; }
   .bm-comparison__axis span:last-child { grid-column: 2; justify-self: end; }
-  .bm-compare-row { display: grid; grid-template-columns: minmax(13rem, .8fr) minmax(18rem, 1.2fr) 10rem; gap: var(--v-5); align-items: center; min-height: 7.5rem; border-bottom: 1px solid var(--v-line); }
+  .bm-compare-row { display: grid; grid-template-columns: minmax(13rem, .8fr) minmax(18rem, 1.2fr) 12rem; gap: var(--v-5); align-items: center; min-height: 7.5rem; border-bottom: 1px solid var(--v-line); }
   .bm-compare-row--break { margin-top: var(--v-6); border-top: 2px solid var(--v-ink); }
   .bm-group-label { margin-bottom: var(--v-2); color: var(--v-ink-faint); font-size: var(--vs-small); font-weight: 600; }
   .bm-compare-row__label h3 { max-width: 22ch; font-size: 1.05rem; line-height: 1.35; }
   .bm-track { --baseline: 0%; --loaded: 100%; position: relative; height: 1.3rem; }
-  .bm-track__line { position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--v-line-strong); }
-  .bm-track__connector { position: absolute; left: min(var(--baseline), var(--loaded)); width: calc(max(var(--baseline), var(--loaded)) - min(var(--baseline), var(--loaded))); top: calc(50% - 1px); height: 2px; background: var(--v-green); opacity: .32; }
+  .bm-track__line { position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--v-data-grid); }
+  .bm-track__connector { position: absolute; left: min(var(--baseline), var(--loaded)); width: calc(max(var(--baseline), var(--loaded)) - min(var(--baseline), var(--loaded))); top: calc(50% - 1px); height: 2px; background: var(--v-data-deep-teal); opacity: .3; }
   .bm-marker { position: absolute; top: 50%; width: .95rem; height: .95rem; border-radius: 50%; transform: translate(-50%, -50%); }
-  .bm-marker--baseline { left: var(--baseline); background: var(--v-paper); border: 3px solid var(--v-line-strong); }
-  .bm-marker--loaded { left: var(--loaded); background: var(--v-green); border: 3px solid var(--v-green); }
+  .bm-marker--baseline { left: var(--baseline); background: var(--v-paper); border: 3px solid var(--v-data-stone); }
+  .bm-marker--loaded { left: var(--loaded); background: var(--v-data-deep-teal); border: 3px solid var(--v-data-deep-teal); }
   .bm-compare-row__values { display: grid; grid-template-columns: 1fr 1fr; gap: var(--v-3); text-align: right; font-size: var(--vs-small); font-variant-numeric: tabular-nums; }
-  .bm-compare-row__values span { color: var(--v-ink-faint); }
-  .bm-compare-row__values strong { color: var(--v-green); }
+  .bm-compare-row__values span, .bm-compare-row__values strong { display: grid; gap: .15rem; }
+  .bm-compare-row__values small { color: var(--v-ink-faint); font-size: .72rem; font-weight: 500; }
+  .bm-compare-row__values span { color: var(--v-ink-soft); }
+  .bm-compare-row__values strong { color: var(--v-data-deep-teal); }
   .bm-comparison__note { max-width: 76ch; margin-top: var(--v-5); margin-left: auto; }
 
   .bm-interpretation { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(3rem, 8vw, 8rem); }
@@ -604,8 +595,8 @@ const materialLimitations = [
   @media (max-width: 980px) {
     .bm-hero__inner, .bm-section-head, .bm-next-study__grid { grid-template-columns: 1fr; }
     .bm-meta { max-width: 30rem; }
-    .bm-comparison__axis { grid-template-columns: minmax(11rem, .8fr) minmax(14rem, 1.2fr) 8rem; }
-    .bm-compare-row { grid-template-columns: minmax(11rem, .8fr) minmax(14rem, 1.2fr) 8rem; }
+    .bm-comparison__axis { grid-template-columns: minmax(11rem, .8fr) minmax(14rem, 1.2fr) 10rem; }
+    .bm-compare-row { grid-template-columns: minmax(11rem, .8fr) minmax(14rem, 1.2fr) 10rem; }
     .bm-condition { min-height: 16rem; padding: var(--v-5); }
   }
 
@@ -615,9 +606,6 @@ const materialLimitations = [
     .bm-comparison__axis { display: none; }
     .bm-compare-row__plot { padding: 0 .5rem; }
     .bm-compare-row__values { grid-template-columns: auto auto; justify-content: end; text-align: left; }
-    .bm-compare-row__values span::before { content: 'All facts '; }
-    .bm-compare-row__values strong::before { content: 'The Decision '; font-weight: 400; color: var(--v-ink-soft); }
-    .bm-comparison__legend { display: none; }
     .bm-condition-diagram { grid-template-columns: 1fr; padding-bottom: 0; }
     .bm-condition + .bm-condition { border-left: 0; border-top: 1px solid var(--v-line); }
     .bm-control-line { position: static; grid-column: 1; padding: var(--v-4) 0; }
