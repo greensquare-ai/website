@@ -7,7 +7,7 @@ const { current = '' } = Astro.props;
 const links = [
   { href: withBase('/'), label: 'Home', key: 'home' },
   { href: withBase('/benchmark/'), label: 'Benchmark', key: 'benchmark' },
-  { href: withBase('/product/'), label: 'Product', key: 'product' },
+  { href: withBase('/benchmark/'), label: 'Compass', key: 'product' },
   { href: withBase('/pricing/'), label: 'Pricing', key: 'pricing' },
 ];
 ---
@@ -23,7 +23,7 @@ const links = [
           <a href={l.href} aria-current={current === l.key ? 'page' : undefined}>{l.label}</a>
         ))}
       </nav>
-      <a class="btn btn-primary" href={withBase('/pricing/')}>Get the Decision</a>
+      <a class="btn btn-primary" href={withBase('/pricing/')}>Get Compass</a>
       <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" id="nav-toggle">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -38,7 +38,7 @@ const links = [
       {links.map((l) => (
         <a href={l.href} aria-current={current === l.key ? 'page' : undefined}>{l.label}</a>
       ))}
-      <a class="btn btn-primary" href={withBase('/pricing/')} style="width:fit-content;">Get the Decision</a>
+      <a class="btn btn-primary" href={withBase('/pricing/')} style="width:fit-content;">Get Compass</a>
     </div>
   </nav>
 </header>
