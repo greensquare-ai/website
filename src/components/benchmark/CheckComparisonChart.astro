@@ -118,7 +118,10 @@ if (x(perArm) !== TRACK_X_MAX) {
 
 const GROUPS = [
   {
-    label: 'Judgement checks, pre-registered',
+    /* "Judgement checks", not "Judgement checks, pre-registered": all eight were
+       pre-registered and only two of these three are the primary result, so the
+       longer label invites a reader to treat three rows as the headline. */
+    label: 'Judgement checks',
     labelY: 82,
     ruleY: 92,
     tracks: [122, 166, 210],

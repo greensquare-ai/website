@@ -173,15 +173,10 @@ export const armBvsArmC = () => {
 const WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
 export const spell = (n: number): string => (n >= 0 && n <= 9 ? WORDS[n] : String(n));
 
-/** Shared vocabulary. The live site used "hidden decision" and "underlying decision"
- *  for the same check on the same page; this stops that recurring. */
-export const LABELS = {
-  composite: 'Produced a defensible brief',
-  hiddenDecision: 'Surfaced the hidden decision',
-  armA: 'Question only',
-  armB: 'All facts',
-  armC: 'The Decision loaded',
-} as const;
+/* LABELS is deleted. It duplicated arm and check names that already come from
+   armLabels() and check().page_label, no page imported it, and it kept its own
+   copy of the arm C label through the rename. A second place to write a name is
+   a second place for a name to go stale. */
 
 function assertInvariants(): void {
   const bad = (m: string) => { throw new Error(`benchmark-results.json: ${m}`); };
