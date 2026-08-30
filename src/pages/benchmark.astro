@@ -7,7 +7,7 @@ import { withBase } from '../lib/paths';
 import {
   grid, checks, check, composite, goCase, directionByCase, dates, refresh,
   prereg, parity, deviations, cleanItems, limitations, fmt, isDefinitional,
-  sealedKey, hashedInputs, transcripts, armLabels, spell, ARMS,
+  sealedKey, hashedInputs, transcripts, armLabels, spell, ARMS, armBvsArmC,
 } from '../lib/benchmark';
 import { demo, demoProvenance, demoRunDate, demoExchange, demoDifferences, demoBriefHtml } from '../lib/demo';
 import { compiledContent } from '../data/demonstrations/demo-1.md';
@@ -34,6 +34,10 @@ const c6 = check('c6');
 const c7 = check('c7');
 const c8 = check('c8');
 const caseSizes = g.cases.map((businessCase) => businessCase.n_per_arm);
+/* The check-by-check tally, derived rather than written down, so the sentence cannot
+   drift from the grid. Splitting measured from definitional keeps the page from
+   counting a cell the baseline cannot pass as a cell the file won. */
+const bvc = armBvsArmC();
 
 /* Figure 1. Every coordinate the chart draws is derived from these, which are
    derived from the accessors, so no count is written here or in the component. */
@@ -196,6 +200,14 @@ const limitationLeads = [
         / scored {d.scoredOn} / adjudicated {d.adjudicatedOn} / pre-registered at commit {p.short}
       </Fragment>
     </CheckComparisonChart>
+
+    <p class="v-small bm-s8">
+      Counted across all {spell(bvc.total)} checks: the two conditions tied on {spell(bvc.tied.length)},
+      the informed baseline was higher on {spell(bvc.baselineHigher.length)}, and Compass was higher on
+      {spell(bvc.loadedHigherMeasured.length)} measured checks. A further
+      {spell(bvc.loadedHigherDefinitional.length)} is not a result, because a single-turn condition
+      cannot ask before answering. One check is flat across all three conditions and separates nothing.
+    </p>
 
     <dl class="bm-status bm-s10">
       <div><dt>Runs</dt><dd>{g.runs_total}</dd></div>
