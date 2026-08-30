@@ -23,6 +23,11 @@
   --v-uncertainty: #56666f;
   --v-risk: #315f69;
 
+  /* information graphics */
+  --v-data-deep-teal: #24393b;
+  --v-data-stone: #b3aca5;
+  --v-data-grid: #e3e1dc;
+
   /* type and rules */
   --v-ink: #12140f;
   --v-ink-soft: #4f514b;

@@ -2,7 +2,7 @@
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 import { withBase } from '../lib/paths';
 import {
-  grid, checks, check, composite, goCase, directionByCase, dates, refresh,
+  grid, checks, check, composite, directionByCase, dates, refresh,
   prereg, parity, deviations, cleanItems, limitations, fmt, isDefinitional,
   sealedKey, hashedInputs, transcripts, armLabels,
 } from '../lib/benchmark';
@@ -12,7 +12,6 @@ const d = dates();
 const r = refresh();
 const p = prereg();
 const comp = composite();
-const gc = goCase();
 const dbc = directionByCase();
 const sk = sealedKey();
 const hi = hashedInputs();
@@ -27,6 +26,13 @@ const c3 = check('c3');
 const c6 = check('c6');
 const c7 = check('c7');
 const caseSizes = g.cases.map((businessCase) => businessCase.n_per_arm);
+
+const comparisonMetrics = [
+  { group: 'Process discipline', label: 'Compared real Options', baseline: c2.armB, loaded: c2.armC },
+  { group: 'Process discipline', label: 'Tagged its evidence', baseline: c3.armB, loaded: c3.armC },
+  { group: 'Judgement', label: c6.page_label, baseline: c6.armB, loaded: c6.armC },
+  { group: 'Judgement', label: c7.page_label, baseline: c7.armB, loaded: c7.armC },
+];
 
 const businessCases = [
   {
@@ -71,6 +77,25 @@ const limitationLeads = [
   'Inventory not reconciled.',
   'One fixed file.',
 ];
+
+const materialLimitations = [
+  {
+    title: 'The intended real-world operator condition was not tested.',
+    body: limitations()[0],
+  },
+  {
+    title: 'Execution and scoring were not independent.',
+    body: limitations()[1],
+  },
+  {
+    title: 'Some apparent differences were fixed by the test design.',
+    body: limitations()[2],
+  },
+  {
+    title: 'Case B question-only runs were contaminated by live search.',
+    body: 'Six ChatGPT question-only runs in Case B invoked live web search. The whole question-only recommendation deficit sits in that case, so it should not be read as clean evidence of an information effect.',
+  },
+];
 ---
 
 <BaseLayoutV2
@@ -79,320 +104,353 @@ const limitationLeads = [
   current="benchmark"
 >
 
-<section class="v-section bm-hero">
-  <div class="v-container bm-hero__grid">
-    <div>
-      <p class="v-label">Benchmark study</p>
-      <h1 class="v-h1 bm-mt3">We tested whether a structured process changes how AI handles a business decision.</h1>
-      <p class="v-lead bm-mt5">Across {g.runs_total} pre-registered runs, two frontier models worked through three synthetic business cases under three conditions: a question only, the same question with all facts, and the question with The Decision loaded.</p>
-      <p class="bm-hero__finding bm-mt5"><strong>The result is specific.</strong> The Decision reliably changed the process the models followed. It did not outperform an informed baseline on the two pre-registered judgement checks.</p>
+<section class="v-section bm-hero" id="result">
+  <div class="v-container bm-hero__inner">
+    <div class="bm-hero__copy">
+      <h1 class="v-h1">The Decision changed process discipline. It did not improve judgement against an informed baseline.</h1>
+      <p class="v-lead bm-mt5">Across {g.runs_total} pre-registered runs, two frontier models worked through three synthetic business cases. The Decision consistently changed how they approached the problem, but did not outperform an equally informed baseline on the two pre-registered judgement checks.</p>
+      <p class="bm-status bm-mt5"><strong>Historical benchmark.</strong> Both tested models have since been superseded{r.anyLapsed ? ', and the published refresh commitment has lapsed.' : '.'}</p>
     </div>
 
-    <aside class="bm-summary" aria-label="Study summary">
-      <p class="bm-summary__title">Study at a glance</p>
-      <dl>
-        <div><dt>Runs</dt><dd>{g.runs_total}</dd></div>
-        <div><dt>Conditions</dt><dd>3</dd></div>
-        <div><dt>Cases</dt><dd>{g.cases.length}</dd></div>
-        <div><dt>Models run</dt><dd>{g.models.length}</dd></div>
-        <div><dt>Scored</dt><dd>{d.scoredOn}</dd></div>
-        <div><dt>Adjudicated</dt><dd>{d.adjudicatedOn}</dd></div>
-      </dl>
-      <p class="v-small">Both tested models have since been superseded. The results should be read as historical.</p>
-    </aside>
+    <dl class="bm-meta" aria-label="Study at a glance">
+      <div><dt>Runs</dt><dd>{g.runs_total}</dd></div>
+      <div><dt>Cases</dt><dd>{g.cases.length}</dd></div>
+      <div><dt>Conditions</dt><dd>3</dd></div>
+      <div><dt>Models</dt><dd>{g.models.length}</dd></div>
+    </dl>
   </div>
 </section>
 
-<section class="v-section v-green">
-  <div class="v-container v-container--narrow">
-    <h2 class="v-h2">What the evidence supports, and where it stops.</h2>
-    <div class="bm-boundary bm-mt6">
-      <div>
-        <p class="bm-boundary__label">Supported</p>
-        <p>The Decision caused the models to ask before advising, compare real Options and tag the basis of material claims. It produced that structured process in every loaded run.</p>
-      </div>
-      <div>
-        <p class="bm-boundary__label">Not established</p>
-        <p>The study does not show better judgement than an informed operator, better real-world decisions, or an effect that a capable operator could not reproduce with their own instructions.</p>
-      </div>
-    </div>
+<nav class="bm-subnav" aria-label="Benchmark sections">
+  <div class="v-container bm-subnav__inner">
+    <a href="#evidence">Evidence</a>
+    <a href="#study-design">Study design</a>
+    <a href="#limitations">Limitations</a>
+    <a href="#research-record">Research record</a>
   </div>
-</section>
+</nav>
 
-<section class="v-section v-off">
+<section class="v-section v-off" id="evidence">
   <div class="v-container">
     <div class="bm-section-head">
-      <h2 class="v-h2">Synthetic cases kept the answers out of the models' reach.</h2>
       <div>
-        <p class="v-lead">A public business case may already appear in model training data, commentary or search results. That can build the answer into the test.</p>
-        <p class="bm-mt4">GreenSquare therefore created three fictional cases whose material facts existed only in the frozen fact sheets. Each case began with a plausible but incomplete executive question. The facts that changed the decision were separated across the case so the model had to connect them.</p>
-        <p class="v-small bm-mt4"><strong>Important caveat.</strong> Fictional cases protected the answer key from retrieval. They did not keep every run clean: ChatGPT invoked live web search during six question-only runs in Case B.</p>
+        <h2 class="v-h2">Process discipline separated sharply. Judgement did not.</h2>
+      </div>
+      <div>
+        <p class="v-lead">The controlled comparison is <strong>All facts versus The Decision</strong>. Both conditions received the same case information. Only The Decision received the GreenSquare process.</p>
+        <p class="v-small bm-mt3">Counts are full passes out of {g.n_per_arm} runs per condition. “Asked before advising” is intentionally excluded from this headline exhibit because the one-turn baseline was unable to pass it by construction.</p>
       </div>
     </div>
 
-    <ol class="bm-cases" aria-label="The three synthetic decision cases">
-      {businessCases.map((businessCase) => (
-        <li>
-          <span class="v-index">/{businessCase.code}</span>
-          <div>
-            <p class="bm-case__meta">{businessCase.name} / {businessCase.type}</p>
-            <h3>{businessCase.decision}</h3>
+    <figure class="bm-comparison bm-mt7" aria-label="Paired comparison of the informed baseline and The Decision across two process measures and two judgement measures">
+      <div class="bm-comparison__axis" aria-hidden="true"><span>0</span><span>{g.n_per_arm} of {g.n_per_arm}</span></div>
+
+      {comparisonMetrics.map((metric, index) => (
+        <div class:list={['bm-compare-row', index === 2 && 'bm-compare-row--break']} aria-label={`${metric.label}: All facts ${fmt(metric.baseline).text}, The Decision ${fmt(metric.loaded).text}`}>
+          <div class="bm-compare-row__label">
+            {index === 0 && <p class="bm-group-label">Process discipline</p>}
+            {index === 2 && <p class="bm-group-label">Judgement</p>}
+            <h3>{metric.label}</h3>
           </div>
-          <p><strong>The decision beneath it.</strong> {businessCase.hidden}</p>
-        </li>
+          <div class="bm-compare-row__plot">
+            <div class="bm-track" style={`--baseline:${fmt(metric.baseline).pct}%; --loaded:${fmt(metric.loaded).pct}%;`} aria-hidden="true">
+              <span class="bm-track__line"></span>
+              <span class="bm-track__connector"></span>
+              <span class="bm-marker bm-marker--baseline"></span>
+              <span class="bm-marker bm-marker--loaded"></span>
+            </div>
+          </div>
+          <div class="bm-compare-row__values">
+            <span><small>All facts</small>{fmt(metric.baseline).text}</span>
+            <strong><small>The Decision</small>{fmt(metric.loaded).text}</strong>
+          </div>
+        </div>
       ))}
-    </ol>
+
+      <figcaption class="v-small bm-comparison__note">The behavioural gaps show that the prescribed process was followed. They do not establish that the models reasoned better. On the two pre-registered judgement checks, the informed baseline was one run higher on surfacing the hidden decision and equal on recommendation direction.</figcaption>
+    </figure>
   </div>
 </section>
 
 <section class="v-section">
-  <div class="v-container v-container--narrow">
-    <h2 class="v-h2">Three conditions separated missing information from process discipline.</h2>
-    <p class="v-lead bm-mt5">The frozen question was identical in all three conditions. The controlled comparison is between the informed baseline and The Decision: both had access to the same case facts, but only one was given the GreenSquare process.</p>
+  <div class="v-container bm-interpretation">
+    <div>
+      <h2 class="v-h2">What the evidence supports</h2>
+      <ul class="bm-plain-list bm-mt5">
+        <li>The Decision caused the models to compare genuine alternatives.</li>
+        <li>It caused them to distinguish the evidentiary basis of material claims.</li>
+        <li>It produced the prescribed structured process in every loaded run.</li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="v-h2">What it does not establish</h2>
+      <ul class="bm-plain-list bm-mt5">
+        <li>Superior judgement to an informed operator.</li>
+        <li>Better real-world decision outcomes.</li>
+        <li>An effect a capable operator could not reproduce with equivalent instructions.</li>
+      </ul>
+    </div>
+  </div>
+</section>
 
-    <ol class="bm-arms bm-mt6">
+<section class="v-section v-off" id="study-design">
+  <div class="v-container">
+    <div class="bm-section-head">
+      <div>
+        <h2 class="v-h2">The experiment separated missing information from process discipline.</h2>
+      </div>
+      <div>
+        <p class="v-lead">The question was identical in all three conditions. The informed baseline and The Decision received the same case facts, making their comparison the cleanest test of what the structured process itself changed.</p>
+      </div>
+    </div>
+
+    <div class="bm-condition-diagram bm-mt7" role="img" aria-label="Three experimental conditions. Question only had incomplete information. All facts and The Decision had equal information, with only The Decision receiving the structured GreenSquare process. The controlled comparison is between All facts and The Decision.">
       {arms.map((arm, index) => (
-        <li>
-          <span class="v-index">/{String.fromCharCode(65 + index)}</span>
-          <div>
-            <h3>{arm.label}</h3>
-            <p>{arm.note}</p>
-          </div>
-        </li>
+        <div class:list={['bm-condition', index === 0 && 'bm-condition--context', index > 0 && 'bm-condition--controlled']}>
+          <span class="bm-condition__index">{String.fromCharCode(65 + index)}</span>
+          <h3>{arm.label}</h3>
+          <p>{arm.note}</p>
+          <p class="bm-condition__state">{index === 0 ? 'Incomplete information' : 'Equal information'}</p>
+        </div>
       ))}
-    </ol>
-
-    <div class="bm-method-note bm-mt6">
-      <h3>Why the informed baseline matters</h3>
-      <p>{parity().statement}</p>
-      <p class="v-small">The operator's answering rule was fixed before the runs. Off-sheet questions received the same response: “That has not been assessed.” Source: {parity().source}, frozen at commit {p.short}.</p>
+      <div class="bm-control-line" aria-hidden="true"><span>Controlled comparison</span></div>
     </div>
 
-    <h3 class="v-h3 bm-mt7">The protocol was public before the scored grid</h3>
-    <p class="bm-mt3">The cases, answering rule, model plan, repeat counts, scoring rubric and sealed answer-key hash were committed to a public repository before the scored runs. This limits the scope for changing the test after seeing the result.</p>
-    <p class="bm-mt4">It does not make the execution independent or fully reproducible. The public record later departed from the protocol in {deviations().length} places. Every departure is listed below.</p>
+    <div class="bm-method-rows bm-mt7">
+      <div><span>01</span><h3>Cases</h3><p>Three synthetic business decisions kept the material answer out of public training data and search results.</p></div>
+      <div><span>02</span><h3>Conditions</h3><p>Question only, all facts, and The Decision loaded.</p></div>
+      <div><span>03</span><h3>Runs</h3><p>{g.runs_total} scored runs, with {g.n_per_arm} per condition across the final grid.</p></div>
+      <div><span>04</span><h3>Measures</h3><p>Eight pre-registered checks spanning process behaviour and judgement.</p></div>
+      <div><span>05</span><h3>Record</h3><p>Cases, answering rule, model plan, scoring rubric and a sealed answer-key hash were committed before the scored grid.</p></div>
+    </div>
+
+    <details class="bm-inline-disclosure bm-mt6">
+      <summary>Read the three synthetic cases</summary>
+      <div class="bm-cases">
+        {businessCases.map((businessCase) => (
+          <article>
+            <span class="bm-case__index">{businessCase.code}</span>
+            <div>
+              <p class="bm-case__meta">{businessCase.name} · {businessCase.type}</p>
+              <h3>{businessCase.decision}</h3>
+              <p><strong>The decision beneath it.</strong> {businessCase.hidden}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </details>
+
+    <p class="v-small bm-mt5"><strong>Why the informed baseline matters.</strong> {parity().statement} The operator's answering rule was fixed before the runs, and off-sheet questions received the same response: “That has not been assessed.”</p>
   </div>
 </section>
 
-<section class="v-section v-off">
-  <div class="v-container v-container--narrow">
-    <h2 class="v-h2">The clearest effect was behavioural: ask, compare and show the evidence.</h2>
-    <p class="v-lead bm-mt5">The Decision changed the process the models followed. Against the informed, all-facts baseline, two measured behaviours separated cleanly. A third behaviour, asking before answering, also separated but was fixed by the single-turn test design.</p>
-
-    <div class="bm-results-grid bm-mt6">
-      <article>
-        <p class="bm-result__name">Compared real Options</p>
-        <p class="bm-result__number">{fmt(c2.armC).text}</p>
-        <p>The Decision loaded</p>
-        <p class="v-small">All-facts baseline: {fmt(c2.armB).text}</p>
-      </article>
-      <article>
-        <p class="bm-result__name">Tagged its evidence</p>
-        <p class="bm-result__number">{fmt(c3.armC).text}</p>
-        <p>The Decision loaded</p>
-        <p class="v-small">All-facts baseline: {fmt(c3.armB).text}</p>
-      </article>
-      <article>
-        <p class="bm-result__name">Asked before advising</p>
-        <p class="bm-result__number">{fmt(c1.armC).text}</p>
-        <p>The Decision loaded</p>
-        <p class="v-small">All-facts baseline: {fmt(c1.armB).text}, definitional</p>
-      </article>
+<section class="v-section" id="limitations">
+  <div class="v-container">
+    <div class="bm-section-head">
+      <div>
+        <h2 class="v-h2">Four limitations materially change how the result should be read.</h2>
+      </div>
+      <div>
+        <p class="v-lead">These are presented with the interpretation, not buried in the audit trail. The complete limitation set remains available below.</p>
+      </div>
     </div>
 
-    <div class="bm-callout bm-mt6">
-      <h3>What changed in the output</h3>
-      <p>The loaded condition produced a brief with real Options, evidence tags, named Assumptions and reversal conditions in {fmt(comp.armC).text} runs. The informed baseline produced that five-part process composite in {fmt(comp.armB).text}.</p>
-      <p class="v-small">This is a derived composite, not an independent ninth result or the pre-registered headline. It includes the asking-first check, which a single-turn baseline cannot pass. Removing that check does not change the counts because the remaining process checks still separate the conditions.</p>
-    </div>
-  </div>
-</section>
-
-<section class="v-section">
-  <div class="v-container v-container--narrow">
-    <h2 class="v-h2">On judgement, the informed baseline matched or slightly exceeded The Decision.</h2>
-    <p class="v-lead bm-mt5">The two pre-registered headline checks were whether the model surfaced the hidden decision and whether its recommendation matched the sealed direction. The all-facts baseline was one run higher on the first and equal on the second.</p>
-
-    <div class="bm-judgement bm-mt6">
-      {[c6, c7].map((result) => (
+    <div class="bm-limitations bm-mt7">
+      {materialLimitations.map((limitation, index) => (
         <article>
-          <h3>{result.page_label}</h3>
-          <dl>
-            <div><dt>Question only</dt><dd>{fmt(result.armA).text}{isDefinitional(result, 'armA') === 'full' ? ' def' : ''}</dd></div>
-            <div><dt>All facts</dt><dd>{fmt(result.armB).text}</dd></div>
-            <div><dt>The Decision</dt><dd>{fmt(result.armC).text}</dd></div>
-          </dl>
+          <span>{String(index + 1).padStart(2, '0')}</span>
+          <div><h3>{limitation.title}</h3><p>{limitation.body}</p></div>
         </article>
       ))}
     </div>
 
-    <div class="bm-callout bm-mt6">
-      <h3>Disciplined process is the supported claim</h3>
-      <p>The informed baseline tied The Decision on four of the eight checks and scored higher on one. The Decision scored higher on two measured checks, comparing real Options and tagging evidence. Asking first also separated, but that difference restates the test design.</p>
-      <p class="v-small">The behaviours that separate most cleanly are the behaviours the file explicitly requires. They show that the process was followed. They do not show that the model reasoned better.</p>
-    </div>
+    <details class="bm-inline-disclosure bm-mt6">
+      <summary>See all methodological limitations</summary>
+      <ul class="bm-full-limitations">
+        {limitations().map((limitation, index) => <li><strong>{limitationLeads[index]}</strong> {limitation}</li>)}
+      </ul>
+    </details>
 
-    <h3 class="v-h3 bm-mt7">Recommendation direction did not improve outside one contaminated case</h3>
-    <p class="bm-mt3">Across Cases A and C, all three conditions matched the sealed direction in {fmt(dbc.cases_A_and_C.armA).text} runs. The whole question-only deficit sits in Case B, where six ChatGPT runs invoked live search.</p>
-
-    <div class="bm-table-wrap bm-mt5">
-      <table class="v-table bm-table">
-        <thead><tr><th scope="col">Case split</th><th scope="col" class="num">Question only</th><th scope="col" class="num">All facts</th><th scope="col" class="num">The Decision</th></tr></thead>
-        <tbody>
-          <tr><th scope="row">Cases A and C</th><td class="num">{fmt(dbc.cases_A_and_C.armA).text}</td><td class="num">{fmt(dbc.cases_A_and_C.armB).text}</td><td class="num">{fmt(dbc.cases_A_and_C.armC).text}</td></tr>
-          <tr><th scope="row">Case B, Larkfield</th><td class="num">{fmt(dbc.case_B.armA).text}</td><td class="num">{fmt(dbc.case_B.armB).text}</td><td class="num">{fmt(dbc.case_B.armC).text}</td></tr>
-        </tbody>
-      </table>
+    <div class="bm-refresh bm-mt7">
+      <h3>The refresh commitment has lapsed</h3>
+      <p>The grid was scored against {g.models[0].name} and {g.models[1].name}. Both have since been superseded, and both {r.commitmentDays}-day re-run windows have expired. No re-run date is published.</p>
+      <p class="v-small bm-mt3"><strong>OpenAI.</strong> {openai.tested_model} was superseded by {openai.superseded_by} on {openai.releasedOn}. The re-run was {openai.daysPastDue} days past due as at {d.currentAsAt}. {openai.caveat}</p>
+      <p class="v-small bm-mt3"><strong>Anthropic.</strong> {anthropic.tested_model} was superseded by {anthropic.superseded_by} on {anthropic.releasedOn}. The re-run was {anthropic.daysPastDue} days past due as at {d.currentAsAt}. {anthropic.caveat}</p>
     </div>
-    <p class="v-small bm-mt3">Case B is also where The Decision adds least. With every fact supplied, the informed baseline and The Decision both matched the sealed direction in {fmt(gc.armB).text} runs.</p>
   </div>
 </section>
 
-<section class="v-section v-green">
-  <div class="v-container v-container--narrow">
-    <h2 class="v-h2">This benchmark does not yet answer the real-world question.</h2>
-    <p class="v-lead bm-mt5">The missing condition is the one the product exists for: a capable operator who holds most of the relevant facts but has a blind spot they cannot see. That condition was not run.</p>
-
-    <div class="bm-limit-lead bm-mt6">
-      <p><strong>Two comparisons still matter.</strong> The next study needs a realistic operator condition and a condition in which a competent operator writes equivalent instructions without The Decision. Until then, this study cannot establish whether the product improves real work or does something the operator could not reproduce.</p>
+<section class="v-section v-off bm-next-study">
+  <div class="v-container bm-next-study__grid">
+    <div>
+      <h2 class="v-h2">The next benchmark needs to test the situation GreenSquare actually exists for.</h2>
+      <p class="v-lead bm-mt5">This study established process discipline. The next one needs to test whether that discipline improves decisions under realistic operating conditions.</p>
     </div>
-
-    <ul class="v-leadlist bm-limitations bm-mt6">
-      {limitations().map((limitation, index) => <li><strong>{limitationLeads[index]}</strong> {limitation}</li>)}
-    </ul>
-
-    <h3 class="v-h3 bm-mt7">The refresh commitment has lapsed</h3>
-    <p class="bm-mt3">The grid was scored against {g.models[0].name} and {g.models[1].name}. Both have since been superseded, and both {r.commitmentDays}-day re-run windows have expired. No re-run date is published.</p>
-    <p class="v-small bm-mt4"><strong>OpenAI.</strong> {openai.tested_model} was superseded by {openai.superseded_by} on {openai.releasedOn}. The re-run was {openai.daysPastDue} days past due as at {d.currentAsAt}. Source strength: {openai.source_strength}. {openai.caveat}</p>
-    <p class="v-small bm-mt3"><strong>Anthropic.</strong> {anthropic.tested_model} was superseded by {anthropic.superseded_by} on {anthropic.releasedOn}. The re-run was {anthropic.daysPastDue} days past due as at {d.currentAsAt}. Source strength: {anthropic.source_strength}. {anthropic.caveat}</p>
+    <ol>
+      <li><span>01</span><div><h3>Realistic information asymmetry</h3><p>Can The Decision expose a blind spot when a capable operator already holds most, but not all, of what matters?</p></div></li>
+      <li><span>02</span><div><h3>Equivalent-instruction baseline</h3><p>Does GreenSquare outperform a competent operator writing their own structured instructions?</p></div></li>
+      <li><span>03</span><div><h3>Independent evaluation</h3><p>Do the results survive independent execution, scoring and adjudication?</p></div></li>
+    </ol>
   </div>
 </section>
 
-<section class="v-section">
-  <div class="v-container v-container--narrow">
-    <h2 class="v-h2">The inputs are public. The scores cannot yet be reproduced independently.</h2>
-    <p class="v-lead bm-mt5">The pre-registration commit is <code class="bm-hash">{p.full}</code>. It was authored at {p.authoredAtTime} and committed at {p.committedAtTime}. A committer timestamp is not proof of push time, and this page does not claim one.</p>
-
-    <div class="bm-verify-grid bm-mt6">
+<section class="v-section bm-research" id="research-record">
+  <div class="v-container">
+    <div class="bm-research__head">
       <div>
-        <h3>What can be checked</h3>
-        <p>Six inputs were hashed and frozen before the first scored run. Their SHA-256 values match the files at the pre-registration commit when read with {hi.line_endings} line endings.</p>
+        <h2 class="v-h2">Research record</h2>
+        <p class="v-lead bm-mt4">Everything required to inspect the benchmark, including unresolved issues and all {deviations().length} recorded departures from protocol.</p>
       </div>
-      <div>
-        <h3>What cannot be checked</h3>
-        <p>No transcript or sealed answer key is published. Nobody outside GreenSquare AI can re-score a run or confirm an adjudicated cell.</p>
-      </div>
+      <button type="button" class="bm-expand-all" data-expand-research>Expand all research record</button>
     </div>
 
-    <h3 class="v-h3 bm-mt7">The six frozen artefacts</h3>
-    <ul class="bm-artifacts bm-mt4">
-      {artefacts.map((artefact) => (
-        <li>
-          <a href={p.fileUrl(artefact.path)} target="_blank" rel="noopener">
-            <span><strong>{artefact.title}</strong><small>{artefact.sub}</small></span>
-            <span>View</span>
-          </a>
-        </li>
-      ))}
-    </ul>
-    <p class="v-small bm-mt3">Every link is pinned to commit {p.short}, not to the current branch.</p>
+    <div class="bm-record-list bm-mt7" data-research-record>
+      <details class="bm-record" id="record-results">
+        <summary><span>Complete results</span><small>Eight checks, case split and scoring notes</small></summary>
+        <div class="bm-record__body">
+          <p>Counts are out of {g.n_per_arm} per condition, pooled across the two models and three cases. “Def” marks a cell fixed by the test design. “Part” marks a cell partly affected by it.</p>
+          <div class="bm-table-wrap bm-mt5">
+            <table class="v-table bm-table bm-full-grid">
+              <thead><tr><th scope="col">Check</th><th scope="col" class="num">Question only</th><th scope="col" class="num">All facts</th><th scope="col" class="num">The Decision</th></tr></thead>
+              <tbody>
+                {checks('process').map((result) => (
+                  <tr>
+                    <th scope="row">{result.page_label}</th>
+                    {(['armA', 'armB', 'armC'] as const).map((arm) => {
+                      const definition = isDefinitional(result, arm);
+                      return <td class="num">{fmt(result[arm]).text}{definition === 'full' ? ' def' : definition === 'partial' ? ' part' : ''}</td>;
+                    })}
+                  </tr>
+                ))}
+                <tr class="bm-composite"><th scope="row">{comp.label}, derived</th><td class="num">{fmt(comp.armA).text}</td><td class="num">{fmt(comp.armB).text}</td><td class="num">{fmt(comp.armC).text}</td></tr>
+                {checks('judgment').map((result) => (
+                  <tr>
+                    <th scope="row">{result.page_label}</th>
+                    {(['armA', 'armB', 'armC'] as const).map((arm) => {
+                      const definition = isDefinitional(result, arm);
+                      return <td class="num">{fmt(result[arm]).text}{definition === 'full' ? ' def' : definition === 'partial' ? ' part' : ''}</td>;
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
-    <details class="bm-disclosure bm-mt6">
-      <summary>View the frozen hashes</summary>
-      <div class="bm-disclosure__body">
-        <div class="bm-table-wrap">
-          <table class="v-table bm-hash-table">
-            <thead><tr><th scope="col">File</th><th scope="col">SHA-256</th></tr></thead>
-            <tbody>{hi.files.map((file) => <tr><th scope="row"><code class="bm-hash">{file.file}</code></th><td><code class="bm-hash">{file.sha256}</code></td></tr>)}</tbody>
-          </table>
+          <h3 class="v-h3 bm-mt7">Recommendation direction by case</h3>
+          <p class="bm-mt3">Across Cases A and C, all three conditions matched the sealed direction in {fmt(dbc.cases_A_and_C.armA).text} runs. The whole question-only deficit sits in Case B, where six ChatGPT runs invoked live search.</p>
+          <div class="bm-table-wrap bm-mt5">
+            <table class="v-table bm-table">
+              <thead><tr><th scope="col">Case split</th><th scope="col" class="num">Question only</th><th scope="col" class="num">All facts</th><th scope="col" class="num">The Decision</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">Cases A and C</th><td class="num">{fmt(dbc.cases_A_and_C.armA).text}</td><td class="num">{fmt(dbc.cases_A_and_C.armB).text}</td><td class="num">{fmt(dbc.cases_A_and_C.armC).text}</td></tr>
+                <tr><th scope="row">Case B, Larkfield</th><td class="num">{fmt(dbc.case_B.armA).text}</td><td class="num">{fmt(dbc.case_B.armB).text}</td><td class="num">{fmt(dbc.case_B.armC).text}</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="bm-notes bm-mt6">
+            <p class="v-small"><strong>Asked before answering.</strong> {c1.definitional_note}</p>
+            <p class="v-small"><strong>Surfaced the hidden decision.</strong> {c6.definitional_note}</p>
+            {checks().filter((result) => result.definitional_note && !['c1', 'c6'].includes(result.id)).map((result) => <p class="v-small"><strong>{result.page_label}.</strong> {result.definitional_note}</p>)}
+            {checks().filter((result) => result.adjudication).map((result) => <p class="v-small"><strong>{result.page_label}, adjudication.</strong> {result.adjudication}</p>)}
+            {checks().filter((result) => result.caveat).map((result) => <p class="v-small"><strong>{result.page_label}, caveat.</strong> {result.caveat}</p>)}
+            <p class="v-small"><strong>Partial passes.</strong> The table shows full passes only. The protocol requires baseline partial counts prominently, per case. No partial count is published on this site.</p>
+            <p class="v-small"><strong>Withdrawn excerpts.</strong> {tx.withdrawn_note}</p>
+          </div>
         </div>
-        <p class="v-small bm-mt4">The product under test is <code class="bm-hash">{hi.product_file}</code>, SHA-256 <code class="bm-hash">{hi.product_sha256}</code>. {hi.product_withheld_note}</p>
-        <p class="v-small bm-mt3">The sealed reference answers hash to <code class="bm-hash">{sk.sha256}</code>. The key itself is not published, so this verification cannot be repeated outside GreenSquare AI.</p>
-      </div>
-    </details>
-  </div>
-</section>
+      </details>
 
-<section class="v-section v-off">
-  <div class="v-container v-container--narrow">
-    <h2 class="v-h2">The complete record includes {deviations().length} departures from the protocol.</h2>
-    <p class="v-lead bm-mt5">The result is presented first so the study can be understood. The full grid, adjudication notes and every recorded departure follow so the evidence can be challenged.</p>
+      <details class="bm-record" id="record-method">
+        <summary><span>Method and reproducibility</span><small>Pre-registration, grid design and what can be independently checked</small></summary>
+        <div class="bm-record__body">
+          <p>The cases, answering rule, model plan, repeat counts, scoring rubric and sealed answer-key hash were committed to a public repository before the scored runs. This limits the scope for changing the test after seeing the result.</p>
+          <p class="bm-mt4">The pre-registration commit is <code class="bm-hash">{p.full}</code>. It was authored at {p.authoredAtTime} and committed at {p.committedAtTime}. A committer timestamp is not proof of push time, and this page does not claim one.</p>
 
-    <h3 class="v-h3 bm-mt7">The grid was smaller and less balanced than planned</h3>
-    <p class="bm-mt3">The final grid contains {g.runs_total} runs, {g.n_per_arm} per condition. Case A ran on ChatGPT only. Cases B and C ran on both models. The condition totals split {caseSizes.join(', ')} across the cases.</p>
-    <p class="bm-mt4">Nine Claude pilot runs on Case A were excluded by the protocol. A third pre-registered model, {g.planned_models[0].name}, was not run. No per-model result split is published.</p>
+          <div class="bm-verify-grid bm-mt6">
+            <div><h3>What can be checked</h3><p>Six inputs were hashed and frozen before the first scored run. Their SHA-256 values match the files at the pre-registration commit when read with {hi.line_endings} line endings.</p></div>
+            <div><h3>What cannot be checked</h3><p>No transcript or sealed answer key is published. Nobody outside GreenSquare AI can re-score a run or confirm an adjudicated cell.</p></div>
+          </div>
 
-    <h3 class="v-h3 bm-mt7">All eight checks</h3>
-    <p class="bm-mt3">Counts are out of {g.n_per_arm} per condition, pooled across the two models and three cases. “Def” marks a cell fixed by the test design. “Part” marks a cell partly affected by it.</p>
-    <div class="bm-table-wrap bm-mt5">
-      <table class="v-table bm-table bm-full-grid">
-        <thead><tr><th scope="col">Check</th><th scope="col" class="num">Question only</th><th scope="col" class="num">All facts</th><th scope="col" class="num">The Decision</th></tr></thead>
-        <tbody>
-          {checks('process').map((result) => (
-            <tr>
-              <th scope="row">{result.page_label}</th>
-              {(['armA', 'armB', 'armC'] as const).map((arm) => {
-                const definition = isDefinitional(result, arm);
-                return <td class="num">{fmt(result[arm]).text}{definition === 'full' ? ' def' : definition === 'partial' ? ' part' : ''}</td>;
-              })}
-            </tr>
-          ))}
-          <tr class="bm-composite"><th scope="row">{comp.label}, derived</th><td class="num">{fmt(comp.armA).text}</td><td class="num">{fmt(comp.armB).text}</td><td class="num">{fmt(comp.armC).text}</td></tr>
-          {checks('judgment').map((result) => (
-            <tr>
-              <th scope="row">{result.page_label}</th>
-              {(['armA', 'armB', 'armC'] as const).map((arm) => {
-                const definition = isDefinitional(result, arm);
-                return <td class="num">{fmt(result[arm]).text}{definition === 'full' ? ' def' : definition === 'partial' ? ' part' : ''}</td>;
-              })}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+          <h3 class="v-h3 bm-mt7">Final grid versus plan</h3>
+          <p class="bm-mt3">The final grid contains {g.runs_total} runs, {g.n_per_arm} per condition. Case A ran on ChatGPT only. Cases B and C ran on both models. The condition totals split {caseSizes.join(', ')} across the cases.</p>
+          <p class="bm-mt4">Nine Claude pilot runs on Case A were excluded by the protocol. A third pre-registered model, {g.planned_models[0].name}, was not run. No per-model result split is published.</p>
+        </div>
+      </details>
+
+      <details class="bm-record" id="record-artefacts">
+        <summary><span>Frozen artefacts</span><small>Cases, protocol, scoring rubric and hashes pinned to the pre-registration commit</small></summary>
+        <div class="bm-record__body">
+          <ul class="bm-artifacts">
+            {artefacts.map((artefact) => (
+              <li>
+                <a href={p.fileUrl(artefact.path)} target="_blank" rel="noopener">
+                  <span><strong>{artefact.title}</strong><small>{artefact.sub}</small></span>
+                  <span>View</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+          <p class="v-small bm-mt3">Every link is pinned to commit {p.short}, not to the current branch.</p>
+
+          <details class="bm-inline-disclosure bm-mt6">
+            <summary>View the frozen hashes</summary>
+            <div class="bm-table-wrap bm-mt5">
+              <table class="v-table bm-hash-table">
+                <thead><tr><th scope="col">File</th><th scope="col">SHA-256</th></tr></thead>
+                <tbody>{hi.files.map((file) => <tr><th scope="row"><code class="bm-hash">{file.file}</code></th><td><code class="bm-hash">{file.sha256}</code></td></tr>)}</tbody>
+              </table>
+            </div>
+            <p class="v-small bm-mt4">The product under test is <code class="bm-hash">{hi.product_file}</code>, SHA-256 <code class="bm-hash">{hi.product_sha256}</code>. {hi.product_withheld_note}</p>
+            <p class="v-small bm-mt3">The sealed reference answers hash to <code class="bm-hash">{sk.sha256}</code>. The key itself is not published, so this verification cannot be repeated outside GreenSquare AI.</p>
+          </details>
+        </div>
+      </details>
+
+      <details class="bm-record" id="record-departures">
+        <summary><span>Protocol departures</span><small>All {deviations().length} recorded deviations, plus obligations met exactly</small></summary>
+        <div class="bm-record__body">
+          <p>The record departed from the pre-registered protocol in {deviations().length} places. They are listed in full rather than netted into a single quality judgement.</p>
+          <ol class="bm-departures bm-mt6">
+            {deviations().map((departure) => (
+              <li>
+                <span>{String(departure.n).padStart(2, '0')}</span>
+                <div><h3>{departure.title}</h3><p class="v-small">{departure.detail}</p></div>
+              </li>
+            ))}
+          </ol>
+          <h3 class="v-h3 bm-mt7">Two obligations were met exactly</h3>
+          <ul class="bm-plain-list bm-mt4">{cleanItems().map((item) => <li>{item}</li>)}</ul>
+        </div>
+      </details>
     </div>
-
-    <details class="bm-disclosure bm-mt6">
-      <summary>Read the scoring and adjudication notes</summary>
-      <div class="bm-disclosure__body bm-notes">
-        <p class="v-small"><strong>Asked before answering.</strong> {c1.definitional_note}</p>
-        <p class="v-small"><strong>Surfaced the hidden decision.</strong> {c6.definitional_note}</p>
-        {checks().filter((result) => result.definitional_note && !['c1', 'c6'].includes(result.id)).map((result) => <p class="v-small"><strong>{result.page_label}.</strong> {result.definitional_note}</p>)}
-        {checks().filter((result) => result.adjudication).map((result) => <p class="v-small"><strong>{result.page_label}, adjudication.</strong> {result.adjudication}</p>)}
-        {checks().filter((result) => result.caveat).map((result) => <p class="v-small"><strong>{result.page_label}, caveat.</strong> {result.caveat}</p>)}
-        <p class="v-small"><strong>Partial passes.</strong> The table shows full passes only. The protocol requires baseline partial counts prominently, per case. No partial count is published on this site.</p>
-        <p class="v-small"><strong>Withdrawn excerpts.</strong> {tx.withdrawn_note}</p>
-      </div>
-    </details>
-
-    <details class="bm-disclosure bm-mt4">
-      <summary>Read all {deviations().length} departures</summary>
-      <div class="bm-disclosure__body">
-        <ol class="bm-departures">
-          {deviations().map((departure) => (
-            <li>
-              <span class="v-index">{String(departure.n).padStart(2, '0')}</span>
-              <div><h3>{departure.title}</h3><p class="v-small">{departure.detail}</p></div>
-            </li>
-          ))}
-        </ol>
-        <h3 class="v-h3 bm-mt6">Two obligations were met exactly</h3>
-        <ul class="v-leadlist bm-mt4">{cleanItems().map((item) => <li>{item}</li>)}</ul>
-      </div>
-    </details>
   </div>
 </section>
 
-<section class="v-section bm-cta">
+<section class="v-section v-off bm-close">
   <div class="v-container v-container--narrow">
-    <h2 class="v-h2">Test the first six questions on a decision you are holding now.</h2>
-    <p class="v-lead bm-mt5">The free Decision Frame puts the first six questions on one page. It takes about ten minutes and is designed to expose a missing fact, a weak Assumption or a better Option.</p>
-    <div class="hero-actions bm-mt5">
+    <h2 class="v-h2">What this benchmark establishes today</h2>
+    <p class="v-lead bm-mt5">The Decision reliably changed process behaviour in this test. It did not demonstrate superior judgement to an informed baseline. The next test needs to establish whether that discipline produces better decisions under realistic operating conditions.</p>
+    <div class="bm-close__actions bm-mt6">
       <a class="v-btn v-btn--green" href={withBase('/decision-frame/')}>Get the free Decision Frame</a>
-      <a class="v-btn v-btn--grey" href={withBase('/methodology/')}>Read the full methodology</a>
+      <a class="v-link" href={withBase('/methodology/')}>Read the full methodology</a>
+      <a class="v-link" href={p.commitUrl} target="_blank" rel="noopener">Inspect the pre-registration record</a>
     </div>
     <p class="v-small bm-mt5">The Decision is not yet on sale. To pressure-test this benchmark or propose the next study, write to <a class="v-link" href="mailto:hello@greensquare.ai">hello@greensquare.ai</a>.</p>
   </div>
 </section>
+
+<script>
+  const button = document.querySelector('[data-expand-research]');
+  const record = document.querySelector('[data-research-record]');
+  if (button && record) {
+    button.addEventListener('click', () => {
+      const details = Array.from(record.querySelectorAll(':scope > details'));
+      const shouldOpen = details.some((item) => !item.open);
+      details.forEach((item) => { item.open = shouldOpen; });
+      button.textContent = shouldOpen ? 'Collapse research record' : 'Expand all research record';
+    });
+  }
+</script>
 
 </BaseLayoutV2>
 
@@ -402,92 +460,171 @@ const limitationLeads = [
   .bm-mt5 { margin-top: var(--v-5); }
   .bm-mt6 { margin-top: var(--v-6); }
   .bm-mt7 { margin-top: var(--v-8); }
-  .bm-hero { border-top: 0; }
-  .bm-hero__grid { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(18rem, .55fr); gap: clamp(3rem, 8vw, 8rem); align-items: start; }
-  .v2 .bm-hero .v-h1 { max-width: 20ch; }
-  .bm-hero__finding { max-width: 62ch; font-size: 1.05rem; line-height: 1.65; }
-  .bm-summary { border-top: 2px solid var(--v-ink); border-bottom: 1px solid var(--v-ink); padding: var(--v-4) 0; }
-  .bm-summary__title { font-weight: 600; }
-  .bm-summary dl { margin: var(--v-4) 0; }
-  .bm-summary dl div { display: flex; justify-content: space-between; gap: var(--v-4); border-top: 1px solid var(--v-line); padding: .7rem 0; }
-  .bm-summary dt { color: var(--v-ink-soft); font-size: var(--vs-small); }
-  .bm-summary dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; }
-  .bm-boundary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--v-line-green); border-left: 1px solid var(--v-line-green); }
-  .bm-boundary > div { padding: clamp(1.5rem, 4vw, 3rem); border-right: 1px solid var(--v-line-green); border-bottom: 1px solid var(--v-line-green); }
-  .bm-boundary p { color: var(--v-cream-soft); }
-  .bm-boundary__label { color: var(--v-lime) !important; font-weight: 600; }
-  .bm-section-head { display: grid; grid-template-columns: minmax(16rem, .8fr) minmax(20rem, 1.2fr); gap: clamp(3rem, 8vw, 8rem); align-items: start; }
-  .bm-cases { list-style: none; padding: 0; margin: var(--v-8) 0 0; border-top: 2px solid var(--v-ink); }
-  .bm-cases li { display: grid; grid-template-columns: 4rem minmax(14rem, .8fr) minmax(20rem, 1.2fr); gap: var(--v-5); align-items: start; border-bottom: 1px solid var(--v-line); padding: var(--v-5) 0; }
-  .bm-cases h3 { font-size: 1.2rem; line-height: 1.3; }
-  .bm-case__meta { margin-bottom: var(--v-2); color: var(--v-ink-faint); font-size: var(--vs-label); }
-  .bm-cases li > p { color: var(--v-ink-soft); font-size: var(--vs-small); }
-  .bm-arms { list-style: none; padding: 0; border-top: 2px solid var(--v-ink); }
-  .bm-arms li { display: grid; grid-template-columns: 4rem 1fr; gap: var(--v-4); border-bottom: 1px solid var(--v-line); padding: var(--v-5) 0; }
-  .bm-arms h3 { margin-bottom: var(--v-2); font-size: 1.2rem; }
-  .bm-arms p { color: var(--v-ink-soft); }
-  .bm-method-note, .bm-callout { border: 1.5px solid var(--v-ink); background: var(--v-paper); padding: var(--v-6); }
-  .bm-method-note h3, .bm-callout h3 { margin-bottom: var(--v-3); font-size: 1.2rem; }
-  .bm-results-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--v-ink); border-left: 1px solid var(--v-ink); }
-  .bm-results-grid article { min-height: 15rem; border-right: 1px solid var(--v-ink); border-bottom: 1px solid var(--v-ink); padding: var(--v-5); }
-  .bm-result__name { min-height: 3rem; font-weight: 600; }
-  .bm-result__number { margin: var(--v-6) 0 var(--v-2); color: var(--v-green); font-family: var(--vf-display); font-size: clamp(2.25rem, 5vw, 3.5rem); font-weight: 600; line-height: 1; }
-  .bm-judgement { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--v-5); }
-  .bm-judgement article { border-top: 2px solid var(--v-ink); border-bottom: 1px solid var(--v-ink); padding: var(--v-5) 0; }
-  .bm-judgement h3 { min-height: 3.4rem; font-size: 1.2rem; }
-  .bm-judgement dl { margin: var(--v-5) 0 0; }
-  .bm-judgement dl div { display: flex; justify-content: space-between; gap: var(--v-4); border-top: 1px solid var(--v-line); padding: .8rem 0; }
-  .bm-judgement dt { color: var(--v-ink-soft); }
-  .bm-judgement dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; }
+
+  .bm-hero { border-top: 0; padding-top: clamp(5rem, 9vw, 9rem); }
+  .bm-hero__inner { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(18rem, .4fr); gap: clamp(3rem, 8vw, 8rem); align-items: end; }
+  .bm-hero__copy { max-width: 68rem; }
+  .v2 .bm-hero .v-h1 { max-width: 22ch; font-size: clamp(2.5rem, 5vw, 5rem); line-height: .98; letter-spacing: -.045em; }
+  .bm-status { max-width: 68ch; padding-top: var(--v-3); border-top: 1px solid var(--v-line); color: var(--v-ink-soft); font-size: var(--vs-small); }
+  .bm-meta { margin: 0; border-top: 2px solid var(--v-ink); }
+  .bm-meta div { display: flex; justify-content: space-between; gap: var(--v-5); padding: .8rem 0; border-bottom: 1px solid var(--v-line); }
+  .bm-meta dt { color: var(--v-ink-soft); }
+  .bm-meta dd { margin: 0; font-family: var(--vf-display); font-size: 1.2rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+
+  .bm-subnav { border-top: 1px solid var(--v-line); border-bottom: 1px solid var(--v-line); background: var(--v-paper); }
+  .bm-subnav__inner { display: flex; flex-wrap: wrap; gap: var(--v-3) var(--v-6); padding-top: var(--v-4); padding-bottom: var(--v-4); }
+  .bm-subnav a { color: var(--v-ink-soft); font-size: var(--vs-small); text-decoration: none; }
+  .bm-subnav a:hover { color: var(--v-green); text-decoration: underline; text-underline-offset: 4px; }
+
+  .bm-section-head { display: grid; grid-template-columns: minmax(0, .9fr) minmax(22rem, 1.1fr); gap: clamp(3rem, 8vw, 8rem); align-items: start; }
+
+  .bm-comparison { margin-left: 0; margin-right: 0; }
+  .bm-comparison__axis { display: grid; grid-template-columns: minmax(13rem, .8fr) minmax(18rem, 1.2fr) 12rem; padding: var(--v-3) 0; border-bottom: 1px solid var(--v-ink); color: var(--v-ink-faint); font-size: .8rem; }
+  .bm-comparison__axis span:first-child { grid-column: 2; }
+  .bm-comparison__axis span:last-child { grid-column: 2; justify-self: end; }
+  .bm-compare-row { display: grid; grid-template-columns: minmax(13rem, .8fr) minmax(18rem, 1.2fr) 12rem; gap: var(--v-5); align-items: center; min-height: 7.5rem; border-bottom: 1px solid var(--v-line); }
+  .bm-compare-row--break { margin-top: var(--v-6); border-top: 2px solid var(--v-ink); }
+  .bm-group-label { margin-bottom: var(--v-2); color: var(--v-ink-faint); font-size: var(--vs-small); font-weight: 600; }
+  .bm-compare-row__label h3 { max-width: 22ch; font-size: 1.05rem; line-height: 1.35; }
+  .bm-track { --baseline: 0%; --loaded: 100%; position: relative; height: 1.3rem; }
+  .bm-track__line { position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--v-data-grid); }
+  .bm-track__connector { position: absolute; left: min(var(--baseline), var(--loaded)); width: calc(max(var(--baseline), var(--loaded)) - min(var(--baseline), var(--loaded))); top: calc(50% - 1px); height: 2px; background: var(--v-data-deep-teal); opacity: .3; }
+  .bm-marker { position: absolute; top: 50%; width: .95rem; height: .95rem; border-radius: 50%; transform: translate(-50%, -50%); }
+  .bm-marker--baseline { left: var(--baseline); background: var(--v-paper); border: 3px solid var(--v-data-stone); }
+  .bm-marker--loaded { left: var(--loaded); background: var(--v-data-deep-teal); border: 3px solid var(--v-data-deep-teal); }
+  .bm-compare-row__values { display: grid; grid-template-columns: 1fr 1fr; gap: var(--v-3); text-align: right; font-size: var(--vs-small); font-variant-numeric: tabular-nums; }
+  .bm-compare-row__values span, .bm-compare-row__values strong { display: grid; gap: .15rem; }
+  .bm-compare-row__values small { color: var(--v-ink-faint); font-size: .72rem; font-weight: 500; }
+  .bm-compare-row__values span { color: var(--v-ink-soft); }
+  .bm-compare-row__values strong { color: var(--v-data-deep-teal); }
+  .bm-comparison__note { max-width: 76ch; margin-top: var(--v-5); margin-left: auto; }
+
+  .bm-interpretation { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(3rem, 8vw, 8rem); }
+  .bm-interpretation > div { border-top: 2px solid var(--v-ink); padding-top: var(--v-5); }
+  .bm-plain-list { list-style: none; padding: 0; margin-bottom: 0; }
+  .bm-plain-list li { position: relative; padding: var(--v-3) 0 var(--v-3) 1.4rem; border-top: 1px solid var(--v-line); }
+  .bm-plain-list li::before { content: ''; position: absolute; left: 0; top: 1.15rem; width: .45rem; height: .45rem; background: var(--v-green); }
+
+  .bm-condition-diagram { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 2px solid var(--v-ink); border-bottom: 1px solid var(--v-ink); }
+  .bm-condition { min-height: 18rem; padding: var(--v-6); }
+  .bm-condition + .bm-condition { border-left: 1px solid var(--v-line); }
+  .bm-condition--context { color: var(--v-ink-soft); background: var(--v-fill); }
+  .bm-condition__index { display: inline-flex; align-items: center; justify-content: center; width: 2rem; height: 2rem; margin-bottom: var(--v-6); border: 1px solid currentColor; font-family: var(--vf-display); font-weight: 600; }
+  .bm-condition h3 { margin-bottom: var(--v-3); font-size: 1.25rem; }
+  .bm-condition p { color: inherit; }
+  .bm-condition__state { margin-top: var(--v-6); padding-top: var(--v-3); border-top: 1px solid currentColor; font-size: var(--vs-small); font-weight: 600; }
+  .bm-control-line { position: absolute; left: 33.333%; right: 0; bottom: -2.4rem; display: flex; align-items: center; gap: var(--v-3); color: var(--v-green); font-size: .78rem; font-weight: 600; }
+  .bm-control-line::before, .bm-control-line::after { content: ''; height: 1px; background: var(--v-green); flex: 1; }
+
+  .bm-method-rows { border-top: 2px solid var(--v-ink); }
+  .bm-method-rows > div { display: grid; grid-template-columns: 3rem minmax(10rem, .45fr) minmax(18rem, 1.55fr); gap: var(--v-5); align-items: start; padding: var(--v-4) 0; border-bottom: 1px solid var(--v-line); }
+  .bm-method-rows span { color: var(--v-ink-faint); font-family: var(--vf-display); font-size: .9rem; }
+  .bm-method-rows h3 { font-size: 1.05rem; }
+  .bm-method-rows p { color: var(--v-ink-soft); }
+
+  .bm-inline-disclosure { border-top: 1px solid var(--v-ink); border-bottom: 1px solid var(--v-ink); }
+  .bm-inline-disclosure summary { padding: var(--v-4) 2rem var(--v-4) 0; font-weight: 600; cursor: pointer; }
+  .bm-inline-disclosure[open] summary { border-bottom: 1px solid var(--v-line); }
+  .bm-cases { padding: var(--v-2) 0 var(--v-5); }
+  .bm-cases article { display: grid; grid-template-columns: 3rem 1fr; gap: var(--v-5); padding: var(--v-5) 0; border-bottom: 1px solid var(--v-line); }
+  .bm-case__index { font-family: var(--vf-display); color: var(--v-green); font-weight: 600; }
+  .bm-case__meta { margin-bottom: var(--v-2); color: var(--v-ink-faint); font-size: var(--vs-small); }
+  .bm-cases h3 { margin-bottom: var(--v-3); font-size: 1.15rem; }
+  .bm-cases p { max-width: 72ch; color: var(--v-ink-soft); }
+
+  .bm-limitations { border-top: 2px solid var(--v-ink); }
+  .bm-limitations article { display: grid; grid-template-columns: 4rem minmax(0, 1fr); gap: var(--v-5); padding: var(--v-5) 0; border-bottom: 1px solid var(--v-line); }
+  .bm-limitations article > span { color: var(--v-ink-faint); font-family: var(--vf-display); }
+  .bm-limitations h3 { margin-bottom: var(--v-3); font-size: 1.15rem; }
+  .bm-limitations p { max-width: 82ch; color: var(--v-ink-soft); }
+  .bm-full-limitations { list-style: none; padding: var(--v-4) 0 var(--v-5); margin: 0; columns: 2; column-gap: var(--v-8); }
+  .bm-full-limitations li { break-inside: avoid; margin-bottom: var(--v-4); color: var(--v-ink-soft); }
+  .bm-refresh { max-width: 78ch; padding-top: var(--v-5); border-top: 2px solid var(--v-ink); }
+  .bm-refresh h3 { margin-bottom: var(--v-3); font-size: 1.2rem; }
+
+  .bm-next-study__grid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(24rem, 1.1fr); gap: clamp(3rem, 8vw, 8rem); }
+  .bm-next-study ol { list-style: none; padding: 0; margin: 0; border-top: 2px solid var(--v-ink); }
+  .bm-next-study li { display: grid; grid-template-columns: 3rem 1fr; gap: var(--v-5); padding: var(--v-5) 0; border-bottom: 1px solid var(--v-line); }
+  .bm-next-study li > span { color: var(--v-green); font-family: var(--vf-display); font-weight: 600; }
+  .bm-next-study h3 { margin-bottom: var(--v-2); font-size: 1.1rem; }
+  .bm-next-study p { color: var(--v-ink-soft); }
+
+  .bm-research { border-top: 3px solid var(--v-ink); }
+  .bm-research__head { display: flex; justify-content: space-between; gap: var(--v-8); align-items: end; }
+  .bm-research__head > div { max-width: 58rem; }
+  .bm-expand-all { appearance: none; border: 1px solid var(--v-ink); background: transparent; color: var(--v-ink); padding: .8rem 1rem; font: inherit; font-size: var(--vs-small); font-weight: 600; cursor: pointer; }
+  .bm-expand-all:hover { background: var(--v-ink); color: var(--v-paper); }
+  .bm-record-list { border-top: 2px solid var(--v-ink); }
+  .bm-record { border-bottom: 1px solid var(--v-ink); scroll-margin-top: 2rem; }
+  .bm-record > summary { display: flex; justify-content: space-between; gap: var(--v-8); padding: var(--v-5) 2.4rem var(--v-5) 0; cursor: pointer; list-style-position: outside; }
+  .bm-record > summary span { font-family: var(--vf-display); font-size: 1.25rem; font-weight: 600; }
+  .bm-record > summary small { max-width: 34rem; color: var(--v-ink-soft); font-size: var(--vs-small); text-align: right; }
+  .bm-record__body { padding: var(--v-3) 0 var(--v-8); }
+  .bm-record__body > p { max-width: 78ch; }
+
   .bm-table-wrap { max-width: 100%; overflow-x: auto; }
-  .bm-table { min-width: 38rem; }
+  .bm-table { min-width: 40rem; }
   .v2 .bm-table th[scope='row'] { font-weight: 400; }
-  .bm-limit-lead { border: 1px solid var(--v-cream); padding: var(--v-5); }
-  .bm-limit-lead p { color: var(--v-cream); }
-  .bm-limitations { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--v-5) var(--v-7); }
-  .bm-verify-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 2px solid var(--v-ink); }
-  .bm-verify-grid > div { padding: var(--v-5) 0; border-bottom: 1px solid var(--v-ink); }
+  .bm-composite th, .bm-composite td { background: var(--v-fill-2); font-weight: 600 !important; }
+  .bm-notes { display: grid; gap: var(--v-3); max-width: 82ch; }
+
+  .bm-verify-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 2px solid var(--v-ink); border-bottom: 1px solid var(--v-ink); }
+  .bm-verify-grid > div { padding: var(--v-5) 0; }
   .bm-verify-grid > div + div { margin-left: var(--v-6); padding-left: var(--v-6); border-left: 1px solid var(--v-line); }
-  .bm-verify-grid h3 { margin-bottom: var(--v-3); font-size: 1.15rem; }
-  .bm-artifacts { list-style: none; padding: 0; border-top: 1px solid var(--v-ink); }
+  .bm-verify-grid h3 { margin-bottom: var(--v-3); font-size: 1.1rem; }
+  .bm-verify-grid p { color: var(--v-ink-soft); }
+
+  .bm-artifacts { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--v-ink); }
   .bm-artifacts li { border-bottom: 1px solid var(--v-line); }
   .bm-artifacts a { display: flex; justify-content: space-between; gap: var(--v-5); padding: var(--v-4) 0; color: var(--v-ink); text-decoration: none; }
   .bm-artifacts a:hover strong { text-decoration: underline; text-underline-offset: 3px; }
   .bm-artifacts strong, .bm-artifacts small { display: block; }
   .bm-artifacts small { margin-top: .2rem; color: var(--v-ink-soft); }
   .bm-artifacts a > span:last-child { color: var(--v-green); font-size: var(--vs-small); font-weight: 600; }
-  .bm-disclosure { border-top: 1px solid var(--v-ink); border-bottom: 1px solid var(--v-ink); }
-  .bm-disclosure + .bm-disclosure { border-top: 0; }
-  .bm-disclosure summary { padding: var(--v-4) 2rem var(--v-4) 0; font-weight: 600; cursor: pointer; }
-  .bm-disclosure__body { padding: var(--v-2) 0 var(--v-6); }
-  .bm-hash, .bm-departures p { overflow-wrap: anywhere; }
-  .bm-hash { font-size: .88em; font-variant-numeric: tabular-nums; }
+  .bm-hash { overflow-wrap: anywhere; font-size: .88em; font-variant-numeric: tabular-nums; }
   .bm-hash-table { min-width: 52rem; }
-  .bm-composite th, .bm-composite td { background: var(--v-fill-2); font-weight: 600 !important; }
-  .bm-notes { display: grid; gap: var(--v-3); }
-  .bm-departures { list-style: none; padding: 0; margin: 0; }
-  .bm-departures li { display: grid; grid-template-columns: 3rem 1fr; gap: var(--v-4); border-top: 1px solid var(--v-line); padding: var(--v-5) 0; }
-  .bm-departures li:last-child { border-bottom: 1px solid var(--v-line); }
-  .bm-departures li > * { min-width: 0; }
-  .bm-departures h3 { margin-bottom: var(--v-2); font-size: 1.05rem; }
-  .bm-cta { border-bottom: 0; }
-  .bm-cta .hero-actions { display: flex; flex-wrap: wrap; gap: var(--v-3); }
 
-  @media (max-width: 860px) {
-    .bm-hero__grid, .bm-section-head { grid-template-columns: 1fr; }
-    .bm-cases li { grid-template-columns: 3rem 1fr; }
-    .bm-cases li > p { grid-column: 2; }
-    .bm-results-grid { grid-template-columns: 1fr; }
-    .bm-results-grid article { min-height: auto; }
-    .bm-result__name { min-height: 0; }
-    .bm-result__number { margin-top: var(--v-4); }
+  .bm-departures { list-style: none; padding: 0; margin-bottom: 0; border-top: 1px solid var(--v-line); }
+  .bm-departures li { display: grid; grid-template-columns: 3rem 1fr; gap: var(--v-5); padding: var(--v-5) 0; border-bottom: 1px solid var(--v-line); }
+  .bm-departures li > span { color: var(--v-ink-faint); font-family: var(--vf-display); }
+  .bm-departures h3 { margin-bottom: var(--v-2); font-size: 1.05rem; }
+  .bm-departures p { overflow-wrap: anywhere; }
+
+  .bm-close__actions { display: flex; flex-wrap: wrap; gap: var(--v-4) var(--v-6); align-items: center; }
+
+  @media (max-width: 980px) {
+    .bm-hero__inner, .bm-section-head, .bm-next-study__grid { grid-template-columns: 1fr; }
+    .bm-meta { max-width: 30rem; }
+    .bm-comparison__axis { grid-template-columns: minmax(11rem, .8fr) minmax(14rem, 1.2fr) 10rem; }
+    .bm-compare-row { grid-template-columns: minmax(11rem, .8fr) minmax(14rem, 1.2fr) 10rem; }
+    .bm-condition { min-height: 16rem; padding: var(--v-5); }
   }
 
-  @media (max-width: 640px) {
-    .bm-boundary, .bm-judgement, .bm-limitations, .bm-verify-grid { grid-template-columns: 1fr; }
-    .bm-verify-grid > div + div { margin-left: 0; padding-left: 0; border-left: 0; }
-    .bm-cases li { grid-template-columns: 2.4rem 1fr; gap: var(--v-3); }
-    .bm-arms li { grid-template-columns: 2.4rem 1fr; }
-    .bm-departures li { grid-template-columns: 2.4rem 1fr; gap: var(--v-3); }
+  @media (max-width: 760px) {
+    .bm-interpretation, .bm-verify-grid { grid-template-columns: 1fr; }
+    .bm-compare-row { grid-template-columns: 1fr; gap: var(--v-3); padding: var(--v-5) 0; }
+    .bm-comparison__axis { display: none; }
+    .bm-compare-row__plot { padding: 0 .5rem; }
+    .bm-compare-row__values { grid-template-columns: auto auto; justify-content: end; text-align: left; }
+    .bm-condition-diagram { grid-template-columns: 1fr; padding-bottom: 0; }
+    .bm-condition + .bm-condition { border-left: 0; border-top: 1px solid var(--v-line); }
+    .bm-control-line { position: static; grid-column: 1; padding: var(--v-4) 0; }
+    .bm-method-rows > div { grid-template-columns: 2.5rem 1fr; }
+    .bm-method-rows > div p { grid-column: 2; }
+    .bm-full-limitations { columns: 1; }
+    .bm-research__head { display: grid; gap: var(--v-5); }
+    .bm-expand-all { justify-self: start; }
+    .bm-record > summary { display: grid; gap: var(--v-2); }
+    .bm-record > summary small { text-align: left; }
+    .bm-verify-grid > div + div { margin-left: 0; padding-left: 0; border-left: 0; border-top: 1px solid var(--v-line); }
+  }
+
+  @media (max-width: 520px) {
+    .v2 .bm-hero .v-h1 { font-size: clamp(2.35rem, 12vw, 3.4rem); }
+    .bm-subnav__inner { gap: var(--v-3) var(--v-4); }
+    .bm-limitations article, .bm-cases article, .bm-next-study li, .bm-departures li { grid-template-columns: 2.25rem 1fr; gap: var(--v-3); }
+    .bm-meta { max-width: none; }
+    .bm-record > summary { padding-right: 1.75rem; }
+    .bm-close__actions { align-items: flex-start; }
   }
 </style>
