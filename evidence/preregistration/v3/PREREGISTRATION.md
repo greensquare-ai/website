@@ -2,7 +2,7 @@
 
 This file records the SHA-256 hashes of the frozen benchmark inputs. The hashes allow readers to verify that the cases, fact sheets, scoring rubric, sealed answer and product version were fixed before the scored runs began.
 
-**Status: COMMITTED.** The pre-registration commit was pushed on 5 July 2026 before the scored grid began.
+**Status: COMMITTED.** The pre-registration commit was authored and committed on 5 July 2026 before the scored grid began. The times below are git's authored and committer times; this record holds no independent evidence of when the commit was pushed.
 
 ## Hashed inputs
 
@@ -43,7 +43,7 @@ independent evidence of when the commit was pushed.
 
 Repository: `github.com/ks-projects-66/greensquare`
 
-The remote file hashes were checked against the table after the commit was pushed.
+The published file hashes were checked against the table above.
 
 ## How to verify
 

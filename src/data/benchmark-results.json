@@ -198,7 +198,7 @@
 
   "clean": [
     "Six inputs were hashed and frozen before the first scored run, and all six SHA-256 values match their files when read with LF line endings.",
-    "The reduction in planned sample size from 180 runs to 54 is logged exactly as the protocol required."
+    "The reduction in planned sample size from the pre-registered target of 180 runs is logged exactly as the protocol required, at both steps: first to 54 runs, then to the current 45 when the nine design-phase pilot runs were removed."
   ],
 
   "limitations": [

@@ -207,9 +207,16 @@ function assertInvariants(): void {
   if (comp.armC.met !== grid().n_per_arm)
     bad(`composite armC is ${comp.armC.met}, expected ${grid().n_per_arm}`);
 
-  // A retired figure must never reappear.
+  // A retired figure must never reappear, as a count or bare in published prose.
   const retired = grid().retired.runs_total;
   if (grid().runs_total === retired) bad(`runs_total is the retired ${retired}`);
+
+  // The clean items say nothing went wrong, so a retired figure standing alone in
+  // one reads as a current count. It may appear only alongside the live total.
+  for (const item of cleanItems()) {
+    if (new RegExp(`\\b${retired}\\b`).test(item) && !new RegExp(`\\b${grid().runs_total}\\b`).test(item))
+      bad(`a clean item states the retired ${retired} without the current ${grid().runs_total}: "${item}"`);
+  }
 
   const gc = goCase();
   const caseB = grid().cases.find((c) => c.id === gc.case_id);
