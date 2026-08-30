@@ -66,7 +66,9 @@ export default function EmailCaptureForm({
       <form
         className={`field-row ${leaving ? 'is-leaving' : ''}`}
         onSubmit={handleSubmit}
-        aria-label="Get the free Decision Frame"
+        /* The form's accessible name comes from the label the page gives its
+           button, so a product rename cannot leave a stale name behind here. */
+        aria-label={buttonLabel}
       >
         <label htmlFor="email_address" className="sr-only">Email address</label>
         <input

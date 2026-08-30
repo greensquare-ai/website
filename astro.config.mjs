@@ -8,6 +8,8 @@ export default defineConfig({
   integrations: [react(), mdx(), sitemap()],
   redirects: {
     '/evidence': '/benchmark',
+    // /product is folded into the flagship /benchmark page. Page parked at src/pages/_product.astro.
+    '/product': '/benchmark',
     // Pricing hidden for launch (email-capture focus). Page parked at src/pages/_pricing.astro.
     '/pricing': '/',
   },
