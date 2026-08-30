@@ -1,10 +1,16 @@
 ---
 import { withBase } from '../lib/paths';
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
+/* Counts render from the same source as the benchmark page rather than being
+   retyped here, so the two records cannot disagree. This page states that in
+   "What the evidence supports today", which is only true while it stays bound. */
+import { grid, spell } from '../lib/benchmark';
+
+const g = grid();
 ---
 <BaseLayoutV2
   title="Benchmark methodology | GreenSquare AI"
-  description="How GreenSquare designed, ran and scored the current 45-run pre-registered benchmark of process discipline and AI judgement, including every limitation and open obligation."
+  description={`How GreenSquare designed, ran and scored the current ${g.runs_total}-run pre-registered benchmark of process discipline and AI judgement, including every limitation and open obligation.`}
   current="methodology"
 >
   <section class="v-section v-off hero">
@@ -13,7 +19,7 @@ import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
         <h1 class="v-h1">How we tested process discipline and AI judgement.</h1>
         <p class="v-lead" style="margin-top: var(--v-6);">
           A benchmark of AI judgement must separate access to information from the discipline used to interpret
-          it. The current benchmark covers 45 scored runs across two models, three business cases and three test
+          it. The current benchmark covers {g.runs_total} scored runs across two models, three business cases and three test
           conditions. It reports the controls, the limitations and the work still required before GreenSquare can
           claim better judgement.
         </p>
@@ -47,13 +53,14 @@ import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
           <li>Three fictional business cases.</li>
           <li>Three test conditions for every case and model.</li>
           <li>Three repeats in each cell.</li>
-          <li>45 runs in total, with 15 runs per condition.</li>
+          <li>{g.runs_total} runs in total, with {g.n_per_arm} runs per condition.</li>
         </ul>
         <p>
-          The pre-registered protocol targeted about 180 runs, including Gemini and more repeats. The completed
-          grid was reduced to 54 runs, and in August 2026 it was re-cut to 45 by removing nine design-phase
-          pilot runs that the protocol said would not be pooled with the pre-registered grid. Gemini was never
-          run. The site reports the 45 run pre-registered grid as an interim two model result.
+          The pre-registered protocol targeted about {g.target_runs} runs, including {g.planned_models[0].name} and
+          more repeats. The completed grid was reduced to {g.retired.runs_total} runs, and in August 2026 it was
+          re-cut to {g.runs_total} by removing {spell(g.excluded.pilot_runs)} design-phase pilot runs that the
+          protocol said would not be pooled with the pre-registered grid. {g.planned_models[0].name} was never
+          run. The site reports the {g.runs_total} run pre-registered grid as an interim two model result.
         </p>
 
         <h2>The cases</h2>
@@ -120,9 +127,10 @@ import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 
         <h2>What the evidence supports today</h2>
         <p>
-          Every count lives on the <a href={withBase('/benchmark/')}>benchmark page</a> and nowhere else. That is
-          deliberate. Figures repeated across several pages drift apart, and this site had that problem. There is
-          now one record to check.
+          The <a href={withBase('/benchmark/')}>benchmark page</a> is the complete record, and it is the one to
+          check. Figures repeated across several pages drift apart, and this site had that problem. Where a count
+          appears elsewhere, including on this page, it is rendered from the same source as the benchmark page
+          rather than retyped, so the two cannot disagree.
         </p>
         <p>
           Two things on that page matter more than any single count. The grid was re-cut in August 2026 to exclude
@@ -158,7 +166,7 @@ import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 
         <h2>Current status</h2>
         <p>
-          The 45-run pre-registered result is published on the <a href={withBase('/benchmark/')}>Benchmark page</a>, which
+          The {g.runs_total}-run pre-registered result is published on the <a href={withBase('/benchmark/')}>Benchmark page</a>, which
           carries the dates, the model versions and the refresh position. Both tested models have since been
           superseded and the 14 day re-run commitment has lapsed on both legs. Gemini, the transcript release, a
           scorer independent of GreenSquare and the senior reviewer study all remain outstanding.
