@@ -43,7 +43,8 @@ export default function EmailCaptureForm({
       });
       if (!res.ok) throw new Error('Request failed');
       const campaign = new URLSearchParams(window.location.search);
-      track('Decision Frame Signup', {
+      track('Lens Signup', {
+        asset: 'lens-4.0',
         utm_source: campaign.get('utm_source') ?? 'direct',
         utm_medium: campaign.get('utm_medium') ?? 'none',
         utm_campaign: campaign.get('utm_campaign') ?? 'none',
