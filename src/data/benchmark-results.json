@@ -19,7 +19,8 @@
     "excluded": {
       "pilot_runs": 9,
       "transcript_files_on_disk": 10,
-      "reconciled": false,
+      "reconciled": true,
+      "reconciliation_note": "The 10 files are the 9 excluded run transcripts plus pilot-results.md, the scoring writeup for them. Verified 30 August 2026.",
       "reason": "Design-phase pilot, Case A on Claude, all three arms. protocol.md:23 excludes pilot runs from the pre-registered grid."
     },
     "retired": {
@@ -31,7 +32,7 @@
   "arms": [
     { "id": "armA", "label": "Question only", "note": "The frozen prompt only. One turn. If the model asks questions they are not answered." },
     { "id": "armB", "label": "All facts", "note": "The frozen prompt with the full fact sheet appended in the first message. One turn. Equal information to the loaded condition." },
-    { "id": "armC", "label": "The Decision loaded", "note": "The file, then the frozen prompt. The model interrogates; the operator answers only from the fact sheet and replies 'That has not been assessed' to anything off-sheet." }
+    { "id": "armC", "label": "Compass loaded", "note": "The file, then the frozen prompt. The model interrogates; the operator answers only from the fact sheet and replies 'That has not been assessed' to anything off-sheet." }
   ],
 
   "checks": [
@@ -78,9 +79,9 @@
     "id": "defensible_brief_structure",
     "label": "Produced a defensible brief, on every run",
     "derived": true,
-    "derivation": "AND",
+    "derivation": "MIN",
     "components": ["c1", "c2", "c3", "c4", "c5"],
-    "provenance": "Logical AND of the five process checks. Not an independent ninth result, and not the pre-registered headline.",
+    "provenance": "The lowest of the five process check counts. That is an upper bound on the number of runs that passed all five, and on this grid it equals the conjunction exactly, because every cell in it is either zero or the full fifteen. Per-run results are not published, so the conjunction itself cannot be recomputed from this page. Not an independent ninth result, and not the pre-registered headline. This line previously described the calculation as a logical AND, which is not what the code performs.",
     "gated_by": "c1",
     "recomputed_without_c1": { "armA": 0, "armB": 0, "armC": 15 },
     "recomputed_note": "Recomputed over the four remaining checks the figures do not move, because the question-only condition compared real options in 0 of 15 runs and the all-facts condition tagged its evidence in 0 of 15. This recomputation was done after the fact and was not pre-registered."
@@ -150,6 +151,13 @@
 
   "transcripts": {
     "published": false,
+    "inventory": {
+      "verified_on": "2026-08-30",
+      "grid_files": 45,
+      "grid_by_case": [{ "case_id": "A", "files": 9 }, { "case_id": "B", "files": 18 }, { "case_id": "C", "files": 18 }],
+      "pilot_files": 10,
+      "pilot_note": "Nine excluded run transcripts plus pilot-results.md, the scoring writeup for them."
+    },
     "withdrawn_note": "The two transcript excerpts previously shown here are withdrawn. One tagged a figure DERIVED where the case file supplies it directly, which under the product's own scheme makes it GIVEN, and the case file is one click away. The replacement will show the model integrating a fact it obtained by asking, rather than restating one it was given."
   },
 
@@ -198,7 +206,7 @@
 
   "clean": [
     "Six inputs were hashed and frozen before the first scored run, and all six SHA-256 values match their files when read with LF line endings.",
-    "The reduction in planned sample size from 180 runs to 54 is logged exactly as the protocol required."
+    "The reduction in planned sample size from the pre-registered target of 180 runs is logged exactly as the protocol required, at both steps: first to 54 runs, then to the current 45 when the nine design-phase pilot runs were removed."
   ],
 
   "limitations": [
@@ -208,7 +216,7 @@
     "The three checks that separate most cleanly are the behaviours the file instructs the model to perform. A reasonable reading is that they measure whether the file was loaded, not whether the model reasoned better.",
     "The all-facts condition was not information-equal between the two models on Case B. The Claude fact sheet carries two cross-reference pointers the ChatGPT one lacks.",
     "n is 15 per condition, three repeats per cell. The grid is small and unbalanced, with Case A running on one model only.",
-    "The run inventory does not fully reconcile. Both directory counts were verified on disk, 45 and 10, and the arithmetic requires 9. The tenth file has not been opened.",
+    "The run inventory reconciles. Both directory counts were verified on disk, 45 grid transcripts and 10 pilot files, and the arithmetic requires 9. The tenth file was opened on 30 August 2026: it is the scoring writeup for the nine excluded pilot runs, and it states in its own opening paragraph that they are not pooled with the pre-registered grid. This entry previously reported the inventory as unreconciled and the tenth file as unopened.",
     "What was tested is a file fixed by its published hash. Nothing here commits any later release to being that same file."
   ]
 }

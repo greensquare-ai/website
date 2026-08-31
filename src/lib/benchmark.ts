@@ -57,7 +57,16 @@ export const isDefinitional = (c: Check, arm: Arm): 'full' | 'partial' | false =
   return false;
 };
 
-/** The composite is derived, never read. */
+/**
+ * The composite is derived, never read.
+ *
+ * This takes the LOWEST of the five component counts, which is an upper bound on
+ * the number of runs that passed all five, not a per-run conjunction. Per-run
+ * results are not published, so the conjunction cannot be computed from this
+ * data at all. On the current grid the two coincide, because every component
+ * cell is either zero or the full n. If a future grid has a component that is
+ * neither, this will overstate, and `composite.provenance` says so.
+ */
 export const composite = () => {
   const def = data.composite;
   const parts = def.components.map((id) => check(id));
@@ -173,15 +182,10 @@ export const armBvsArmC = () => {
 const WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
 export const spell = (n: number): string => (n >= 0 && n <= 9 ? WORDS[n] : String(n));
 
-/** Shared vocabulary. The live site used "hidden decision" and "underlying decision"
- *  for the same check on the same page; this stops that recurring. */
-export const LABELS = {
-  composite: 'Produced a defensible brief',
-  hiddenDecision: 'Surfaced the hidden decision',
-  armA: 'Question only',
-  armB: 'All facts',
-  armC: 'The Decision loaded',
-} as const;
+/* LABELS is deleted. It duplicated arm and check names that already come from
+   armLabels() and check().page_label, no page imported it, and it kept its own
+   copy of the arm C label through the rename. A second place to write a name is
+   a second place for a name to go stale. */
 
 function assertInvariants(): void {
   const bad = (m: string) => { throw new Error(`benchmark-results.json: ${m}`); };
@@ -207,9 +211,27 @@ function assertInvariants(): void {
   if (comp.armC.met !== grid().n_per_arm)
     bad(`composite armC is ${comp.armC.met}, expected ${grid().n_per_arm}`);
 
-  // A retired figure must never reappear.
+  // The transcript inventory is a verified count, so it must agree with the grid
+  // it claims to reconcile against, and its per-case split must sum to the total.
+  const inv = transcripts().inventory;
+  if (inv.grid_files !== grid().runs_total)
+    bad(`transcript inventory is ${inv.grid_files} files, grid is ${grid().runs_total} runs`);
+  const byCase = inv.grid_by_case.reduce((t, c) => t + c.files, 0);
+  if (byCase !== inv.grid_files)
+    bad(`transcript inventory by case sums to ${byCase}, total is ${inv.grid_files}`);
+  if (inv.pilot_files !== grid().excluded.pilot_runs + 1)
+    bad(`pilot files ${inv.pilot_files} is not ${grid().excluded.pilot_runs} runs plus one writeup`);
+
+  // A retired figure must never reappear, as a count or bare in published prose.
   const retired = grid().retired.runs_total;
   if (grid().runs_total === retired) bad(`runs_total is the retired ${retired}`);
+
+  // The clean items say nothing went wrong, so a retired figure standing alone in
+  // one reads as a current count. It may appear only alongside the live total.
+  for (const item of cleanItems()) {
+    if (new RegExp(`\\b${retired}\\b`).test(item) && !new RegExp(`\\b${grid().runs_total}\\b`).test(item))
+      bad(`a clean item states the retired ${retired} without the current ${grid().runs_total}: "${item}"`);
+  }
 
   const gc = goCase();
   const caseB = grid().cases.find((c) => c.id === gc.case_id);

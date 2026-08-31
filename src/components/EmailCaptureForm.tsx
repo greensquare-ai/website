@@ -15,7 +15,7 @@ export interface Props {
 type Status = 'idle' | 'loading' | 'success' | 'error';
 
 export default function EmailCaptureForm({
-  buttonLabel = 'Email me the Decision Frame',
+  buttonLabel = 'Email me the Lens worksheet',
   fineprint = 'Confirm your address to receive the PDF and occasional GreenSquare updates. Unsubscribe at any time.',
   dark = false,
 }: Props) {
@@ -63,7 +63,7 @@ export default function EmailCaptureForm({
     return (
       <div className="field-row-wrapper" style={{ minHeight: '4.75rem' }}>
         <p className="form-status form-status--success" role="status">
-          Check your inbox and confirm your address. The Decision Frame will arrive immediately after.
+          Check your inbox and confirm your address. Lens 4.0 will arrive immediately after.
         </p>
       </div>
     );
@@ -74,7 +74,9 @@ export default function EmailCaptureForm({
       <form
         className={`field-row ${leaving ? 'is-leaving' : ''}`}
         onSubmit={handleSubmit}
-        aria-label="Get the free Decision Frame"
+        /* The form's accessible name comes from the label the page gives its
+           button, so a product rename cannot leave a stale name behind here. */
+        aria-label={buttonLabel}
       >
         <label htmlFor="email_address" className="sr-only">Email address</label>
         <input

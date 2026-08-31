@@ -4,7 +4,7 @@ import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
 
 const questions = [
-  { n: '1', q: 'What exactly are you deciding, and why now?', body: 'State the Decision in one sentence. Then name the event, deadline or pressure that made it active now.' },
+  { n: '1', q: 'What exactly are you deciding, and why now?', body: 'State the decision in one sentence. Then name the event, deadline or pressure that made it active now.' },
   { n: '2', q: 'What larger decision sits underneath it?', body: 'If the immediate choice disappeared, which bigger question would still need an answer?' },
   { n: '3', q: 'Which option is missing?', body: 'Add a genuine third path. It may be a smaller commitment, a different sequence or keeping the current position.' },
   { n: '4', q: 'Which assumption carries the decision?', body: 'Find the single Assumption that would change the recommendation if it proved wrong.' },
@@ -13,7 +13,7 @@ const questions = [
 ];
 ---
 <BaseLayoutV2
-  title="The Decision Frame | Six questions before AI answers"
+  title="Lens 4.0 | Six questions before AI answers"
   description="A free one-page worksheet with six questions to expose the real decision, test the assumption carrying the most risk and separate evidence from interpretation."
   current="frame"
 >
@@ -22,12 +22,12 @@ const questions = [
       <h1 class="v-display">Frame the decision before AI answers it.</h1>
       <p class="v-lead" style="margin-top: var(--v-6);">
         Many weak recommendations begin before the analysis. The decision is framed too narrowly, an Option is
-        treated as fixed or an Assumption goes untested. The Decision Frame is a free, one-page worksheet that
+        treated as fixed or an Assumption goes untested. Lens 4.0 is a free, one-page worksheet that
         exposes those problems before you compare options.
       </p>
       <div class="hero-actions">
         <a class="v-btn v-btn--green" href="#get-it">Get the one-page PDF</a>
-        <a class="v-btn v-btn--grey" href={withBase('/product/')}>See the complete process</a>
+        <a class="v-btn v-btn--grey" href={withBase('/benchmark/')}>See the complete process</a>
       </div>
     </div>
   </section>
@@ -62,14 +62,14 @@ const questions = [
       <h2 class="v-h2">The output is a clearer decision, not a longer document.</h2>
       <div class="v-card v-reveal" style="margin-top: var(--v-6);">
         <ul class="v-leadlist">
-          <li><strong>The Decision.</strong> One clear sentence that names the choice and why it must be made now.</li>
+          <li><strong>The decision.</strong> One clear sentence that names the choice and why it must be made now.</li>
           <li><strong>A wider option set.</strong> At least one credible path beyond the choices you started with.</li>
           <li><strong>The critical Assumption.</strong> The belief that deserves the fastest test.</li>
           <li><strong>An evidence map.</strong> A simple view of what is GIVEN, INFERRED and still UNKNOWN.</li>
         </ul>
       </div>
       <p class="v-measure" style="margin-top: var(--v-8); color: var(--v-ink-soft);">
-        The Decision Frame prepares the choice. <a href={withBase('/product/')}>The Decision</a> then interrogates
+        Lens prepares the choice. <a href={withBase('/benchmark/')}>Compass</a> then interrogates
         the context, compares the Options and produces the complete Decision Brief.
       </p>
     </div>
@@ -80,12 +80,12 @@ const questions = [
       <div class="v-reveal">
         <h2 class="v-h2">Put the six questions beside your next decision.</h2>
         <p class="v-lead" style="margin-top: var(--v-5);">
-          Enter your email and confirm the address. The one-page Decision Frame will arrive immediately after.
+          Enter your email and confirm the address. The one-page Lens worksheet will arrive immediately after.
         </p>
       </div>
       <div class="v-reveal d1">
         <div class="v-card">
-          <EmailCaptureForm client:visible buttonLabel="Email me the Decision Frame" />
+          <EmailCaptureForm client:visible buttonLabel="Email me the Lens worksheet" />
         </div>
       </div>
     </div>
