@@ -171,6 +171,9 @@ import ThroughFlowHero from '../components/ThroughFlowHero.astro';
     .hero-actions { margin-top: var(--v-6); }
     .hero-split__media { aspect-ratio: 4 / 3; }
   }
+  @media (max-width: 560px) {
+    .v-caprow .v-cap-body { grid-column: 1; }
+  }
   .home-next { padding-block: clamp(4.5rem, 8vw, 6.5rem); }
   .home-next__inner { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(25rem, 1.1fr); gap: clamp(3rem, 8vw, 7rem); align-items: center; }
   .home-next__copy { max-width: 40rem; }
