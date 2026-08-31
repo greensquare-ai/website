@@ -57,7 +57,16 @@ export const isDefinitional = (c: Check, arm: Arm): 'full' | 'partial' | false =
   return false;
 };
 
-/** The composite is derived, never read. */
+/**
+ * The composite is derived, never read.
+ *
+ * This takes the LOWEST of the five component counts, which is an upper bound on
+ * the number of runs that passed all five, not a per-run conjunction. Per-run
+ * results are not published, so the conjunction cannot be computed from this
+ * data at all. On the current grid the two coincide, because every component
+ * cell is either zero or the full n. If a future grid has a component that is
+ * neither, this will overstate, and `composite.provenance` says so.
+ */
 export const composite = () => {
   const def = data.composite;
   const parts = def.components.map((id) => check(id));

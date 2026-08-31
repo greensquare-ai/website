@@ -79,9 +79,9 @@
     "id": "defensible_brief_structure",
     "label": "Produced a defensible brief, on every run",
     "derived": true,
-    "derivation": "AND",
+    "derivation": "MIN",
     "components": ["c1", "c2", "c3", "c4", "c5"],
-    "provenance": "Logical AND of the five process checks. Not an independent ninth result, and not the pre-registered headline.",
+    "provenance": "The lowest of the five process check counts. That is an upper bound on the number of runs that passed all five, and on this grid it equals the conjunction exactly, because every cell in it is either zero or the full fifteen. Per-run results are not published, so the conjunction itself cannot be recomputed from this page. Not an independent ninth result, and not the pre-registered headline. This line previously described the calculation as a logical AND, which is not what the code performs.",
     "gated_by": "c1",
     "recomputed_without_c1": { "armA": 0, "armB": 0, "armC": 15 },
     "recomputed_note": "Recomputed over the four remaining checks the figures do not move, because the question-only condition compared real options in 0 of 15 runs and the all-facts condition tagged its evidence in 0 of 15. This recomputation was done after the fact and was not pre-registered."
