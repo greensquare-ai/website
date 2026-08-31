@@ -76,7 +76,7 @@ import ThroughFlowHero from '../components/ThroughFlowHero.astro';
           not yet prove better judgement than an informed operator. The cases, protocol, scoring rubric and every
           departure from the plan are published so readers can inspect that boundary for themselves.
         </p>
-        <p class="v-small" style="margin-top: var(--v-5);">
+        <p class="v-small" style="margin-top: var(--v-5); color: var(--v-cream-soft);">
           The product was renamed on 30 August 2026, after the study was run and scored. The product named
           Compass here is the one that was tested under its former name.
         </p>
@@ -120,17 +120,17 @@ import ThroughFlowHero from '../components/ThroughFlowHero.astro';
   .hero-split-section {
     position: relative;
     min-height: clamp(480px, 62vh, 680px);
-    display: flex;             /* stretch the container to full band height */
+    display: flex;
     overflow: hidden;
   }
   .hero-split__grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;   /* divider sits at container centre = screen centre */
-    align-items: center;              /* vertically centre the text */
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
     width: 100%;
   }
   .hero-split__text {
-    grid-column: 1;                   /* text occupies the left half only */
+    grid-column: 1;
     max-width: 34rem;
     padding-right: clamp(1.5rem, 4vw, 3.5rem);
     padding-block: clamp(2.5rem, 5vh, 4rem);
@@ -140,8 +140,8 @@ import ThroughFlowHero from '../components/ThroughFlowHero.astro';
   .hero-actions { display: flex; gap: var(--v-4); align-items: center; flex-wrap: wrap; margin-top: var(--v-8); }
   .hero-split__media {
     position: absolute; top: 0; bottom: 0;
-    left: 50%;                        /* meets the text column's right edge exactly */
-    right: 0;                         /* full-bleed to the right viewport edge */
+    left: 50%;
+    right: 0;
   }
   @media (max-width: 900px) {
     .hero-split-section { min-height: 0; display: block; }
