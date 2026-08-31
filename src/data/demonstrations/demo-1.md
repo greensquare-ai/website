@@ -15,8 +15,9 @@ edited: false
 attempts_before_this: 1
 attempt_note: >-
   A first attempt was abandoned because the operator had not been given its own opening message and
-  wrongly contradicted it. That was an orchestration fault, not a product failure. No content from
-  it was carried forward. Recorded in full in greensquare-ops/benchmark-rewrite/demo-run-log.md.
+  wrongly contradicted it, which would have shown the product appearing to invent a fact it did not
+  invent. That was a fault in how the run was set up, not a product failure. The attempt was
+  abandoned rather than edited, and no content from it was carried forward into this one.
 ---
 
 # Demonstration run, Kelbrane Group
