@@ -1,9 +1,6 @@
-name: Decision Frame V2 preview QA
+name: Launch preview QA
 
 on:
-  push:
-    branches:
-      - launch/decision-frame-v2
   pull_request:
     branches:
       - main
@@ -20,7 +17,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: decision-frame-v2-preview-qa-${{ github.ref }}
+  group: launch-preview-qa-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -36,13 +33,12 @@ jobs:
           node-version: '22'
           cache: npm
 
-      - name: Install site dependencies
-        run: npm ci
+      - name: Install and build
+        run: |
+          npm ci
+          npm run build
 
-      - name: Production build
-        run: npm run build
-
-      - name: Install browser QA dependencies
+      - name: Install Chromium
         run: |
           npm install --no-save playwright@1.55.0
           npx playwright install --with-deps chromium
@@ -50,7 +46,6 @@ jobs:
       - name: Start Astro preview
         run: |
           npm run preview -- --host 127.0.0.1 --port 4321 > /tmp/greensquare-preview.log 2>&1 &
-          echo $! > /tmp/greensquare-preview.pid
           for i in $(seq 1 30); do
             if curl -fsS http://127.0.0.1:4321/ >/dev/null; then exit 0; fi
             sleep 1
@@ -58,22 +53,22 @@ jobs:
           cat /tmp/greensquare-preview.log
           exit 1
 
-      - name: Browser and responsive QA
+      - name: Responsive launch regression
         run: |
-          mkdir -p qa/decision-frame-v2
-          cat > qa/decision-frame-v2/run.mjs <<'EOF'
+          mkdir -p qa/launch
+          cat > qa/launch/run.mjs <<'EOF'
           import { chromium } from 'playwright';
           import fs from 'node:fs';
           import path from 'node:path';
 
           const base = 'http://127.0.0.1:4321';
-          const routes = ['/', '/decision-frame/', '/product/', '/benchmark/'];
+          const routes = ['/', '/decision-frame/', '/benchmark/', '/product/'];
           const viewports = [
             { name: 'desktop', width: 1440, height: 1000 },
+            { name: 'tablet', width: 820, height: 1180 },
             { name: 'mobile', width: 390, height: 844 },
           ];
-          const output = 'qa/decision-frame-v2';
-          fs.mkdirSync(output, { recursive: true });
+          const output = 'qa/launch';
           const browser = await chromium.launch();
           const results = [];
           let failed = false;
@@ -82,54 +77,88 @@ jobs:
             const context = await browser.newContext({ viewport: { width: viewport.width, height: viewport.height } });
             for (const route of routes) {
               const page = await context.newPage();
-              const pageErrors = [];
-              page.on('pageerror', error => pageErrors.push(String(error)));
+              const errors = [];
+              page.on('pageerror', error => errors.push(`pageerror: ${String(error)}`));
               const response = await page.goto(base + route, { waitUntil: 'networkidle' });
               const status = response?.status() ?? 0;
-              const h1Count = await page.locator('h1').count();
-              const h1Visible = h1Count > 0 ? await page.locator('h1').first().isVisible() : false;
+              const h1Visible = await page.locator('h1').first().isVisible().catch(() => false);
               const geometry = await page.evaluate(() => ({
                 scrollWidth: document.documentElement.scrollWidth,
                 clientWidth: document.documentElement.clientWidth,
-                scrollHeight: document.documentElement.scrollHeight,
-                clientHeight: document.documentElement.clientHeight,
               }));
               const horizontalOverflow = geometry.scrollWidth > geometry.clientWidth + 2;
-              const bodyText = await page.locator('body').innerText();
-              if (route === '/decision-frame/' || route === '/product/' || route === '/') {
-                if (!/beta/i.test(bodyText)) pageErrors.push('Public V2 launch surface does not visibly identify the product as beta');
+              if (status !== 200) errors.push(`HTTP ${status}`);
+              if (!h1Visible) errors.push('Primary heading is not visible');
+              if (horizontalOverflow) errors.push(`Horizontal overflow ${geometry.scrollWidth}/${geometry.clientWidth}`);
+
+              if (route === '/') {
+                if (await page.locator('a[href*="decision-frame"]').count() < 1) errors.push('Lens CTA missing');
+                if (await page.locator('a[href*="benchmark"]').count() < 1) errors.push('Benchmark CTA missing');
+                if (await page.locator('[data-decision-passage]').count() !== 1) errors.push('Decision Passage missing');
+                const expected = viewport.name === 'desktop' ? 'desktop' : viewport.name === 'tablet' ? 'tablet' : 'mobile';
+                const visibleSvg = await page.locator(`.through-flow__${expected}`).evaluate(el => getComputedStyle(el).display !== 'none').catch(() => false);
+                if (!visibleSvg) errors.push(`Expected ${expected} hero composition is not active`);
+                await page.waitForTimeout(4300);
               }
-              if (route === '/decision-frame/' || route === '/product/') {
-                if (/one-page six-question|opening six questions/i.test(bodyText)) pageErrors.push('Obsolete Decision Frame V1 positioning detected');
-                if (await page.locator('input[type="email"]').count() < 1) pageErrors.push('Email acquisition input missing');
+
+              if (route === '/decision-frame/') {
+                if (await page.locator('input[type="email"]').count() < 1) errors.push('Lens email input missing');
+                if (await page.getByRole('button', { name: /Lens worksheet/i }).count() < 1) errors.push('Lens submit action missing');
               }
-              if (route === '/decision-frame/' && !/historical|earlier GreenSquare|earlier.*method/i.test(bodyText)) {
-                pageErrors.push('Historical benchmark boundary is not visible on Decision Frame page');
+
+              if (route === '/benchmark/') {
+                const text = await page.locator('body').innerText();
+                if (!/Compass/.test(text)) errors.push('Compass naming missing from benchmark');
+                if (!/does not|limit/i.test(text)) errors.push('Benchmark limitation boundary is not visible');
               }
+
+              if (route === '/product/' && !page.url().includes('/benchmark/')) {
+                errors.push('/product/ did not resolve to /benchmark/');
+              }
+
               const safeRoute = route === '/' ? 'home' : route.replaceAll('/', '-').replace(/^-|-$/g, '');
               const screenshot = path.join(output, `${safeRoute}-${viewport.name}.png`);
               await page.screenshot({ path: screenshot, fullPage: true });
-              const passed = status === 200 && h1Visible && !horizontalOverflow && pageErrors.length === 0;
+              const passed = errors.length === 0;
               if (!passed) failed = true;
-              results.push({ route, viewport: viewport.name, status, h1Visible, horizontalOverflow, pageErrors, screenshot, ...geometry, passed });
+              results.push({ route, viewport: viewport.name, status, horizontalOverflow, errors, screenshot, passed });
               await page.close();
             }
             await context.close();
           }
+
+          const reduced = await browser.newContext({ viewport: { width: 1440, height: 1000 }, reducedMotion: 'reduce' });
+          const reducedPage = await reduced.newPage();
+          await reducedPage.goto(base + '/', { waitUntil: 'networkidle' });
+          const reducedState = await reducedPage.evaluate(() => {
+            const root = document.querySelector('[data-decision-passage]');
+            const motion = root?.querySelector('.through-flow__desktop .through-flow__motion');
+            const still = root?.querySelector('.through-flow__desktop .through-flow__still');
+            return {
+              motion: motion ? getComputedStyle(motion).display : 'missing',
+              still: still ? getComputedStyle(still).display : 'missing',
+            };
+          });
+          const reducedPassed = reducedState.motion === 'none' && reducedState.still !== 'none';
+          if (!reducedPassed) failed = true;
+          results.push({ route: '/', viewport: 'desktop-reduced-motion', reducedState, passed: reducedPassed });
+          await reduced.close();
+
           await browser.close();
           fs.writeFileSync(path.join(output, 'report.json'), JSON.stringify({ passed: !failed, results }, null, 2));
           console.log(JSON.stringify({ passed: !failed, results }, null, 2));
           if (failed) process.exit(1);
           EOF
-          node qa/decision-frame-v2/run.mjs
+          node qa/launch/run.mjs
 
       - name: Check internal links
         run: |
           python - <<'PY'
-          import pathlib, urllib.request
+          import urllib.request
           from html.parser import HTMLParser
           from urllib.parse import urljoin, urlparse
-          base='http://127.0.0.1:4321/'; seeds=['/','/decision-frame/','/product/','/benchmark/']
+          base='http://127.0.0.1:4321/'
+          seeds=['/','/decision-frame/','/benchmark/']
           class Links(HTMLParser):
               def __init__(self): super().__init__(); self.links=[]
               def handle_starttag(self,tag,attrs):
@@ -142,15 +171,14 @@ jobs:
               p=Links();p.feed(html)
               for href in p.links:
                   parsed=urlparse(urljoin(urljoin(base,seed),href))
-                  if parsed.netloc=='127.0.0.1:4321':targets.add(parsed.path or '/')
+                  if parsed.netloc=='127.0.0.1:4321': targets.add(parsed.path or '/')
           failures=[]
           for target in sorted(targets):
               try:
-                  with urllib.request.urlopen(urljoin(base,target),timeout=10) as r:status=r.status
-                  if status>=400:failures.append((target,status))
-              except Exception as exc:failures.append((target,str(exc)))
-          pathlib.Path('qa/decision-frame-v2/internal-links.txt').write_text('\n'.join(f'{t}\t{s}' for t,s in failures) if failures else 'PASS\n',encoding='utf-8')
-          if failures:raise SystemExit(f'Broken internal links: {failures}')
+                  with urllib.request.urlopen(urljoin(base,target),timeout=10) as r: status=r.status
+                  if status>=400: failures.append((target,status))
+              except Exception as exc: failures.append((target,str(exc)))
+          if failures: raise SystemExit(f'Broken internal links: {failures}')
           print(f'PASS internal_links={len(targets)}')
           PY
 
@@ -158,7 +186,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: decision-frame-v2-preview-qa
-          path: qa/decision-frame-v2/
+          name: launch-preview-qa
+          path: qa/launch/
           if-no-files-found: warn
           retention-days: 14
