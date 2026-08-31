@@ -3,7 +3,7 @@ name: Astro 7 security upgrade
 on:
   push:
     branches:
-      - launch/decision-frame-v2
+      - launch-gauntlet/hero-pass
     paths:
       - '.github/workflows/astro7-security-upgrade.yml'
   workflow_dispatch:
@@ -20,10 +20,10 @@ jobs:
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout launch branch
+      - name: Checkout launch candidate
         uses: actions/checkout@v4
         with:
-          ref: launch/decision-frame-v2
+          ref: launch-gauntlet/hero-pass
           fetch-depth: 0
 
       - name: Set up Node
@@ -32,8 +32,11 @@ jobs:
           node-version: '22'
           cache: npm
 
-      - name: Install current patched Astro stack
-        run: npm install --save-exact astro@7.2.4 @astrojs/mdx@7.0.7 @astrojs/react@6.0.4 @astrojs/sitemap@3.7.3
+      - name: Install patched Astro stack
+        run: npm install --save-exact astro@7.2.9 @astrojs/mdx@7.0.7 @astrojs/react@6.0.4 @astrojs/sitemap@3.7.3
+
+      - name: Apply non-breaking production audit fixes
+        run: npm audit fix --omit=dev --audit-level=high
 
       - name: Build with upgraded stack
         run: npm run build
@@ -50,5 +53,5 @@ jobs:
             echo 'Dependency files already current'
           else
             git commit -m 'Upgrade Astro stack to patched current releases [skip ci]'
-            git push origin HEAD:launch/decision-frame-v2
+            git push origin HEAD:launch-gauntlet/hero-pass
           fi
