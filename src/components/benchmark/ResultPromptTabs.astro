@@ -55,6 +55,10 @@ const {
 } = Astro.props;
 
 const hasBasis = Astro.slots.has('basis');
+/* A fault found in the published run sits between the panels and the basis line,
+   at body weight rather than in the fine print. A defect disclosed in smaller
+   type than the claim it undercuts is not disclosed. */
+const hasDefect = Astro.slots.has('defect');
 ---
 
 <figure class:list={['bm-fig', 'bm-tabs', 'bm-breakout', className]}>
@@ -124,10 +128,27 @@ const hasBasis = Astro.slots.has('basis');
     </div>
   </div>
 
+  {hasDefect && (
+    <div class="bm-tabs__defect"><slot name="defect" /></div>
+  )}
+
   {hasBasis && (
     <p class="bm-fig__basis"><slot name="basis" /></p>
   )}
 </figure>
+
+<style is:global>
+  .bm-tabs__defect {
+    margin-top: var(--v-5);
+    padding: var(--v-5);
+    background: var(--v-fill);
+    border-left: 2px solid var(--v-ink);
+    font-size: var(--vs-body);
+    color: var(--v-ink);
+    max-width: 72ch;
+  }
+  .bm-tabs__defect strong { font-weight: 600; }
+</style>
 
 <style>
   /* Figure numbers come from a counter reset on .bm-page. Section 2.6. */

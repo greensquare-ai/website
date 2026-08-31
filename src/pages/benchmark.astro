@@ -271,11 +271,22 @@ const limitationLeads = [
         direction follows that evidence. It does not show the run finding the whole of the case's
         hidden decision, and it is not evidence of anything the study measured: one run, on a
         fictional case, not scored, not adjudicated, with no sealed key and no baseline to compare
-        against. It differs from a buyer's own use in three ways. {differences.join(' ')} One earlier
-        attempt was abandoned for a fault in the way this run was orchestrated rather than a fault in
-        the file, and no content from it was carried forward. Demonstration / model {dm.model} /
+        against. It differs from a buyer's own use in three ways. {differences.join(' ')} This is the
+        second of {spell(dm.attemptsBefore + 1)} attempts and the only one published. The first was
+        abandoned for a fault in the way the run was orchestrated rather than a fault in the file, and
+        no content from it was carried forward. Demonstration / model {dm.model} /
         run {demoRun} / {dm.productFile}, asserted at build to hash to the value published below
         / not part of the pre-registered study
+      </Fragment>
+      <Fragment slot="defect">
+        <strong>One tagging error in this run, found on review and left in place.</strong> In the
+        options table, the evidence column for option A reads "Integrator attestation, assessed by
+        nobody independent of the integrator", tagged given. The operator did not say that. They
+        said they did not know who assesses the attestation independently of the integrator. Under
+        the scheme Compass is applying, an absence of knowledge is unknown, not given, so the tag is
+        wrong and the claim is stronger than the answer it rests on. It is the same class of error
+        that withdrew the two excerpts previously shown here, which is why it is named rather than
+        quietly corrected. The transcript is published unedited and this note sits beside it.
       </Fragment>
     </ResultPromptTabs>
   </div>
