@@ -1,0 +1,164 @@
+name: Decision Frame V2 preview QA
+
+on:
+  push:
+    branches:
+      - launch/decision-frame-v2
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'astro.config.*'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/decision-frame-v2-preview-qa.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: decision-frame-v2-preview-qa-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-browser-qa:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install site dependencies
+        run: npm ci
+
+      - name: Production build
+        run: npm run build
+
+      - name: Install browser QA dependencies
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Start Astro preview
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4321 > /tmp/greensquare-preview.log 2>&1 &
+          echo $! > /tmp/greensquare-preview.pid
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4321/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/greensquare-preview.log
+          exit 1
+
+      - name: Browser and responsive QA
+        run: |
+          mkdir -p qa/decision-frame-v2
+          cat > qa/decision-frame-v2/run.mjs <<'EOF'
+          import { chromium } from 'playwright';
+          import fs from 'node:fs';
+          import path from 'node:path';
+
+          const base = 'http://127.0.0.1:4321';
+          const routes = ['/', '/decision-frame/', '/product/', '/benchmark/'];
+          const viewports = [
+            { name: 'desktop', width: 1440, height: 1000 },
+            { name: 'mobile', width: 390, height: 844 },
+          ];
+          const output = 'qa/decision-frame-v2';
+          fs.mkdirSync(output, { recursive: true });
+          const browser = await chromium.launch();
+          const results = [];
+          let failed = false;
+
+          for (const viewport of viewports) {
+            const context = await browser.newContext({ viewport: { width: viewport.width, height: viewport.height } });
+            for (const route of routes) {
+              const page = await context.newPage();
+              const pageErrors = [];
+              page.on('pageerror', error => pageErrors.push(String(error)));
+              const response = await page.goto(base + route, { waitUntil: 'networkidle' });
+              const status = response?.status() ?? 0;
+              const h1Count = await page.locator('h1').count();
+              const h1Visible = h1Count > 0 ? await page.locator('h1').first().isVisible() : false;
+              const geometry = await page.evaluate(() => ({
+                scrollWidth: document.documentElement.scrollWidth,
+                clientWidth: document.documentElement.clientWidth,
+                scrollHeight: document.documentElement.scrollHeight,
+                clientHeight: document.documentElement.clientHeight,
+              }));
+              const horizontalOverflow = geometry.scrollWidth > geometry.clientWidth + 2;
+              const bodyText = await page.locator('body').innerText();
+              if (route === '/decision-frame/' || route === '/product/' || route === '/') {
+                if (!/beta/i.test(bodyText)) pageErrors.push('Public V2 launch surface does not visibly identify the product as beta');
+              }
+              if (route === '/decision-frame/' || route === '/product/') {
+                if (/one-page six-question|opening six questions/i.test(bodyText)) pageErrors.push('Obsolete Decision Frame V1 positioning detected');
+                if (await page.locator('input[type="email"]').count() < 1) pageErrors.push('Email acquisition input missing');
+              }
+              if (route === '/decision-frame/' && !/historical|earlier GreenSquare|earlier.*method/i.test(bodyText)) {
+                pageErrors.push('Historical benchmark boundary is not visible on Decision Frame page');
+              }
+              const safeRoute = route === '/' ? 'home' : route.replaceAll('/', '-').replace(/^-|-$/g, '');
+              const screenshot = path.join(output, `${safeRoute}-${viewport.name}.png`);
+              await page.screenshot({ path: screenshot, fullPage: true });
+              const passed = status === 200 && h1Visible && !horizontalOverflow && pageErrors.length === 0;
+              if (!passed) failed = true;
+              results.push({ route, viewport: viewport.name, status, h1Visible, horizontalOverflow, pageErrors, screenshot, ...geometry, passed });
+              await page.close();
+            }
+            await context.close();
+          }
+          await browser.close();
+          fs.writeFileSync(path.join(output, 'report.json'), JSON.stringify({ passed: !failed, results }, null, 2));
+          console.log(JSON.stringify({ passed: !failed, results }, null, 2));
+          if (failed) process.exit(1);
+          EOF
+          node qa/decision-frame-v2/run.mjs
+
+      - name: Check internal links
+        run: |
+          python - <<'PY'
+          import pathlib, urllib.request
+          from html.parser import HTMLParser
+          from urllib.parse import urljoin, urlparse
+          base='http://127.0.0.1:4321/'; seeds=['/','/decision-frame/','/product/','/benchmark/']
+          class Links(HTMLParser):
+              def __init__(self): super().__init__(); self.links=[]
+              def handle_starttag(self,tag,attrs):
+                  if tag=='a':
+                      href=dict(attrs).get('href')
+                      if href:self.links.append(href)
+          targets=set()
+          for seed in seeds:
+              with urllib.request.urlopen(urljoin(base,seed),timeout=10) as r: html=r.read().decode('utf-8','replace')
+              p=Links();p.feed(html)
+              for href in p.links:
+                  parsed=urlparse(urljoin(urljoin(base,seed),href))
+                  if parsed.netloc=='127.0.0.1:4321':targets.add(parsed.path or '/')
+          failures=[]
+          for target in sorted(targets):
+              try:
+                  with urllib.request.urlopen(urljoin(base,target),timeout=10) as r:status=r.status
+                  if status>=400:failures.append((target,status))
+              except Exception as exc:failures.append((target,str(exc)))
+          pathlib.Path('qa/decision-frame-v2/internal-links.txt').write_text('\n'.join(f'{t}\t{s}' for t,s in failures) if failures else 'PASS\n',encoding='utf-8')
+          if failures:raise SystemExit(f'Broken internal links: {failures}')
+          print(f'PASS internal_links={len(targets)}')
+          PY
+
+      - name: Upload QA evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: decision-frame-v2-preview-qa
+          path: qa/decision-frame-v2/
+          if-no-files-found: warn
+          retention-days: 14
