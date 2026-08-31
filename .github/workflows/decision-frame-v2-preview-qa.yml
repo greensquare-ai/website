@@ -106,14 +106,10 @@ jobs:
                 if (await page.getByRole('button', { name: /Lens worksheet/i }).count() < 1) errors.push('Lens submit action missing');
               }
 
-              if (route === '/benchmark/') {
+              if (route === '/benchmark/' || route === '/product/') {
                 const text = await page.locator('body').innerText();
-                if (!/Compass/.test(text)) errors.push('Compass naming missing from benchmark');
-                if (!/does not|limit/i.test(text)) errors.push('Benchmark limitation boundary is not visible');
-              }
-
-              if (route === '/product/' && !page.url().includes('/benchmark/')) {
-                errors.push('/product/ did not resolve to /benchmark/');
+                if (!/Compass/.test(text)) errors.push('Compass naming missing from flagship surface');
+                if (!/does not|limit/i.test(text)) errors.push('Evidence limitation boundary is not visible');
               }
 
               const safeRoute = route === '/' ? 'home' : route.replaceAll('/', '-').replace(/^-|-$/g, '');
