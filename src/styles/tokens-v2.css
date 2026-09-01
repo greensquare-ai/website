@@ -6,6 +6,7 @@
   /* surfaces */
   --v-paper: #ffffff;
   --v-off: #f5f5f5;
+  --v-canvas: #f3f0e7;
   --v-fill: #efefec;
   --v-fill-2: #e7e7e2;
   --v-fill-3: #d8d8d1;
@@ -30,6 +31,8 @@
   --v-cream: #ffffff;
   --v-cream-soft: rgba(255, 255, 255, 0.82);
   --v-cream-faint: rgba(255, 255, 255, 0.62);
+  --v-black: var(--v-green-ink);
+  --v-white: var(--v-paper);
   --v-line: #dedad2;
   --v-line-strong: #a7a59d;
   --v-line-green: rgba(255, 255, 255, 0.22);
@@ -43,6 +46,8 @@
   --vf-display: 'Space Grotesk', Arial, sans-serif;
   --vf-body: 'IBM Plex Sans', Arial, sans-serif;
   --vf-brand: 'Manrope', Arial, sans-serif;
+  --v-font-display: var(--vf-display);
+  --v-font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
 
   /* larger reading text, quieter headings */
   --vs-display: clamp(2.65rem, 4.5vw, 4.5rem);
@@ -51,14 +56,14 @@
   --vs-h3: 1.25rem;
   --vs-h4: 1.0625rem;
   --vs-lead: clamp(1.18rem, 1.55vw, 1.4rem);
-  --vs-body: 1.075rem;
-  --vs-small: 0.98rem;
+  --vs-body: clamp(1rem, 0.96rem + 0.18vw, 1.075rem);
+  --vs-small: clamp(0.96rem, 0.93rem + 0.1vw, 1rem);
   --vs-label: 0.82rem;
 
   /* layout */
   --v-max: 1400px;
   --v-gutter: clamp(22px, 4vw, 52px);
-  --v-section: clamp(4.5rem, 7vw, 7rem);
+  --v-section: clamp(3.75rem, 6vw, 6.5rem);
 
   /* spacing */
   --v-1: 4px;

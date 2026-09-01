@@ -1,22 +1,22 @@
 ---
 layout: ../../layouts/LegalLayout.astro
 title: Terms of use
-description: The terms governing use of the GreenSquare website and the Decision.
+description: The terms governing use of the GreenSquare AI website and products.
 ---
 
 # Terms of use
 
-Last updated: 17 August 2026
+Last updated: 1 September 2026
 
-These terms govern your use of www.greensquare.ai, run by GreenSquare (the trading name of the operator of this site). By using the site, joining the launch list, or requesting the Decision Frame, you agree to them.
+These terms govern your use of www.greensquare.ai, run by GreenSquare AI. By using the site, joining the beta list, or requesting GreenSquare Free, you agree to them.
 
 ## What the site is
 
-The site describes GreenSquare's products and lets you request the free Decision Frame. Nothing is currently for sale. When The Decision opens for sale, these terms will be updated to cover purchase, payment and refunds before any checkout is available.
+The site describes GreenSquare AI's products and lets you request GreenSquare Free. Nothing is currently for sale. GreenSquare Pro is in development. These terms will be updated to cover purchase, payment and refunds before any checkout is available.
 
-## The Decision and the Decision Frame
+## GreenSquare Free and GreenSquare Pro
 
-The Decision, the Decision Frame, the writing on this site, and the methodology behind GreenSquare are ours, protected by copyright and other rights. You may use them for your own decisions. You may not resell them, republish them, or present them as your own. We give you a personal, non-transferable right to use what we send you, and nothing more.
+GreenSquare Free, GreenSquare Pro, the writing on this site and the methodology behind GreenSquare are ours, protected by copyright and other rights. You may use material we send you for your own decisions. You may not resell it, republish it or present it as your own. We give you a personal, non-transferable right to use it, and nothing more.
 
 Where the site describes products that are not yet available, those descriptions are for information. Features, names and timing may change before anything is released.
 

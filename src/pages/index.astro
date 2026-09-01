@@ -3,185 +3,141 @@ import { withBase } from '../lib/paths';
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
 import ThroughFlowHero from '../components/ThroughFlowHero.astro';
+
+const capabilities = [
+  { label: 'Frame', title: 'Clarify the decision before solving it', body: 'GreenSquare identifies the mandate, decision owner, stakes and evidence needed before a recommendation can be credible.' },
+  { label: 'Challenge', title: 'Expose assumptions and missing evidence', body: 'It separates what is known from what is inferred, tests contradictions and keeps uncertainty visible where it can still change the call.' },
+  { label: 'Decide', title: 'Compare real options and define the path', body: 'It evaluates distinct choices consistently, recommends only when the evidence permits and carries decision conditions into action.' },
+];
 ---
 <BaseLayoutV2
-  title="GreenSquare AI | Turn capable AI into a disciplined strategy partner"
-  description="GreenSquare gives Claude, ChatGPT and Gemini a disciplined strategy process for consequential business decisions, from the first material question to a defensible recommendation."
+  title="GreenSquare AI | Professional judgement for consequential decisions"
+  description="GreenSquare adds a disciplined professional judgement process to the AI you already use, from the first material question to an inspectable decision."
   current="home"
 >
-  <section class="hero-split-section v-off hero">
-    <div class="v-container hero-split__grid">
-      <div class="hero-split__text v-reveal">
-        <h1 class="v-display">Turn capable AI into a disciplined strategy partner.</h1>
-        <p class="v-lead" style="margin-top: var(--v-6);">
-          Compass loads a structured decision process into Claude, ChatGPT and Gemini. Instead of simply answering
-          the question it is given, it clarifies the real decision, compares credible alternatives and shows what
-          is known, inferred or uncertain before recommending.
-        </p>
-        <p class="hero-audience v-small">
-          For operators accountable for consequential decisions across strategy, investment, risk and resource allocation.
+  <section class="home-hero v-off">
+    <div class="v-container home-hero__grid">
+      <div class="home-hero__copy">
+        <p class="v-index">Professional judgement for AI</p>
+        <h1 class="v-display">Make better use of capable AI when the decision matters.</h1>
+        <p class="v-lead">
+          GreenSquare gives AI a disciplined process for consequential business decisions. It clarifies the real
+          choice, interrogates the evidence and makes the recommendation easier to inspect before you act.
         </p>
         <div class="hero-actions">
-          <a class="v-btn v-btn--green" href={withBase('/decision-frame/')}>Get the free Lens worksheet</a>
-          <a class="v-btn v-btn--grey" href={withBase('/benchmark/')}>Read the benchmark</a>
+          <a class="v-btn v-btn--green" href={withBase('/free/')}>Try GreenSquare Free</a>
+          <a class="v-link" href={withBase('/product/')}>See how GreenSquare works</a>
         </div>
       </div>
-    </div>
-    <div class="hero-split__media v-reveal d1">
-      <ThroughFlowHero />
-    </div>
-  </section>
-
-  <section class="v-section v-fill">
-    <div class="v-container">
-      <p class="v-quote v-reveal">The quality of a recommendation depends on the questions asked before it, the evidence beneath it and the conditions that could change it.</p>
+      <div class="home-hero__visual" aria-label="A visual passage from complexity to a resolved decision">
+        <ThroughFlowHero />
+      </div>
     </div>
   </section>
 
   <section class="v-section">
     <div class="v-container">
-      <h2 class="v-h2" style="max-width: 24ch;">A disciplined recommendation starts before the model answers.</h2>
-      <div class="v-caplist">
-        <div class="v-caprow v-reveal">
-          <span class="v-index">Frame</span>
-          <h3>Clarify the real decision before answering</h3>
-          <p class="v-small v-cap-body">
-            Compass asks for missing facts, checks whether the stated question is the decision that actually matters,
-            and surfaces contradictions before they harden into assumptions.
-          </p>
-        </div>
-        <div class="v-caprow v-reveal d1">
-          <span class="v-index">Compare</span>
-          <h3>Force genuine alternatives, including doing nothing</h3>
-          <p class="v-small v-cap-body">
-            It develops credible options, keeps the current position in the set, and tests each against criteria
-            fixed before a preferred answer is known.
-          </p>
-        </div>
-        <div class="v-caprow v-reveal d2">
-          <span class="v-index">Substantiate</span>
-          <h3>Show what is known, derived, inferred or still unknown</h3>
-          <div class="v-small v-cap-body">
-            <p>
-              Material claims are labelled so a reader can inspect the basis of the recommendation, then test the
-              assumptions, trade-offs and conditions that could change it.
-            </p>
-            <p class="evidence-tag-row" aria-label="Evidence labels">
-              <span class="v-tag">GIVEN</span>
-              <span class="v-tag">DERIVED</span>
-              <span class="v-tag">INFERRED</span>
-              <span class="v-tag">UNKNOWN</span>
-            </p>
-          </div>
-        </div>
+      <div class="section-intro">
+        <p class="v-index">The problem</p>
+        <h2 class="v-h2">A fluent answer is not the same as a sound decision.</h2>
+        <p class="v-lead">AI can analyse and write at speed. It does not automatically know which question matters, which assumption carries the risk or what evidence should change the call.</p>
+      </div>
+      <div class="home-capabilities">
+        {capabilities.map((item) => (
+          <article>
+            <span>{item.label}</span>
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+          </article>
+        ))}
       </div>
     </div>
   </section>
 
   <section class="v-section v-green">
-    <div class="v-container v-split is-reverse">
-      <div class="v-reveal">
-        <h2 class="v-h2">The benchmark shows a more disciplined process, not better judgement.</h2>
-        <p class="v-lead" style="margin-top: var(--v-5);">
-          In the benchmark, Compass consistently asked before advising, compared genuine alternatives and tagged
-          the basis for its claims. The study does not establish that Compass makes better decisions than an
-          informed operator. We publish that boundary.
-        </p>
-        <p class="v-small" style="margin-top: var(--v-5); color: var(--v-cream-soft);">
-          45 runs across two frontier models and three business cases. The protocol was pre-registered; the cases,
-          scoring rubric and departures from the plan are published.
-        </p>
-        <p class="v-small" style="margin-top: var(--v-3); color: var(--v-cream-soft);">
-          The product was renamed on 30 August 2026, after the study was run and scored. The product named
-          Compass here is the one that was tested under its former name.
-        </p>
-        <a class="v-link" href={withBase('/benchmark/')} style="display:inline-block; margin-top: var(--v-6);">See what the benchmark supports, and what it does not</a>
+    <div class="v-container product-intro">
+      <div>
+        <p class="v-index">One product, two plans</p>
+        <h2 class="v-h2">Start with the current beta.</h2>
       </div>
-      <div class="v-reveal d1">
-        <div class="v-readout">
-          <div class="v-readout__bar"><span class="v-readout__dot"></span> What is published</div>
-          <div class="v-readout__body">
-            <div class="v-run"><div class="v-run__head"><span class="v-run__name">Pre-registration</span><span class="v-run__val"><b>Hashed</b></span></div></div>
-            <div class="v-run"><div class="v-run__head"><span class="v-run__name">Cases and rubric</span><span class="v-run__val"><b>Public</b></span></div></div>
-            <div class="v-run"><div class="v-run__head"><span class="v-run__name">Deviations</span><span class="v-run__val"><b>Published</b></span></div></div>
-            <div class="v-run"><div class="v-run__head"><span class="v-run__name">Transcripts</span><span class="v-run__val">Withheld</span></div></div>
-            <div class="v-run"><div class="v-run__head"><span class="v-run__name">Results</span><span class="v-run__val">See benchmark</span></div></div>
-          </div>
-          <div class="v-readout__foot">One evidence record / results and limitations on the benchmark page</div>
-        </div>
+      <p class="v-lead">GreenSquare Free is the current adaptive beta. GreenSquare Pro is the paid plan that will follow and remains in development.</p>
+    </div>
+    <div class="v-container plan-grid">
+      <article class="plan-card plan-card--available">
+        <div><span class="plan-state">Available now</span><h3>GreenSquare Free</h3></div>
+        <p>An adaptive decision system you upload to a capable AI model. It moves from mandate and evidence through options, recommendation and proportionate execution.</p>
+        <a class="v-btn v-btn--green" href={withBase('/free/')}>Try GreenSquare Free</a>
+      </article>
+      <article class="plan-card">
+        <div><span class="plan-state">In development</span><h3>GreenSquare Pro</h3></div>
+        <p>The future paid plan. Its scope, features and pricing will be published only when the product boundary is ready.</p>
+        <a class="v-link" href={withBase('/product/#pro')}>View the product direction</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="v-section research-strip">
+    <div class="v-container research-strip__grid">
+      <div>
+        <p class="v-index">Research</p>
+        <h2 class="v-h2">Evidence with its boundary intact.</h2>
+      </div>
+      <div>
+        <p class="v-lead">The published benchmark found a consistent change in process, not proof of better operator judgement. The protocol, findings, limitations and departures remain available for scrutiny.</p>
+        <a class="v-link" href={withBase('/research/')}>Review the research</a>
       </div>
     </div>
   </section>
 
-  <section class="home-next v-fill-2" aria-label="Get started">
-    <div class="v-container home-next__inner">
-      <div class="home-next__copy v-reveal">
-        <h2 class="v-h2">Start with the decision itself.</h2>
-        <p class="v-lead">
-          Lens is a free 10-minute worksheet for naming the real choice, surfacing the assumption carrying the most
-          risk and separating evidence from interpretation before asking AI for an answer.
-        </p>
+  <section class="home-cta v-fill">
+    <div class="v-container home-cta__grid">
+      <div>
+        <h2 class="v-h2">Bring GreenSquare to your next consequential decision.</h2>
+        <p class="v-lead">Enter your email, confirm your address and receive GreenSquare Free.</p>
       </div>
-      <div class="home-next__action v-reveal d1">
-        <EmailCaptureForm client:visible buttonLabel="Email me the Lens worksheet" />
-        <a class="v-link home-next__benchmark" href={withBase('/benchmark/')}>Review the evidence and limitations</a>
-      </div>
+      <EmailCaptureForm client:visible />
     </div>
   </section>
 </BaseLayoutV2>
 
 <style>
-  /* Full-bleed split-screen hero: text left, Through-flow Passage right. */
-  .hero-split-section {
-    position: relative;
-    min-height: clamp(480px, 62vh, 680px);
-    display: flex;
-    overflow: hidden;
-  }
-  .hero-split__grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    width: 100%;
-  }
-  .hero-split__text {
-    grid-column: 1;
-    max-width: 34rem;
-    padding-right: clamp(1.5rem, 4vw, 3.5rem);
-    padding-block: clamp(2.5rem, 5vh, 4rem);
-    position: relative;
-    z-index: 1;
-  }
-  .hero-audience { margin-top: var(--v-4); max-width: 48ch; color: var(--v-ink-soft); }
-  .hero-actions { display: flex; gap: var(--v-4); align-items: center; flex-wrap: wrap; margin-top: var(--v-8); }
-  .hero-split__media {
-    position: absolute; top: 0; bottom: 0;
-    left: 50%;
-    right: 0;
-  }
-  .evidence-tag-row { display: flex; flex-wrap: wrap; gap: var(--v-2); margin-top: var(--v-3); }
+  .home-hero { overflow: hidden; }
+  .home-hero__grid { display: grid; grid-template-columns: 1fr 1fr; min-height: clamp(560px, 70vh, 760px); align-items: stretch; }
+  .home-hero__copy { align-self: center; max-width: 42rem; padding-block: clamp(3.5rem, 7vw, 6.5rem); padding-right: clamp(2rem, 5vw, 5rem); }
+  .home-hero__copy .v-display { margin-top: var(--v-4); }
+  .home-hero__copy .v-lead { margin-top: var(--v-6); }
+  .home-hero__visual { min-width: 50vw; margin-right: calc(50% - 50vw); }
+  .hero-actions { display: flex; align-items: center; gap: var(--v-5); flex-wrap: wrap; margin-top: var(--v-8); }
+  .section-intro { display: grid; grid-template-columns: .45fr 1fr; gap: var(--v-8); align-items: start; }
+  .section-intro .v-lead { grid-column: 2; margin-top: var(--v-3); }
+  .home-capabilities { margin-top: var(--v-10); border-top: 2px solid var(--v-ink); }
+  .home-capabilities article { display: grid; grid-template-columns: 7rem minmax(14rem, .75fr) minmax(18rem, 1.25fr); gap: var(--v-6); padding: var(--v-6) 0; border-bottom: 1px solid var(--v-line); }
+  .home-capabilities article > span { color: var(--v-green); font-weight: 600; }
+  .home-capabilities h3 { font-size: 1.25rem; }
+  .home-capabilities p { color: var(--v-ink-soft); }
+  .product-intro { display: grid; grid-template-columns: 1fr 1fr; gap: var(--v-10); align-items: end; }
+  .product-intro .v-h2 { margin-top: var(--v-3); }
+  .plan-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--v-5); margin-top: var(--v-10); }
+  .plan-card { display: flex; flex-direction: column; align-items: flex-start; gap: var(--v-6); min-height: 330px; padding: var(--v-8); background: var(--v-paper); color: var(--v-ink); }
+  .plan-card h3 { margin-top: var(--v-2); font-size: clamp(1.7rem, 3vw, 2.5rem); }
+  .plan-card p { color: var(--v-ink-soft); }
+  .plan-card > :last-child { margin-top: auto; }
+  .plan-state { color: var(--v-ink-faint); font-size: var(--vs-label); font-weight: 600; }
+  .research-strip__grid, .home-cta__grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(3rem, 8vw, 8rem); align-items: center; }
+  .research-strip .v-link { display: inline-block; margin-top: var(--v-5); }
+  .home-cta { padding-block: clamp(4rem, 7vw, 6rem); }
   @media (max-width: 900px) {
-    .hero-split-section { min-height: 0; display: block; }
-    .hero-split__grid { grid-template-columns: 1fr; }
-    .hero-split__media { position: static; aspect-ratio: 16 / 9; }
-  }
-  @media (max-width: 640px) {
-    .hero-split__text { padding-block: var(--v-8); }
-    .hero-split__text .v-lead { margin-top: var(--v-4) !important; }
-    .hero-actions { margin-top: var(--v-6); }
-    .hero-split__media { aspect-ratio: 4 / 3; }
+    .home-hero__grid, .section-intro, .product-intro, .research-strip__grid, .home-cta__grid { grid-template-columns: 1fr; }
+    .home-hero__visual { min-width: 0; margin: 0 calc(var(--v-gutter) * -1); aspect-ratio: 16 / 9; }
+    .section-intro .v-lead { grid-column: auto; }
+    .plan-grid { grid-template-columns: 1fr; }
+    .home-capabilities article { grid-template-columns: 5rem 1fr; }
+    .home-capabilities article p { grid-column: 2; }
   }
   @media (max-width: 560px) {
-    .v-caprow .v-cap-body { grid-column: 1; }
-  }
-  .home-next { padding-block: clamp(4.5rem, 8vw, 6.5rem); }
-  .home-next__inner { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(25rem, 1.1fr); gap: clamp(3rem, 8vw, 7rem); align-items: center; }
-  .home-next__copy { max-width: 40rem; }
-  .home-next__copy .v-lead { max-width: 48ch; margin-top: var(--v-4); color: var(--v-ink-soft); }
-  .home-next__action { width: min(100%, 35rem); justify-self: end; }
-  .home-next__benchmark { display: inline-block; margin-top: var(--v-4); color: var(--v-green); }
-  @media (max-width: 900px) {
-    .home-next__inner { grid-template-columns: 1fr; gap: var(--v-8); }
-    .home-next__action { justify-self: start; }
+    .home-hero__visual { aspect-ratio: 4 / 3; }
+    .home-capabilities article { grid-template-columns: 1fr; gap: var(--v-3); }
+    .home-capabilities article p { grid-column: auto; }
+    .plan-card { min-height: 0; padding: var(--v-6); }
   }
 </style>

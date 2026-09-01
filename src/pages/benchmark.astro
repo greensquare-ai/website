@@ -1,911 +1,162 @@
 ---
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
-import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
-import CheckComparisonChart from '../components/benchmark/CheckComparisonChart.astro';
-import ResultPromptTabs from '../components/benchmark/ResultPromptTabs.astro';
 import { withBase } from '../lib/paths';
 import {
-  grid, checks, check, composite, goCase, directionByCase, dates, refresh,
-  prereg, parity, deviations, cleanItems, limitations, fmt, isDefinitional,
-  sealedKey, hashedInputs, transcripts, armLabels, spell, ARMS, armBvsArmC,
+  armLabels, checks, composite, dates, deviations, fmt, grid, limitations, prereg,
 } from '../lib/benchmark';
-import { demo, demoProvenance, demoRunDate, demoExchange, demoDifferences, demoBriefHtml } from '../lib/demo';
-import { compiledContent } from '../data/demonstrations/demo-1.md';
 
 const g = grid();
-const d = dates();
-const r = refresh();
-const p = prereg();
-const comp = composite();
-const gc = goCase();
-const dbc = directionByCase();
-const sk = sealedKey();
-const hi = hashedInputs();
-const tx = transcripts();
-const inv = tx.inventory;
 const arms = armLabels();
-
-const openai = r.legs.find((leg) => leg.vendor === 'OpenAI')!;
-const anthropic = r.legs.find((leg) => leg.vendor === 'Anthropic')!;
-const c1 = check('c1');
-const c2 = check('c2');
-const c3 = check('c3');
-const c6 = check('c6');
-const c7 = check('c7');
-const c8 = check('c8');
-const caseSizes = g.cases.map((businessCase) => businessCase.n_per_arm);
-/* The check-by-check tally, derived rather than written down, so the sentence cannot
-   drift from the grid. Splitting measured from definitional keeps the page from
-   counting a cell the baseline cannot pass as a cell the file won. */
-const bvc = armBvsArmC();
-
-/* Figure 1. Every coordinate the chart draws is derived from these, which are
-   derived from the accessors, so no count is written here or in the component. */
-const chartRow = (result: ReturnType<typeof check>) => ({
-  id: result.id,
-  label: result.page_label,
-  baseline: { met: result.armB.met, text: fmt(result.armB).text, pct: fmt(result.armB).pct },
-  loaded: { met: result.armC.met, text: fmt(result.armC).text, pct: fmt(result.armC).pct },
-  baselineDefinitional: isDefinitional(result, 'armB') === 'full',
-});
-
-/* Figure 3, the demonstration. The brief is the file's own markdown, rendered
-   through Astro's markdown pipeline and split at the file's own heading, so the
-   panel cannot drift from the transcript demo.ts guards. */
-const demoHtml = await compiledContent();
-const briefHtml = demoBriefHtml(demoHtml, 'd1');
-const exchange = demoExchange();
-const differences = demoDifferences();
-const dm = demo();
-const demoRun = demoRunDate();
-
-const stages = [
-  { n: 1, name: 'Ask', body: 'The model asks three to six focused questions before offering advice. The depth of the interrogation scales with the stakes.' },
-  { n: 2, name: 'Frame', body: 'It tests whether the stated question is the real decision and identifies choices that have been treated as fixed too early.' },
-  { n: 3, name: 'Confirm', body: 'It plays the situation back in a few lines, then asks you to resolve contradictions, missing evidence and untested assumptions.' },
-  { n: 4, name: 'Compare', body: 'It develops credible alternatives, including keeping the current position, and compares them against explicit criteria.' },
-  { n: 5, name: 'Recommend', body: 'It produces a five-part Decision Brief and checks whether the call follows from the evidence before handing it to you.' },
-];
-
-const briefParts = [
-  'The decision and why it matters now',
-  'The Options compared',
-  'The recommendation',
-  'The next actions',
-  'The Assumptions and reversal conditions',
-];
-
-const businessCases = [
-  {
-    code: 'A',
-    name: 'Meridian',
-    decision: 'Structure a major contract bid',
-    hidden: 'Decide whether to accept the concentration, regulatory dependency and non-redeployable investment at all.',
-    type: 'Reversal case',
-  },
-  {
-    code: 'B',
-    name: 'Larkfield',
-    decision: 'Sequence an in-house e-commerce build',
-    hidden: 'Decide whether to pursue a live acquisition before the eight-week window closes.',
-    type: 'Go case',
-  },
-  {
-    code: 'C',
-    name: 'Corvan',
-    decision: 'Fund the next phase of a venture',
-    hidden: 'Decide whether to exit and redeploy capital into the under-invested core business.',
-    type: 'Exit and reallocate case',
-  },
-];
-
-const artefacts = [
-  { title: 'Case A, Meridian', sub: 'The frozen prompt and fact sheet.', path: 'evidence/preregistration/v3/cases/case-A-anchor-client.md' },
-  { title: 'Case B, Larkfield', sub: 'The go case, and the case where Compass adds least.', path: 'evidence/preregistration/v3/cases/case-B-go-case.md' },
-  { title: 'Case C, Corvan', sub: 'Adapted from a documented Australian post-mortem.', path: 'evidence/preregistration/v3/cases/case-C-disguised-real.md' },
-  { title: 'Test protocol', sub: 'Conditions, answering rule, target grid and scoring procedure.', path: 'evidence/preregistration/v3/protocol.md' },
-  { title: 'Scoring rubric', sub: 'The pass criteria for all eight checks.', path: 'evidence/preregistration/v3/rubric-operationalisations.md' },
-  { title: 'Pre-registration record', sub: 'The hashes and the record\'s edit history.', path: 'evidence/preregistration/v3/PREREGISTRATION.md' },
-];
-
-const limitationLeads = [
-  'No realistic operator.',
-  'One person throughout.',
-  'Definitional cells.',
-  'Mandated behaviours.',
-  'Unequal fact sheets.',
-  'Small, unbalanced grid.',
-  'Inventory now reconciled.',
-  'One fixed file.',
-];
+const results = checks();
+const process = results.filter((item) => item.group === 'process');
+const judgement = results.filter((item) => item.group === 'judgment');
+const comp = composite();
+const d = dates();
+const pre = prereg();
+const integrityIssues = deviations();
+const studyLimits = limitations();
+const loaded = arms[2];
 ---
 
 <BaseLayoutV2
-  title="Compass | GreenSquare AI"
-  description={`Compass is a plain markdown file that interrogates before it advises. A ${g.runs_total}-run pre-registered study of what it changed, and what it did not.`}
-  current="benchmark"
+  title="Benchmark results | GreenSquare AI"
+  description={`The complete public record of GreenSquare's ${g.runs_total}-run preregistered benchmark, including raw counts, limitations and protocol deviations.`}
+  current="research"
 >
-<div class="bm-page">
-
-<!-- S1 · Hero, what it is -->
-<section class="v-section v-off bm-hero">
-  <div class="v-container">
-    <div class="v-split is-top">
-      <div>
-        <h1 class="v-display bm-hero__title">Compass is an instruction file that interrogates before it advises.</h1>
-        <p class="v-lead bm-s6">
-          Compass is a plain markdown file. You load it into Claude, ChatGPT or Gemini, describe one
-          consequential business decision in your own words, and the model interrogates you before it
-          advises. What it produces is the Decision Brief, clean markdown you can edit, challenge or
-          move into your own document.
-        </p>
-        <p class="v-small bm-s5 bm-hero__note">
-          Open a new chat, paste or upload Compass, then describe the choice in your own words. The
-          process runs inside the AI account and workplace policy you already use. Compass is not yet
-          on sale and the launch edition is in preparation. The only thing available from this page
-          today is Lens, the free one-page worksheet.
-        </p>
-        <div class="hero-actions bm-s8">
-          <a class="v-btn v-btn--green" href={withBase('/decision-frame/')}>Get the free Lens worksheet</a>
-          <a class="v-btn v-btn--grey" href="#result">Read the result</a>
-        </div>
+  <div>
+    <section class="v-section v-black hero">
+      <div class="v-container">
+        <p class="v-eyebrow">Benchmark record · Current as at {d.currentAsAt}</p>
+        <h1>The loaded method changed the process. It did not beat an informed baseline on judgement.</h1>
+        <p class="v-lede">A {g.runs_total}-run preregistered study across two models, three fictional cases and three conditions. Raw counts and uncomfortable limitations are part of the result.</p>
       </div>
-      <div class="v-readout">
-        <div class="v-readout__bar"><span class="v-readout__dot"></span> The Compass workflow</div>
-        <div class="v-readout__body">
-          <ul class="v-spec__list">
-            {stages.map((stage) => <li><span class="n">{stage.n}</span> {stage.name}</li>)}
-          </ul>
-        </div>
-        <div class="v-readout__foot">Compass is the file / the Decision Brief is what it produces / Lens is the free worksheet</div>
+    </section>
+
+    <nav class="record-nav" aria-label="Benchmark sections"><div class="v-container">
+      <a href="#reading">Reading</a><a href="#results">Results</a><a href="#design">Design</a><a href="#integrity">Integrity</a><a href="#limits">Limits</a><a href="#sources">Sources</a>
+    </div></nav>
+
+    <section class="v-section v-cream" id="reading"><div class="v-container reading-grid">
+      <div><p class="v-eyebrow">The honest reading</p><h2>Process separation was clear. Judgement separation was not.</h2></div>
+      <div class="reading-points">
+        <p><strong>Process.</strong> The loaded condition asked before answering, compared options and tagged evidence on every run.</p>
+        <p><strong>Judgement.</strong> The all-facts baseline matched or exceeded the loaded condition on all three judgement checks.</p>
+        <p><strong>Boundary.</strong> This grid does not resemble a real operator arriving with partial knowledge and a blind spot.</p>
       </div>
-    </div>
-  </div>
-</section>
+    </div></section>
 
-<!-- S2 · The result and the anti-claim -->
-<section class="v-section bm-s2" id="result">
-  <div class="v-container v-container--narrow">
-    <h2 class="v-h2 bm-claim">Compass changed the process on every loaded run. It did not beat an informed baseline on judgement.</h2>
-    <p class="v-lead bm-s5">
-      On the two pre-registered judgement checks, the informed baseline came out one run ahead on one
-      and level on the other. It surfaced the hidden decision in {fmt(c6.armB).text} runs against
-      Compass at {fmt(c6.armC).text}, and both matched the sealed direction in {fmt(c7.armB).text}.
-      n is {g.n_per_arm} per condition, pooled across {spell(g.models.length)} models and
-      {spell(g.cases.length)} cases.
-    </p>
-
-    <CheckComparisonChart
-      class="bm-s10"
-      id="fig1"
-      title="The informed baseline matched or exceeded Compass on judgement. Compass separated on process."
-      svgTitle={`Eight pre-registered checks, the informed baseline compared with Compass, counts out of ${g.n_per_arm} runs per condition.`}
-      perArm={g.n_per_arm}
-      unit="runs"
-      baseline={{ name: arms[1].label, keyLabel: `${arms[1].label}, the informed baseline`, columnHead: arms[1].label }}
-      loaded={{ name: arms[2].label, keyLabel: arms[2].label, columnHead: 'Compass' }}
-      judgement={checks('judgment').map(chartRow)}
-      process={checks('process').map(chartRow)}
-      scaleNote={`The track runs from zero on the left to ${g.n_per_arm} runs on the right.`}
-      definitionalPhrase="fixed by the single-turn test design"
-    >
-      <Fragment slot="basis">
-        Read the judgement rows first. On {c7.page_label} and {c8.page_label} the two conditions land
-        on the same mark, and on {c6.page_label} the informed baseline is one run ahead. The process
-        rows separate, and those are behaviours Compass instructs the model to perform, so they are
-        evidence the file was followed rather than evidence the model reasoned better. “Def” marks a
-        cell fixed by the test design: a single-turn condition cannot ask before answering. The
-        question-only condition is not plotted here and appears in the full grid below. Counts out of
-        {g.n_per_arm} per condition / pooled across {g.models.length} models and {g.cases.length} cases
-        / scored {d.scoredOn} / adjudicated {d.adjudicatedOn} / pre-registered at commit {p.short}
-      </Fragment>
-    </CheckComparisonChart>
-
-    <p class="v-small bm-s8">
-      Counted across all {spell(bvc.total)} checks: the two conditions tied on {spell(bvc.tied.length)},
-      the informed baseline was higher on {spell(bvc.baselineHigher.length)}, and Compass was higher on
-      {spell(bvc.loadedHigherMeasured.length)} measured checks. A further
-      {spell(bvc.loadedHigherDefinitional.length)} is not a result, because a single-turn condition
-      cannot ask before answering. One check is flat across all three conditions and separates nothing.
-    </p>
-
-    <dl class="bm-status bm-s10">
-      <div><dt>Runs</dt><dd>{g.runs_total}</dd></div>
-      <div><dt>Conditions</dt><dd>{arms.length}</dd></div>
-      <div><dt>Cases</dt><dd>{g.cases.length}</dd></div>
-      <div><dt>Models run</dt><dd>{g.models.length}</dd></div>
-      <div><dt>Scored</dt><dd>{d.scoredOn}</dd></div>
-      <div><dt>Adjudicated</dt><dd>{d.adjudicatedOn}</dd></div>
-    </dl>
-
-    <p class="v-small bm-s5">
-      Both tested models have since been superseded and no re-run has been published, so these results
-      should be read as historical. The product was renamed on 30 August 2026, after the study was run
-      and scored: the arm labelled Compass throughout this page is the arm that was tested under its
-      former name.
-    </p>
-  </div>
-
-  <div class="v-green bm-band">
-    <div class="v-container v-container--narrow">
-      <h3 class="v-h3">What the evidence supports, and where it stops.</h3>
-      <div class="bm-boundary bm-s6">
-        <div>
-          <p class="bm-boundary__label">Supported</p>
-          <p>Compass caused the models to ask before advising, compare real Options and tag the basis of material claims. It produced that structured process in every loaded run.</p>
-        </div>
-        <div>
-          <p class="bm-boundary__label">Not established</p>
-          <p>The study does not show better judgement than an informed operator, better real-world decisions, or an effect that a capable operator could not reproduce with their own instructions.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- S3 · See it run -->
-<section class="v-section v-off">
-  <div class="v-container v-container--narrow">
-    <h2 class="v-h2">See the file work, then read the transcript it came from.</h2>
-    <p class="v-lead bm-s5">
-      No transcript from the study is published. What follows is a single demonstration run on a fresh
-      case, shown as the brief it produced and the exchange it came from, so the product can be read
-      rather than only counted.
-    </p>
-    <p class="v-small bm-s5">{tx.withdrawn_note}</p>
-
-    <ResultPromptTabs
-      class="bm-s10"
-      id="d1"
-      title="Compass reframed the decision it was handed, obtained one buried fact by asking for it, and generated an option the operator had not put on the table."
-      provenance={demoProvenance()}
-      transcriptTitle="Transcript, verbatim and unedited"
-      transcriptLabel="Demonstration transcript"
-    >
-      <Fragment slot="result" set:html={briefHtml} />
-      <Fragment slot="prompt">{exchange}</Fragment>
-      <Fragment slot="basis">
-        Read the brief first, then the exchange it came from. The run reframed the stated question,
-        obtained one fact the operator had not volunteered, generated an option the operator had not
-        considered, tagged the basis of its material claims, and reached a recommendation whose
-        direction follows that evidence. It does not show the run finding the whole of the case's
-        hidden decision, and it is not evidence of anything the study measured: one run, on a
-        fictional case, not scored, not adjudicated, with no sealed key and no baseline to compare
-        against. It differs from a buyer's own use in three ways. {differences.join(' ')}
-        {spell(dm.attemptsBefore + 1)} attempts were made and this is the only one published. The
-        rest were abandoned for a fault in the way the run was orchestrated rather than a fault in
-        the file, and no content from them was carried forward. Demonstration / model {dm.model} /
-        run {demoRun} / {dm.productFile}, asserted at build to hash to the value published below
-        / not part of the pre-registered study
-      </Fragment>
-      <Fragment slot="defect">
-        <strong>One tagging error in this run, found on review and left in place.</strong> In the
-        options table, the evidence column for option A reads "Integrator attestation, assessed by
-        nobody independent of the integrator", tagged given. The operator did not say that. They
-        said they did not know who assesses the attestation independently of the integrator. Under
-        the scheme Compass is applying, an absence of knowledge is unknown, not given, so the tag is
-        wrong and the claim is stronger than the answer it rests on. It is the same class of error
-        that withdrew one of the two excerpts previously shown here, which is why it is named rather
-        than quietly corrected. State the base rate plainly rather than leave it to be counted: of
-        the three transcripts of this feature ever published on this page, two are now known to
-        carry a tagging error, and this is one of them. The transcript is published unedited and
-        this note sits beside it.
-      </Fragment>
-    </ResultPromptTabs>
-  </div>
-</section>
-
-<!-- S4 · What the discipline buys -->
-<section class="v-section">
-  <div class="v-container v-container--narrow">
-    <h2 class="v-h2">The informed baseline needed the full fact sheet. Compass started from the question.</h2>
-    <p class="v-lead bm-s5">
-      What the file changes is the input it can start from. The informed baseline reaches its results
-      from a complete fact sheet handed to it in the first message. Compass reaches them from the
-      short executive question, by asking.
-    </p>
-  </div>
-
-  <div class="v-container">
-    <div class="v-caplist">
-      {stages.map((stage) => (
-        <div class="v-caprow">
-          <span class="v-index">Step {stage.n}</span>
-          <h3>{stage.name}</h3>
-          <p class="v-small v-cap-body">{stage.body}</p>
-        </div>
-      ))}
-    </div>
-  </div>
-
-  <div class="v-container v-container--narrow">
-    <div class="v-readout bm-s10">
-      <div class="v-readout__bar"><span class="v-readout__dot"></span> Decision Brief structure</div>
-      <div class="v-readout__body">
-        <ul class="v-spec__list">
-          {briefParts.map((part, index) => <li><span class="n">{index + 1}</span> {part}</li>)}
-        </ul>
-        <div class="bm-tags">
-          <span class="v-tag">GIVEN</span><span class="v-tag">DERIVED</span><span class="v-tag">INFERRED</span><span class="v-tag">UNKNOWN</span>
-        </div>
-      </div>
-    </div>
-
-    <figure class="bm-fig bm-fig--meter bm-s10">
-      <h3 class="bm-fig__title bm-fig__title--sm">
-        A derived process figure, not a result: starting from the short question, Compass produced a
-        brief with its Options, evidence tags and change criteria attached on every run, and the
-        informed baseline, holding every fact, produced none. This is not the study's headline, and
-        leading with it as though it were is the departure this page ranks first.
-      </h3>
-      <div class="v-readout bm-s5">
-        <div class="v-readout__bar"><span class="v-readout__dot"></span> {comp.label}</div>
-        <div class="v-readout__body">
-          {ARMS.map((arm, index) => (
-            <div class="v-run">
-              <div class="v-run__head">
-                <span class="v-run__name">{arms[index].label}</span>
-                <span class="v-run__val"><b>{fmt(comp[arm]).text}</b></span>
-              </div>
-              <div class="v-meter"><span class="v-meter__fill" style={`--w: ${fmt(comp[arm]).pct}%`}></span></div>
-            </div>
-          ))}
-        </div>
-        <div class="v-readout__foot">{comp.provenance}</div>
-      </div>
-      <p class="bm-fig__basis">
-        This is a derived composite, not a ninth result. Recomputed without the asking-first check the
-        counts do not move: {comp.recomputed_note} Counts out of {g.n_per_arm} per condition / pooled
-        across {g.models.length} models and {g.cases.length} cases / scored {d.scoredOn} / adjudicated
-        {' '}{d.adjudicatedOn}
-      </p>
-    </figure>
-
-    <ol class="bm-pairs bm-s10">
-      {[c2, c3].map((result) => (
-        <li>
-          <p class="bm-pairs__name">{result.page_label}</p>
-          <p class="bm-pairs__vals">
-            <span>{arms[1].label} <b>{fmt(result.armB).text}</b></span>
-            <span>{arms[2].label} <b>{fmt(result.armC).text}</b></span>
-          </p>
-          {result.caveat && <p class="bm-pairs__note">{result.caveat}</p>}
-        </li>
-      ))}
-      <li>
-        <p class="bm-pairs__name">{c1.page_label}</p>
-        <p class="bm-pairs__vals">
-          <span>{arms[1].label} <b>{fmt(c1.armB).text} def</b></span>
-          <span>{arms[2].label} <b>{fmt(c1.armC).text}</b></span>
-        </p>
-        <p class="bm-pairs__note">{c1.definitional_note}</p>
-      </li>
-    </ol>
-
-    <p class="bm-s6">
-      These three are behaviours the file instructs the model to perform. They are evidence the file
-      was followed, not evidence the model reasoned better. The study also did not run the obvious
-      fourth condition, a capable operator writing equivalent instructions of their own, so nothing
-      here separates Compass from that operator either.
-    </p>
-
-    <ul class="v-leadlist bm-s6">
-      <li>Tested: one consequential business decision at a time, on {spell(g.cases.length)} fictional cases, a managed-service bid, a build-versus-buy sequencing call and a continue-versus-exit call on a venture. All three case files are published in full and linked below.</li>
-      <li>Not tested: any decision outside those three shapes, any operator who holds most of the facts and one blind spot they cannot see, and any comparison against a capable operator writing their own instructions.</li>
-    </ul>
-  </div>
-</section>
-
-<!-- S5 · How the test worked -->
-<section class="v-section v-off">
-  <div class="v-container">
-    <div class="bm-section-head">
-      <h2 class="v-h2">Three conditions separated missing information from process discipline.</h2>
-      <div>
-        <p class="v-lead">A public business case may already appear in model training data, commentary or search results. That can build the answer into the test.</p>
-        <p class="bm-s4">GreenSquare therefore created {spell(g.cases.length)} fictional cases whose material facts existed only in the frozen fact sheets. Each case began with a plausible but incomplete executive question. The facts that changed the decision were separated across the case so the model had to connect them.</p>
-        <p class="v-small bm-s4">Important caveat. The fictional cases kept the answer key out of retrieval, and they did not keep every run clean. ChatGPT invoked live web search unprompted during six question-only runs on Case B. Both halves of that are true and the first is not usable without the second.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="v-container v-container--narrow">
-    <ol class="bm-arms bm-s8">
-      {arms.map((arm, index) => (
-        <li>
-          <span class="v-index">/{String.fromCharCode(65 + index)}</span>
-          <div>
-            <h3>{arm.label}</h3>
-            <p>{arm.note}</p>
-          </div>
-        </li>
-      ))}
-    </ol>
-
-    <div class="bm-method-note bm-s6">
-      <h3>Why the informed baseline matters</h3>
-      <p>{parity().statement}</p>
-      <p class="v-small">The operator's answering rule was fixed before the runs. Off-sheet questions received the same reply every time: “That has not been assessed.” Source: {parity().source}, frozen at commit {p.short}.</p>
-    </div>
-  </div>
-
-  <div class="v-container">
-    <ol class="bm-cases" aria-label="The three fictional decision cases">
-      {businessCases.map((businessCase) => (
-        <li>
-          <span class="v-index">/{businessCase.code}</span>
-          <div>
-            <p class="bm-case__meta">{businessCase.name} / {businessCase.type}</p>
-            <h3>{businessCase.decision}</h3>
-          </div>
-          <p><strong>The decision beneath it.</strong> {businessCase.hidden}</p>
-        </li>
-      ))}
-    </ol>
-  </div>
-
-  <div class="v-container v-container--narrow">
-    <h3 class="v-h3 bm-s10">Recommendation direction, split by case</h3>
-    <p class="bm-s5">{dbc.note} Across Cases A and C, all three conditions matched the sealed direction in {fmt(dbc.cases_A_and_C.armA).text} runs. The whole measured deficit sits in Case B, where six ChatGPT question-only runs invoked live search.</p>
-
-    <p class="v-small bm-scrollhint" aria-hidden="true">Scroll the table sideways to compare all three conditions.</p>
-    <div class="bm-table-wrap" role="region" aria-label="Recommendation direction by case and condition" tabindex="0">
-      <table class="v-table bm-table">
-        <thead><tr><th scope="col">Case split</th>{arms.map((arm) => <th scope="col" class="num">{arm.label}</th>)}</tr></thead>
-        <tbody>
-          <tr><th scope="row">Cases A and C</th><td class="num">{fmt(dbc.cases_A_and_C.armA).text}</td><td class="num">{fmt(dbc.cases_A_and_C.armB).text}</td><td class="num">{fmt(dbc.cases_A_and_C.armC).text}</td></tr>
-          <tr><th scope="row">Case B, Larkfield</th><td class="num">{fmt(dbc.case_B.armA).text}</td><td class="num">{fmt(dbc.case_B.armB).text}</td><td class="num">{fmt(dbc.case_B.armC).text}</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <p class="v-small bm-s5">{dbc.reading}</p>
-    <p class="v-small bm-s4">Case B is also the case where the file adds least, which the protocol required to be identified and which was not identified until now. With every fact supplied, the informed baseline and Compass matched the sealed direction in {fmt(gc.armB).text} runs each, on both models. That is one case, n of {gc.armB.n} per condition, and the generalisation is weak in both directions.</p>
-
-    <h3 class="v-h3 bm-s10">The protocol was public before the scored grid</h3>
-    <p class="bm-s5">The cases, answering rule, model plan, repeat counts, scoring rubric and sealed answer-key hash were committed to a public repository before the scored runs. This limits the scope for changing the test after seeing the result.</p>
-    <p>It does not make the execution independent or fully reproducible. The public record later departed from the protocol in {deviations().length} places. Every departure is listed below.</p>
-  </div>
-</section>
-
-<!-- S6 · The limits -->
-<section class="v-section v-green">
-  <div class="v-container v-container--narrow">
-    <h2 class="v-h2">This benchmark does not yet answer the real-world question.</h2>
-    <p class="v-lead bm-s5">The missing condition is the one the product exists for: a capable operator who holds most of the relevant facts but has a blind spot they cannot see. That condition was not run.</p>
-
-    <div class="bm-limit-lead bm-s6">
-      <p>Two comparisons still matter. The next study needs a realistic operator condition, and a condition in which a competent operator writes equivalent instructions without Compass. Until then, this study cannot establish whether the product improves real work, or whether it does anything the operator could not reproduce.</p>
-    </div>
-
-    <ul class="v-leadlist bm-limitations bm-s6">
-      {limitations().map((limitation, index) => <li><strong>{limitationLeads[index]}</strong> {limitation}</li>)}
-    </ul>
-
-    <h3 class="v-h3 bm-s10">The refresh commitment has lapsed</h3>
-    <p class="bm-s5">The grid was scored against {g.models[0].name} and {g.models[1].name}. Both have since been superseded, and both {r.commitmentDays}-day re-run windows have expired. No re-run date is published.</p>
-    <p class="v-small">OpenAI. {openai.tested_model} was superseded by {openai.superseded_by} on {openai.releasedOn}. The re-run was {openai.daysPastDue} days past due as at {d.currentAsAt}. Source strength: {openai.source_strength}. {openai.caveat}</p>
-    <p class="v-small">Anthropic. {anthropic.tested_model} was superseded by {anthropic.superseded_by} on {anthropic.releasedOn}. The re-run was {anthropic.daysPastDue} days past due as at {d.currentAsAt}. Source strength: {anthropic.source_strength}. {anthropic.caveat}</p>
-  </div>
-</section>
-
-<!-- S7 · The study record -->
-<section class="v-section">
-  <div class="v-container v-container--narrow">
-    <h2 class="v-h2">The inputs are public. The scores cannot yet be reproduced independently.</h2>
-    <p class="v-lead bm-s5">
-      The result is presented first so the study can be read before it is challenged. The
-      {' '}{deviations().length} departures from the protocol sit here, below the result, rather than
-      at the top. They are listed in full and ranked by how much damage each does when someone hostile
-      finds it. None is softened and none is omitted.
-    </p>
-
-    <p class="bm-s6">The pre-registration commit is <code class="bm-hash">{p.full}</code>. It was authored at {p.authoredAtTime} and committed at {p.committedAtTime}. A committer timestamp is not proof of push time, and this page does not claim one.</p>
-
-    <div class="bm-verify-grid bm-s6">
-      <div>
-        <h3>Can be checked</h3>
-        <p>Six inputs were hashed and frozen before the first scored run. Their SHA-256 values match the files at the pre-registration commit when read with {hi.line_endings} line endings. The sealed reference answers were verified against the pre-registration table on both LF and CRLF line endings; the key was fixed before any run and has not been altered.</p>
-      </div>
-      <div>
-        <h3>Cannot be checked</h3>
-        <p>No transcript and no sealed answer key is published. All {g.runs_total} grid transcripts exist and are held; they are unpublished by decision, not absent. Nobody outside GreenSquare AI can re-score a run or confirm an adjudicated cell.</p>
-      </div>
-    </div>
-
-    <h3 class="v-h3 bm-s10">The grid was smaller and less balanced than planned</h3>
-    <p class="bm-s5">The final grid contains {g.runs_total} runs, {g.n_per_arm} per condition. Case A ran on ChatGPT only. Cases B and C ran on both models. The condition totals split {caseSizes.join(', ')} across cases.</p>
-    <p>Nine Claude pilot runs on Case A were excluded by the protocol. A third pre-registered model, {g.planned_models[0].name}, was not run. No per-model result split is published, and every aggregate on this page should be read as an average over an unbalanced grid. The one per-model statement is Case B, where the informed baseline and Compass tied on both.</p>
-    <p>The transcript directory holds {inv.grid_files} files, {inv.grid_by_case.map((c) => `${c.files} for Case ${c.case_id}`).join(', ')}, matching the published grid. The pilot directory holds {inv.pilot_files} files: the {g.excluded.pilot_runs} excluded design-phase run transcripts plus the scoring writeup for them, which states in its own opening paragraph that the pilot runs are not pooled with the pre-registered grid. The inventory reconciles. It did not when this page was first published, and the entry that said so is corrected in the limitations above.</p>
-    <p>The rubric names per-case, per-condition counts as the headline unit. Two such cuts are published, Case B in full and direction split by case. The other seven checks are aggregate only.</p>
-
-    <h3 class="v-h3 bm-s10">All eight checks</h3>
-    <p class="bm-s5">Counts are out of {g.n_per_arm} per condition, pooled across the {spell(g.models.length)} models and {spell(g.cases.length)} cases. “Def” marks a cell fixed by the test design. “Part” marks a cell partly affected by it.</p>
-  </div>
-
-  <div class="v-container v-container--narrow">
-    <p class="v-small bm-scrollhint" aria-hidden="true">Scroll the table sideways to compare all three conditions.</p>
-  </div>
-  <div class="v-container v-container--narrow">
-    <div class="bm-breakout">
-      <div class="bm-table-wrap" role="region" aria-label="All eight checks by condition" tabindex="0">
-        <table class="v-table bm-table bm-full-grid">
-          <thead><tr><th scope="col">Check</th>{arms.map((arm) => <th scope="col" class="num">{arm.label}</th>)}</tr></thead>
+    <section class="v-section v-green" id="results"><div class="v-container">
+      <div class="results-head"><p class="v-eyebrow">Raw results</p><h2>Eight preregistered checks. Counts out of {g.n_per_arm} per condition.</h2></div>
+      <div class="table-wrap" tabindex="0" aria-label="Scrollable benchmark results">
+        <table>
+          <caption>Benchmark checks by condition</caption>
+          <thead><tr><th scope="col">Check</th>{arms.map((arm) => <th scope="col">{arm.label}</th>)}</tr></thead>
           <tbody>
-            {checks('process').map((result) => (
-              <tr>
-                <th scope="row">{result.page_label}</th>
-                {ARMS.map((arm) => {
-                  const definition = isDefinitional(result, arm);
-                  return <td class="num">{fmt(result[arm]).text}{definition === 'full' ? ' def' : definition === 'partial' ? ' part' : ''}</td>;
-                })}
-              </tr>
-            ))}
-            <tr class="bm-composite">
-              <th scope="row">{comp.label}, derived<span class="v-small">{comp.provenance}</span></th>
-              <td class="num">{fmt(comp.armA).text}</td><td class="num">{fmt(comp.armB).text}</td><td class="num">{fmt(comp.armC).text}</td>
-            </tr>
-            {checks('judgment').map((result) => (
-              <tr>
-                <th scope="row">{result.page_label}</th>
-                {ARMS.map((arm) => {
-                  const definition = isDefinitional(result, arm);
-                  return <td class="num">{fmt(result[arm]).text}{definition === 'full' ? ' def' : definition === 'partial' ? ' part' : ''}</td>;
-                })}
-              </tr>
-            ))}
+            <tr class="group"><th colspan="4" scope="colgroup">Process checks</th></tr>
+            {process.map((item) => <tr><th scope="row">{item.page_label}</th><td>{fmt(item.armA).text}</td><td>{fmt(item.armB).text}</td><td class="loaded">{fmt(item.armC).text}</td></tr>)}
+            <tr class="group"><th colspan="4" scope="colgroup">Judgement checks</th></tr>
+            {judgement.map((item) => <tr><th scope="row">{item.page_label}</th><td>{fmt(item.armA).text}</td><td>{fmt(item.armB).text}</td><td class="loaded">{fmt(item.armC).text}</td></tr>)}
           </tbody>
         </table>
       </div>
-    </div>
+      <p class="table-note">Some cells are wholly or partly definitional because a single-turn prompt cannot ask questions or obtain facts it was not given. The methodology and limitations record those cases.</p>
+    </div></section>
+
+    <section class="v-section v-white"><div class="v-container composite-grid">
+      <div><p class="v-eyebrow">Derived process figure</p><h2>Produced the full brief structure</h2></div>
+      <div class="composite-score"><strong>{fmt(comp.armC).text}</strong><span>{loaded.label}</span></div>
+      <p class="composite-note">This is the lowest of the five process check counts. It is not an independent ninth result and was not the preregistered headline.</p>
+    </div></section>
+
+    <section class="v-section v-cream" id="design"><div class="v-container design-grid">
+      <div><p class="v-eyebrow">Study design</p><h2>Information access was controlled across three conditions.</h2></div>
+      <ol>
+        {arms.map((arm, index) => <li><span>{String(index + 1).padStart(2, '0')}</span><div><h3>{arm.label}</h3><p>{arm.note}</p></div></li>)}
+      </ol>
+      <aside class="historical"><strong>Historical naming note.</strong> The frozen study artefact used earlier internal product names. The public record now calls the arm the GreenSquare-loaded condition. This study is not a test of GreenSquare Free or GreenSquare Pro.</aside>
+      <a class="v-link" href={withBase('/methodology/')}>Read the full methodology</a>
+    </div></section>
+
+    <section class="v-section v-black" id="integrity"><div class="v-container">
+      <div class="integrity-head"><p class="v-eyebrow">Protocol integrity</p><h2>The record includes {integrityIssues.length} deviations.</h2><p>They are not footnotes to be hidden. They change how confidently the result should be read.</p></div>
+      <ol class="issues">
+        {integrityIssues.map((issue) => <li><span>{String(issue.n).padStart(2, '0')}</span><details><summary>{issue.title}</summary><p>{issue.detail}</p></details></li>)}
+      </ol>
+    </div></section>
+
+    <section class="v-section v-cream" id="limits"><div class="v-container limits-grid">
+      <div><p class="v-eyebrow">Limitations</p><h2>What this benchmark cannot establish.</h2></div>
+      <ol>{studyLimits.map((item, index) => <li><span>{String(index + 1).padStart(2, '0')}</span><p>{item}</p></li>)}</ol>
+    </div></section>
+
+    <section class="v-section v-white" id="sources"><div class="v-container sources-grid">
+      <div><p class="v-eyebrow">Source record</p><h2>Inspect what is public, and what remains withheld.</h2></div>
+      <dl>
+        <div><dt>Scored runs</dt><dd>{g.runs_total}</dd></div>
+        <div><dt>Preregistration commit</dt><dd><a href={pre.commitUrl}>{pre.short}</a></dd></div>
+        <div><dt>Authored</dt><dd>{pre.authoredAtTime}</dd></div>
+        <div><dt>Transcripts</dt><dd>Not published</dd></div>
+        <div><dt>Sealed answers</dt><dd>Hash verified, contents not published</dd></div>
+      </dl>
+      <div class="source-actions"><a class="v-btn v-btn-primary" href="https://github.com/greensquare-ai/website/tree/main/evidence/preregistration">Frozen source files</a><a class="v-link" href={withBase('/research/')}>Research overview</a></div>
+    </div></section>
   </div>
-
-  <div class="v-container v-container--narrow">
-    <p class="v-small bm-s5">This table shows full passes only. The protocol requires baseline partial counts reported prominently, per case, and the rubric describes the full versus partial distinction as the core of the benchmark. No partial count is published anywhere on this site, including here.</p>
-
-    <h3 class="v-h3 bm-s10">The six frozen artefacts</h3>
-    <ul class="bm-artifacts bm-s5">
-      {artefacts.map((artefact) => (
-        <li>
-          <a href={p.fileUrl(artefact.path)} target="_blank" rel="noopener">
-            <span><strong>{artefact.title}</strong><small>{artefact.sub}</small></span>
-            <span>View</span>
-          </a>
-        </li>
-      ))}
-    </ul>
-    <p class="v-small bm-s4">Every link is pinned to commit {p.short}, not to the current branch, so a later edit cannot change what was verified.</p>
-
-    <details class="bm-disclosure bm-s6">
-      <summary>View the frozen hashes</summary>
-      <div class="bm-disclosure__body">
-        <p class="v-small bm-scrollhint" aria-hidden="true">Scroll the table sideways to read the full hashes.</p>
-        <div class="bm-table-wrap" role="region" aria-label="The six frozen inputs and their SHA-256 values" tabindex="0">
-          <table class="v-table bm-hash-table">
-            <thead><tr><th scope="col">File</th><th scope="col">SHA-256</th></tr></thead>
-            <tbody>{hi.files.map((file) => <tr><th scope="row"><code class="bm-hash">{file.file}</code></th><td><code class="bm-hash">{file.sha256}</code></td></tr>)}</tbody>
-          </table>
-        </div>
-        <p class="v-small bm-s4">The product under test is <code class="bm-hash">{hi.product_file}</code>, SHA-256 <code class="bm-hash">{hi.product_sha256}</code>. {hi.product_withheld_note}</p>
-        <p class="v-small bm-s4">The sealed reference answers hash to <code class="bm-hash">{sk.sha256}</code>. The key itself is not published, so this verification cannot be repeated outside GreenSquare AI.</p>
-      </div>
-    </details>
-
-    <details class="bm-disclosure">
-      <summary>Read the scoring and adjudication notes</summary>
-      <div class="bm-disclosure__body bm-notes">
-        <p class="v-small"><strong>Asked before answering.</strong> {c1.definitional_note}</p>
-        <p class="v-small"><strong>Surfaced the hidden decision.</strong> {c6.definitional_note}</p>
-        {checks().filter((result) => result.definitional_note && !['c1', 'c6'].includes(result.id)).map((result) => <p class="v-small"><strong>{result.page_label}.</strong> {result.definitional_note}</p>)}
-        {checks().filter((result) => result.adjudication).map((result) => <p class="v-small"><strong>{result.page_label}, adjudication.</strong> {result.adjudication}</p>)}
-        {checks().filter((result) => result.caveat).map((result) => <p class="v-small"><strong>{result.page_label}, caveat.</strong> {result.caveat}</p>)}
-        <p class="v-small"><strong>The composite.</strong> It was previously the headline number of this benchmark and it should never have been used that way.</p>
-        <p class="v-small"><strong>Adjudication.</strong> Five cells the two scoring passes disagreed on were adjudicated on {d.adjudicatedOn} against the sealed reference answers. No cell is withheld.</p>
-      </div>
-    </details>
-
-    <details class="bm-disclosure">
-      <summary>Read all {deviations().length} departures</summary>
-      <div class="bm-disclosure__body">
-        <ol class="bm-departures">
-          {deviations().map((departure) => (
-            <li>
-              <span class="v-index">{String(departure.n).padStart(2, '0')}</span>
-              <div><h3>{departure.title}</h3><p class="v-small">{departure.detail}</p></div>
-            </li>
-          ))}
-        </ol>
-        <h3 class="v-h3 bm-s6">Two obligations were met exactly</h3>
-        <ul class="v-leadlist bm-s5">{cleanItems().map((item) => <li>{item}</li>)}</ul>
-      </div>
-    </details>
-  </div>
-</section>
-
-<!-- S8 · Get started -->
-<section class="v-section">
-  <div class="v-container v-container--narrow">
-    <h2 class="v-h2">Start with Lens 4.0 on a decision you are holding now.</h2>
-    <p class="v-lead bm-s5">Lens 4.0 is the free one-page worksheet, six questions, about ten minutes, delivered as a PDF by email. It is the fourth iteration and it puts the opening part of the method in front of a live decision.</p>
-    <ul class="v-leadlist bm-s6">
-      <li>Nothing to install: open a new chat, paste or upload one plain markdown file, then describe the choice in your own words.</li>
-      <li>Your existing account: the process runs inside the AI service and workplace policy you already use, and your decision stays inside your AI account.</li>
-      <li>Editable output: the Decision Brief is clean markdown you can keep as it is, challenge, or move into your own document.</li>
-    </ul>
-  </div>
-
-  <div class="v-splitcta bm-splitcta">
-    <div class="v-splitcta__panel v-splitcta__panel--green">
-      <div>
-        <h3 class="v-h3">Put the six questions beside your next decision.</h3>
-        <p class="v-small bm-s3">Enter your email and confirm the address. The one-page PDF arrives immediately after.</p>
-      </div>
-      <div class="v-card">
-        <EmailCaptureForm client:visible buttonLabel="Email me Lens 4.0" />
-      </div>
-    </div>
-    <div class="v-splitcta__panel v-splitcta__panel--fill">
-      <p class="v-small">Compass is not yet on sale. The launch edition is in preparation, and what was tested is a file fixed by its published hash, so nothing here commits the launch edition to being that same file.</p>
-      <p class="v-small">To pressure-test this benchmark, propose the next study, or discuss a pilot, write to <a class="v-link" href="mailto:hello@greensquare.ai">hello@greensquare.ai</a>.</p>
-    </div>
-  </div>
-
-  <div class="v-container v-container--narrow">
-    <h3 class="v-h3">Common questions</h3>
-    <div class="bm-s6">
-      <details>
-        <summary>What exactly is Compass?</summary>
-        <p class="v-small">A plain markdown instruction file for one consequential business decision. It guides the conversation and produces the Decision Brief inside your AI chat.</p>
-      </details>
-      <details>
-        <summary>Do I need to install anything?</summary>
-        <p class="v-small">No installation is required. Open a new chat, paste or upload Compass, then describe the choice in your own words.</p>
-      </details>
-      <details>
-        <summary>Which AI services can I use?</summary>
-        <p class="v-small">Compass is written for Claude, ChatGPT and Gemini. The published benchmark covers {g.models[0].name} and {g.models[1].name}. {g.planned_models[0].name} was pre-registered and never run.</p>
-      </details>
-      <details>
-        <summary>Is the benchmark current?</summary>
-        <p class="v-small">No. Both tested models have since been superseded, both {r.commitmentDays}-day re-run windows have expired, and no re-run date is published. The dates and the arithmetic are in the limits section above.</p>
-      </details>
-      <details>
-        <summary>When can I buy it?</summary>
-        <p class="v-small">Compass is not yet on sale and the launch edition is in preparation. Lens 4.0 applies the opening part of the method now.</p>
-      </details>
-    </div>
-  </div>
-</section>
-
-</div>
 </BaseLayoutV2>
 
-<style is:global>
-  /* ---------- spacing utilities, section 2.4 ----------
-     Named for the token they apply. The old bm-mt ladder is gone: bm-mt7
-     resolved to --v-8, which is a name that lied. */
-  .bm-s3 { margin-top: var(--v-3); }
-  .bm-s4 { margin-top: var(--v-4); }
-  .bm-s5 { margin-top: var(--v-5); }
-  .bm-s6 { margin-top: var(--v-6); }
-  .bm-s8 { margin-top: var(--v-8); }
-  .bm-s10 { margin-top: var(--v-10); }
-
-  /* Figure numbers come from a counter, so they cannot go stale when a figure is
-     added or dropped. Section 2.6. */
-  .bm-page { counter-reset: bm-fig; }
-
-  /* ---------- S1, section 3.1 ---------- */
-  .bm-hero { border-top: 0; padding-top: clamp(3rem, 6vh, 5rem); }
-  .bm-hero__title { max-width: 16ch; }
-  /* The page stylesheet loads before global-v2.css, so anything that has to beat
-     a global rule needs the specificity to do it on its own. .v2 p caps the
-     measure at 70ch and would otherwise win this. */
-  .v2 .bm-hero__note { max-width: 58ch; }
-
-  /* ---------- S2, section 3.2 ----------
-     The band is a direct child of the section, outside .v-container, which is the
-     only safe full-bleed on this site because .v-section has no horizontal padding.
-     The section drops its own bottom padding and border so the band sits flush:
-     --v-line drawn across the foot of a green band is a visible pale hairline. */
-  .bm-s2 { padding-bottom: 0; border-bottom: 0; }
-  .bm-band { padding-block: var(--v-10); }
-  .bm-claim { max-width: 24ch; }
-  .bm-status { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); margin: 0; border-top: 2px solid var(--v-ink); border-bottom: 1px solid var(--v-ink); }
-  .bm-status > div { padding: var(--v-4) 0; }
-  .bm-status dt { font-size: var(--vs-label); color: var(--v-ink-soft); }
-  .bm-status dd { margin: 0; font-size: var(--vs-body); font-weight: 600; font-variant-numeric: tabular-nums; }
-  .bm-boundary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--v-line-green); border-left: 1px solid var(--v-line-green); }
-  .bm-boundary > div { padding: clamp(1.5rem, 4vw, 3rem); border-right: 1px solid var(--v-line-green); border-bottom: 1px solid var(--v-line-green); }
-  .bm-boundary p { color: var(--v-cream-soft); }
-  .bm-boundary__label { color: var(--v-lime) !important; font-weight: 600; }
-
-  /* ---------- the breakout, section 2.2 ----------
-     Both margins come from one variable, so they are equal by construction at
-     every width. The components carry the same rule in their own scope; this copy
-     serves the S7 grid, which is page markup. */
-  .bm-breakout { width: min(1100px, 100%); margin-inline: auto; }
-  @media (min-width: 1171px) {
-    .bm-breakout {
-      --bm-bw: min(1100px, calc(100vw - 2 * var(--v-gutter)));
-      width: var(--bm-bw);
-      margin-inline: calc((100% - var(--bm-bw)) / 2);
-    }
-  }
-
-  /* ---------- figures written by the page, not by a component ----------
-     Figure 2 is a readout, so it has no component of its own. The counter and the
-     title treatment have to exist globally for it. */
-  .bm-fig { margin: 0; counter-increment: bm-fig; }
-  .bm-fig .bm-fig__title { margin: 0; font-family: var(--vf-body); font-size: var(--vs-h3); font-weight: 600; letter-spacing: -0.01em; line-height: 1.3; }
-  .bm-fig .bm-fig__title::before { content: 'Figure ' counter(bm-fig) '. '; }
-  .bm-fig .bm-fig__title--sm { font-size: var(--vs-h4); }
-  .bm-fig .bm-fig__basis { margin: var(--v-3) 0 0; max-width: 72ch; font-size: var(--vs-small); color: var(--v-ink-soft); }
-
-  /* Section 5.2. Two of the three rows are zero, so their fill has no width. The
-     left-edge tick makes a zero row read as zero rather than as unrendered. It
-     sits under the fill, so a non-zero row is unchanged. */
-  .bm-fig .v-meter { position: relative; }
-  .bm-fig .v-meter::after { content: ''; position: absolute; inset-block: 0; left: 0; width: 2px; background: var(--v-ink-faint); }
-
-  /* Section 8.1, and the second permitted repair. The at-rest declaration in
-     global-v2.css is untouched: this adds a start state under .js only, so
-     without scripting the fill renders at rest and a broken observer cannot leave
-     a bar empty. */
-  .js .bm-fig .v-meter__fill { transform: scaleX(0); }
-  .js .bm-fig.is-visible .v-meter__fill { transform: scaleX(1); }
-  .js .bm-fig.is-visible .v-run:nth-child(2) .v-meter__fill { transition-delay: 60ms; }
-  .js .bm-fig.is-visible .v-run:nth-child(3) .v-meter__fill { transition-delay: 120ms; }
-  /* Reduced motion renders at rest and fully visible, with no dependence on the
-     observer having run. */
-  @media (prefers-reduced-motion: reduce) {
-    .js .bm-fig .v-meter__fill { transform: none; }
-  }
-
-  /* ---------- S3, the demonstration brief ----------
-     The Result panel is the product's output read as text, so it carries no
-     border and no chrome. Its part headings are h3 elements held at --vs-h4, a
-     level below every other h3 on the page, the same treatment the departures
-     get in section 7.5. */
-  .v2 .bm-brief__part { font-family: var(--vf-body); font-size: var(--vs-h4); font-weight: 600; line-height: 1.35; margin-top: var(--v-6); margin-bottom: var(--v-3); }
-  .bm-brief__table table { min-width: 34rem; }
-  .bm-tabs__panel--result table { width: 100%; border-collapse: collapse; font-size: var(--vs-small); }
-  .bm-tabs__panel--result th, .bm-tabs__panel--result td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--v-line); vertical-align: top; }
-  .bm-tabs__panel--result thead th { border-bottom: 2px solid var(--v-ink); }
-  .bm-tabs__panel--result hr { display: none; }
-  .bm-tabs__panel--result .v-tag { display: inline-block; }
-
-  /* ---------- S4 ---------- */
-  .bm-tags { display: flex; flex-wrap: wrap; gap: var(--v-2); margin-top: var(--v-2); }
-  /* Section 2.4: .bm-pairs replaces the deleted big-number cards. Both counts
-     share one selector, so there is no way to enlarge one without the other. */
-  .bm-pairs { list-style: none; padding: 0; margin: 0; border-top: 2px solid var(--v-ink); }
-  .bm-pairs li { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: var(--v-5); align-items: baseline; padding: var(--v-5) 0; border-bottom: 1px solid var(--v-line); }
-  .bm-pairs .bm-pairs__name { margin: 0; max-width: none; font-weight: 600; }
-  .bm-pairs .bm-pairs__vals { margin: 0; max-width: none; display: flex; flex-wrap: wrap; gap: var(--v-2) var(--v-6); font-size: var(--vs-body); color: var(--v-ink-soft); }
-  .bm-pairs .bm-pairs__vals b { font-weight: 600; color: var(--v-ink); font-variant-numeric: tabular-nums; }
-  .bm-pairs .bm-pairs__note { grid-column: 1 / -1; margin: 0; font-size: var(--vs-small); color: var(--v-ink-soft); }
-
-  /* ---------- S5 ---------- */
-  .bm-section-head { display: grid; grid-template-columns: minmax(16rem, .8fr) minmax(20rem, 1.2fr); gap: clamp(3rem, 8vw, 8rem); align-items: start; }
-  .bm-cases { list-style: none; padding: 0; margin: var(--v-8) 0 0; border-top: 2px solid var(--v-ink); }
-  .bm-cases li { display: grid; grid-template-columns: 4rem minmax(14rem, .8fr) minmax(20rem, 1.2fr); gap: var(--v-5); align-items: start; border-bottom: 1px solid var(--v-line); padding: var(--v-5) 0; }
-  .bm-cases h3 { font-size: 1.2rem; line-height: 1.3; }
-  .bm-case__meta { margin-bottom: var(--v-2); color: var(--v-ink-faint); font-size: var(--vs-label); }
-  .bm-cases li > p { color: var(--v-ink-soft); font-size: var(--vs-small); }
-  .bm-arms { list-style: none; padding: 0; border-top: 2px solid var(--v-ink); }
-  .bm-arms li { display: grid; grid-template-columns: 4rem 1fr; gap: var(--v-4); border-bottom: 1px solid var(--v-line); padding: var(--v-5) 0; }
-  .bm-arms h3 { margin-bottom: var(--v-2); font-size: 1.2rem; }
-  .bm-arms p { color: var(--v-ink-soft); }
-  .bm-method-note { border: 1.5px solid var(--v-ink); background: var(--v-paper); padding: var(--v-6); }
-  .bm-method-note h3 { margin-bottom: var(--v-3); font-size: 1.2rem; }
-
-  /* ---------- tables, sections 7.1 to 7.3 ---------- */
-  .bm-table-wrap { max-width: 100%; overflow-x: auto; }
-  /* overflow-x clips a ring drawn outside the box, so these three regions draw
-     theirs inside. */
-  .bm-table-wrap:focus-visible { outline-offset: -2px; }
-  .bm-table { min-width: 38rem; }
-  .v2 .bm-table th[scope='row'] { font-weight: 400; }
-  .bm-scrollhint { display: none; margin-bottom: var(--v-3); color: var(--v-ink-faint); }
-  @media (max-width: 900px) { .bm-scrollhint { display: block; } }
-  /* The Compass column carries a full-height square outline: the one to look at,
-     not the winner. Composed from cell borders because <col> borders are
-     unreliable across engines. The header cell's own 2px bottom rule closes the
-     top corners. There is deliberately no sticky thead: the wrapper scrolls
-     horizontally only, so a sticky header would have nothing to stick within. */
-  .bm-full-grid th:nth-child(4), .bm-full-grid td:nth-child(4) { border-left: 2px solid var(--v-ink); border-right: 2px solid var(--v-ink); }
-  .bm-full-grid thead th:nth-child(4) { border-top: 2px solid var(--v-ink); }
-  .bm-full-grid tbody tr:last-child > :nth-child(4) { border-bottom: 2px solid var(--v-ink); }
-  /* A sticky cell with a transparent background lets the scrolled numerals slide
-     underneath it. */
-  .bm-full-grid th[scope='row'] { position: sticky; left: 0; z-index: 1; background: var(--v-paper); }
-  .bm-full-grid tr.bm-composite th[scope='row'] { background: var(--v-fill-2); }
-  .bm-composite th, .bm-composite td { background: var(--v-fill-2); font-weight: 600 !important; }
-  .bm-composite th[scope='row'] { line-height: 1.4; }
-  .bm-composite th[scope='row'] .v-small { display: block; margin-top: var(--v-1); font-size: var(--vs-label); color: var(--v-ink-soft); font-weight: 400; }
-  .bm-hash-table { min-width: 52rem; }
-
-  /* ---------- S6 ---------- */
-  .bm-limit-lead { border: 1px solid var(--v-cream); padding: var(--v-5); }
-  .bm-limit-lead p { color: var(--v-cream); }
-  /* The gutter token was --v-7, which does not exist, and one invalid value
-     invalidates the whole gap declaration. First permitted repair. */
-  .v-leadlist.bm-limitations { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--v-5) var(--v-8); }
-
-  /* ---------- S7 ---------- */
-  .bm-verify-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 2px solid var(--v-ink); }
-  .bm-verify-grid > div { padding: var(--v-5) 0; border-bottom: 1px solid var(--v-ink); }
-  .bm-verify-grid > div + div { margin-left: var(--v-6); padding-left: var(--v-6); border-left: 1px solid var(--v-line); }
-  .bm-verify-grid h3 { margin-bottom: var(--v-3); font-size: 1.15rem; }
-  .bm-artifacts { list-style: none; padding: 0; border-top: 1px solid var(--v-ink); }
-  .bm-artifacts li { border-bottom: 1px solid var(--v-line); }
-  .bm-artifacts a { display: flex; justify-content: space-between; gap: var(--v-5); padding: var(--v-4) 0; color: var(--v-ink); text-decoration: none; }
-  .bm-artifacts a:hover strong { text-decoration: underline; text-underline-offset: 3px; }
-  .bm-artifacts strong, .bm-artifacts small { display: block; }
-  .bm-artifacts small { margin-top: .2rem; color: var(--v-ink-soft); }
-  .bm-artifacts a > span:last-child { color: var(--v-green); font-size: var(--vs-small); font-weight: 600; }
-  .bm-disclosure { border-top: 1px solid var(--v-ink); border-bottom: 1px solid var(--v-ink); }
-  .bm-disclosure + .bm-disclosure { border-top: 0; }
-  .bm-disclosure summary { padding: var(--v-4) 2rem var(--v-4) 0; font-weight: 600; cursor: pointer; }
-  .bm-disclosure__body { padding: var(--v-2) 0 var(--v-6); }
-  .bm-hash, .bm-departures p { overflow-wrap: anywhere; }
-  .bm-hash { font-size: .88em; font-variant-numeric: tabular-nums; }
-  .bm-notes { display: grid; gap: var(--v-3); }
-  .bm-departures { list-style: none; padding: 0; margin: 0; }
-  .bm-departures li { display: grid; grid-template-columns: 3rem 1fr; gap: var(--v-4); border-top: 1px solid var(--v-line); padding: var(--v-5) 0; }
-  .bm-departures li:last-child { border-bottom: 1px solid var(--v-line); }
-  .bm-departures li > * { min-width: 0; }
-  /* Eighteen items in one vertical run is roughly three viewports, and scroll
-     length is what converts candour into posture. Two columns at desktop, at a
-     weight below every other h3 on the page. */
-  .v2 .bm-departures h3 { margin-bottom: var(--v-2); font-family: var(--vf-body); font-size: var(--vs-h4); font-weight: 600; line-height: 1.35; }
-  @media (min-width: 900px) {
-    .bm-departures { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--v-8); }
-  }
-
-  /* ---------- S8 ---------- */
-  .bm-splitcta { margin-block: var(--v-10); }
-
-  @media (max-width: 900px) {
-    .bm-band { padding-block: var(--v-8); }
-    .bm-section-head { grid-template-columns: 1fr; }
-    .bm-cases li { grid-template-columns: 3rem 1fr; }
-    .bm-cases li > p { grid-column: 2; }
-  }
-
-  @media (max-width: 640px) {
-    .bm-status { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .bm-status > div { border-top: 1px solid var(--v-line); }
-    .bm-status > div:nth-child(-n + 2) { border-top: 0; }
-    .bm-boundary, .v-leadlist.bm-limitations, .bm-verify-grid { grid-template-columns: 1fr; }
-    .bm-verify-grid > div + div { margin-left: 0; padding-left: 0; border-left: 0; }
-    .bm-cases li { grid-template-columns: 2.4rem 1fr; gap: var(--v-3); }
-    .bm-arms li { grid-template-columns: 2.4rem 1fr; }
-    .bm-pairs li { grid-template-columns: 1fr; gap: var(--v-3); }
-    .bm-departures li { grid-template-columns: 2.4rem 1fr; gap: var(--v-3); }
+<style>
+  .hero { padding-top:clamp(5rem,10vw,9rem); }
+  .hero h1 { max-width:18ch; }
+  .hero .v-lede { color:var(--v-cream-soft); max-width:52rem; }
+  .record-nav { position:sticky; top:0; z-index:20; background:var(--v-cream); border-bottom:1px solid var(--v-line); }
+  .record-nav .v-container { min-height:3.5rem; display:flex; align-items:center; gap:clamp(1rem,4vw,3rem); overflow-x:auto; }
+  .record-nav a { color:var(--v-black); text-decoration:none; font-size:.84rem; font-weight:700; white-space:nowrap; }
+  .reading-grid, .design-grid, .limits-grid, .sources-grid { display:grid; grid-template-columns:minmax(0,.9fr) minmax(20rem,1.1fr); gap:clamp(3rem,8vw,8rem); align-items:start; }
+  .reading-points p { padding:1.2rem 0; margin:0; border-top:1px solid var(--v-line); }
+  .results-head { max-width:52rem; margin-bottom:3rem; }
+  .table-wrap { overflow-x:auto; outline-offset:.3rem; }
+  table { width:100%; min-width:48rem; border-collapse:collapse; background:var(--v-cream); color:var(--v-black); }
+  caption { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }
+  th, td { padding:1rem; border:1px solid rgba(0,0,0,.22); text-align:left; }
+  thead th { background:var(--v-black); color:var(--v-cream); font:700 .72rem/1.2 var(--v-font-mono); text-transform:uppercase; }
+  tbody th { font-size:.9rem; }
+  td { font:700 .82rem/1 var(--v-font-mono); white-space:nowrap; }
+  td.loaded { background:rgba(18,255,117,.13); }
+  tr.group th { background:#dedbd0; font:700 .67rem/1 var(--v-font-mono); letter-spacing:.08em; text-transform:uppercase; }
+  .table-note { max-width:55rem; font-size:.85rem; }
+  .composite-grid { display:grid; grid-template-columns:1fr auto; gap:2rem 5rem; align-items:end; }
+  .composite-score { display:flex; flex-direction:column; align-items:flex-end; }
+  .composite-score strong { font:700 clamp(3.2rem,9vw,7rem)/.8 var(--v-font-display); }
+  .composite-score span { margin-top:1rem; font:700 .7rem/1 var(--v-font-mono); color:var(--v-green-deep); }
+  .composite-note { grid-column:1/-1; border-top:1px solid var(--v-line); padding-top:1rem; font-size:.85rem; }
+  .design-grid ol { list-style:none; margin:0; padding:0; }
+  .design-grid li { display:grid; grid-template-columns:3rem 1fr; gap:1rem; padding:1.2rem 0; border-top:1px solid var(--v-line); }
+  .design-grid li > span { font:700 .7rem/1 var(--v-font-mono); color:var(--v-green-deep); padding-top:.3rem; }
+  .design-grid h3, .design-grid p { margin:0; }
+  .design-grid p { margin-top:.4rem; color:var(--v-ink-soft); }
+  .historical { grid-column:1/-1; padding:1.25rem; border-left:.4rem solid var(--v-green); background:var(--v-white); font-size:.88rem; }
+  .design-grid > .v-link { grid-column:2; }
+  .integrity-head { max-width:52rem; margin-bottom:3rem; }
+  .integrity-head > p:last-child { color:var(--v-cream-soft); }
+  .issues { list-style:none; padding:0; margin:0; display:grid; grid-template-columns:repeat(2,1fr); border-top:1px solid rgba(255,255,255,.22); border-left:1px solid rgba(255,255,255,.22); }
+  .issues li { display:grid; grid-template-columns:2.5rem 1fr; gap:1rem; padding:1.25rem; border-right:1px solid rgba(255,255,255,.22); border-bottom:1px solid rgba(255,255,255,.22); }
+  .issues li > span { color:var(--v-green); font:700 .7rem/1 var(--v-font-mono); padding-top:.25rem; }
+  .issues summary { cursor:pointer; font-weight:700; }
+  .issues p { color:var(--v-cream-soft); font-size:.88rem; }
+  .limits-grid ol { list-style:none; padding:0; margin:0; }
+  .limits-grid li { display:grid; grid-template-columns:2.5rem 1fr; gap:1rem; border-top:1px solid var(--v-line); padding:1rem 0; }
+  .limits-grid li span { font:700 .7rem/1 var(--v-font-mono); color:var(--v-green-deep); padding-top:.45rem; }
+  .limits-grid li p { margin:0; }
+  .sources-grid dl { margin:0; }
+  .sources-grid dl div { display:grid; grid-template-columns:10rem 1fr; gap:1rem; padding:1rem 0; border-top:1px solid var(--v-line); }
+  .sources-grid dt { font-weight:700; }
+  .sources-grid dd { margin:0; overflow-wrap:anywhere; }
+  .source-actions { grid-column:2; display:flex; gap:1.5rem; align-items:center; flex-wrap:wrap; }
+  @media (max-width:760px) {
+    .reading-grid, .design-grid, .limits-grid, .sources-grid { grid-template-columns:1fr; }
+    .design-grid > .v-link, .source-actions { grid-column:1; }
+    .composite-grid { grid-template-columns:1fr; }
+    .composite-score { align-items:flex-start; }
+    .issues { grid-template-columns:1fr; }
+    .sources-grid dl div { grid-template-columns:1fr; gap:.3rem; }
   }
 </style>
-
-<script>
-  /* Figure 2 has no connector, so the chart component's own observer does not
-     reach it, and its meter fills would stay at their .js start state. This adds
-     .is-visible to any figure holding a meter, and nothing else. */
-  const meterFigures = Array.from(document.querySelectorAll<HTMLElement>('.bm-fig')).filter((figure) =>
-    figure.querySelector('.v-meter__fill'),
-  );
-  if (meterFigures.length > 0) {
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            io.unobserve(entry.target);
-          }
-        }
-      },
-      { threshold: 0.12 },
-    );
-    meterFigures.forEach((figure) => io.observe(figure));
-  }
-</script>

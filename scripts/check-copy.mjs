@@ -55,19 +55,26 @@ function visibleText(html) {
  */
 const RULES = [
   {
-    name: 'former product names outside the legal pages',
-    decision: 'The product was renamed after the study was run (2026-08-30)',
-    except: [/^legal\//],
+    name: 'retired product names',
+    decision: 'One product and two-plan architecture locked on 2026-09-01',
     test: (text) => [
+      ...text.matchAll(/\bCompass\b/g),
+      ...text.matchAll(/\bLens(?:\s4\.0)?\b/g),
       ...text.matchAll(/The Decision(?! Brief)/g),
       ...text.matchAll(/Decision Frame/g),
     ].map((m) => m[0]),
   },
   {
     name: 'unannounced product names',
-    decision: 'Only Compass and Lens are announced',
+    decision: 'Only GreenSquare Free and GreenSquare Pro are announced',
     test: (text) =>
       [...text.matchAll(/\b(Scout|Atlas|Spark|Forge|Realm)\b/g)].map((m) => m[0]),
+  },
+  {
+    name: 'model brands on launch product surfaces',
+    decision: 'The launch story is model-agnostic',
+    only: [/^(home|product|free|about)$/],
+    test: (text) => [...text.matchAll(/\b(?:Claude|ChatGPT|Gemini|OpenAI|Anthropic)\b/g)].map((m) => m[0]),
   },
   {
     name: 'a price, which is not published before launch',
@@ -106,6 +113,7 @@ for (const file of htmlFiles(DIST)) {
 
   for (const rule of RULES) {
     if (rule.except?.some((re) => re.test(route))) continue;
+    if (rule.only && !rule.only.some((re) => re.test(route))) continue;
     if (rule.exempt?.(route)) continue;
     const hits = rule.test(text);
     if (hits.length) {
@@ -130,12 +138,21 @@ try {
       count: 1,
     });
   }
+  if (!/not a test of GreenSquare Free or GreenSquare Pro/.test(text)) {
+    failures.push({
+      route: 'benchmark',
+      rule: 'the historical naming boundary is missing',
+      decision: 'Current plans must not inherit the frozen study claim',
+      hits: ['required boundary sentence absent'],
+      count: 1,
+    });
+  }
 } catch {
   failures.push({ route: 'benchmark', rule: 'the benchmark page did not build', decision: '', hits: [], count: 1 });
 }
 
 if (failures.length === 0) {
-  console.log(`check-copy: ${RULES.length + 1} rules, no violations.`);
+  console.log(`check-copy: ${RULES.length + 2} rules, no violations.`);
   process.exit(0);
 }
 
