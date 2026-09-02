@@ -6,9 +6,9 @@ description: How GreenSquare collects, uses and protects your personal informati
 
 # Privacy policy
 
-Last updated: 17 August 2026
+Last updated: 1 September 2026
 
-GreenSquare (the trading name of the operator of this site) runs www.greensquare.ai. This policy explains what personal information we collect, why we collect it, who we share it with, and the choices you have. It applies to everyone who visits the site, wherever you are.
+GreenSquare AI runs www.greensquare.ai. This policy explains what personal information we collect, why we collect it, who we share it with, and the choices you have. It applies to everyone who visits the site, wherever you are.
 
 We are based in Australia and handle personal information under the Australian Privacy Act 1988 and the Australian Privacy Principles. If you are in the European Union or the United Kingdom, we also aim to meet the standards of the General Data Protection Regulation, and this policy sets out the lawful basis we rely on.
 
@@ -16,14 +16,14 @@ We are based in Australia and handle personal information under the Australian P
 
 We keep collection to the minimum the site needs to work.
 
-- **Your email address.** You give us this when you request the Decision Frame or join the launch list. This is the only personal detail you enter on the site.
+- **Your email address.** You give us this when you request GreenSquare Free or join the beta list. This is the only personal detail you enter on the site.
 - **Technical and usage data.** When you load a page, our hosting provider records standard information such as your IP address, browser type, device type, the pages you view, and the time of your visit. We also collect aggregate page view counts through Vercel Web Analytics, which uses no cookies and does not identify you.
 
 We do not run advertising trackers. We do not build profiles of you for marketing.
 
 ## How we use your information
 
-- We use your email address to send you the Decision Frame and occasional product updates covered by the form. Every marketing email includes a one-click unsubscribe link.
+- We use your email address to send you GreenSquare Free and occasional product updates covered by the form. Every marketing email includes a one-click unsubscribe link.
 - We use technical and usage data to keep the site running, to fix problems, and to understand which pages people find useful.
 
 We do not sell your personal information, and we never will.
@@ -34,7 +34,7 @@ For your email address and the messages we send you, we rely on your consent, gi
 
 ## Who we share it with
 
-- **Kit (ConvertKit LLC, United States)** stores the launch list and sends the Decision Frame and product updates.
+- **Kit (ConvertKit LLC, United States)** stores the beta list and sends GreenSquare Free and product updates.
 - **Google Workspace (Google LLC, United States)** carries email we send to you and email you send to us at our contact address.
 - **Vercel Inc. (United States)** hosts the site, processes technical and usage data to serve it, and provides the aggregate page view counts described above.
 

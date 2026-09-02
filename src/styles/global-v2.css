@@ -44,6 +44,9 @@ html:has(.v2) { scroll-behavior: smooth; color-scheme: light; }
 
 /* ---------- typography (moderate, balanced) ---------- */
 .v2 h1, .v2 h2, .v2 h3, .v2 h4 { margin: 0; font-family: var(--vf-display); font-weight: 600; }
+.v2 h1 { font-size: var(--vs-display); line-height: 1.01; letter-spacing: -0.032em; text-wrap: balance; }
+.v2 h2 { font-size: var(--vs-h2); line-height: 1.1; letter-spacing: -0.02em; text-wrap: balance; }
+.v2 h3 { font-size: var(--vs-h3); line-height: 1.3; }
 .v-display { font-family: var(--vf-display); font-weight: 600; font-size: var(--vs-display); line-height: 1.01; letter-spacing: -0.032em; text-wrap: balance; }
 .v-h1 { font-size: var(--vs-h1); line-height: 1.06; letter-spacing: -0.025em; text-wrap: balance; }
 .v-h2 { font-size: var(--vs-h2); line-height: 1.1; letter-spacing: -0.02em; text-wrap: balance; }
@@ -52,8 +55,10 @@ html:has(.v2) { scroll-behavior: smooth; color-scheme: light; }
 
 .v2 p { margin: 0 0 var(--v-4); max-width: 70ch; text-wrap: pretty; }
 .v-lead { font-size: var(--vs-lead); line-height: 1.52; max-width: 58ch; color: var(--v-ink-soft); }
+.v-lede { font-size: var(--vs-lead); line-height: 1.52; max-width: 58ch; color: var(--v-ink-soft); }
 .v-green .v-lead { color: var(--v-cream-soft); }
 .v-small { font-size: var(--vs-small); color: var(--v-ink-soft); }
+.v-green .v-small { color: var(--v-cream-soft); }
 .v-measure { max-width: 62ch; }
 .v2 :where(a) { color: var(--v-green); }
 
@@ -80,6 +85,13 @@ html:has(.v2) { scroll-behavior: smooth; color-scheme: light; }
 /* the big bold color-block — the "big square section" the brand is built on */
 .v-green { background: var(--v-green); color: var(--v-cream); }
 .v-green h1, .v-green h2, .v-green h3, .v-green h4 { color: var(--v-cream); }
+.v-green .v-eyebrow { color: var(--v-lime); }
+.v-black { background: var(--v-black); color: var(--v-cream); }
+.v-black h1, .v-black h2, .v-black h3, .v-black h4 { color: var(--v-cream); }
+.v-black .v-eyebrow { color: var(--v-lime); }
+.v-black .v-lede, .v-black .v-lead, .v-black .v-small { color: var(--v-cream-soft); }
+.v-white { background: var(--v-paper); }
+.v-cream { background: var(--v-canvas); }
 .v-green-deep { background: var(--v-green-deep); color: var(--v-cream); }
 
 .v-rule { border: 0; border-top: 2px solid currentColor; opacity: 1; margin: 0; }
@@ -87,23 +99,26 @@ html:has(.v2) { scroll-behavior: smooth; color-scheme: light; }
 .v-split { display: grid; grid-template-columns: 1.12fr 0.88fr; gap: var(--v-10); align-items: center; }
 .v-split.is-reverse { grid-template-columns: 0.88fr 1.12fr; }
 .v-split.is-top { align-items: start; }
-.v-eyebrow { margin-bottom: var(--v-3); }
+.v-eyebrow { margin-bottom: var(--v-3); font-family: var(--v-font-mono); font-size: .72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--v-green); }
 .v-stack > * + * { margin-top: var(--v-4); }
+.v-actions { display: flex; align-items: center; gap: var(--v-5); flex-wrap: wrap; margin-top: var(--v-6); }
 
-/* ---------- buttons (rectangular, radius 0) ---------- */
-.v-btn { display: inline-flex; align-items: center; justify-content: center; padding: 13px 22px; border-radius: 0; font-family: var(--vf-body); font-weight: 600; font-size: var(--vs-small); text-decoration: none; cursor: pointer; border: 1px solid transparent; transition: background-color var(--v-fast) var(--v-ease), color var(--v-fast) var(--v-ease), transform var(--v-fast) var(--v-ease); }
+/* ---------- buttons ---------- */
+.v-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 12px 22px; border-radius: 999px; font-family: var(--vf-body); font-weight: 600; font-size: var(--vs-small); line-height: 1.2; text-decoration: none; cursor: pointer; border: 1px solid transparent; touch-action: manipulation; -webkit-tap-highlight-color: transparent; transition: background-color var(--v-fast) var(--v-ease), color var(--v-fast) var(--v-ease), transform var(--v-fast) var(--v-ease); }
 .v-btn:active { transform: translateY(1px); }
 .v-btn--green { background: var(--v-green); color: var(--v-cream); }
+.v-btn-primary { background: var(--v-green); color: var(--v-cream); }
 .v-btn--grey { background: var(--v-fill-2); color: var(--v-ink); }
 .v-btn--on-green { background: var(--v-cream); color: var(--v-green); }
 @media (hover: hover) and (pointer: fine) {
   .v-btn--green:hover { background: var(--v-green-bright); }
+  .v-btn-primary:hover { background: var(--v-green-bright); }
   .v-btn--grey:hover { background: var(--v-fill-3); }
   .v-btn--on-green:hover { background: #fff; }
 }
 .v-btn[disabled] { opacity: 0.5; cursor: not-allowed; }
 /* paired buttons in a hero read as equals */
-.hero-actions .v-btn { min-width: 220px; }
+.hero-actions .v-btn { min-width: 190px; }
 
 /* inline prose link only — underline, no arrow, no gap animation */
 .v-link { color: var(--v-green); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; font-weight: 600; font-size: var(--vs-small); }
@@ -202,6 +217,7 @@ a.v-card:hover, .v-card--hover:hover { background: var(--v-fill); }
 .v-prose h2:first-of-type { border-top: 0; padding-top: 0; }
 .v-prose h3 { font-family: var(--vf-body); font-weight: 600; font-size: 1.1rem; margin-top: var(--v-6); margin-bottom: var(--v-3); }
 .v-prose p, .v-prose li { color: var(--v-ink); }
+.v-green .v-prose p, .v-green .v-prose li { color: var(--v-cream); }
 .v-prose p { margin-bottom: var(--v-4); max-width: 72ch; }
 .v-prose ul, .v-prose ol { padding-left: 1.2em; max-width: 72ch; margin-bottom: var(--v-4); }
 .v-prose li { margin-bottom: var(--v-2); }
@@ -220,7 +236,7 @@ a.v-card:hover, .v-card--hover:hover { background: var(--v-fill); }
 .v-nav__right { display: flex; align-items: center; gap: var(--v-5); }
 .v-nav__right > .v-btn { background: var(--v-cream); color: var(--v-green-ink); border-color: var(--v-cream); }
 .v-nav__right > .v-btn:hover { background: var(--v-lime); border-color: var(--v-lime); }
-.v-nav__toggle { display: none; background: transparent; border: 1px solid rgba(255,255,255,0.5); color: var(--v-cream); padding: 11px; cursor: pointer; }
+.v-nav__toggle { display: none; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; background: transparent; border: 1px solid rgba(255,255,255,0.5); border-radius: 999px; color: var(--v-cream); padding: 11px; cursor: pointer; touch-action: manipulation; }
 .v-nav__toggle svg { width: 20px; height: 20px; display: block; }
 
 /* ---------- footer (near-black green big block, distinct from any section above) ---------- */
@@ -248,7 +264,7 @@ a.v-card:hover, .v-card--hover:hover { background: var(--v-fill); }
   border: 0;
 }
 .v2 .field-row { display: flex; gap: var(--v-3); flex-wrap: wrap; align-items: stretch; container-type: inline-size; }
-.v2 input[type='email'] { flex: 1 1 240px; padding: 0 15px; height: 48px; border: 1px solid var(--v-line-strong); border-radius: 0; font-family: var(--vf-body); font-size: var(--vs-small); background: var(--v-paper); color: var(--v-ink); transition: border-color var(--v-fast) var(--v-ease), box-shadow var(--v-fast) var(--v-ease); }
+.v2 input[type='email'] { flex: 1 1 240px; padding: 0 17px; height: 48px; border: 1px solid var(--v-line-strong); border-radius: 999px; font-family: var(--vf-body); font-size: 1rem; background: var(--v-paper); color: var(--v-ink); transition: border-color var(--v-fast) var(--v-ease), box-shadow var(--v-fast) var(--v-ease); }
 .v2 input[type='email']::placeholder { color: var(--v-ink-soft); opacity: 1; }
 .v2 input[type='email']:focus { border-color: var(--v-green); outline: none; }
 .v2 input[type='email']:focus-visible { border-color: var(--v-green); box-shadow: 0 0 0 3px color-mix(in srgb, var(--v-green) 22%, transparent); }
@@ -257,11 +273,14 @@ a.v-card:hover, .v-card--hover:hover { background: var(--v-fill); }
 .v2 form.is-leaving { opacity: 0; transition: opacity var(--v-fast) var(--v-ease); }
 .v2 .form-status--error, .v2 [class*='form-status'][role='alert'] { color: var(--v-error); }
 .v2 .form-status--success { color: var(--v-green); }
-.v2 .field-row .btn, .v2 .field-row button[type='submit'] { border-radius: 0; background: var(--v-green); color: var(--v-cream); border: 1px solid var(--v-green); font-family: var(--vf-body); font-weight: 600; font-size: var(--vs-small); height: 48px; padding: 0 20px; cursor: pointer; transition: background-color var(--v-fast) var(--v-ease), transform var(--v-fast) var(--v-ease), box-shadow var(--v-fast) var(--v-ease); }
+.v2 .field-row .btn, .v2 .field-row button[type='submit'] { border-radius: 999px; background: var(--v-green); color: var(--v-cream); border: 1px solid var(--v-green); font-family: var(--vf-body); font-weight: 600; font-size: var(--vs-small); min-height: 48px; padding: 0 20px; cursor: pointer; touch-action: manipulation; transition: background-color var(--v-fast) var(--v-ease), transform var(--v-fast) var(--v-ease), box-shadow var(--v-fast) var(--v-ease); }
 .v2 .field-row .btn:hover, .v2 .field-row button[type='submit']:hover { background: var(--v-green-bright); }
 .v2 .field-row .btn:active, .v2 .field-row button[type='submit']:active { transform: translateY(1px); }
 .v2 .field-row .btn:focus-visible, .v2 .field-row button[type='submit']:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--v-paper), 0 0 0 4px var(--v-green); }
 .v2 .field-row button[type='submit']:disabled { opacity: 0.72; cursor: progress; }
+.v2 .field-row button[type='submit'] { gap: var(--v-2); }
+.form-spinner { width: 14px; height: 14px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 999px; animation: v-spin 700ms linear infinite; }
+@keyframes v-spin { to { transform: rotate(360deg); } }
 /* When the row is too narrow to hold input + button side by side (either a narrow
    form column on desktop or a small viewport), the button wraps. In that case it
    should span the input's full width, not hug its label as a short orphaned button.
@@ -306,6 +325,7 @@ a.v-card:hover, .v-card--hover:hover { background: var(--v-fill); }
   .v2 .field-row .btn:active, .v2 .field-row button[type='submit']:active { transform: none; }
   .v-btn:active { transform: none; }
   .v-meter__fill { transform: none; transition: none; }
+  .form-spinner { animation: none; }
   .v2 details::details-content, .v2 details[open]::details-content { transition-duration: 0ms; }
 }
 

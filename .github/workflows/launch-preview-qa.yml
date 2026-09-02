@@ -1,0 +1,79 @@
+name: Launch preview QA
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'scripts/**'
+      - 'qa/**'
+      - 'astro.config.*'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'lighthouserc.cjs'
+      - '.github/workflows/launch-preview-qa.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: launch-preview-qa-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-browser-qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install and build
+        run: |
+          npm ci
+          npm run build
+
+      - name: Install browser QA tools
+        run: |
+          npm install --no-save playwright@1.55.0 @axe-core/playwright@4.10.2 @lhci/cli@0.15.1 @astrojs/check@0.9.6 typescript@5.9.3
+          npx playwright install --with-deps chromium
+          echo "CHROME_PATH=$(find "$HOME/.cache/ms-playwright" -type f -path '*/chrome-linux/chrome' | head -1)" >> "$GITHUB_ENV"
+
+      - name: Type and content checks
+        run: |
+          npx astro check
+          node qa/check-static.mjs
+
+      - name: Start preview
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4321 > /tmp/greensquare-preview.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4321/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/greensquare-preview.log
+          exit 1
+
+      - name: Responsive, interaction and accessibility regression
+        run: |
+          mkdir -p qa/launch
+          node qa/run-launch-qa.mjs
+
+      - name: Check internal links
+        run: node qa/check-links.mjs
+
+      - name: Lighthouse budgets
+        run: npx lhci autorun --config=./lighthouserc.cjs
+
+      - name: Upload QA evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: launch-preview-qa
+          path: qa/launch/
+          if-no-files-found: warn
+          retention-days: 14

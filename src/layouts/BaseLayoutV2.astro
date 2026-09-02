@@ -33,6 +33,7 @@ const ogImage = new URL(withBase('/assets/og-image.png'), Astro.site).toString()
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="GreenSquare AI" />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href={withBase('/assets/favicon.svg')} type="image/svg+xml" />
     <link rel="icon" href={withBase('/favicon.ico')} sizes="48x48" />
@@ -42,7 +43,7 @@ const ogImage = new URL(withBase('/assets/og-image.png'), Astro.site).toString()
     <!-- Manrope 400/500 and IBM Plex Mono carry the benchmark page's design language
          (see benchmark.astro --f / --m). Without them that page falls back to system faces. -->
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=optional"
       rel="stylesheet"
     />
   </head>
@@ -78,10 +79,27 @@ const ogImage = new URL(withBase('/assets/og-image.png'), Astro.site).toString()
 
       const toggle = document.getElementById('v-nav-toggle');
       const drawer = document.getElementById('v-nav-drawer');
+      const closeDrawer = (returnFocus = false) => {
+        toggle?.setAttribute('aria-expanded', 'false');
+        toggle?.setAttribute('aria-label', 'Open menu');
+        drawer?.classList.remove('is-open');
+        if (returnFocus) toggle?.focus();
+      };
       toggle?.addEventListener('click', () => {
         const open = toggle.getAttribute('aria-expanded') === 'true';
         toggle.setAttribute('aria-expanded', String(!open));
+        toggle.setAttribute('aria-label', open ? 'Open menu' : 'Close menu');
         drawer?.classList.toggle('is-open', !open);
+        if (!open) drawer?.querySelector<HTMLElement>('a')?.focus();
+      });
+      drawer?.addEventListener('click', (event) => {
+        if ((event.target as HTMLElement).closest('a')) closeDrawer();
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && drawer?.classList.contains('is-open')) closeDrawer(true);
+      });
+      window.matchMedia('(min-width: 901px)').addEventListener('change', (event) => {
+        if (event.matches) closeDrawer();
       });
     </script>
   </body>
