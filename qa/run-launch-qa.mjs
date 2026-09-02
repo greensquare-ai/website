@@ -60,7 +60,9 @@ for (const viewport of viewports) {
     if (route === '/research/' && !/not a test of the current GreenSquare Free plan or the future GreenSquare Pro plan/i.test(state.body)) errors.push('Research plan boundary missing');
 
     if (viewport.name === 'mobile') {
-      const menu = page.getByRole('button', { name: 'Open menu' });
+      // Use the stable control ID because the accessible name intentionally
+      // changes between "Open menu" and "Close menu" as state changes.
+      const menu = page.locator('#v-nav-toggle');
       if (await menu.count() !== 1) errors.push('Mobile menu button missing');
       else {
         await menu.click();
