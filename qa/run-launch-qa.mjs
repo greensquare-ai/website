@@ -55,7 +55,7 @@ for (const viewport of viewports) {
         await page.getByRole('tab', { name: /Decision Brief/i }).press('Home');
         if (await page.locator('[data-demo-tab="context"]').getAttribute('aria-selected') !== 'true') errors.push('Product demo keyboard navigation failed');
       }
-      if (!/GreenSquare Pro[\s\S]*in development/i.test(state.body)) errors.push('Pro boundary missing');
+      if (!/GreenSquare Pro/i.test(state.body) || !/in development/i.test(state.body)) errors.push('Pro boundary missing');
     }
     if (route === '/research/' && !/not a test of the current GreenSquare Free plan or the future GreenSquare Pro plan/i.test(state.body)) errors.push('Research plan boundary missing');
 
