@@ -3,6 +3,41 @@
    decisive rules, connected exhibits, restrained colour and readable typography. */
 @import './tokens-v2.css';
 
+/* Metric-matched fallbacks. `display=swap` renders a fallback face first and swaps in
+   the brand face on arrival. Line heights here are explicit and unitless, so the swap
+   does not change line box height; what it changes is glyph advance width, which moves
+   the wrap points, which changes the number of lines. On /product/ that reflowed the h1
+   and pushed the whole hero, measuring 0.198 CLS in CI against a 0.1 budget.
+   `src: local(...)` pins which face the fallback actually is, so `size-adjust` is
+   measured against a known font rather than whatever the platform picks. Liberation Sans
+   is metric-compatible with Arial and is what Ubuntu resolves to in CI.
+   Percentages are measured, not estimated: each brand face and Arial were rendered at
+   1000px and their advance widths over a common sample compared. */
+@font-face {
+  font-family: 'Space Grotesk Fallback';
+  src: local('Arial'), local('Liberation Sans'), local('Helvetica');
+  size-adjust: 99.44%;
+  ascent-override: 98.96%;
+  descent-override: 29.36%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'IBM Plex Sans Fallback';
+  src: local('Arial'), local('Liberation Sans'), local('Helvetica');
+  size-adjust: 99.77%;
+  ascent-override: 102.74%;
+  descent-override: 27.56%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Manrope Fallback';
+  src: local('Arial'), local('Liberation Sans'), local('Helvetica');
+  size-adjust: 98.31%;
+  ascent-override: 108.43%;
+  descent-override: 30.51%;
+  line-gap-override: 0%;
+}
+
 .v2 * { box-sizing: border-box; }
 .v2 { scrollbar-width: thin; scrollbar-color: var(--v-line-strong) transparent; }
 /* The site is light-only. Declaring it stops Windows and Android dark mode from

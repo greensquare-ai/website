@@ -53,9 +53,9 @@
      logo lockup. IBM Plex Mono is not in the design language and has been removed.
      It was styling 18 labels at weight 700 against a face loaded only at 400 and 500,
      so the browser was synthesising the bold. */
-  --vf-display: 'Space Grotesk', Arial, sans-serif;
-  --vf-body: 'IBM Plex Sans', Arial, sans-serif;
-  --vf-brand: 'Manrope', Arial, sans-serif;
+  --vf-display: 'Space Grotesk', 'Space Grotesk Fallback', Arial, sans-serif;
+  --vf-body: 'IBM Plex Sans', 'IBM Plex Sans Fallback', Arial, sans-serif;
+  --vf-brand: 'Manrope', 'Manrope Fallback', Arial, sans-serif;
   --v-font-display: var(--vf-display);
 
   /* larger reading text, quieter headings.
