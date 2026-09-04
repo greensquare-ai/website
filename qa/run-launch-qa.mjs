@@ -75,13 +75,90 @@ for (const viewport of viewports) {
     const axe = await new AxeBuilder({ page }).analyze();
     const serious = axe.violations.filter((item) => ['critical', 'serious'].includes(item.impact ?? ''));
     if (serious.length) errors.push(`Axe: ${serious.map((item) => item.id).join(', ')}`);
+    /* Axe cannot always resolve a background it did not paint itself and returns those
+       cases as `incomplete` rather than a violation. A white link on a white card scored
+       1:1 in production and passed this gate for exactly that reason.
+       These are recorded, not failed. Axe reported the homepage hero CTA as "overlapped
+       by another element" at tablet and mobile, and it is not: elementsFromPoint at the
+       button's centre returns the button, and the hero visual starts 57px below it.
+       Failing on that would train the reader to ignore the gate. The sweep below resolves
+       backgrounds by ancestor walk and is the authority for contrast. */
+    const unresolved = axe.incomplete
+      .filter((item) => item.id === 'color-contrast')
+      .flatMap((item) => item.nodes.map((node) => node.target.join(' ')));
+
+    const contrastFailures = await page.evaluate(() => {
+      const parse = (value) => {
+        const match = value.match(/rgba?\(([^)]+)\)/);
+        if (!match) return null;
+        const parts = match[1].split(/[,\s/]+/).filter(Boolean).map(Number);
+        return { r: parts[0], g: parts[1], b: parts[2], a: parts.length > 3 ? parts[3] : 1 };
+      };
+      const luminance = ({ r, g, b }) => {
+        const channel = (v) => { const n = v / 255; return n <= 0.03928 ? n / 12.92 : ((n + 0.055) / 1.055) ** 2.4; };
+        return 0.2126 * channel(r) + 0.7152 * channel(g) + 0.0722 * channel(b);
+      };
+      const ratio = (fg, bg) => {
+        const [hi, lo] = [luminance(fg), luminance(bg)].sort((a, b) => b - a);
+        return (hi + 0.05) / (lo + 0.05);
+      };
+      const over = (fg, bg) => ({
+        r: fg.a * fg.r + (1 - fg.a) * bg.r,
+        g: fg.a * fg.g + (1 - fg.a) * bg.g,
+        b: fg.a * fg.b + (1 - fg.a) * bg.b,
+      });
+      /* The nearest opaque ancestor background is what the text actually sits on.
+         An image or a translucent layer in the chain is not worth approximating, so
+         those elements are skipped rather than guessed at. */
+      const backdrop = (el) => {
+        for (let node = el; node instanceof Element; node = node.parentElement) {
+          const style = getComputedStyle(node);
+          if (style.backgroundImage !== 'none') return null;
+          const bg = parse(style.backgroundColor);
+          if (bg && bg.a === 1) return bg;
+          if (bg && bg.a > 0) return null;
+        }
+        return { r: 255, g: 255, b: 255, a: 1 };
+      };
+      const name = (el) => {
+        if (el.id) return `#${el.id}`;
+        const classes = (el.getAttribute('class') || '').trim().split(/\s+/).filter(Boolean).slice(0, 2);
+        return el.tagName.toLowerCase() + classes.map((c) => `.${c}`).join('');
+      };
+
+      const found = [];
+      for (const el of document.querySelectorAll('body *')) {
+        if (el.closest('svg')) continue;
+        const ownText = [...el.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim().length > 1);
+        if (!ownText) continue;
+        const style = getComputedStyle(el);
+        if (style.visibility === 'hidden' || style.display === 'none' || style.opacity === '0') continue;
+        const box = el.getBoundingClientRect();
+        if (box.width === 0 || box.height === 0) continue;
+        const colour = parse(style.color);
+        const bg = backdrop(el);
+        if (!colour || !bg) continue;
+        const size = parseFloat(style.fontSize);
+        const weight = Number(style.fontWeight) || 400;
+        const required = size >= 24 || (size >= 18.66 && weight >= 700) ? 3 : 4.5;
+        const measured = ratio(colour.a < 1 ? over(colour, bg) : colour, bg);
+        if (measured < required) {
+          found.push({ selector: name(el), ratio: Math.round(measured * 100) / 100, required, text: el.textContent.trim().slice(0, 40) });
+        }
+      }
+      const seen = new Set();
+      return found.filter((item) => (seen.has(item.selector) ? false : seen.add(item.selector)));
+    });
+    if (contrastFailures.length) {
+      errors.push(`Contrast: ${contrastFailures.map((c) => `${c.selector} ${c.ratio}:1 needs ${c.required}:1 ("${c.text}")`).join(' | ')}`);
+    }
 
     const safeRoute = route === '/' ? 'home' : route.replaceAll('/', '-').replace(/^-|-$/g, '');
     const screenshot = path.join(output, `${safeRoute}-${viewport.name}.png`);
     await page.screenshot({ path: screenshot, fullPage: true });
     const passed = errors.length === 0;
     if (!passed) failed = true;
-    results.push({ route, viewport: viewport.name, status, errors, screenshot, passed });
+    results.push({ route, viewport: viewport.name, status, errors, warnings: unresolved, screenshot, passed });
     await page.close();
   }
   await context.close();

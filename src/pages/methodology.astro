@@ -1,6 +1,7 @@
 ---
 import { withBase } from '../lib/paths';
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
+import SectionNav from '../components/SectionNav.astro';
 import { grid, spell } from '../lib/benchmark';
 
 const g = grid();
@@ -9,13 +10,19 @@ const g = grid();
 <BaseLayoutV2 title="Benchmark methodology | GreenSquare AI" description={`How GreenSquare designed, ran and scored its ${g.runs_total}-run preregistered benchmark of process discipline and AI judgement.`} current="research">
   <div>
     <section class="v-section v-black hero"><div class="v-container v-container--narrow">
-      <p class="v-eyebrow">Methodology</p><h1>How we tested process discipline and AI judgement.</h1>
-      <p class="v-lede">The benchmark separates access to information from the discipline used to interpret it. It reports the controls, limitations and unfinished work alongside the results.</p>
+      <h1>How we tested process discipline and AI judgement.</h1>
+      <p class="v-lead">The benchmark separates access to information from the discipline used to interpret it. It reports the controls, limitations and unfinished work alongside the results.</p>
     </div></section>
 
-    <nav class="method-nav" aria-label="On this page"><div class="v-container">
-      <a href="#claim">Claim</a><a href="#design">Design</a><a href="#scorecard">Scorecard</a><a href="#integrity">Integrity</a><a href="#limits">Limits</a>
-    </div></nav>
+    <SectionNav
+      items={[
+        { id: 'claim', label: 'Claim' },
+        { id: 'design', label: 'Design' },
+        { id: 'scorecard', label: 'Scorecard' },
+        { id: 'integrity', label: 'Integrity' },
+        { id: 'limits', label: 'Limits' },
+      ]}
+    />
 
     <section class="v-section v-white" id="claim"><div class="v-container v-container--narrow v-prose">
       <h2>The claim under test</h2>
@@ -60,10 +67,7 @@ const g = grid();
 
 <style>
   .hero { padding-top:clamp(5rem,10vw,9rem); }
-  .hero .v-lede { color:var(--v-cream-soft); }
-  .method-nav { position:sticky; top:0; z-index:20; background:var(--v-cream); border-bottom:1px solid var(--v-line); }
-  .method-nav .v-container { display:flex; gap:clamp(1rem,4vw,3rem); align-items:center; min-height:3.5rem; overflow-x:auto; }
-  .method-nav a { color:var(--v-black); text-decoration:none; font-size:.84rem; font-weight:700; white-space:nowrap; }
+  .hero .v-lead { color:var(--v-cream-soft); }
   .note { border-left:.4rem solid var(--v-green); padding:1.25rem; margin-top:2rem; background:var(--v-cream); font-size:.9rem; }
   .v-green .v-prose, .v-green .v-prose a { color:var(--v-cream); }
 </style>
