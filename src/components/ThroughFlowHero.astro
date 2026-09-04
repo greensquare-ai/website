@@ -125,7 +125,7 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background: #0b2313;
+    background: var(--v-green-deep);
   }
 
   .through-flow svg {
@@ -144,13 +144,18 @@
     stroke-linejoin: miter;
   }
 
+  /* Both strokes were off-palette greens (#c9d8cd, #5ea983) that read as mud against
+     the deep ground. The palette gives an approved pair for this surface: lime and
+     white on forest. The paths not taken are white at low opacity; the one path that
+     continues is lime, which is the only part of this graphic that should carry
+     attention and previously did not. */
   .through-flow__neutral {
-    stroke: #c9d8cd;
-    stroke-opacity: 0.55;
+    stroke: var(--v-cream);
+    stroke-opacity: 0.42;
   }
 
   .through-flow__continuing {
-    stroke: #5ea983;
+    stroke: var(--v-lime);
     stroke-opacity: 1;
   }
 
