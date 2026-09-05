@@ -7,7 +7,7 @@ import { grid, spell } from '../lib/benchmark';
 const g = grid();
 ---
 
-<BaseLayoutV2 title="Benchmark methodology | GreenSquare AI" description={`How GreenSquare designed, ran and scored its ${g.runs_total}-run preregistered benchmark of process discipline and AI judgement.`} current="research">
+<BaseLayoutV2 title="Benchmark methodology | GreenSquare AI" description={`How GreenSquare AI designed, ran and scored its ${g.runs_total}-run preregistered benchmark of process discipline and AI judgement.`} current="research">
   <div>
     <section class="v-section v-black hero"><div class="v-container v-container--narrow">
       <h1>How we tested process discipline and AI judgement.</h1>
@@ -28,18 +28,18 @@ const g = grid();
       <h2>The claim under test</h2>
       <p>The loaded method is designed to make an AI model follow a disciplined process for one consequential business decision. It should ask for missing facts, test the framing, compare credible options, mark the basis of material claims and state what would change the recommendation.</p>
       <p>The benchmark asks two questions. Does that process hold across models and repeated runs? Does asking before advising help the model connect the facts that reveal the underlying decision? It does not test whether experienced operators prefer the resulting brief.</p>
-      <aside class="note"><strong>Historical naming note.</strong> The frozen study artefact used earlier internal product names. This page calls that arm the GreenSquare-loaded condition for clarity. The study is not a test of the current GreenSquare Free plan or the future GreenSquare Pro plan.</aside>
+      <aside class="note"><strong>Historical naming note.</strong> The frozen study artefact used earlier internal product names. This page calls that arm the loaded condition for clarity. The study is not a test of the current Frame Free plan or the future Frame Pro plan.</aside>
     </div></section>
 
     <section class="v-section v-cream" id="design"><div class="v-container v-container--narrow v-prose">
       <h2>The completed grid</h2>
-      <ul><li>{g.runs_total} scored runs, with {g.n_per_arm} per condition.</li><li>Two tested models, three fictional business cases and three repeats in each completed cell.</li><li>Three conditions: question only, all facts provided, and GreenSquare loaded.</li></ul>
+      <ul><li>{g.runs_total} scored runs, with {g.n_per_arm} per condition.</li><li>Two tested models, three fictional business cases and three repeats in each completed cell.</li><li>Three conditions: question only, all facts provided, and Loaded method.</li></ul>
       <p>The preregistered protocol targeted about {g.target_runs} runs, including {g.planned_models[0].name} and more repeats. The completed grid was reduced to {g.retired.runs_total} runs, then re-cut to {g.runs_total} by removing {spell(g.excluded.pilot_runs)} design-phase pilot runs that the protocol said would not be pooled. {g.planned_models[0].name} was not run.</p>
       <h2>The cases</h2>
       <p>The three cases are fictional and cannot be found through search. Each begins with an attractive surface question while placing three facts elsewhere in the case that change the real decision.</p>
       <ul><li><strong>Meridian.</strong> A managed-service bid with concentration, regulatory and stranded-investment risk.</li><li><strong>Larkfield.</strong> A build-or-acquire choice where the evidence supports the more aggressive acquisition.</li><li><strong>Corvan.</strong> A continue-or-exit decision adapted from a documented Australian post-mortem.</li></ul>
       <h2>The three conditions</h2>
-      <ul><li><strong>Question only.</strong> The model receives the short question and answers once. Questions receive no reply.</li><li><strong>All facts.</strong> The same question and complete fact sheet are supplied in the first message.</li><li><strong>GreenSquare loaded.</strong> The frozen method file and short question are supplied. The operator answers only from the same fact sheet.</li></ul>
+      <ul><li><strong>Question only.</strong> The model receives the short question and answers once. Questions receive no reply.</li><li><strong>All facts.</strong> The same question and complete fact sheet are supplied in the first message.</li><li><strong>Loaded method.</strong> The frozen method file and short question are supplied. The operator answers only from the same fact sheet.</li></ul>
       <p>The all-facts condition is the informed baseline. It shows how well the model reasons when someone already knows which information matters. The loaded condition tests whether the method can draw that information out through questions and then produce the structured brief.</p>
     </div></section>
 
@@ -58,7 +58,7 @@ const g = grid();
 
     <section class="v-section v-cream" id="limits"><div class="v-container v-container--narrow v-prose">
       <h2>Limitations</h2>
-      <ul><li>Three repeats per cell provide an early reliability signal and leave substantial uncertainty.</li><li>GreenSquare wrote two of the three cases.</li><li>The current grid covers two models. A third preregistered model was not run.</li><li>One person ran and scored the grid and held the sealed answers. The adjudication was also internal.</li><li>The senior-reviewer study and independent re-score remain planned work.</li><li>Model behaviour changes, so the evidence needs periodic replication.</li></ul>
+      <ul><li>Three repeats per cell provide an early reliability signal and leave substantial uncertainty.</li><li>GreenSquare AI wrote two of the three cases.</li><li>The current grid covers two models. A third preregistered model was not run.</li><li>One person ran and scored the grid and held the sealed answers. The adjudication was also internal.</li><li>The senior-reviewer study and independent re-score remain planned work.</li><li>Model behaviour changes, so the evidence needs periodic replication.</li></ul>
       <p>The results support a claim about process consistency and fact gathering across the tested conditions. They do not support a claim that the method improves an experienced operator’s judgement.</p>
       <a class="v-link" href={withBase('/benchmark/')}>Read the benchmark record</a>
     </div></section>

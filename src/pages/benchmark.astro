@@ -21,7 +21,7 @@ const loaded = arms[2];
 
 <BaseLayoutV2
   title="Benchmark results | GreenSquare AI"
-  description={`The complete public record of GreenSquare's ${g.runs_total}-run preregistered benchmark, including raw counts, limitations and protocol deviations.`}
+  description={`The complete public record of our ${g.runs_total}-run preregistered benchmark, including raw counts, limitations and protocol deviations.`}
   current="research"
 >
   <div>
@@ -82,7 +82,7 @@ const loaded = arms[2];
       <ol>
         {arms.map((arm, index) => <li><span>{String(index + 1).padStart(2, '0')}</span><div><h3>{arm.label}</h3><p>{arm.note}</p></div></li>)}
       </ol>
-      <aside class="historical"><strong>Historical naming note.</strong> The frozen study artefact used earlier internal product names. The public record now calls the arm the GreenSquare-loaded condition. This study is not a test of GreenSquare Free or GreenSquare Pro.</aside>
+      <aside class="historical"><strong>Historical naming note.</strong> The frozen study artefact used earlier internal product names. The public record now calls the arm the loaded condition. This study is not a test of Frame Free or Frame Pro.</aside>
       <a class="v-link" href={withBase('/methodology/')}>Read the full methodology</a>
     </div></section>
 

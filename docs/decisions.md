@@ -2,6 +2,16 @@
 
 Current public-site decisions, their rationale and the condition that would reverse them.
 
+## 2026-09-05 · Frame is the product, and the study arm loses its product name
+
+**Decided.** The product is **Frame**; the plans are **Frame Free** and **Frame Pro**. GreenSquare AI remains the company and Decision Brief remains the output. A bare `GreenSquare` becomes a retired product name, guarded by a negative lookahead so that `GreenSquare AI` still passes. The method step previously called Frame is now **Clarify**, because a step cannot share the product's name.
+
+**Why.** A deliberate product-portfolio decision, which is the condition the 1 September naming entry set for changing this architecture.
+
+**Constraint.** The benchmark is not renamed into the new vocabulary. It tested an artefact that predates Frame, so labelling its third arm `Frame-loaded` would assert the study tested Frame. The arm becomes the **loaded condition**, which names what was supplied rather than which product supplied it, and the historical naming note says the artefact predates Frame. This corrects the previous rename rather than repeating it: in September the arm was relabelled to the then-current product name, which carried exactly the implication now being removed. Analytics event names keep the old product name deliberately, because they are the keys of a running time series and renaming them splits the funnel with no way to join the halves; they are never rendered.
+
+**Reversed by.** A further product-portfolio decision recorded here and in the private product repository.
+
 ## 2026-09-05 · One grey, one rule, one reading tint
 
 **Decided.** The palette drops from fifteen colour values to nine. Surfaces are white and one grey, `#f5f5f5`; `--v-canvas`, `--v-fill`, `--v-fill-2` and `--v-fill-3` are retired. Reading text is one grey, `#4f514b`; `--v-ink-faint` is retired. Rules are one colour, `#dedad2`; `--v-line-strong` is retired. Greens are forest, its hover and the near-black used by the footer; `--v-green-deep` is retired. `--v-line-green-strong` and `--v-signal-on-green` were declared and never referenced, and are gone.

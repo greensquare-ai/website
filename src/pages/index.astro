@@ -5,14 +5,14 @@ import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
 import ThroughFlowHero from '../components/ThroughFlowHero.astro';
 
 const capabilities = [
-  { label: 'Frame', title: 'Clarify the decision before solving it', body: 'GreenSquare identifies the mandate, decision owner, stakes and evidence needed before a recommendation can be credible.' },
+  { label: 'Clarify', title: 'Define the decision before solving it', body: 'Frame identifies the mandate, decision owner, stakes and evidence needed before a recommendation can be credible.' },
   { label: 'Challenge', title: 'Expose assumptions and missing evidence', body: 'It separates what is known from what is inferred, tests contradictions and keeps uncertainty visible where it can still change the call.' },
   { label: 'Decide', title: 'Compare real options and define the path', body: 'It evaluates distinct choices consistently, recommends only when the evidence permits and carries decision conditions into action.' },
 ];
 ---
 <BaseLayoutV2
   title="GreenSquare AI | Professional judgement for consequential decisions"
-  description="GreenSquare adds a disciplined professional judgement process to the AI you already use, from the first material question to an inspectable decision."
+  description="Frame adds a disciplined professional judgement process to the AI you already use, from the first material question to an inspectable decision."
   current="home"
 >
   <section class="home-hero v-off">
@@ -20,12 +20,12 @@ const capabilities = [
       <div class="home-hero__copy">
         <h1 class="v-display">Make better use of capable AI when the decision matters.</h1>
         <p class="v-lead">
-          GreenSquare gives AI a disciplined process for consequential business decisions. It clarifies the real
+          Frame gives AI a disciplined process for consequential business decisions. It clarifies the real
           choice, interrogates the evidence and makes the recommendation easier to inspect before you act.
         </p>
         <div class="hero-actions">
-          <a class="v-btn v-btn--green" href={withBase('/free/')}>Try GreenSquare Free</a>
-          <a class="v-link" href={withBase('/product/')}>See how GreenSquare works</a>
+          <a class="v-btn v-btn--green" href={withBase('/free/')}>Try Frame Free</a>
+          <a class="v-link" href={withBase('/product/')}>See how Frame works</a>
         </div>
       </div>
       <div class="home-hero__visual">
@@ -57,16 +57,16 @@ const capabilities = [
       <div>
         <h2 class="v-h2">Start with the current beta.</h2>
       </div>
-      <p class="v-lead">GreenSquare Free is the current adaptive beta. GreenSquare Pro is the paid plan that will follow and remains in development.</p>
+      <p class="v-lead">Frame Free is the current adaptive beta. Frame Pro is the paid plan that will follow and remains in development.</p>
     </div>
     <div class="v-container plan-grid">
       <article class="plan-card plan-card--available">
-        <div><span class="plan-state">Available now</span><h3>GreenSquare Free</h3></div>
+        <div><span class="plan-state">Available now</span><h3>Frame Free</h3></div>
         <p>An adaptive decision system you upload to a capable AI model. It moves from mandate and evidence through options, recommendation and proportionate execution.</p>
-        <a class="v-btn v-btn--green" href={withBase('/free/')}>Try GreenSquare Free</a>
+        <a class="v-btn v-btn--green" href={withBase('/free/')}>Try Frame Free</a>
       </article>
       <article class="plan-card">
-        <div><span class="plan-state">In development</span><h3>GreenSquare Pro</h3></div>
+        <div><span class="plan-state">In development</span><h3>Frame Pro</h3></div>
         <p>The future paid plan. Its scope, features and pricing will be published only when the product boundary is ready.</p>
         <a class="v-link" href={withBase('/product/#pro')}>View the product direction</a>
       </article>
@@ -88,8 +88,8 @@ const capabilities = [
   <section class="home-cta v-fill">
     <div class="v-container home-cta__grid">
       <div>
-        <h2 class="v-h2">Bring GreenSquare to your next consequential decision.</h2>
-        <p class="v-lead">Enter your email, confirm your address and receive GreenSquare Free.</p>
+        <h2 class="v-h2">Bring Frame to your next consequential decision.</h2>
+        <p class="v-lead">Enter your email, confirm your address and receive Frame Free.</p>
       </div>
       <EmailCaptureForm client:visible />
     </div>

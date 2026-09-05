@@ -35,15 +35,15 @@ for (const viewport of viewports) {
     if (!state.h1) errors.push('Primary heading missing');
     if (state.mains !== 1) errors.push(`Expected one main landmark, found ${state.mains}`);
     if (state.scrollWidth > state.clientWidth + 2) errors.push(`Horizontal overflow ${state.scrollWidth}/${state.clientWidth}`);
-    if (/\b(?:Compass|Lens)\b|Decision Frame|The Decision(?! Brief)/.test(state.body)) errors.push('Retired product name visible');
+    if (/\b(?:Compass|Lens)\b|Decision Frame|The Decision(?! Brief)|\bGreenSquare\b(?! AI)/.test(state.body)) errors.push('Retired product name visible');
 
     if (route === '/') {
-      if (await page.getByRole('link', { name: /Try GreenSquare Free/i }).count() < 1) errors.push('Primary Free CTA missing');
+      if (await page.getByRole('link', { name: /Try Frame Free/i }).count() < 1) errors.push('Primary Free CTA missing');
       if (await page.locator('[data-decision-passage]').count() !== 1) errors.push('Decision animation missing');
     }
     if (route === '/free/') {
       if (await page.getByLabel('Email address').count() !== 1) errors.push('Email input missing');
-      if (await page.getByRole('button', { name: /Email me GreenSquare Free/i }).count() !== 1) errors.push('Free submit action missing');
+      if (await page.getByRole('button', { name: /Email me Frame Free/i }).count() !== 1) errors.push('Free submit action missing');
     }
     if (route === '/product/') {
       const tabs = page.getByRole('tab');
@@ -55,9 +55,9 @@ for (const viewport of viewports) {
         await page.getByRole('tab', { name: /Decision Brief/i }).press('Home');
         if (await page.locator('[data-demo-tab="context"]').getAttribute('aria-selected') !== 'true') errors.push('Product demo keyboard navigation failed');
       }
-      if (!/GreenSquare Pro/i.test(state.body) || !/in development/i.test(state.body)) errors.push('Pro boundary missing');
+      if (!/Frame Pro/i.test(state.body) || !/in development/i.test(state.body)) errors.push('Pro boundary missing');
     }
-    if (route === '/research/' && !/not a test of the current GreenSquare Free plan or the future GreenSquare Pro plan/i.test(state.body)) errors.push('Research plan boundary missing');
+    if (route === '/research/' && !/not a test of the current Frame Free plan or the future Frame Pro plan/i.test(state.body)) errors.push('Research plan boundary missing');
 
     if (viewport.name === 'mobile') {
       // Use the stable control ID because the accessible name intentionally
