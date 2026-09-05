@@ -2,7 +2,7 @@
 import { withBase } from '../lib/paths';
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
-import ThroughFlowHero from '../components/ThroughFlowHero.astro';
+import FrameProcessAnimation from '../components/FrameProcessAnimation.astro';
 
 const capabilities = [
   { label: 'Clarify', title: 'Define the decision before solving it', body: 'Frame identifies the mandate, decision owner, stakes and evidence needed before a recommendation can be credible.' },
@@ -28,11 +28,10 @@ const capabilities = [
           <a class="v-link" href={withBase('/product/')}>See how Frame works</a>
         </div>
       </div>
-      <div class="home-hero__visual">
-        <ThroughFlowHero />
-      </div>
     </div>
   </section>
+
+  <section class="home-process"><div class="v-container"><FrameProcessAnimation /></div></section>
 
   <section class="v-section">
     <div class="v-container">
@@ -98,9 +97,9 @@ const capabilities = [
 
 <style>
   .home-hero { overflow: hidden; }
-  .home-hero__grid { display: grid; grid-template-columns: 1fr 1fr; min-height: clamp(560px, 70vh, 760px); align-items: stretch; }
-  .home-hero__copy { align-self: center; max-width: 42rem; padding-block: clamp(3.5rem, 7vw, 6.5rem); padding-right: clamp(2rem, 5vw, 5rem); }
-  .home-hero__visual { min-width: 50vw; margin-right: calc(50% - 50vw); }
+  .home-hero__grid { display: block; }
+  .home-hero__copy { max-width: 54rem; padding-block: clamp(3.5rem, 7vw, 6.5rem); }
+  .home-process { padding-block: var(--v-10) var(--v-section); background: var(--v-paper); }
   .hero-actions { display: flex; align-items: center; gap: var(--v-5); flex-wrap: wrap; margin-top: var(--v-8); }
   /* Was a two-column grid with the eyebrow filling the narrow .45fr label column.
      With the eyebrow removed the heading has nothing to sit beside, so this is a
@@ -125,13 +124,11 @@ const capabilities = [
   .home-cta { padding-block: clamp(4rem, 7vw, 6rem); }
   @media (max-width: 900px) {
     .home-hero__grid, .product-intro, .research-strip__grid, .home-cta__grid { grid-template-columns: 1fr; }
-    .home-hero__visual { min-width: 0; margin: 0 calc(var(--v-gutter) * -1); aspect-ratio: 16 / 9; }
     .plan-grid { grid-template-columns: 1fr; }
     .home-capabilities article { grid-template-columns: 5rem 1fr; }
     .home-capabilities article p { grid-column: 2; }
   }
   @media (max-width: 560px) {
-    .home-hero__visual { aspect-ratio: 4 / 3; }
     .home-capabilities article { grid-template-columns: 1fr; gap: var(--v-3); }
     .home-capabilities article p { grid-column: auto; }
     .plan-card { min-height: 0; padding: var(--v-6); }
