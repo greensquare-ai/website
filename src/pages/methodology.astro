@@ -9,7 +9,7 @@ const g = grid();
 
 <BaseLayoutV2 title="Benchmark methodology | GreenSquare AI" description={`How GreenSquare AI designed, ran and scored its ${g.runs_total}-run preregistered benchmark of process discipline and AI judgement.`} current="research">
   <div>
-    <section class="v-section v-black hero"><div class="v-container v-container--narrow">
+    <section class="hero v-hero v-hero--editorial"><div class="v-container v-container--narrow">
       <h1>How we tested process discipline and AI judgement.</h1>
       <p class="v-lead">The benchmark separates access to information from the discipline used to interpret it. It reports the controls, limitations and unfinished work alongside the results.</p>
     </div></section>
@@ -24,14 +24,14 @@ const g = grid();
       ]}
     />
 
-    <section class="v-section v-white" id="claim"><div class="v-container v-container--narrow v-prose">
+    <section class="v-section" id="claim"><div class="v-container v-container--narrow v-prose">
       <h2>The claim under test</h2>
       <p>The loaded method is designed to make an AI model follow a disciplined process for one consequential business decision. It should ask for missing facts, test the framing, compare credible options, mark the basis of material claims and state what would change the recommendation.</p>
       <p>The benchmark asks two questions. Does that process hold across models and repeated runs? Does asking before advising help the model connect the facts that reveal the underlying decision? It does not test whether experienced operators prefer the resulting brief.</p>
       <aside class="note"><strong>Historical naming note.</strong> The frozen study artefact used earlier internal product names. This page calls that arm the loaded condition for clarity. The study is not a test of the current Frame Free plan or the future Frame Pro plan.</aside>
     </div></section>
 
-    <section class="v-section v-cream" id="design"><div class="v-container v-container--narrow v-prose">
+    <section class="v-section" id="design"><div class="v-container v-container--narrow v-prose">
       <h2>The completed grid</h2>
       <ul><li>{g.runs_total} scored runs, with {g.n_per_arm} per condition.</li><li>Two tested models, three fictional business cases and three repeats in each completed cell.</li><li>Three conditions: question only, all facts provided, and Loaded method.</li></ul>
       <p>The preregistered protocol targeted about {g.target_runs} runs, including {g.planned_models[0].name} and more repeats. The completed grid was reduced to {g.retired.runs_total} runs, then re-cut to {g.runs_total} by removing {spell(g.excluded.pilot_runs)} design-phase pilot runs that the protocol said would not be pooled. {g.planned_models[0].name} was not run.</p>
@@ -43,20 +43,20 @@ const g = grid();
       <p>The all-facts condition is the informed baseline. It shows how well the model reasons when someone already knows which information matters. The loaded condition tests whether the method can draw that information out through questions and then produce the structured brief.</p>
     </div></section>
 
-    <section class="v-section v-white" id="scorecard"><div class="v-container v-container--narrow v-prose">
+    <section class="v-section" id="scorecard"><div class="v-container v-container--narrow v-prose">
       <h2>The scorecard</h2><p>Every run is scored on eight checks fixed before the scored grid began.</p>
       <h3>Process checks</h3><ul><li>Asked questions before giving the recommendation.</li><li>Compared real options, including keeping the current position.</li><li>Marked the basis of important claims.</li><li>Named an untested constraint or assumption.</li><li>Stated the conditions that would change the recommendation.</li></ul>
       <h3>Judgement checks</h3><ul><li>Connected the relevant facts and surfaced the underlying decision.</li><li>Recommended the same direction as the sealed answer.</li><li>Caught the planted inconsistency or bias.</li></ul>
     </div></section>
 
-    <section class="v-section v-green" id="integrity"><div class="v-container v-container--narrow v-prose">
+    <section class="v-section" id="integrity"><div class="v-container v-container--narrow v-prose">
       <h2>Preregistration and scoring</h2>
       <p>The cases, fact sheets, protocol, rubric and answer-key hashes were committed publicly before the scored grid began. The method file and sealed answer were recorded by hash so their exact versions could be fixed without publishing their contents during the test.</p>
       <p>The current grid has one scorer. Five disputed cells were adjudicated against the sealed reference answers. A second independent score has not been completed.</p>
       <p><a class="v-link" href="https://github.com/greensquare-ai/website/tree/main/evidence/preregistration">Inspect the frozen preregistration</a></p>
     </div></section>
 
-    <section class="v-section v-cream" id="limits"><div class="v-container v-container--narrow v-prose">
+    <section class="v-section" id="limits"><div class="v-container v-container--narrow v-prose">
       <h2>Limitations</h2>
       <ul><li>Three repeats per cell provide an early reliability signal and leave substantial uncertainty.</li><li>GreenSquare AI wrote two of the three cases.</li><li>The current grid covers two models. A third preregistered model was not run.</li><li>One person ran and scored the grid and held the sealed answers. The adjudication was also internal.</li><li>The senior-reviewer study and independent re-score remain planned work.</li><li>Model behaviour changes, so the evidence needs periodic replication.</li></ul>
       <p>The results support a claim about process consistency and fact gathering across the tested conditions. They do not support a claim that the method improves an experienced operator’s judgement.</p>
@@ -66,7 +66,6 @@ const g = grid();
 </BaseLayoutV2>
 
 <style>
-  .hero { padding-top:clamp(5rem,10vw,9rem); }
   .hero .v-lead { color:var(--v-cream-soft); }
   .note { border-left:.4rem solid var(--v-green); padding:1.25rem; margin-top:2rem; background:var(--v-cream); font-size:.9rem; }
   .v-green .v-prose, .v-green .v-prose a { color:var(--v-cream); }

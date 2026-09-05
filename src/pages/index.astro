@@ -15,24 +15,25 @@ const capabilities = [
   description="Frame adds a disciplined professional judgement process to the AI you already use, from the first material question to an inspectable decision."
   current="home"
 >
-  <section class="home-hero v-off">
-    <div class="v-container home-hero__grid">
-      <div class="home-hero__copy">
-        <h1 class="v-display">Make better use of capable AI when the decision matters.</h1>
-        <p class="v-lead">
-          Frame gives AI a disciplined process for consequential business decisions. It clarifies the real
-          choice, interrogates the evidence and makes the recommendation easier to inspect before you act.
-        </p>
-        <div class="hero-actions">
-          <a class="v-btn v-btn--green" href={withBase('/free/')}>Try Frame Free</a>
-          <a class="v-link" href={withBase('/product/')}>See how Frame works</a>
-        </div>
-      </div>
-      <div class="home-hero__visual">
-        <ThroughFlowHero />
+  <section class="home-hero v-hero v-hero--marketing">
+    <div class="v-container">
+      <h1 class="v-display">Make better use of capable AI when the decision matters.</h1>
+      <p class="v-lead">
+        Frame gives AI a disciplined process for consequential business decisions. It clarifies the real
+        choice, interrogates the evidence and makes the recommendation easier to inspect before you act.
+      </p>
+      <div class="hero-actions">
+        <a class="v-btn v-btn--green" href={withBase('/free/')}>Try Frame Free</a>
+        <a class="v-link" href={withBase('/product/')}>See how Frame works</a>
       </div>
     </div>
   </section>
+
+  <div class="v-container">
+    <div class="v-hero__visual v-hero__visual--passage">
+      <ThroughFlowHero />
+    </div>
+  </div>
 
   <section class="v-section">
     <div class="v-container">
@@ -52,7 +53,7 @@ const capabilities = [
     </div>
   </section>
 
-  <section class="v-section v-green">
+  <section class="v-section">
     <div class="v-container product-intro">
       <div>
         <h2 class="v-h2">Start with the current beta.</h2>
@@ -85,7 +86,7 @@ const capabilities = [
     </div>
   </section>
 
-  <section class="home-cta v-fill">
+  <section class="home-cta v-section v-green">
     <div class="v-container home-cta__grid">
       <div>
         <h2 class="v-h2">Bring Frame to your next consequential decision.</h2>
@@ -97,10 +98,6 @@ const capabilities = [
 </BaseLayoutV2>
 
 <style>
-  .home-hero { overflow: hidden; }
-  .home-hero__grid { display: grid; grid-template-columns: 1fr 1fr; min-height: clamp(560px, 70vh, 760px); align-items: stretch; }
-  .home-hero__copy { align-self: center; max-width: 42rem; padding-block: clamp(3.5rem, 7vw, 6.5rem); padding-right: clamp(2rem, 5vw, 5rem); }
-  .home-hero__visual { min-width: 50vw; margin-right: calc(50% - 50vw); }
   .hero-actions { display: flex; align-items: center; gap: var(--v-5); flex-wrap: wrap; margin-top: var(--v-8); }
   /* Was a two-column grid with the eyebrow filling the narrow .45fr label column.
      With the eyebrow removed the heading has nothing to sit beside, so this is a

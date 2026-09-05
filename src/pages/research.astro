@@ -10,7 +10,7 @@ import SectionNav from '../components/SectionNav.astro';
   current="research"
 >
   <div>
-    <section class="v-section v-black research-hero">
+    <section class="research-hero v-hero v-hero--editorial">
       <div class="v-container">
         <h1>Test the method.<br />Publish the boundary.</h1>
         <p class="v-lead">We study whether structured decision support improves professional judgement, and state plainly what the evidence cannot yet establish.</p>
@@ -26,7 +26,7 @@ import SectionNav from '../components/SectionNav.astro';
       ]}
     />
 
-    <section class="v-section v-cream" id="finding">
+    <section class="v-section" id="finding">
       <div class="v-container finding-grid">
         <div>
           <h2>The structured process is where the tested change showed up.</h2>
@@ -39,7 +39,7 @@ import SectionNav from '../components/SectionNav.astro';
       </div>
     </section>
 
-    <section class="v-section v-green" id="boundary">
+    <section class="v-section" id="boundary">
       <div class="v-container evidence-boundary">
         <h2>Under the tested conditions, the structured method improved how the decision was worked.</h2>
         <div class="boundary-grid">
@@ -49,7 +49,7 @@ import SectionNav from '../components/SectionNav.astro';
       </div>
     </section>
 
-    <section class="v-section v-white" id="record">
+    <section class="v-section" id="record">
       <div class="v-container record-grid">
         <div>
           <h2>Inspect the claim, method and frozen source material.</h2>
@@ -63,7 +63,7 @@ import SectionNav from '../components/SectionNav.astro';
       </div>
     </section>
 
-    <section class="v-section v-black" id="next">
+    <section class="v-section" id="next">
       <div class="v-container next-grid">
         <div>
           <h2>Future work needs to widen the test: more decision domains, more users, sharper measurement of the outcome.</h2>
@@ -75,19 +75,18 @@ import SectionNav from '../components/SectionNav.astro';
 </BaseLayoutV2>
 
 <style>
-  .research-hero { padding-top:clamp(5rem,10vw,9rem); }
   .research-hero h1 { max-width:12ch; }
-  .research-hero .v-lead { max-width:48rem; color:var(--v-cream-soft); }
+  .research-hero .v-lead { max-width:48rem; }
   .finding-grid, .record-grid, .next-grid { display:grid; grid-template-columns:minmax(0,1fr) minmax(18rem,.75fr); gap:clamp(3rem,8vw,8rem); align-items:start; }
   .finding-copy p { font-size:clamp(1.05rem,2vw,1.3rem); }
   .finding-copy .v-link { display:inline-block; margin-top:1rem; }
   .evidence-boundary { max-width:67rem; }
-  .boundary-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:2rem; border-top:1px solid rgba(255,255,255,.3); margin-top:3rem; padding-top:1.5rem; }
+  .boundary-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:2rem; border-top:1px solid var(--v-line); margin-top:3rem; padding-top:1.5rem; }
   .boundary-grid p { margin:0; }
-  .record-links a { display:grid; grid-template-columns:5rem 1fr; gap:1rem; padding:1.4rem 0; color:var(--v-black); text-decoration:none; border-top:1px solid var(--v-line); }
+  .record-links a { display:grid; grid-template-columns:5rem 1fr; gap:1rem; padding:1.4rem 0; color:var(--v-ink); text-decoration:none; border-top:1px solid var(--v-line); }
   .record-links span { color:var(--v-ink-soft); font:600 var(--vs-label)/1.4 var(--vf-body); }
     .historical-note { grid-column:1/-1; max-width:60rem; margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--v-line); color:var(--v-ink-soft); font-size:.88rem; }
-  .next-grid > p { color:var(--v-cream-soft); font-size:1.1rem; }
+  .next-grid > p { color:var(--v-ink-soft); font-size:1.1rem; }
   @media (max-width:760px) {
     .finding-grid, .record-grid, .next-grid, .boundary-grid { grid-template-columns:1fr; }
     .record-links a { grid-template-columns:4.5rem 1fr; }

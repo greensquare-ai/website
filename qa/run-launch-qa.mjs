@@ -37,6 +37,88 @@ for (const viewport of viewports) {
     if (state.scrollWidth > state.clientWidth + 2) errors.push(`Horizontal overflow ${state.scrollWidth}/${state.clientWidth}`);
     if (/\b(?:Compass|Lens)\b|Decision Frame|The Decision(?! Brief)|\bGreenSquare\b(?! AI)/.test(state.body)) errors.push('Retired product name visible');
 
+    /* Composition, checked per archetype rather than site wide.
+
+       A marketing page answers "is this for me" and opens on a centred claim. An
+       evidence page answers "does this hold" and opens as a document, left aligned.
+       Asserting one alignment everywhere would fail the evidence pages for behaving
+       correctly, so the assertion follows the archetype.
+
+       Centring is measured per rendered line, not on the h1 box: a left aligned
+       heading that happens to fill its container has a perfectly centred box, so the
+       box test on its own passes exactly the case worth catching. */
+    /* Two independent properties, not one archetype flag. /about/ opens as a document
+       and closes on the conversion block, so it is editorial at the top and marketing
+       at the bottom; collapsing these into one set fails it for being correct. */
+    const CENTRED_HERO = new Set(['/', '/product/', '/free/']);
+    const FOREST_CLOSE = new Set(['/', '/product/', '/free/', '/about/']);
+    const composition = await page.evaluate((isMarketing) => {
+      const parse = (value) => {
+        const match = value.match(/rgba?\(([^)]+)\)/);
+        if (!match) return null;
+        const parts = match[1].split(/[,\s/]+/).filter(Boolean).map(Number);
+        return { r: parts[0], g: parts[1], b: parts[2], a: parts.length > 3 ? parts[3] : 1 };
+      };
+      const name = (el) => {
+        if (el.id) return `#${el.id}`;
+        const cls = (el.getAttribute('class') || '').trim().split(/\s+/).filter(Boolean)[0];
+        return el.tagName.toLowerCase() + (cls ? `.${cls}` : '');
+      };
+
+      const h1 = document.querySelector('h1');
+      const box = h1.getBoundingClientRect();
+      const range = document.createRange();
+      range.selectNodeContents(h1);
+      const lines = [...range.getClientRects()].filter((r) => r.width > 1 && r.height > 1);
+      const mid = document.documentElement.clientWidth / 2;
+      const offCentre = Math.max(
+        Math.abs((box.left + box.right) / 2 - mid),
+        ...lines.map((r) => Math.abs((r.left - box.left) - (box.right - r.right)) / 2),
+      );
+      /* Left aligned means every rendered line starts at the heading's own left edge.
+         Testing raggedness instead would never fire: centred text is ragged too. */
+      const leftFlush = lines.length > 0 && lines.every((r) => Math.abs(r.left - box.left) <= 2);
+
+      /* Ground census. White is the canvas; forest is allowed on the single conversion
+         block a marketing page closes with. Nav and footer sit outside <main> and are
+         never visited. A translucent or image ground counts as its own value, so a tint
+         cannot hide behind the contrast sweep's skip rule. */
+      const main = document.querySelector('main');
+      const ground = (el) => {
+        for (let n = el; n && n !== main.parentElement; n = n.parentElement) {
+          const st = getComputedStyle(n);
+          if (st.backgroundImage !== 'none') return `image@${name(n)}`;
+          const bg = parse(st.backgroundColor);
+          if (bg && bg.a === 1) return `${bg.r},${bg.g},${bg.b}`;
+          if (bg && bg.a > 0) return `translucent@${name(n)}`;
+        }
+        const body = parse(getComputedStyle(document.body).backgroundColor);
+        return body && body.a === 1 ? `${body.r},${body.g},${body.b}` : '255,255,255';
+      };
+      const grounds = new Map();
+      for (const sec of main.querySelectorAll('section')) {
+        if (sec.closest('[data-product-demo]')) continue;
+        const g = ground(sec);
+        if (!grounds.has(g)) grounds.set(g, name(sec));
+      }
+      return { offCentre: Math.round(offCentre * 100) / 100, leftFlush, isMarketing,
+               grounds: [...grounds.entries()] };
+    }, CENTRED_HERO.has(route));
+
+    if (composition.isMarketing) {
+      if (composition.offCentre > 2) errors.push(`Marketing h1 off centre by ${composition.offCentre}px`);
+    } else if (!composition.leftFlush) {
+      errors.push('Evidence h1 is not left aligned; evidence pages open as a document');
+    }
+    const WHITE = '255,255,255';
+    const FOREST = '19,63,38';
+    const stray = composition.grounds.filter(([g]) => g !== WHITE && g !== FOREST);
+    if (stray.length) errors.push(`Ground census: ${stray.map(([g, sec]) => `${sec} ${g}`).join(' | ')}`);
+    const forest = composition.grounds.filter(([g]) => g === FOREST);
+    if (forest.length && !FOREST_CLOSE.has(route)) errors.push('Forest ground on a page that closes white');
+    if (forest.length > 1) errors.push(`${forest.length} forest grounds; the close is the only one`);
+
+
     if (route === '/') {
       if (await page.getByRole('link', { name: /Try Frame Free/i }).count() < 1) errors.push('Primary Free CTA missing');
       if (await page.locator('[data-decision-passage]').count() !== 1) errors.push('Decision animation missing');
