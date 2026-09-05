@@ -1,6 +1,6 @@
 # Frame process animation
 
-Status: static storyboard approved; motion implemented for PR #28 preview review. Production approval remains pending. This document describes implementation and required verification, not a completed QA result.
+Status: static storyboard approved; motion implemented and deployed to the PR #28 preview for review. Production approval remains pending. This document describes implementation and required verification, not a completed QA result.
 
 ## Integration and baseline
 
@@ -23,6 +23,8 @@ The homepage keeps the centred hero, copy and calls to action and renders `<Fram
 | `astro.config.mjs` | Excludes review routes from sitemap |
 | `qa/check-frame-process.mjs` | Every state at 1440/820/390, readable text, accessibility, equal alternatives, no-JS reduced-motion meaning |
 | `qa/run-launch-qa.mjs` | Existing regression suite now checks decision meaning rather than the obsolete component name |
+| `qa/check-frame-motion.mjs` | Cross-browser motion, scroll reversal, playback controls, resize, reduced-motion, no-JS, failed-import and route lifecycle checks in Chromium, Firefox and WebKit |
+| `qa/check-links.mjs` | Internal link check; accepts a local `QA_BASE_URL` override |
 
 All colours and typography inherit active site tokens. Functional text uses IBM Plex Sans, at least 15px at the normal root size. Only the principal title uses Space Grotesk. `gsap` is pinned to exact version `3.15.0`, including its ScrollTrigger plugin. The loader dynamically imports the timeline module within 500px of an animated figure; static storyboard pages do not request the GSAP bundle.
 
@@ -40,7 +42,7 @@ The added capacity finding is explicitly illustrative, not research evidence or 
 
 ## Static review
 
-Open `/frame-storyboard/situation/` and use the seven state links. Each URL renders its state on the server. No query-driven hydration, playback or scroll position is required. The homepage renders the complete final explanation even without JavaScript. The seven review pages use noindex and are excluded from the sitemap; remove them or gate them to previews before final production release.
+Open `/frame-storyboard/situation/` and use the seven state links. Each URL renders its state on the server. No query-driven hydration, playback or scroll position is required. The homepage renders the complete final explanation even without JavaScript. The seven review pages use noindex and are excluded from the sitemap. They are omitted from the build when `VERCEL_ENV=production`; a separate build with that variable set confirmed the storyboard directory is absent from `dist`.
 
 `state` is a 1-based component prop, defaulting to 7; `animated` defaults to false. Give instances unique `id` props if more than one appears on a page. Static `data-part`, `data-input`, `data-option` and `data-field` selectors identify deterministic compositions. Motion uses a separate persistent scene, scoped `data-motion-*` hooks and `data-route` paths; it does not replace elements during playback. `data-state`, `data-motion-progress`, `data-motion-mode` and `data-supported` expose current runtime state.
 
@@ -60,6 +62,6 @@ Without JavaScript or with reduced motion, the full static explanation is visibl
 
 ## Verification boundaries
 
-Run `npm run build`, `npx astro check`, `node qa/check-static.mjs`, `node qa/check-links.mjs`, `node qa/check-frame-process.mjs`, and `node qa/run-launch-qa.mjs`. Supply `QA_BASE_URL` for the target preview; `QA_OUTPUT` redirects the storyboard evidence folder. The static storyboard check does not establish motion correctness. Separately verify forward/reverse scrolling, compact entry playback, pause/replay/read controls, reduced-motion switching, no-JavaScript and failed-import fallbacks, animated resizing, and route/HMR cleanup. Measure loading, performance and CLS on the deployed PR #28 preview.
+Run `npm run build`, `npx astro check`, `node qa/check-static.mjs`, `node qa/check-links.mjs`, `node qa/check-frame-process.mjs`, `node qa/check-frame-motion.mjs`, and `node qa/run-launch-qa.mjs`. Supply `QA_BASE_URL` for the target preview; `QA_OUTPUT` redirects the storyboard evidence folder. The static storyboard check does not establish motion correctness. `qa/check-frame-motion.mjs` covers forward/reverse scrolling, compact entry playback, pause/replay/read controls, reduced-motion switching, no-JavaScript and failed-import fallbacks, animated resizing, and route cleanup across three browser engines. HMR disposal is registered but must be exercised by hand. Measure loading, performance and CLS on the deployed PR #28 preview.
 
-Current verification evidence is generated separately; this record does not claim new tests have passed. A fresh-person comprehension check, actual Safari/device testing and completed-motion preview review remain release boundaries. Production deployment requires approval even after technical checks pass.
+Current verification evidence is generated separately; this record does not claim new tests have passed. The dated verification record for the deployed preview is in the PR #28 description. A fresh-person comprehension check, actual Safari/device testing and completed-motion preview review remain release boundaries. Production deployment requires approval even after technical checks pass.
