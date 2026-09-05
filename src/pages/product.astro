@@ -20,7 +20,7 @@ const method = [
 >
   <div>
     <section class="v-section v-cream product-hero">
-      <div class="v-container hero-grid">
+      <div class="v-container">
         <div>
           <h1>Better intelligence is not enough. You need better judgement.</h1>
           <p class="v-lead">GreenSquare is the decision layer between what an AI can generate and what a professional can responsibly act on.</p>
@@ -28,11 +28,6 @@ const method = [
             <a class="v-btn v-btn--green" href={withBase('/free/')}>Try GreenSquare Free</a>
             <a class="v-link" href="#demo">Explore the product</a>
           </div>
-        </div>
-        <div class="product-object" role="img" aria-label="GreenSquare product architecture">
-          <div class="product-name">GreenSquare</div>
-          <div class="plan available"><span>Free</span><strong>Available</strong></div>
-          <div class="plan"><span>Pro</span><strong>In development</strong></div>
         </div>
       </div>
     </section>
@@ -100,20 +95,13 @@ const method = [
 
 <style>
   .product-hero { padding-top:clamp(5rem,10vw,9rem); }
-  .hero-grid { display:grid; grid-template-columns:minmax(0,1.1fr) minmax(19rem,.9fr); gap:clamp(3rem,8vw,8rem); align-items:center; }
-  h1 { max-width:14ch; }
+  h1 { max-width:19ch; }
   .v-lead { max-width:40rem; }
-  .product-object { background:var(--v-black); color:var(--v-cream); border:1px solid var(--v-black); box-shadow:1rem 1rem 0 var(--v-green); }
-  .product-name { padding:1.5rem; font:600 1rem/1 var(--vf-body); }
-  .plan { display:flex; justify-content:space-between; gap:1rem; padding:1.5rem; border-top:1px solid rgba(255,255,255,.22); }
-  .plan span { font:600 clamp(1.6rem,4vw,3rem)/1 var(--v-font-display); }
-  .plan strong { align-self:center; color:var(--v-cream-soft); font:600 var(--vs-label)/1 var(--vf-body); }
-  .plan.available strong { color:var(--v-lime); }
   .method-grid { display:grid; grid-template-columns:.85fr 1.15fr; gap:clamp(3rem,9vw,9rem); align-items:start; }
   .method-intro { position:sticky; top:8rem; }
   .method-grid ol { list-style:none; margin:0; padding:0; }
   .method-grid li { display:grid; grid-template-columns:3.5rem 1fr; gap:1rem; padding:1.4rem 0; border-top:1px solid var(--v-line); }
-  .method-grid li > span { color:var(--v-green-deep); font:600 var(--vs-label)/1 var(--vf-body); font-variant-numeric:tabular-nums; padding-top:.35rem; }
+  .method-grid li > span { color:var(--v-green); font:600 var(--vs-label)/1 var(--vf-body); font-variant-numeric:tabular-nums; padding-top:.35rem; }
   .method-grid h3, .method-grid p { margin:0; }
   .method-grid p { color:var(--v-ink-soft); margin-top:.35rem; }
   .demo-head { max-width:47rem; margin-bottom:3rem; }
@@ -125,13 +113,12 @@ const method = [
   .plans article + article { border-left:1px solid var(--v-line); }
   .plans p { color:var(--v-ink-soft); max-width:29rem; }
   .plans .v-btn { margin-top:auto; }
-  .plan-status { font:600 var(--vs-label)/1 var(--vf-body); color:var(--v-green-deep); margin-bottom:4rem; }
+  .plan-status { font:600 var(--vs-label)/1 var(--vf-body); color:var(--v-green); margin-bottom:4rem; }
   .plan-status.muted { color:var(--v-ink-soft); }
   .research-callout { display:flex; justify-content:space-between; gap:3rem; align-items:end; }
   .research-callout h2 { max-width:20ch; }
   @media (max-width:760px) {
-    .hero-grid, .method-grid { grid-template-columns:1fr; }
-    .product-object { box-shadow:.65rem .65rem 0 var(--v-green); }
+    .method-grid { grid-template-columns:1fr; }
     .method-intro { position:static; }
     .plans { grid-template-columns:1fr; }
     .plans article { min-height:20rem; }
