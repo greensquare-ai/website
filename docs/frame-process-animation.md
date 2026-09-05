@@ -4,9 +4,9 @@ Status: static composition approval candidate. Full motion requires Karim's appr
 
 ## Integration and baseline
 
-The public default branch is `main` at `8dc64d7`. The latest inspected local website work was `refine/recomposition` at `0d6039b`, including PR #26's typography/QA work, the reduced palette and Frame naming. This isolated branch starts at that commit. None of those existing changes were rewritten. Compare this feature against `0d6039b`, not against main, to see its exact scope. Reconcile the other branch before merging.
+The public default branch is `main` at `8dc64d7`. The initial local baseline was `refine/recomposition` at `0d6039b`, including PR #26's typography/QA work, the reduced palette and Frame naming. While the storyboard was being built, that branch advanced to `5b905f7` with the centred marketing hero and an explicit below-hero animation slot. That update was merged into this isolated feature branch. Compare this feature against `refine/recomposition`, not against main, to see its exact scope. Reconcile the other branch before merging.
 
-The homepage keeps the existing hero copy and calls to action, makes the text region full width, and places `FrameProcessAnimation.astro` immediately below the hero on the white page. The old `ThroughFlowHero` source remains available, but its homepage import is removed. Retire that file only after final motion approval and a repository-wide import check. Frozen evidence and demonstration records are untouched by this feature.
+The homepage keeps the other agent's centred hero, copy and calls to action and places `FrameProcessAnimation.astro` in its below-hero `v-hero__visual` slot. The obsolete passage-only fixed height is removed from this slot because the responsive semantic composition supplies its dimensions. The old `ThroughFlowHero` source remains available, but its homepage import is removed. Retire that file only after final motion approval and a repository-wide import check. Frozen evidence and demonstration records are untouched by this feature.
 
 ## Files and responsibilities
 
