@@ -2,7 +2,7 @@
 
 ## Overview
 
-This records the implemented static storyboard in `src/components/FrameProcessAnimation.astro`, its illustrative narrative in `src/data/frame-process.ts`, and the active site tokens in `src/styles/tokens-v2.css`. It is a scoped extension of the existing site, not a replacement design system. The seven compositions await Karim's approval before motion implementation. See `frame-process-animation.md` for integration and verification gates.
+This records the approved static storyboard, its implemented motion enhancement in `FrameProcessMotion.astro` and `src/scripts/frame-process*.ts`, the illustrative narrative in `src/data/frame-process.ts`, and active tokens in `src/styles/tokens-v2.css`. It is a scoped extension of the existing site. Latest `refine/recomposition` changes through `ee440ea` are merged. PR #28 is for preview review; production approval remains pending. See `frame-process-animation.md` for integration and verification boundaries.
 
 The example shows how a capacity constraint changes a growth question, how common criteria compare alternatives, and how a tested assumption changes support. The capacity finding is illustrative; it is not a benchmark, customer result or claim that staged expansion is universally best.
 
@@ -25,15 +25,17 @@ Only the figure's principal title uses `--vf-display`: `'Space Grotesk', 'Space 
 
 All functional copy uses `--vf-body`: `'IBM Plex Sans', 'IBM Plex Sans Fallback', Arial, sans-serif`. Introductory copy uses `--vs-body` (`clamp(1rem, 0.96rem + 0.18vw, 1.075rem)`) at line-height 1.6 with a 65ch limit. Small text uses `--vs-small` (`clamp(0.96rem, 0.93rem + 0.1vw, 1rem)`); labels use `--vs-label` (`0.9375rem`, 15px at the normal root size). Option and resolution text use `--vs-h4` (`1.0625rem`) at weight 500. Constraint emphasis and the human checkpoint use `--vs-h3` (`1.3125rem`).
 
-The transformed question is the largest functional statement: `clamp(1.8rem, 3.6vw, 3.1rem)`, line-height 1.2, maximum 31ch. It becomes 1.8rem below 600px. The later persistent question uses `clamp(1.4rem, 2.3vw, 2rem)`, becoming 1.4rem on mobile.
+In the static storyboard, the transformed question uses `clamp(1.8rem, 3.6vw, 3.1rem)`, line-height 1.2, maximum 31ch, becoming 1.8rem below 600px. The persistent question uses `clamp(1.4rem, 2.3vw, 2rem)`, becoming 1.4rem on mobile. In motion, the question grows to 42px desktop / 28px compact during reframing, then settles at 28px / 22px. Its line-height remains 1.2.
 
 ## Layout
 
-The figure sits on the white page below the homepage hero. The introduction is capped at 56rem; the canvas reserves a 540px minimum height. Desktop inputs and alternatives use four equal columns. The reframe puts the capacity constraint and original question in a `1fr 1.4fr` grid, with the new question spanning both columns. The initial question is capped at 32rem and the persistent question at 45rem. Criteria occupy a separate horizontal track. The resolution has four columns.
+The figure sits in the white `v-hero__visual` slot below the centred homepage hero. The introduction is capped at 56rem. In static review, the canvas reserves a 540px minimum height; inputs and alternatives use four equal desktop columns. The static reframe uses a `1fr 1.4fr` grid with the new question spanning both columns. The initial question is capped at 32rem and the persistent question at 45rem. Criteria occupy a separate track, and resolution has four desktop columns.
 
 Spacing inherits `--v-1/2/3/4/5/6/8/10/12`: 4/8/12/16/24/32/48/64/96px. Common desktop padding and gaps are 24px. At 1000px and below, input and option padding becomes 16px, criteria stack, and resolution fields become two columns.
 
-At 600px and below, the canvas minimum is 480px. Inputs and intermediate alternatives stack with side collectors and dedicated narrow connectors. The reframe becomes vertical. The final state uses a two-by-two alternative matrix, a compact feedback statement, and a single vertical group of four resolution fields. The human checkpoint aligns left. This is a recomposed mobile sequence, not a scaled desktop SVG.
+At 600px and below, the static canvas minimum is 480px. Inputs and intermediate alternatives stack with side collectors and dedicated narrow connectors. The reframe becomes vertical. The final static state uses a two-by-two alternative matrix, a compact feedback statement, and a single vertical group of four resolution fields. The human checkpoint aligns left.
+
+Motion uses separate measured geometry. At width ≥1000px and height ≥720px, four columns sit within a 590px scene and 690px stage, sticky at 80px with 1100px of reserved scroll travel. Compact mode uses two columns, 16px gaps, a 720px scene and an 845px stage; controls sit above the scene and resolution fields use two columns. Compact comparison temporarily hides the question to make room, then returns it for resolution. Both modes preserve the same narrative rather than scale a desktop SVG.
 
 ## Elevation & Depth
 
@@ -41,7 +43,7 @@ The component has no shadows. White surfaces, single-pixel rules, spacing and co
 
 ## Shapes
 
-Containers have square corners. Assumptions have dashed boundaries; the untested question has a dashed underline. The old question's bottom border is absent and a short displaced rule suggests its boundary opening. The human checkpoint uses a small outlined square.
+Containers have square corners. Assumptions have dashed boundaries; the static untested question has a dashed underline. Static reframe geometry leaves the old question's bottom border open with a displaced rule; motion opens and expands the actual SVG boundary. The uncertainty node changes from dashed to solid when its finding arrives. The human checkpoint uses a small outlined square. Reading/playback controls are underlined text buttons with a two-pixel green focus outline offset by 4px.
 
 ## Components
 
@@ -55,23 +57,25 @@ Containers have square corners. Assumptions have dashed boundaries; the untested
 | 4 — Options | Present four equal alternatives, including maintaining the current position. |
 | 5 — Comparison | Apply growth, capacity, cost, risk and reversibility consistently; underline Capacity and show each option's capacity consequence and trade-off. |
 | 6 — Uncertainty | Test whether managers can absorb more; the finding reduces immediate expansion's support. Staged expansion gains a stronger boundary while retaining its capacity condition. |
-| 7 — Decision | Retain all alternatives, the finding, direction, reasons and trade-offs, conditions, next step and “You make the call.” Demand durability remains uncertain. |
+| 7 — Decision | Retain all alternatives, direction, reasons and trade-offs, conditions, next step and “You make the call.” Demand durability remains uncertain. The static explanation retains the finding; motion clears the comparison and feedback region as resolution arrives. |
 
 ### Reframe signature
 
-The central transformation changes “Should we expand?” to “How should we grow without overloading the business?” The capacity constraint feeds a visibly larger green boundary; the new words receive the lime highlight. In this static phase, the opened old border and connector encode the intended transformation. They do not animate yet.
+The central transformation changes “Should we expand?” to “How should we grow without overloading the business?” Capacity pressure draws into an opening green question boundary, which expands as the new wording reveals through a clipping mask. The words “without overloading” receive the lime highlight; that highlight clears when the question settles above the alternatives. The static storyboard represents the same change with an opened old border, a connector and the expanded question.
 
 ### Static review and no-motion fallback
 
-`state` is a 1-based prop clamped to phases 1–7 and defaults to 7. Seven deterministic `/frame-storyboard/[state]/` review routes render server-side compositions. The default homepage state is the complete static explanation, with no JavaScript required. The figure has a title, descriptive text equivalent and illustrative-example disclosure; decorative SVGs are hidden from assistive technology.
+`state` is a 1-based prop clamped to phases 1–7 and defaults to 7; `animated` defaults to false. Seven deterministic `/frame-storyboard/[state]/` review routes render server-side compositions. The homepage opts into animation while retaining the complete static explanation. The figure has a title, descriptive text equivalent and illustrative-example disclosure. The animated scene and caption are hidden from assistive technology; controls remain accessible.
 
-No playback, scrubbing, sticky timeline, GSAP dependency or animated breakpoint rebuilding is implemented. Reduced-motion users currently receive the same static content as everyone else. Future enhancement must retain the complete final structure when motion is disabled or unavailable and must not autoplay or scrub for reduced motion.
+No JavaScript and reduced-motion settings show the full static content. Reduced-motion changes dispose an active timeline. A failed lazy import also selects the static explanation. Read the full explanation stops motion and exposes that content; its toggle offers Return to the animation. No autoplay or scrub runs with reduced motion enabled.
 
-### Stable targets and later motion
+### Motion and stable targets
 
-Scope future selectors to the figure instance, whose default `id` is `frame-process`; supply unique IDs for multiple instances. The stable hooks are `data-frame-process`, `data-state`, `data-phase`, `data-part`, `data-input`, `data-option` and `data-field`. Named parts include inputs, initial-question, reframe, reframed-question, criteria, alternatives, feedback, resolution and human-checkpoint. Input and option IDs come from the narrative data; field targets use the field names.
+Scope selectors to the figure instance, whose default `id` is `frame-process`; supply unique IDs for multiple instances. Static hooks include `data-part`, `data-input`, `data-option` and `data-field`. The persistent motion scene uses `data-motion-*` targets for inputs, options, fields, controls and geometry; SVG connectors use `data-route`, and the question uses `data-question-boundary`, `data-question-old` and `data-question-new`. Input/option IDs and field names come from narrative data. Runtime `data-state`, `data-motion-progress`, `data-motion-mode` and `data-supported` expose playback state.
 
-The current renderer conditionally includes phase groups. Approved motion work must retain the groups needed for continuous transitions rather than swap these static scenes. GSAP/ScrollTrigger timing, geometry, teardown, resize behavior and performance require a separate implementation and preview verification. Static approval is not completed-motion approval or production approval.
+GSAP `3.15.0` and ScrollTrigger load through a viewport-aware dynamic import. One 12-second timeline retains its elements throughout. Desktop scrolling traverses 1100px reversibly with 0.3-second scrub catch-up. Compact entry playback starts at 65% stage visibility, pauses offscreen or when the document hides, respects manual pause, and stops at completion until Replay is chosen.
+
+`gsap.matchMedia()` selects responsive/reduced-motion behavior; scoped contexts revert old timelines and triggers. Width changes debounce geometry rebuilds by 120ms while retaining progress. Disposal disconnects observers and listeners, reverts contexts and clears runtime attributes on route teardown and HMR. These implemented mechanisms still require preview verification; this record makes no claim that new QA has passed. Production approval remains separate.
 
 ## Do's and Don'ts
 
@@ -79,4 +83,4 @@ The current renderer conditionally includes phase groups. Approved motion work m
 - Do preserve the common comparison criteria and visible trade-offs without inventing numerical scores.
 - Do keep motion hooks instance-scoped and keep the static explanation usable independently.
 - Don't present illustrative evidence as research or a customer outcome.
-- Don't infer animation quality, scroll behavior or production readiness from these static compositions.
+- Don't infer motion correctness or production readiness from static composition approval; verify the PR #28 preview and obtain production approval.

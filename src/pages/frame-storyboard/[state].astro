@@ -4,6 +4,7 @@ import FrameProcessAnimation from '../../components/FrameProcessAnimation.astro'
 import { frameProcess } from '../../data/frame-process';
 import { withBase } from '../../lib/paths';
 export function getStaticPaths() {
+  if (import.meta.env.VERCEL_ENV === 'production') return [];
   return frameProcess.states.map((state, index) => ({ params: { state: state.id }, props: { phase: index + 1 } }));
 }
 const { phase } = Astro.props;

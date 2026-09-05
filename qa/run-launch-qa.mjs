@@ -122,8 +122,9 @@ for (const viewport of viewports) {
     if (route === '/') {
       if (await page.getByRole('link', { name: /Try Frame Free/i }).count() < 1) errors.push('Primary Free CTA missing');
       if (await page.locator('[data-frame-process]').count() !== 1) errors.push('Decision process missing');
-      for (const phrase of ['Should we expand?', 'without overloading the business?', 'You make the call', 'Demand durability remains uncertain']) {
-        if (!state.body.includes(phrase)) errors.push(`Decision meaning missing: ${phrase}`);
+      const processDescription = await page.locator('[data-frame-process]').evaluate(root => document.getElementById(root.getAttribute('aria-describedby'))?.textContent || '');
+      for (const phrase of ['Should we expand?', 'without overloading the business?', 'Demand durability remains uncertain', 'human decision']) {
+        if (!processDescription.toLowerCase().includes(phrase.toLowerCase())) errors.push(`Accessible decision meaning missing: ${phrase}`);
       }
     }
     if (route === '/free/') {

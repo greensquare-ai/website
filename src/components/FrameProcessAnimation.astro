@@ -1,18 +1,21 @@
 ---
 import { frameProcess as story } from '../data/frame-process';
-interface Props { state?: number; id?: string; }
-const { state = 7, id = 'frame-process' } = Astro.props;
+import FrameProcessMotion from './FrameProcessMotion.astro';
+interface Props { state?: number; id?: string; animated?: boolean; }
+const { state = 7, id = 'frame-process', animated = false } = Astro.props;
 const phase = Math.max(1, Math.min(7, Math.round(state)));
 const current = story.states[phase - 1];
 ---
 
-<figure id={id} class="frame-process" data-frame-process data-state={current.id} aria-labelledby={`${id}-title`} aria-describedby={`${id}-description`}>
+<figure id={id} class="frame-process" data-frame-process data-animated={animated || undefined} data-state={current.id} aria-labelledby={`${id}-title`} aria-describedby={`${id}-description`}>
   <figcaption class="fp-intro">
     <h2 id={`${id}-title`}>Frame changes how you reach a decision.</h2>
     <p>A portable decision system for the AI you already use. It challenges the question, tests the options and leaves the call with you.</p>
   </figcaption>
   <p id={`${id}-description`} class="fp-equivalent">In this illustrative business decision, facts, constraints, assumptions and goals inform the initial question: should we expand? Limited capacity changes it to: how should we grow without overloading the business? Four alternatives are compared against growth, capacity, cost, risk and reversibility. The assumption that managers can absorb more is tested. A finding of no spare management time reduces support for immediate expansion. Staged expansion is supported only if capacity is released before each stage. Demand durability remains uncertain. Reasons, trade-offs, conditions and a next step support the human decision.</p>
 
+  {animated && <FrameProcessMotion />}
+  <div class="fp-static">
   <div class="fp-canvas" data-phase={phase}>
     {phase <= 2 && <div class="fp-inputs" data-part="inputs">
       {story.inputs.map((input) => <div class="fp-input" data-input={input.id}>
@@ -70,6 +73,7 @@ const current = story.states[phase - 1];
     <p class="fp-state-caption">{current.caption}</p>
   </div>
   <p class="fp-example">Illustrative business situation. The capacity finding shows how new evidence can change a direction.</p>
+  </div>
 </figure>
 
 <style>
@@ -142,6 +146,9 @@ const current = story.states[phase - 1];
   .fp-state-caption { position: absolute; bottom: 0; max-width: 65ch; font-size: var(--vs-small); color: var(--v-ink-soft); line-height: 1.5; }
   .fp-example { margin: var(--v-6) 0 0; padding-top: var(--v-4); border-top: 1px solid var(--v-line); color: var(--v-ink-soft); font-size: var(--vs-label); line-height: 1.5; }
   .fp-narrow { display: none; }
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.js) .frame-process[data-animated]:not([data-show-static]) .fp-static { display: none; }
+  }
   [data-phase="7"] .fp-option { min-height: 80px; }
   [data-phase="7"] .fp-feedback { height: auto; padding: var(--v-5) 0; }
   [data-phase="7"] .fp-feedback-route { display: none; }
