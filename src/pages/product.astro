@@ -19,20 +19,18 @@ const method = [
   current="product"
 >
   <div>
-    <section class="v-section v-cream product-hero">
+    <section class="product-hero v-hero v-hero--marketing">
       <div class="v-container">
-        <div>
-          <h1>Better intelligence is not enough. You need better judgement.</h1>
-          <p class="v-lead">Frame is the decision layer between what an AI can generate and what a professional can responsibly act on.</p>
-          <div class="v-actions">
-            <a class="v-btn v-btn--green" href={withBase('/free/')}>Try Frame Free</a>
-            <a class="v-link" href="#demo">Explore the product</a>
-          </div>
+        <h1>Better intelligence is not enough. You need better judgement.</h1>
+        <p class="v-lead">Frame is the decision layer between what an AI can generate and what a professional can responsibly act on.</p>
+        <div class="v-actions">
+          <a class="v-btn v-btn--green" href={withBase('/free/')}>Try Frame Free</a>
+          <a class="v-link" href="#demo">Explore the product</a>
         </div>
       </div>
     </section>
 
-    <section class="v-section v-white">
+    <section class="v-section">
       <div class="v-container method-grid">
         <div class="method-intro">
           <h2>From a messy situation to a defensible next move.</h2>
@@ -45,7 +43,7 @@ const method = [
       </div>
     </section>
 
-    <section class="v-section v-black" id="demo">
+    <section class="v-section" id="demo">
       <div class="v-container">
         <div class="demo-head">
           <h2>See the decision change as the evidence changes.</h2>
@@ -55,13 +53,13 @@ const method = [
       </div>
     </section>
 
-    <section class="v-section v-green">
+    <section class="v-section">
       <div class="v-container boundary">
         <h2>The model contributes intelligence. Frame structures judgement. You remain accountable.</h2>
       </div>
     </section>
 
-    <section class="v-section v-cream" id="plans">
+    <section class="v-section" id="plans">
       <div class="v-container">
         <div class="plans-head">
           <h2>Start free. Move up when the work demands it.</h2>
@@ -82,7 +80,7 @@ const method = [
       </div>
     </section>
 
-    <section class="v-section v-white">
+    <section class="v-section">
       <div class="v-container research-callout">
         <div>
           <h2>We separate what the evidence shows from what the product promises.</h2>
@@ -94,7 +92,6 @@ const method = [
 </BaseLayoutV2>
 
 <style>
-  .product-hero { padding-top:clamp(5rem,10vw,9rem); }
   h1 { max-width:19ch; }
   .v-lead { max-width:40rem; }
   .method-grid { display:grid; grid-template-columns:.85fr 1.15fr; gap:clamp(3rem,9vw,9rem); align-items:start; }
@@ -105,7 +102,7 @@ const method = [
   .method-grid h3, .method-grid p { margin:0; }
   .method-grid p { color:var(--v-ink-soft); margin-top:.35rem; }
   .demo-head { max-width:47rem; margin-bottom:3rem; }
-  .demo-head > p:last-child { color:var(--v-cream-soft); }
+  .demo-head > p:last-child { color:var(--v-ink-soft); }
   .boundary { max-width:62rem; }
   .plans-head { max-width:45rem; margin-bottom:3rem; }
   .plans { display:grid; grid-template-columns:repeat(2,1fr); border:1px solid var(--v-line); }

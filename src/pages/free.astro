@@ -18,20 +18,18 @@ const stages = [
   description="A free, adaptive decision system that helps you frame, challenge and act on consequential decisions."
 >
   <div>
-    <section class="v-section v-cream hero">
+    <section class="hero v-hero v-hero--marketing">
       <div class="v-container">
-        <div>
-          <h1>Give it the problem.<br />It works out what to ask next.</h1>
-          <p class="v-lead">A guided decision system that adapts to your situation, challenges the logic and produces a portable Decision Brief.</p>
-          <div class="v-actions">
-            <a class="v-btn v-btn--green" href="#get-free">Get Frame Free</a>
-            <a class="v-link" href={withBase('/product/#demo')}>See how it works</a>
-          </div>
+        <h1>Give it the problem.<br />It works out what to ask next.</h1>
+        <p class="v-lead">A guided decision system that adapts to your situation, challenges the logic and produces a portable Decision Brief.</p>
+        <div class="v-actions">
+          <a class="v-btn v-btn--green" href="#get-free">Get Frame Free</a>
+          <a class="v-link" href={withBase('/product/#demo')}>See how it works</a>
         </div>
       </div>
     </section>
 
-    <section class="v-section v-white">
+    <section class="v-section">
       <div class="v-container">
         <div class="section-head">
           <h2>It changes course when the decision changes.</h2>
@@ -49,7 +47,7 @@ const stages = [
       </div>
     </section>
 
-    <section class="v-section v-black">
+    <section class="v-section">
       <div class="v-container boundary-grid">
         <div>
           <h2>You bring the evidence and the accountability. Frame brings the discipline to work through them.</h2>
@@ -72,7 +70,7 @@ const stages = [
       </div>
     </section>
 
-    <section class="v-section v-cream">
+    <section class="v-section">
       <div class="v-container faq-grid">
         <div>
           <h2>What Frame Free is, and is not.</h2>
@@ -101,7 +99,6 @@ const stages = [
 </BaseLayoutV2>
 
 <style>
-  .hero { padding-top: clamp(5rem, 10vw, 9rem); }
   .boundary-grid, .signup-grid, .faq-grid { display:grid; grid-template-columns:minmax(0,1.12fr) minmax(18rem,.88fr); gap:clamp(2.5rem,7vw,7rem); align-items:center; }
   h1 { max-width:20ch; }
   .v-lead { max-width:38rem; }
@@ -111,8 +108,8 @@ const stages = [
   .stages span { color:var(--v-green); font:600 var(--vs-label)/1 var(--vf-body); font-variant-numeric:tabular-nums; }
   .stages h3 { margin-top:3.5rem; }
   .stages p { color:var(--v-ink-soft); font-size:.95rem; }
-  .boundary-list p { border-top:1px solid rgba(255,255,255,.25); padding:1.2rem 0; margin:0; color:var(--v-cream-soft); }
-  .boundary-list strong { color:var(--v-cream); }
+  .boundary-list p { border-top:1px solid var(--v-line); padding:1.2rem 0; margin:0; color:var(--v-ink-soft); }
+  .boundary-list strong { color:var(--v-ink); }
   .signup-grid form { max-width:34rem; }
   .faq-grid { align-items:start; }
   .faq-list details { border-top:1px solid var(--v-line); padding:1.25rem 0; }
