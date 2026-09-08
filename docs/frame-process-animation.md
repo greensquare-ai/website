@@ -1,5 +1,11 @@
 # Frame process animation
 
+## Production video integration, 8 September 2026
+
+The homepage now renders the approved 20-second animation as responsive video through `src/components/FrameHeroVideo.astro`. It serves a 1920 × 702 desktop asset from 768px and a dedicated 1080 × 1920 mobile asset below 768px. Both are muted, inline and continuously looping. Reduced-motion users receive static final-state posters and an accessible text equivalent.
+
+The editable Claude Design ZIP packages are retained outside the public repository. Only the optimised website assets are committed. The earlier `FrameProcessAnimation` implementation remains in the repository for storyboard history and reference, but it is no longer mounted on the homepage.
+
 Status: static storyboard approved; motion implemented and deployed to the PR #28 preview for review. Production approval remains pending. This document describes implementation and required verification, not a completed QA result.
 
 ## Integration and baseline
