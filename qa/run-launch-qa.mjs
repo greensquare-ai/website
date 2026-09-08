@@ -121,10 +121,36 @@ for (const viewport of viewports) {
 
     if (route === '/') {
       if (await page.getByRole('link', { name: /Try Frame Free/i }).count() < 1) errors.push('Primary Free CTA missing');
-      if (await page.locator('[data-frame-process]').count() !== 1) errors.push('Decision process missing');
-      const processDescription = await page.locator('[data-frame-process]').evaluate(root => document.getElementById(root.getAttribute('aria-describedby'))?.textContent || '');
-      for (const phrase of ['Should we expand?', 'without overloading the business?', 'Demand durability remains uncertain', 'human decision']) {
-        if (!processDescription.toLowerCase().includes(phrase.toLowerCase())) errors.push(`Accessible decision meaning missing: ${phrase}`);
+      const frameFigure = page.locator('[data-frame-hero-figure]');
+      const frameVideo = page.locator('[data-frame-hero-video]');
+      if (await frameFigure.count() !== 1) errors.push('Frame animation figure missing');
+      if (await frameVideo.count() !== 1) errors.push('Frame animation video missing');
+      if (await frameFigure.count() === 1) {
+        const frameDescription = await frameFigure.evaluate(root => document.getElementById(root.getAttribute('aria-labelledby'))?.textContent || '');
+        for (const phrase of ['growing demand', 'limited capacity', 'four tested options', 'conditional recommendation', 'management capacity is released']) {
+          if (!frameDescription.toLowerCase().includes(phrase)) errors.push(`Accessible animation meaning missing: ${phrase}`);
+        }
+      }
+      if (await frameVideo.count() === 1) {
+        const expected = viewport.name === 'mobile'
+          ? { path: '/media/frame-animation-mobile.mp4', media: '(max-width: 767px)' }
+          : { path: '/media/frame-animation-desktop.mp4', media: '(min-width: 768px)' };
+        const media = await frameVideo.evaluate((element) => ({
+          autoplay: element.autoplay,
+          muted: element.muted,
+          loop: element.loop,
+          playsInline: element.playsInline,
+          sources: [...element.querySelectorAll('source')].map(source => ({
+            path: new URL(source.src).pathname,
+            media: source.media,
+            type: source.type,
+          })),
+        }));
+        if (!media.autoplay || !media.muted || !media.loop || !media.playsInline) errors.push('Frame animation playback attributes incomplete');
+        const source = media.sources.find(item => item.path === expected.path);
+        if (!source || source.media !== expected.media || source.type !== 'video/mp4') {
+          errors.push(`Frame animation source configuration missing: ${expected.path}`);
+        }
       }
     }
     if (route === '/free/') {
@@ -254,15 +280,19 @@ const reduced = await browser.newContext({ viewport: viewports[0], reducedMotion
 const reducedPage = await reduced.newPage();
 await reducedPage.goto(base + '/', { waitUntil: 'domcontentloaded' });
 const reducedState = await reducedPage.evaluate(() => {
-  const root = document.querySelector('[data-frame-process]');
+  const figure = document.querySelector('[data-frame-hero-figure]');
+  const video = document.querySelector('[data-frame-hero-video]');
+  const still = figure?.querySelector('.frame-hero-video__still');
   return {
-    state: root?.getAttribute('data-state'),
-    fields: root?.querySelectorAll('[data-field]').length,
-    text: root?.textContent,
-    runningAnimations: root?.getAnimations({ subtree: true }).filter(a => a.playState === 'running').length,
+    figure: Boolean(figure),
+    videoPaused: video instanceof HTMLVideoElement ? video.paused : false,
+    videoDisplay: video ? getComputedStyle(video).display : null,
+    stillDisplay: still ? getComputedStyle(still).display : null,
+    runningAnimations: figure?.getAnimations({ subtree: true }).filter(a => a.playState === 'running').length,
   };
 });
-const reducedPassed = reducedState.state === 'decision' && reducedState.fields === 4 && reducedState.runningAnimations === 0 && reducedState.text.includes('You make the call');
+const reducedPassed = reducedState.figure && reducedState.videoPaused && reducedState.videoDisplay === 'none' &&
+  reducedState.stillDisplay === 'block' && reducedState.runningAnimations === 0;
 if (!reducedPassed) failed = true;
 results.push({ route: '/', viewport: 'desktop-reduced-motion', reducedState, passed: reducedPassed });
 await reduced.close();
