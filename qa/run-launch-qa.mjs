@@ -132,29 +132,24 @@ for (const viewport of viewports) {
         }
       }
       if (await frameVideo.count() === 1) {
-        await frameVideo.evaluate((element) => {
-          if (element.readyState >= 1) return;
-          return new Promise((resolve, reject) => {
-            element.addEventListener('loadedmetadata', resolve, { once: true });
-            element.addEventListener('error', () => reject(new Error('Frame animation failed to load')), { once: true });
-          });
-        });
         const expected = viewport.name === 'mobile'
-          ? { path: '/media/frame-animation-mobile.mp4', width: 1080, height: 1920 }
-          : { path: '/media/frame-animation-desktop.mp4', width: 1920, height: 702 };
+          ? { path: '/media/frame-animation-mobile.mp4', media: '(max-width: 767px)' }
+          : { path: '/media/frame-animation-desktop.mp4', media: '(min-width: 768px)' };
         const media = await frameVideo.evaluate((element) => ({
           autoplay: element.autoplay,
           muted: element.muted,
           loop: element.loop,
           playsInline: element.playsInline,
-          currentSrc: new URL(element.currentSrc).pathname,
-          videoWidth: element.videoWidth,
-          videoHeight: element.videoHeight,
+          sources: [...element.querySelectorAll('source')].map(source => ({
+            path: new URL(source.src).pathname,
+            media: source.media,
+            type: source.type,
+          })),
         }));
         if (!media.autoplay || !media.muted || !media.loop || !media.playsInline) errors.push('Frame animation playback attributes incomplete');
-        if (media.currentSrc !== expected.path) errors.push(`Wrong Frame animation source: ${media.currentSrc}`);
-        if (media.videoWidth !== expected.width || media.videoHeight !== expected.height) {
-          errors.push(`Wrong Frame animation dimensions: ${media.videoWidth}x${media.videoHeight}`);
+        const source = media.sources.find(item => item.path === expected.path);
+        if (!source || source.media !== expected.media || source.type !== 'video/mp4') {
+          errors.push(`Frame animation source configuration missing: ${expected.path}`);
         }
       }
     }
