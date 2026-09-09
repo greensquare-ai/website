@@ -47,26 +47,34 @@ const ogImage = new URL(withBase('/assets/og-image.png'), Astro.site).toString()
          400 and 500 were loaded, so the browser synthesised the bold. Space Grotesk ships
          Semibold alone, which is the only weight the guideline gives it.
 
-         The two faces load with different `display` values on purpose, which is why this
-         is two requests rather than one.
+         The two faces load differently on purpose.
 
-         Reading text swaps. A paragraph reflowing costs a little shift and the reader
-         genuinely wants the brand face for the text they spend their time in.
+         Reading text swaps, from Google Fonts. A paragraph reflowing costs a little shift
+         and the reader genuinely wants the brand face for the text they spend their time in.
 
-         Headings do not swap. Space Grotesk sets h1 and h2 only: a handful of large words
-         under `text-wrap: balance`, where a small change in glyph advance moves a wrap
-         point, changes the line count and moves everything below the heading. On /free/
-         that measured 0.105 CLS against a 0.1 budget. The metric-matched fallbacks cannot
-         reach it, because they correct the line box, not where a line breaks. With
-         `optional` the heading either has the face from the first paint or keeps the
-         fallback for that visit, and never moves either way. The face is still fetched and
-         cached, so the second visit has it. -->
+         Headings do not swap, and Space Grotesk is served from this origin rather than
+         Google's. Space Grotesk sets h1 and h2 only: a handful of large words under
+         `text-wrap: balance`, where a small change in glyph advance moves a wrap point,
+         changes the line count and moves everything below the heading. On /free/ that
+         measured 0.105 CLS against a 0.1 budget, so the face carries `font-display:
+         optional` and never swaps in mid-visit.
+
+         `optional` gives the file about 100ms to arrive or the visit keeps the fallback.
+         Loaded from fonts.gstatic.com that meant a DNS lookup, a TLS handshake, a
+         stylesheet and only then the font, which lost the race on most cold visits and
+         rendered the headings in Arial. Self-hosted and preloaded, the file is in memory
+         before first paint, so `optional` now wins every time and still guarantees no
+         reflow. The two subsets are the latin and latin-ext files from Google's own
+         Space Grotesk v22 (SIL Open Font License). -->
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Manrope:wght@600&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      href={withBase('/fonts/space-grotesk-600-latin.woff2')}
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600&display=optional"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Manrope:wght@600&display=swap"
       rel="stylesheet"
     />
   </head>

@@ -1,7 +1,25 @@
 ---
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 import ProductDemo from '../components/ProductDemo.astro';
+import PlanCards from '../components/PlanCards.astro';
 import { withBase } from '../lib/paths';
+
+const plans = [
+  {
+    variant: 'free',
+    title: 'Frame Free',
+    status: 'Available',
+    body: 'The adaptive decision system for individual use during beta.',
+    cta: { href: withBase('/free/'), label: 'Try Frame Free', icon: 'download' },
+  },
+  {
+    variant: 'pro',
+    title: 'Frame Pro',
+    status: 'In development',
+    id: 'pro',
+    body: 'The paid plan that will follow. Scope and pricing will be announced when they are ready.',
+  },
+] as const;
 
 const method = [
   ['Clarify', 'Define the decision, not just the topic.'],
@@ -64,19 +82,7 @@ const method = [
         <div class="plans-head">
           <h2>Start free. Move up when the work demands it.</h2>
         </div>
-        <div class="plans">
-          <article>
-            <div class="plan-status">Available</div>
-            <h3>Frame Free</h3>
-            <p>The adaptive decision system for individual use during beta.</p>
-            <a class="v-btn v-btn--green" href={withBase('/free/')}>Try Frame Free</a>
-          </article>
-          <article id="pro">
-            <div class="plan-status muted">In development</div>
-            <h3>Frame Pro</h3>
-            <p>The paid plan that will follow. Scope and pricing will be announced when they are ready.</p>
-          </article>
-        </div>
+        <PlanCards plans={plans} />
       </div>
     </section>
 
@@ -105,21 +111,11 @@ const method = [
   .demo-head > p:last-child { color:var(--v-ink-soft); }
   .boundary { max-width:62rem; }
   .plans-head { max-width:45rem; margin-bottom:3rem; }
-  .plans { display:grid; grid-template-columns:repeat(2,1fr); border:1px solid var(--v-line); }
-  .plans article { padding:clamp(1.5rem,4vw,3rem); min-height:24rem; display:flex; flex-direction:column; align-items:flex-start; }
-  .plans article + article { border-left:1px solid var(--v-line); }
-  .plans p { color:var(--v-ink-soft); max-width:29rem; }
-  .plans .v-btn { margin-top:auto; }
-  .plan-status { font:600 var(--vs-label)/1 var(--vf-body); color:var(--v-green); margin-bottom:4rem; }
-  .plan-status.muted { color:var(--v-ink-soft); }
   .research-callout { display:flex; justify-content:space-between; gap:3rem; align-items:end; }
   .research-callout h2 { max-width:20ch; }
   @media (max-width:760px) {
     .method-grid { grid-template-columns:1fr; }
     .method-intro { position:static; }
-    .plans { grid-template-columns:1fr; }
-    .plans article { min-height:20rem; }
-    .plans article + article { border-left:0; border-top:1px solid var(--v-line); }
     .research-callout { align-items:flex-start; flex-direction:column; }
   }
 </style>
