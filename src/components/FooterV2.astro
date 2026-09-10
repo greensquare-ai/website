@@ -1,5 +1,6 @@
 ---
 import { withBase } from '../lib/paths';
+import { operator } from '../data/operator';
 const year = new Date().getFullYear();
 ---
 <footer class="v-footer">
@@ -7,42 +8,45 @@ const year = new Date().getFullYear();
     <div class="v-footer__top">
       <div>
         <a class="v-footer__brand" href={withBase('/')} aria-label="GreenSquare AI home">
-          <img src={withBase('/assets/logo-mark.svg')} alt="" width="24" height="24" />
+          <img src={withBase('/assets/logo-mark.svg')} alt="" width="22" height="22" />
           <span>GreenSquare AI</span>
         </a>
-        <p style="margin-top:var(--v-4); color:var(--v-cream-faint); font-size:var(--vs-small); max-width:34ch;">
-          Decision discipline for the AI you already use.
-        </p>
+        <p class="v-footer__line">Decision support for consequential work, built to sit beside the AI you already use.</p>
+        <p class="v-footer__operator">{operator.footerLine}</p>
       </div>
       <div class="v-footer__cols">
         <div class="v-footer__col">
           <h4>Product</h4>
           <a href={withBase('/product/')}>Frame</a>
-          <a href={withBase('/free/')}>Frame Free</a>
+          <a href={withBase('/free/')}>Frame Free beta</a>
           <a href={withBase('/product/#pro')}>Frame Pro</a>
         </div>
         <div class="v-footer__col">
           <h4>Research</h4>
           <a href={withBase('/research/')}>Research overview</a>
-          <a href={withBase('/benchmark/')}>Benchmark</a>
+          <a href={withBase('/benchmark/')}>Benchmark record</a>
           <a href={withBase('/methodology/')}>Methodology</a>
         </div>
         <div class="v-footer__col">
           <h4>Company</h4>
           <a href={withBase('/about/')}>About</a>
-          <a href="mailto:hello@greensquare.ai">Contact</a>
+          <a href="mailto:hello@greensquare.ai">hello@greensquare.ai</a>
         </div>
         <div class="v-footer__col">
           <h4>Legal</h4>
-          <a href={withBase('/legal/privacy/')}>Privacy</a>
-          <a href={withBase('/legal/terms/')}>Terms</a>
-          <a href={withBase('/legal/cookies/')}>Cookies</a>
+          <a href={withBase('/legal/privacy/')}>Privacy policy</a>
+          <a href={withBase('/legal/terms/')}>Terms of use</a>
+          <a href={withBase('/legal/cookies/')}>Cookie notice</a>
         </div>
       </div>
     </div>
     <div class="v-footer__legal">
       <span>&copy; {year} GreenSquare AI</span>
-      <span>hello@greensquare.ai</span>
+      <span>Sydney, Australia</span>
     </div>
   </div>
 </footer>
+<style>
+  .v-footer__line { margin-top: var(--v-4); color: var(--v-cream-soft); font-size: var(--vs-small); max-width: 36ch; }
+  .v-footer__operator { color: var(--v-cream-faint); font-size: var(--vs-meta); max-width: 40ch; margin: 0; }
+</style>

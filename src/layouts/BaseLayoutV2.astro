@@ -26,8 +26,7 @@ const ogImage = new URL(withBase('/assets/og-image.png'), Astro.site).toString()
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonical} />
-    <!-- Matches the sticky nav, which is what the browser chrome abuts, not the white page body. -->
-    <meta name="theme-color" content="#10110f" />
+    <meta name="theme-color" content="#f6f3ec" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content={ogType} />
@@ -42,39 +41,12 @@ const ogImage = new URL(withBase('/assets/og-image.png'), Astro.site).toString()
     <link rel="apple-touch-icon" href={withBase('/assets/apple-touch-icon.png')} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Three faces, matching the design language and nothing more. IBM Plex Mono is gone:
-         it was not in the guideline, and it was being asked for at weight 700 while only
-         400 and 500 were loaded, so the browser synthesised the bold. Space Grotesk ships
-         Semibold alone, which is the only weight the guideline gives it.
-
-         The two faces load differently on purpose.
-
-         Reading text swaps, from Google Fonts. A paragraph reflowing costs a little shift
-         and the reader genuinely wants the brand face for the text they spend their time in.
-
-         Headings do not swap, and Space Grotesk is served from this origin rather than
-         Google's. Space Grotesk sets h1 and h2 only: a handful of large words under
-         `text-wrap: balance`, where a small change in glyph advance moves a wrap point,
-         changes the line count and moves everything below the heading. On /free/ that
-         measured 0.105 CLS against a 0.1 budget, so the face carries `font-display:
-         optional` and never swaps in mid-visit.
-
-         `optional` gives the file about 100ms to arrive or the visit keeps the fallback.
-         Loaded from fonts.gstatic.com that meant a DNS lookup, a TLS handshake, a
-         stylesheet and only then the font, which lost the race on most cold visits and
-         rendered the headings in Arial. Self-hosted and preloaded, the file is in memory
-         before first paint, so `optional` now wins every time and still guarantees no
-         reflow. The two subsets are the latin and latin-ext files from Google's own
-         Space Grotesk v22 (SIL Open Font License). -->
+    <!-- Newsreader sets h1, h2 and quoted brief text. It is served from this origin and
+         preloaded so that `font-display: optional` in global-v2.css wins the race on a
+         cold visit and the headings never reflow. Reading text swaps in from Google. -->
+    <link rel="preload" href={withBase('/fonts/newsreader-variable-latin.woff2')} as="font" type="font/woff2" crossorigin />
     <link
-      rel="preload"
-      href={withBase('/fonts/space-grotesk-600-latin.woff2')}
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Manrope:wght@600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Manrope:wght@600&display=swap"
       rel="stylesheet"
     />
   </head>
@@ -87,19 +59,6 @@ const ogImage = new URL(withBase('/assets/og-image.png'), Astro.site).toString()
     <FooterV2 />
     <Analytics />
     <script>
-      const io = new IntersectionObserver(
-        (entries) => {
-          for (const entry of entries) {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('is-visible');
-              io.unobserve(entry.target);
-            }
-          }
-        },
-        { threshold: 0.12 }
-      );
-      document.querySelectorAll('.v-reveal').forEach((el) => io.observe(el));
-
       const nav = document.querySelector('.v-nav');
       if (nav) {
         let ticking = false;

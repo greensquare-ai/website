@@ -1,0 +1,50 @@
+---
+/**
+ * The Decision Brief as an exhibit. Five fields from the published demonstration run,
+ * quoted verbatim, with provenance in the panel head and foot so the reader can see
+ * what it is before they read it.
+ */
+import { briefExcerpt as b } from '../data/brief-excerpt';
+export interface Props { compact?: boolean; }
+const { compact = false } = Astro.props;
+const f = b.fields;
+---
+<figure class:list={['brief', { 'brief--compact': compact }]} aria-label="Excerpt from a Decision Brief">
+  <div class="d-panel d-panel--ink">
+    <div class="d-panel__head">
+      <span><strong>Decision Brief</strong> {b.case}</span>
+      <span>{b.provenance.kind}</span>
+    </div>
+    <div class="d-panel__body brief__body">
+      <div class="brief__main">
+        <p class="v-meta">{f.recommendation.label}</p>
+        <p class="d-quote d-quote--large">{f.recommendation.text}</p>
+      </div>
+      <dl class="d-meta brief__meta">
+        <div><dt>{f.confidence.label}</dt><dd>{f.confidence.text}</dd></div>
+        <div><dt>{f.risk.label}</dt><dd>{f.risk.text}</dd></div>
+        <div><dt>{f.condition.label}</dt><dd>{f.condition.text}</dd></div>
+        <div><dt>{f.nextReview.label}</dt><dd>{f.nextReview.text}</dd></div>
+        {!compact && <div><dt>{f.validateFirst.label}</dt><dd>{f.validateFirst.text}</dd></div>}
+      </dl>
+    </div>
+    <figcaption class="d-panel__foot">
+      <p>{b.provenance.caseNote} Run {b.provenance.runOn} on {b.provenance.model} with {b.provenance.file}. The full transcript is published unedited in the site repository.</p>
+    </figcaption>
+  </div>
+</figure>
+
+<style>
+  .brief__body { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: clamp(1.5rem, 4vw, 3rem); padding: var(--v-6) var(--v-5); }
+  .brief__main .v-meta { margin-bottom: var(--v-3); }
+  .brief__main .d-quote { margin: 0; max-width: 34ch; }
+  .brief__meta { border-top: 1px solid var(--v-line); }
+  .brief__meta > div:first-child { border-top: 0; }
+  .brief__meta dd { font-size: var(--vs-small); line-height: 1.5; }
+  .brief--compact .brief__body { grid-template-columns: 1fr; padding: var(--v-5); }
+  .brief--compact .brief__main .d-quote { max-width: none; font-size: 1.2rem; }
+  @media (max-width: 800px) {
+    .brief__body { grid-template-columns: 1fr; }
+    .brief__main .d-quote { max-width: none; }
+  }
+</style>

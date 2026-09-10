@@ -1,49 +1,38 @@
 /* GreenSquare AI public-site foundation.
-   The marketing site uses the same visual grammar as the approved guidelines:
-   decisive rules, connected exhibits, restrained colour and readable typography. */
+   The site reads as a decision dossier: warm paper, rectangular panels with hairline
+   rules, compact metadata rows, and the Decision Brief quoted as the exhibit. */
 @import './tokens-v2.css';
 
-/* Space Grotesk, served from this origin. It carries `font-display: optional`, which
-   gives the file roughly 100ms to arrive or the visit keeps the fallback for good, so
-   the headings never reflow mid-visit. From fonts.gstatic.com that budget bought a DNS
-   lookup, a TLS handshake, a stylesheet and only then the font, which lost on most cold
-   visits and left the headings in Arial. Preloaded from this origin in BaseLayoutV2, the
-   file is in memory before first paint, so `optional` wins and still guarantees no
-   reflow. Both subsets are Google's own Space Grotesk v22 files, SIL Open Font License.
-   Keep the preload in the layout pointed at the latin file below. */
+/* Newsreader, served from this origin as one variable file per style. It carries
+   `font-display: optional` so a heading never reflows mid-visit: preloaded from this
+   origin the file is in memory before first paint. Google's own v26 latin subset,
+   SIL Open Font License. Keep the preload in BaseLayoutV2 pointed at the upright file. */
 @font-face {
-  font-family: 'Space Grotesk';
+  font-family: 'Newsreader';
   font-style: normal;
-  font-weight: 600;
+  font-weight: 200 800;
   font-display: optional;
-  src: url('/fonts/space-grotesk-600-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  src: url('/fonts/newsreader-variable-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
-  font-family: 'Space Grotesk';
-  font-style: normal;
-  font-weight: 600;
+  font-family: 'Newsreader';
+  font-style: italic;
+  font-weight: 200 800;
   font-display: optional;
-  src: url('/fonts/space-grotesk-600-latin.woff2') format('woff2');
+  src: url('/fonts/newsreader-italic-variable-latin.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-/* Metric-matched fallbacks. `display=swap` renders a fallback face first and swaps in
-   the brand face on arrival. Line heights here are explicit and unitless, so the swap
-   does not change line box height; what it changes is glyph advance width, which moves
-   the wrap points, which changes the number of lines. On /product/ that reflowed the h1
-   and pushed the whole hero, measuring 0.198 CLS in CI against a 0.1 budget.
-   `src: local(...)` pins which face the fallback actually is, so `size-adjust` is
-   measured against a known font rather than whatever the platform picks. Liberation Sans
-   is metric-compatible with Arial and is what Ubuntu resolves to in CI.
-   Percentages are measured, not estimated: each brand face and Arial were rendered at
-   1000px and their advance widths over a common sample compared. */
+/* Metric-matched fallbacks, so a swap or a missed `optional` window changes glyph shape
+   without moving a wrap point. Georgia is the nearest installed face to Newsreader's
+   advance widths; Liberation Serif is what Ubuntu resolves it to in CI. */
 @font-face {
-  font-family: 'Space Grotesk Fallback';
-  src: local('Arial'), local('Liberation Sans'), local('Helvetica');
-  size-adjust: 99.44%;
-  ascent-override: 98.96%;
-  descent-override: 29.36%;
+  font-family: 'Newsreader Fallback';
+  src: local('Georgia'), local('Liberation Serif'), local('Times New Roman');
+  size-adjust: 93.2%;
+  ascent-override: 95%;
+  descent-override: 26%;
   line-gap-override: 0%;
 }
 @font-face {
@@ -65,32 +54,13 @@
 
 .v2 * { box-sizing: border-box; }
 .v2 { scrollbar-width: thin; scrollbar-color: var(--v-line) transparent; }
-/* The site is light-only. Declaring it stops Windows and Android dark mode from
-   inverting native controls (the email input, scrollbars) against a white page. */
-html:has(.v2) { scroll-behavior: smooth; color-scheme: light; }
+html:has(.v2) { scroll-behavior: smooth; color-scheme: light; background: var(--v-paper); }
 
-/* The nav is sticky at 72px, so anything scrolled to by anchor lands underneath it. */
-.v2 :where(h1, h2, h3, h4, [id]) { scroll-margin-top: 88px; }
-/* A page carrying the section index has a second sticky layer: the 62px pill rail that
-   floats 16px below the nav. Anchor targets have to clear both, or following a link from
-   the index lands the reader behind the index they just used. */
-.v2:has(.section-nav) :where(h1, h2, h3, h4, [id]) { scroll-margin-top: 166px; }
+/* The nav is sticky at 64px. Pages with a section index carry a second 48px band. */
+.v2 :where(h1, h2, h3, h4, [id]) { scroll-margin-top: 80px; }
+.v2:has(.section-nav) :where(h1, h2, h3, h4, [id]) { scroll-margin-top: 132px; }
 
-/* Visible on keyboard focus only. Previously inline on the layout with no focus rule,
-   which left it permanently at left:-9999px and unreachable for sighted keyboard users.
-   The `.v2` prefix is load-bearing, not tidiness. Bare `.skip-link` ties with
-   `.v2 :where(a)` on specificity and loses on source order, which painted the link
-   forest green on its own forest green background: 1:1, unreadable the moment a
-   keyboard user focused it. */
-.v2 .skip-link {
-  position: absolute;
-  left: -9999px;
-  top: 0;
-  background: var(--v-green);
-  color: var(--v-cream);
-  padding: 10px 16px;
-  z-index: 100;
-}
+.v2 .skip-link { position: absolute; left: -9999px; top: 0; background: var(--v-green); color: var(--v-cream); padding: 10px 16px; z-index: 100; }
 .v2 .skip-link:focus { left: 0; }
 
 .v2 {
@@ -99,283 +69,276 @@ html:has(.v2) { scroll-behavior: smooth; color-scheme: light; }
   color: var(--v-ink);
   font-family: var(--vf-body);
   font-size: var(--vs-body);
-  line-height: 1.62;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   font-feature-settings: 'liga' 1, 'kern' 1;
   interpolate-size: allow-keywords;
+  caret-color: var(--v-green);
 }
 .v2 img, .v2 svg, .v2 video { max-width: 100%; display: block; }
 .v2 ::selection { background: var(--v-green); color: var(--v-cream); }
 .v2 :focus-visible { outline: 2px solid var(--v-green); outline-offset: 2px; }
-.v2 .v-green :focus-visible { outline-color: var(--v-cream); }
+.v2 .v-green :focus-visible, .v2 .v-black :focus-visible { outline-color: var(--v-cream); }
 
-/* ---------- typography (moderate, balanced) ---------- */
-/* Space Grotesk stops at h2. Below that the guideline gives the tier to IBM Plex Sans,
-   and bare `h3` was rendering in Space Grotesk while `.v-h3` rendered in Plex Sans, so
-   the same level looked different depending on which markup path a page took.
-   Tracking is -0.02em, not -0.032em. Measured at 1440: DeepMind -0.022em, OpenAI -0.03em,
-   Anthropic none. The old value was tighter than all three. */
-.v2 h1, .v2 h2, .v2 h3, .v2 h4 { margin: 0; font-weight: 600; }
-.v2 h1, .v2 h2 { font-family: var(--vf-display); }
-.v2 h3, .v2 h4 { font-family: var(--vf-body); }
-.v2 h1 { font-size: var(--vs-display); line-height: 1.01; letter-spacing: -0.02em; text-wrap: balance; }
-.v2 h2 { font-size: var(--vs-h2); line-height: 1.1; letter-spacing: -0.02em; text-wrap: balance; }
-.v2 h3 { font-size: var(--vs-h3); line-height: 1.3; letter-spacing: -0.01em; }
-.v-display { font-family: var(--vf-display); font-weight: 600; font-size: var(--vs-display); line-height: 1.01; letter-spacing: -0.02em; text-wrap: balance; }
-.v-h1 { font-size: var(--vs-h1); line-height: 1.06; letter-spacing: -0.025em; text-wrap: balance; }
-.v-h2 { font-size: var(--vs-h2); line-height: 1.1; letter-spacing: -0.02em; text-wrap: balance; }
-.v-h3 { font-family: var(--vf-body); font-size: var(--vs-h3); font-weight: 600; letter-spacing: -0.01em; line-height: 1.3; }
-.v-h4 { font-family: var(--vf-body); font-size: var(--vs-h4); font-weight: 600; line-height: 1.35; }
+/* ---------- typography ---------- */
+.v2 h1, .v2 h2, .v2 h3, .v2 h4 { margin: 0; }
+.v2 h1, .v2 h2 { font-family: var(--vf-display); font-weight: 500; font-variation-settings: 'opsz' 72; }
+.v2 h3, .v2 h4 { font-family: var(--vf-body); font-weight: 600; }
+.v2 h1 { font-size: var(--vs-h1); line-height: 1.04; letter-spacing: -0.015em; text-wrap: balance; }
+.v2 h2 { font-size: var(--vs-h2); line-height: 1.1; letter-spacing: -0.01em; text-wrap: balance; }
+.v2 h3 { font-size: var(--vs-h3); line-height: 1.3; letter-spacing: -0.005em; }
+.v2 h4 { font-size: var(--vs-h4); line-height: 1.35; }
+.v-display { font-family: var(--vf-display); font-weight: 500; font-variation-settings: 'opsz' 72; font-size: var(--vs-display); line-height: 1; letter-spacing: -0.02em; text-wrap: balance; }
+.v-h2 { font-size: var(--vs-h2); line-height: 1.1; letter-spacing: -0.01em; text-wrap: balance; }
+.v-h3 { font-family: var(--vf-body); font-size: var(--vs-h3); font-weight: 600; line-height: 1.3; }
 
-.v2 p { margin: 0 0 var(--v-4); max-width: 70ch; text-wrap: pretty; }
-/* `.v-lead` and `.v-lede` were byte-identical rules for the same tier, one used by the
-   homepage and one by every page the September rebuild added. `.v-lead` is canonical,
-   and `.v-btn-primary` was collapsed into `.v-btn--green` the same way. */
-.v-lead { font-size: var(--vs-lead); line-height: 1.52; max-width: 58ch; color: var(--v-ink-soft); }
-/* The gap between a heading and its lead paragraph, in one place. Measured at 0px on
-   every page the September rebuild added: nothing sat between an h1 or h2 and the
-   `.v-lead` straight after it, so the two ran together. Scoped to an immediate sibling
-   so a lead sitting elsewhere in a section is untouched. */
+.v2 p { margin: 0 0 var(--v-4); max-width: 68ch; text-wrap: pretty; }
+.v-lead { font-size: var(--vs-lead); line-height: 1.5; max-width: 56ch; color: var(--v-ink-soft); }
 .v2 :where(h1, h2) + .v-lead { margin-top: var(--v-5); }
-.v-green .v-lead { color: var(--v-cream-soft); }
+.v-green .v-lead, .v-black .v-lead { color: var(--v-cream-soft); }
 .v-small { font-size: var(--vs-small); color: var(--v-ink-soft); }
-.v-green .v-small { color: var(--v-cream-soft); }
-.v2 :where(a) { color: var(--v-green); }
+.v2 :where(a) { color: var(--v-green); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.v2 strong { font-weight: 600; }
+
+/* The metadata tier: a short label in the reading face at 13px, medium weight. It sits
+   beside a value, above a panel, or under a figure. It never stands alone as a kicker. */
+.v-meta { font-family: var(--vf-body); font-size: var(--vs-meta); font-weight: 500; line-height: 1.4; color: var(--v-ink-soft); font-variant-numeric: tabular-nums; letter-spacing: 0; text-transform: none; }
+.v-green .v-meta, .v-black .v-meta { color: var(--v-cream-faint); }
 
 /* ---------- layout ---------- */
 .v-container { max-width: var(--v-max); margin: 0 auto; padding-inline: var(--v-gutter); }
-.v-container--wide { max-width: 1520px; }
-.v-container--narrow { max-width: 780px; }
-.v-section { padding-block: var(--v-section); position: relative; border-bottom: 1px solid var(--v-line); }
-.v-section:last-of-type { border-bottom: 0; }
-.v-fill { background: var(--v-off); }
-.v-fill-2 { background: var(--v-off); }
-.v-off { background: var(--v-off); }
-
-/* the big bold color-block — the "big square section" the brand is built on */
+.v-container--wide { max-width: 1400px; }
+.v-container--narrow { max-width: 760px; }
+.v-section { padding-block: var(--v-section); position: relative; }
+.v-section--rule { border-top: 1px solid var(--v-line); }
+.v-section--tight { padding-block: var(--v-8); }
 .v-green { background: var(--v-green); color: var(--v-cream); }
 .v-green h1, .v-green h2, .v-green h3, .v-green h4 { color: var(--v-cream); }
-.v-green .v-eyebrow { color: var(--v-lime); }
 .v-black { background: var(--v-black); color: var(--v-cream); }
 .v-black h1, .v-black h2, .v-black h3, .v-black h4 { color: var(--v-cream); }
-.v-black .v-eyebrow { color: var(--v-lime); }
-.v-black .v-lead, .v-black .v-small { color: var(--v-cream-soft); }
-.v-white { background: var(--v-paper); }
-.v-cream { background: var(--v-off); }
-.v-green-deep { background: var(--v-green); color: var(--v-cream); }
+.v-off { background: var(--v-off); }
+.v-actions { display: flex; align-items: center; gap: var(--v-4); flex-wrap: wrap; margin-top: var(--v-6); }
 
-/* The one label tier. `.v-index` was the homepage's name for the same thing, with
-   different type; both are this class now. Guideline V5.1: IBM Plex Sans Medium, sentence case, because
-   "capitals and letter-spacing do not create hierarchy". It was 11.5px uppercase mono
-   at weight 700 against a face loaded only to 500, so the browser faked the bold.
-   Workstream B removes most of these labels; the tier survives for the few that carry
-   evidence rather than decoration. */
-.v-eyebrow { margin-bottom: var(--v-3); font-family: var(--vf-body); font-size: var(--vs-label); font-weight: 500; letter-spacing: 0; text-transform: none; color: var(--v-green); font-variant-numeric: tabular-nums; }
-.v-actions { display: flex; align-items: center; gap: var(--v-5); flex-wrap: wrap; margin-top: var(--v-6); }
+/* Two-column reading grid: a heading column and a content column. Used on every page
+   so the eye finds the same left edge. */
+.v-cols { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(2rem, 6vw, 6rem); align-items: start; }
+.v-cols--even { grid-template-columns: 1fr 1fr; }
+.v-cols > * { min-width: 0; }
+.v-cols > .v-cols__head h2 { max-width: 18ch; }
+.v-cols__head > p { color: var(--v-ink-soft); margin-top: var(--v-4); }
+@media (max-width: 800px) { .v-cols, .v-cols--even { grid-template-columns: 1fr; gap: var(--v-6); } }
 
-/* ---------- buttons ---------- */
-.v-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 12px 22px; border-radius: 999px; font-family: var(--vf-body); font-weight: 600; font-size: var(--vs-small); line-height: 1.2; text-decoration: none; cursor: pointer; border: 1px solid transparent; touch-action: manipulation; -webkit-tap-highlight-color: transparent; transition: background-color var(--v-fast) var(--v-ease), color var(--v-fast) var(--v-ease), transform var(--v-fast) var(--v-ease); }
-.v-btn:active { transform: translateY(1px); }
-.v-btn--green { background: var(--v-green); color: var(--v-cream); }
-.v-btn--grey { background: var(--v-off); color: var(--v-ink); }
-.v-btn--on-green { background: var(--v-cream); color: var(--v-green); }
+/* ---------- buttons: rectangular, one weight ---------- */
+.v-btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--v-2); min-height: 46px; padding: 10px 20px; border-radius: 0; font-family: var(--vf-body); font-weight: 600; font-size: var(--vs-small); line-height: 1.2; text-decoration: none; cursor: pointer; border: 1px solid var(--v-ink); color: var(--v-ink); background: transparent; touch-action: manipulation; -webkit-tap-highlight-color: transparent; transition: background-color var(--v-fast) var(--v-ease), color var(--v-fast) var(--v-ease), border-color var(--v-fast) var(--v-ease); }
+.v-btn--green { background: var(--v-green); color: var(--v-cream); border-color: var(--v-green); }
+.v-btn--on-green { background: var(--v-cream); color: var(--v-green); border-color: var(--v-cream); }
+.v-btn--ghost-on-green { background: transparent; color: var(--v-cream); border-color: var(--v-cream-soft); }
 @media (hover: hover) and (pointer: fine) {
-  .v-btn--green:hover { background: var(--v-green-bright); }
-  .v-btn--grey:hover { background: var(--v-off); }
-  .v-btn--on-green:hover { background: #fff; }
+  .v-btn:hover { background: var(--v-ink); color: var(--v-cream); }
+  .v-btn--green:hover { background: var(--v-green-bright); border-color: var(--v-green-bright); color: var(--v-cream); }
+  .v-btn--on-green:hover { background: #fff; color: var(--v-green); }
+  .v-btn--ghost-on-green:hover { background: var(--v-cream); color: var(--v-green); }
 }
 .v-btn[disabled] { opacity: 0.5; cursor: not-allowed; }
-/* paired buttons in a hero read as equals */
-.hero-actions .v-btn { min-width: 190px; }
 
-/* inline prose link only — underline, no arrow, no gap animation.
-   Link colour follows the surface, carried on an inherited custom property rather
-   than a descendant override. `.v-green .v-link { color: cream }` painted the
-   homepage plan card's link white on white paper, because a light card inside a
-   green section still matches the descendant selector. A surface that changes the
-   ground now resets the property once and every link inside it follows, which is
-   the same failure the green form-button overrides further down had to patch by
-   hand. `.v-black` had no rule at all, so a link there would have been forest on
-   near-black. */
-.v-link { color: var(--v-link-ink, var(--v-green)); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; font-weight: 600; font-size: var(--vs-small); }
+/* inline prose link */
+.v-link { color: var(--v-link-ink, var(--v-green)); text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; font-weight: 600; font-size: var(--vs-small); }
 .v-link:hover { text-decoration-thickness: 2px; }
-.v-green, .v-black, .v-green-deep { --v-link-ink: var(--v-cream); }
-.plan-card { --v-link-ink: var(--v-green); }
+.v-green, .v-black { --v-link-ink: var(--v-cream); }
+
+/* ---------- dossier primitives ---------- */
+/* A panel is a rectangle on the paper with a hairline edge. No radius, no shadow. */
+.d-panel { background: var(--v-panel); border: 1px solid var(--v-line); }
+.d-panel--ink { border-color: var(--v-ink); }
+.d-panel__head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--v-4); padding: var(--v-3) var(--v-5); border-bottom: 1px solid var(--v-line); font-size: var(--vs-meta); font-weight: 500; color: var(--v-ink-soft); font-variant-numeric: tabular-nums; }
+.d-panel--ink > .d-panel__head { border-bottom-color: var(--v-ink); }
+.d-panel__head strong { color: var(--v-ink); font-weight: 600; }
+.d-panel__body { padding: var(--v-5); }
+.d-panel__foot { padding: var(--v-3) var(--v-5); border-top: 1px solid var(--v-line); font-size: var(--vs-meta); color: var(--v-ink-soft); }
+.d-panel__foot p { margin: 0; max-width: none; }
+
+/* A metadata list: label on the left, value on the right, one hairline per row. */
+.d-meta { margin: 0; }
+.d-meta > div { display: grid; grid-template-columns: minmax(7rem, 9rem) 1fr; gap: var(--v-4); padding: 10px 0; border-top: 1px solid var(--v-line); }
+.d-meta > div:first-child { border-top: 0; }
+.d-meta dt { font-size: var(--vs-meta); font-weight: 500; color: var(--v-ink-soft); padding-top: 2px; }
+.d-meta dd { margin: 0; font-size: var(--vs-small); }
+.d-meta dd p { margin: 0; max-width: none; }
+.d-meta dd + dd { margin-top: var(--v-1); }
+@media (max-width: 480px) { .d-meta > div { grid-template-columns: 1fr; gap: var(--v-1); } }
+
+/* Evidence-class marks: a square swatch and the class name. Four classes, one shape. */
+.d-tag { display: inline-flex; align-items: center; gap: 6px; font-size: var(--vs-meta); font-weight: 500; color: var(--v-ink-soft); white-space: nowrap; font-family: var(--vf-body); }
+.d-tag::before { content: ''; width: 9px; height: 9px; flex: none; border: 1px solid currentColor; background: transparent; }
+.d-tag--given { color: var(--v-given); }
+.d-tag--given::before { background: var(--v-given); }
+.d-tag--derived { color: var(--v-derived); }
+.d-tag--derived::before { background: color-mix(in srgb, var(--v-derived) 45%, transparent); }
+.d-tag--inferred { color: var(--v-inferred); }
+.d-tag--unknown { color: var(--v-unknown); }
+.d-tag--unknown::before { background: var(--v-unknown); }
+.v-green .d-tag, .v-black .d-tag { color: var(--v-cream-soft); }
+
+/* Status words: a fixed vocabulary, set as text with a mark, never as a coloured pill. */
+.d-status { display: inline-flex; align-items: center; gap: 7px; font-size: var(--vs-meta); font-weight: 600; white-space: nowrap; }
+.d-status::before { content: ''; width: 8px; height: 8px; flex: none; }
+.d-status--open { color: var(--v-signal); }
+.d-status--open::before { background: var(--v-signal); }
+.d-status--corrected { color: var(--v-green); }
+.d-status--corrected::before { background: var(--v-green); }
+.d-status--disclosed { color: var(--v-ink-soft); }
+.d-status--disclosed::before { border: 1px solid currentColor; }
+
+/* Quoted brief text. Newsreader italic at reading size, with the source under it. */
+.d-quote { font-family: var(--vf-display); font-style: italic; font-weight: 400; font-variation-settings: 'opsz' 18; font-size: 1.125rem; line-height: 1.5; color: var(--v-ink); text-wrap: pretty; }
+.d-quote--large { font-size: clamp(1.25rem, 1rem + 1vw, 1.6rem); line-height: 1.4; }
+
+/* Tables: hairlines, tabular figures, a ruled head. Wide tables scroll in their wrap. */
+.d-table-wrap { overflow-x: auto; outline-offset: 4px; -webkit-overflow-scrolling: touch; }
+.d-table { width: 100%; border-collapse: collapse; background: var(--v-panel); font-size: var(--vs-small); }
+.d-table caption { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.d-table th, .d-table td { padding: 12px 14px; border-bottom: 1px solid var(--v-line); text-align: left; vertical-align: top; }
+.d-table thead th { font-size: var(--vs-meta); font-weight: 500; color: var(--v-ink-soft); border-bottom: 1px solid var(--v-ink); background: var(--v-panel); }
+.d-table tbody th { font-weight: 600; }
+.d-table td { font-variant-numeric: tabular-nums; }
+.d-table td p { margin: 0; max-width: none; }
+.d-table .num { text-align: right; white-space: nowrap; }
+.d-table .is-emph { background: color-mix(in srgb, var(--v-green) 8%, var(--v-panel)); }
+.d-table tr.group th { background: var(--v-off); font-size: var(--vs-meta); font-weight: 600; color: var(--v-ink); border-bottom: 1px solid var(--v-line); }
+
+/* A ruled list: items separated by hairlines, an optional index on the left. */
+.d-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--v-line); }
+.d-list > li { display: grid; grid-template-columns: 1fr; gap: var(--v-2); padding: var(--v-4) 0; border-bottom: 1px solid var(--v-line); }
+.d-list--indexed > li { grid-template-columns: 2.5rem 1fr; gap: var(--v-4); }
+.d-list__index { font-size: var(--vs-meta); font-weight: 500; color: var(--v-ink-soft); font-variant-numeric: tabular-nums; padding-top: 3px; }
+.d-list h3 { font-size: 1.0625rem; }
+.d-list p { margin: var(--v-1) 0 0; color: var(--v-ink-soft); font-size: var(--vs-small); }
+
+/* Count bars in the benchmark table: the count is the text; the bar is a reading aid. */
+.d-bar { display: grid; grid-template-columns: 4.2rem 1fr; align-items: center; gap: var(--v-3); min-width: 9rem; }
+.d-bar__track { height: 8px; background: var(--v-off); }
+.d-bar__fill { height: 100%; background: var(--v-ink-soft); width: var(--pct, 0%); }
+.d-bar--loaded .d-bar__fill { background: var(--v-green); }
+.d-bar--baseline .d-bar__fill { background: var(--v-ink); }
+.d-bar--def .d-bar__fill { background: repeating-linear-gradient(90deg, var(--v-line) 0 4px, transparent 4px 8px); }
 
 /* ---------- prose (methodology, legal) ---------- */
-.v-prose { max-width: 72ch; }
+.v-prose { max-width: 70ch; }
 .v-prose > :first-child { margin-top: 0; }
-.v-prose h1 { font-family: var(--vf-display); font-weight: 600; font-size: clamp(1.9rem, 3.4vw, 2.6rem); letter-spacing: -0.02em; line-height: 1.08; margin-bottom: var(--v-6); }
-.v-prose h2 { font-size: 1.5rem; margin-top: var(--v-10); padding-top: var(--v-5); border-top: 1px solid var(--v-line); margin-bottom: var(--v-4); }
-.v-prose h2:first-of-type { border-top: 0; padding-top: 0; }
-.v-prose h3 { font-family: var(--vf-body); font-weight: 600; font-size: 1.1rem; margin-top: var(--v-6); margin-bottom: var(--v-3); }
+.v-prose h1 { font-family: var(--vf-display); font-weight: 500; font-size: var(--vs-h1); letter-spacing: -0.015em; line-height: 1.06; margin-bottom: var(--v-5); }
+.v-prose h2 { font-family: var(--vf-body); font-weight: 600; font-size: 1.25rem; letter-spacing: 0; margin-top: var(--v-10); padding-top: var(--v-4); border-top: 1px solid var(--v-ink); margin-bottom: var(--v-4); }
+.v-prose h2:first-of-type { margin-top: var(--v-6); }
+.v-prose h3 { font-family: var(--vf-body); font-weight: 600; font-size: 1.0625rem; margin-top: var(--v-6); margin-bottom: var(--v-3); }
 .v-prose p, .v-prose li { color: var(--v-ink); }
-.v-green .v-prose p, .v-green .v-prose li { color: var(--v-cream); }
-.v-prose p { margin-bottom: var(--v-4); max-width: 72ch; }
-.v-prose ul, .v-prose ol { padding-left: 1.2em; max-width: 72ch; margin-bottom: var(--v-4); }
+.v-prose p { margin-bottom: var(--v-4); max-width: 70ch; }
+.v-prose ul, .v-prose ol { padding-left: 1.2em; max-width: 70ch; margin-bottom: var(--v-4); }
 .v-prose li { margin-bottom: var(--v-2); }
-.v-prose li::marker { color: var(--v-green); }
+.v-prose li::marker { color: var(--v-ink-soft); }
 .v-prose a { text-decoration: underline; text-underline-offset: 3px; }
+.v-prose table { width: 100%; border-collapse: collapse; font-size: var(--vs-small); margin-bottom: var(--v-5); }
+.v-prose th, .v-prose td { padding: 10px 12px; border-bottom: 1px solid var(--v-line); text-align: left; vertical-align: top; }
+.v-prose thead th { font-size: var(--vs-meta); font-weight: 500; color: var(--v-ink-soft); border-bottom: 1px solid var(--v-ink); }
+.v-prose .legal-updated { font-size: var(--vs-meta); color: var(--v-ink-soft); margin-bottom: var(--v-6); }
 
-/* ---------- heroes: two archetypes, because the reader arrives twice over ----------
-   A marketing page is answering "is this for me", so its opening is a claim: centred,
-   the heading carrying the display size, one primary action in view. An evidence page
-   is answering "does this hold", so its opening is a record: left aligned, dateline
-   first, nothing competing with the finding. Six pages were each carrying their own
-   copy of the same padding rule; this is the one place it lives now. */
-.v-hero { padding-block: clamp(5rem, 10vw, 9rem) 0; }
-.v-hero--marketing { text-align: center; }
-.v-hero--marketing > .v-container { display: flex; flex-direction: column; align-items: center; }
-.v-hero--marketing h1 { max-width: 19ch; }
-.v-hero--marketing .v-lead { max-width: 46rem; }
-.v-hero--marketing .v-actions, .v-hero--marketing .hero-actions { justify-content: center; }
-.v-hero--editorial h1 { max-width: 17ch; }
-.v-hero--editorial .v-lead { max-width: 46rem; }
+/* ---------- heroes ---------- */
+/* One archetype. Left aligned, ruled at the foot, with an optional dateline beneath the
+   heading. The exhibit on a marketing page sits beside or below it inside the same rule. */
+.v-hero { padding-block: clamp(3.5rem, 7vw, 6rem) 0; }
+.v-hero h1 { max-width: 20ch; }
+.v-hero .v-lead { max-width: 52ch; }
+.v-hero__dateline { margin: var(--v-4) 0 0; font-size: var(--vs-meta); font-weight: 500; color: var(--v-ink-soft); font-variant-numeric: tabular-nums; max-width: none; }
+.v-hero__dateline + .v-lead { margin-top: var(--v-5); }
 
-/* The visual sits under the hero rather than beside it, which is what both comparators
-   do and what a centred opening requires. The Frame animation fills this slot and
-   reserves its own responsive height, so the page does not move as it loads. */
-.v-hero__visual { margin-top: var(--v-10); }
-
-/* ---------- nav: white, so the page opens on the canvas it is built on ----------
-   The nav was a near-black block above every page, which made the first thing the reader
-   met the heaviest thing on the screen. White with a hairline lets the page start with its
-   own content. The forest mark reads on white without an asset change. */
+/* ---------- nav ---------- */
 .v-nav { position: sticky; top: 0; z-index: 60; background: var(--v-paper); color: var(--v-ink); border-bottom: 1px solid var(--v-line); transition: border-color var(--v-mid) var(--v-ease); }
-.v-nav.is-solid { border-bottom-color: var(--v-ink-soft); }
-.v-nav__row { display: flex; align-items: center; justify-content: space-between; min-height: 72px; padding-block: var(--v-3); }
-.v-nav__brand { display: flex; align-items: center; gap: var(--v-3); text-decoration: none; color: var(--v-ink); font-family: var(--vf-brand); font-weight: 600; letter-spacing: -0.015em; }
-.v-nav__brand img { height: 28px; width: auto; }
+.v-nav.is-solid { border-bottom-color: var(--v-ink); }
+.v-nav__row { display: flex; align-items: center; justify-content: space-between; min-height: 64px; padding-block: var(--v-2); }
+.v-nav__brand { display: flex; align-items: center; gap: var(--v-3); text-decoration: none; color: var(--v-ink); font-family: var(--vf-brand); font-weight: 600; letter-spacing: -0.015em; font-size: 1rem; }
+.v-nav__brand img { height: 22px; width: auto; }
 .v-nav__links { display: flex; align-items: center; gap: var(--v-6); }
-.v-nav__links a { color: var(--v-ink-soft); text-decoration: none; font-size: var(--vs-small); font-weight: 500; transition: color var(--v-fast), box-shadow var(--v-fast); }
-.v-nav__links a:hover, .v-nav__links a[aria-current='page'] { color: var(--v-ink); box-shadow: inset 0 -2px 0 var(--v-green); }
-.v-nav__right { display: flex; align-items: center; gap: var(--v-5); }
-.v-nav__right > .v-btn { background: var(--v-green); color: var(--v-paper); border-color: var(--v-green); }
-.v-nav__right > .v-btn:hover { background: var(--v-green-bright); border-color: var(--v-green-bright); }
-.v-nav__toggle { display: none; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; background: transparent; border: 1px solid var(--v-line); border-radius: 999px; color: var(--v-ink); padding: 11px; cursor: pointer; touch-action: manipulation; }
+.v-nav__links a { color: var(--v-ink-soft); text-decoration: none; font-size: var(--vs-small); font-weight: 500; padding-block: 4px; transition: color var(--v-fast), box-shadow var(--v-fast); }
+.v-nav__links a:hover, .v-nav__links a[aria-current='page'] { color: var(--v-ink); box-shadow: inset 0 -1px 0 var(--v-ink); }
+.v-nav__right { display: flex; align-items: center; gap: var(--v-6); }
+.v-nav__right > .v-btn { min-height: 40px; padding: 8px 16px; }
+.v-nav__toggle { display: none; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; background: transparent; border: 1px solid var(--v-line); border-radius: 0; color: var(--v-ink); padding: 11px; cursor: pointer; touch-action: manipulation; }
 .v-nav__toggle svg { width: 20px; height: 20px; display: block; }
 
-/* ---------- footer: forest, the page's closing anchor ----------
-   Kept dark deliberately. With the nav now white the footer is the one piece of furniture
-   carrying brand recognition, and it sits where it cannot compete with reading. */
-.v-footer { background: var(--v-green-ink); color: var(--v-cream); padding-block: var(--v-12) var(--v-8); }
-.v-footer__top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--v-10); }
-.v-footer__cols { display: flex; gap: var(--v-12); flex-wrap: wrap; }
-.v-footer__col { display: flex; flex-direction: column; gap: var(--v-3); }
-.v-footer__col h4 { font-family: var(--vf-body); font-size: 0.82rem; font-weight: 600; text-transform: none; letter-spacing: 0; color: var(--v-cream-faint); margin-bottom: var(--v-1); }
+/* ---------- footer ---------- */
+.v-footer { background: var(--v-green-ink); color: var(--v-cream); padding-block: var(--v-10) var(--v-6); border-top: 1px solid var(--v-green); }
+.v-footer__top { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 2fr); gap: var(--v-10); }
+.v-footer__cols { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--v-6); }
+.v-footer__col { display: flex; flex-direction: column; gap: 10px; }
+.v-footer__col h4 { font-family: var(--vf-body); font-size: var(--vs-meta); font-weight: 500; color: var(--v-cream-faint); margin-bottom: var(--v-1); }
 .v-footer__col a { color: var(--v-cream-soft); text-decoration: none; font-size: var(--vs-small); transition: color var(--v-fast); }
-.v-footer__col a:hover { color: var(--v-cream); }
+.v-footer__col a:hover { color: var(--v-cream); text-decoration: underline; }
 .v-footer__brand { color: var(--v-cream); font-family: var(--vf-brand); font-weight: 600; display: flex; align-items: center; gap: var(--v-3); text-decoration: none; }
-.v-footer__brand img { filter: brightness(0) invert(1); }
-.v-footer__legal { margin-top: var(--v-10); padding-top: var(--v-5); border-top: 1px solid var(--v-line-green); display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--v-3); font-family: var(--vf-body); font-size: var(--vs-small); letter-spacing: 0; color: var(--v-cream-faint); }
+.v-footer__brand img { filter: brightness(0) invert(1); height: 22px; width: auto; }
+.v-footer__legal { margin-top: var(--v-8); padding-top: var(--v-4); border-top: 1px solid var(--v-line-green); display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--v-3); font-size: var(--vs-meta); color: var(--v-cream-faint); }
+.v-footer__legal a { color: inherit; }
+@media (max-width: 800px) {
+  .v-footer__top { grid-template-columns: 1fr; gap: var(--v-8); }
+  .v-footer__cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 
 /* ---------- forms ---------- */
-/* Visually-hidden utility. Defined in global.css but this stylesheet (BaseLayoutV2)
-   ships without it, so the sr-only email label was rendering visibly beside the input. */
-.sr-only {
-  position: absolute;
-  width: 1px; height: 1px;
-  padding: 0; margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-.v2 .field-row { display: flex; gap: var(--v-3); flex-wrap: wrap; align-items: stretch; container-type: inline-size; }
-/* The border is --v-ink-soft, not --v-line. A control's edge is the only thing telling the
-   reader where to type, and WCAG 1.4.11 asks 3:1 of it. The rule colour is 1.3:1 on white;
-   this is 8.04:1. Axe does not test non-text contrast, so nothing would have caught it. */
-.v2 input[type='email'] { flex: 1 1 240px; padding: 0 17px; height: 48px; border: 1px solid var(--v-ink-soft); border-radius: 999px; font-family: var(--vf-body); font-size: 1rem; background: var(--v-paper); color: var(--v-ink); transition: border-color var(--v-fast) var(--v-ease), box-shadow var(--v-fast) var(--v-ease); }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.v2 .field-row { display: flex; gap: 0; flex-wrap: wrap; align-items: stretch; container-type: inline-size; }
+/* The input's edge is ink, not the hairline: WCAG 1.4.11 asks 3:1 of a control's boundary. */
+.v2 input[type='email'] { flex: 1 1 240px; padding: 0 16px; height: 48px; border: 1px solid var(--v-ink); border-right: 0; border-radius: 0; font-family: var(--vf-body); font-size: 1rem; background: var(--v-panel); color: var(--v-ink); transition: border-color var(--v-fast) var(--v-ease), box-shadow var(--v-fast) var(--v-ease); }
 .v2 input[type='email']::placeholder { color: var(--v-ink-soft); opacity: 1; }
 .v2 input[type='email']:focus { border-color: var(--v-green); outline: none; }
-.v2 input[type='email']:focus-visible { border-color: var(--v-green); box-shadow: 0 0 0 3px color-mix(in srgb, var(--v-green) 22%, transparent); }
-.v2 .form-note { font-size: var(--vs-label); color: var(--v-ink-soft); margin-top: var(--v-2); width: 100%; }
-.v2 .form-status { font-size: var(--vs-small); margin-top: var(--v-2); width: 100%; animation: v-status-in var(--v-mid) var(--v-ease) both; }
+.v2 input[type='email']:focus-visible { box-shadow: inset 0 0 0 1px var(--v-green); }
+.v2 .form-note { font-size: var(--vs-meta); color: var(--v-ink-soft); margin-top: var(--v-3); width: 100%; max-width: none; }
+.v2 .form-status { font-size: var(--vs-small); margin-top: var(--v-3); width: 100%; animation: v-status-in var(--v-mid) var(--v-ease) both; }
 .v2 form.is-leaving { opacity: 0; transition: opacity var(--v-fast) var(--v-ease); }
 .v2 .form-status--error, .v2 [class*='form-status'][role='alert'] { color: var(--v-error); }
 .v2 .form-status--success { color: var(--v-green); }
-.v2 .field-row .btn, .v2 .field-row button[type='submit'] { border-radius: 999px; background: var(--v-green); color: var(--v-cream); border: 1px solid var(--v-green); font-family: var(--vf-body); font-weight: 600; font-size: var(--vs-small); min-height: 48px; padding: 0 20px; cursor: pointer; touch-action: manipulation; transition: background-color var(--v-fast) var(--v-ease), transform var(--v-fast) var(--v-ease), box-shadow var(--v-fast) var(--v-ease); }
+.v2 .field-row .btn, .v2 .field-row button[type='submit'] { border-radius: 0; background: var(--v-green); color: var(--v-cream); border: 1px solid var(--v-green); font-family: var(--vf-body); font-weight: 600; font-size: var(--vs-small); min-height: 48px; padding: 0 20px; cursor: pointer; touch-action: manipulation; display: inline-flex; align-items: center; gap: var(--v-2); transition: background-color var(--v-fast) var(--v-ease); }
 .v2 .field-row .btn:hover, .v2 .field-row button[type='submit']:hover { background: var(--v-green-bright); }
-.v2 .field-row .btn:active, .v2 .field-row button[type='submit']:active { transform: translateY(1px); }
 .v2 .field-row .btn:focus-visible, .v2 .field-row button[type='submit']:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--v-paper), 0 0 0 4px var(--v-green); }
 .v2 .field-row button[type='submit']:disabled { opacity: 0.72; cursor: progress; }
-.v2 .field-row button[type='submit'] { gap: var(--v-2); }
 .form-spinner { width: 14px; height: 14px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 999px; animation: v-spin 700ms linear infinite; }
 @keyframes v-spin { to { transform: rotate(360deg); } }
-/* When the row is too narrow to hold input + button side by side (either a narrow
-   form column on desktop or a small viewport), the button wraps. In that case it
-   should span the input's full width, not hug its label as a short orphaned button.
-   Container-query on .field-row's own inline size, so it responds to the actual
-   available width rather than the viewport. */
-@container (max-width: 560px) {
-  .v2 .field-row .btn, .v2 .field-row button[type='submit'] { flex: 1 1 100%; width: 100%; }
+@container (max-width: 520px) {
+  .v2 input[type='email'] { border-right: 1px solid var(--v-ink); }
+  .v2 .field-row .btn, .v2 .field-row button[type='submit'] { flex: 1 1 100%; width: 100%; margin-top: var(--v-2); }
 }
-/* inside a green block, the submit button flips to cream so it doesn't vanish */
+/* On green the input keeps its own ink edge and the button flips to cream. */
+.v2 .v-green input[type='email'] { border-color: var(--v-cream); }
 .v2 .v-green .field-row .btn, .v2 .v-green .field-row button[type='submit'] { background: var(--v-cream); color: var(--v-green); border-color: var(--v-cream); }
 .v2 .v-green .field-row .btn:hover, .v2 .v-green .field-row button[type='submit']:hover { background: #fff; }
 .v2 .v-green .field-row .btn:focus-visible, .v2 .v-green .field-row button[type='submit']:focus-visible { box-shadow: 0 0 0 2px var(--v-green), 0 0 0 4px var(--v-cream); }
-.v2 .v-green input[type='email']:focus-visible { box-shadow: 0 0 0 3px color-mix(in srgb, var(--v-cream) 40%, transparent); }
+.v2 .v-green input[type='email']:focus-visible { box-shadow: inset 0 0 0 1px var(--v-cream); }
 .v2 .v-green .form-note { color: var(--v-cream-soft); }
 .v2 .v-green .form-status--success { color: var(--v-cream); }
 .v2 .v-green .form-status--error { color: var(--v-error-on-green); }
 
-/* A green section can host a white .v-card (see .v-green .v-card above), and the form
-   often sits inside one. The cream flips directly above are written for a form sitting
-   on the green itself, so inside a card they painted a white button and white status
-   text onto white paper: the button read as floating text, and the success message
-   disappeared entirely on submit. Restore the on-paper treatment. */
-.v2 .v-green .v-card .field-row .btn,
-.v2 .v-green .v-card .field-row button[type='submit'] { background: var(--v-green); color: var(--v-cream); border-color: var(--v-green); }
-.v2 .v-green .v-card .field-row .btn:hover,
-.v2 .v-green .v-card .field-row button[type='submit']:hover { background: var(--v-green-bright); }
-.v2 .v-green .v-card .field-row .btn:focus-visible,
-.v2 .v-green .v-card .field-row button[type='submit']:focus-visible { box-shadow: 0 0 0 2px var(--v-paper), 0 0 0 4px var(--v-green); }
-.v2 .v-green .v-card input[type='email']:focus-visible { box-shadow: 0 0 0 3px color-mix(in srgb, var(--v-green) 22%, transparent); }
-.v2 .v-green .v-card .form-note { color: var(--v-ink-soft); }
-.v2 .v-green .v-card .form-status--success { color: var(--v-green); }
-.v2 .v-green .v-card .form-status--error { color: var(--v-error); }
-
-@keyframes v-status-in {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: none; }
-}
+@keyframes v-status-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) {
   .v2 .form-status { animation: none; }
-  .v2 .field-row .btn, .v2 .field-row button[type='submit'],
-  .v2 input[type='email'] { transition: none; }
-  .v2 .field-row .btn:active, .v2 .field-row button[type='submit']:active { transform: none; }
-  .v-btn:active { transform: none; }
   .form-spinner { animation: none; }
   .v2 details::details-content, .v2 details[open]::details-content { transition-duration: 0ms; }
 }
 
-/* ---------- disclosure (FAQ) ---------- */
+/* ---------- disclosure ---------- */
 .v2 details { border-bottom: 1px solid var(--v-line); padding: var(--v-4) 0; }
-.v2 details > summary { list-style: none; cursor: pointer; font-weight: 600; display: flex; justify-content: space-between; gap: var(--v-4); }
+.v2 details > summary { list-style: none; cursor: pointer; font-weight: 600; display: flex; justify-content: space-between; gap: var(--v-4); align-items: baseline; }
 .v2 details > summary::-webkit-details-marker { display: none; }
-.v2 details > summary::after { content: '+'; font-family: var(--vf-body); color: var(--v-green); }
+.v2 details > summary::after { content: '+'; font-family: var(--vf-body); font-weight: 400; color: var(--v-ink-soft); flex: none; }
 .v2 details[open] > summary::after { content: '\2212'; }
 .v2 details > *:not(summary) { margin-top: var(--v-3); }
 .v2 details::details-content { block-size: 0; opacity: 0; overflow: clip; transition: block-size var(--v-mid) var(--v-ease), opacity var(--v-mid) var(--v-ease), content-visibility var(--v-mid) allow-discrete; }
 .v2 details[open]::details-content { block-size: auto; opacity: 1; }
-
-/* ---------- reveal ----------
-   Content is always visible. Motion is reserved for interactive controls and
-   data bars, so a paused tab or slow observer can never hide an exhibit. */
-.v-reveal,
-.js .v-reveal,
-.js .v-reveal.is-visible { opacity: 1; transform: none; }
 
 /* ---------- responsive ---------- */
 @media (max-width: 900px) {
   .v-nav__links { display: none; }
   .v-nav__right .v-btn { display: none; }
   .v-nav__toggle { display: inline-flex; }
-  .hero-actions .v-btn { min-width: 0; flex: 1 1 auto; }
 }
 @media (max-width: 560px) {
-  .hero-actions .v-btn { width: 100%; flex: 1 1 100%; }
+  .v-actions .v-btn { width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) {
   html:has(.v2) { scroll-behavior: auto; }

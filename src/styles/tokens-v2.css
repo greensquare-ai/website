@@ -1,76 +1,66 @@
 /* GreenSquare AI public-site tokens.
-   Mirrors the approved design language: Space Grotesk headings, IBM Plex Sans
-   reading text, Manrope Semibold for the supplied wordmark, and a restrained
-   forest / black / white palette. */
+   The site is set as a decision dossier: warm paper, deep green, near-black ink,
+   one signal colour for the things a reader must not miss (an unknown, a condition,
+   a correction). Newsreader carries headings and quoted brief text; IBM Plex Sans
+   carries reading, data and controls; Manrope stays in the wordmark. */
 :root {
-  /* surfaces: white, and one grey for cards, inputs and rails */
-  --v-paper: #ffffff;
-  --v-off: #f5f5f5;
+  /* surfaces: warm paper for the page, white for a panel, one deeper band */
+  --v-paper: #f6f3ec;
+  --v-panel: #fffdf8;
+  --v-off: #ece7db;
 
   /* identity */
   --v-green: #133f26;
   --v-green-bright: #1b5433;
-  --v-green-ink: #10110f;
-  --v-lime: #dff49f;
+  --v-green-ink: #0f1a13;
 
-  /* semantic notation */
-  --v-confirmed: #24553b;
-  --v-assumption: #70877a;
-  --v-uncertainty: #56666f;
-  --v-risk: #315f69;
+  /* the one signal colour: conditions, unknowns, corrections. 6.3:1 on paper. */
+  --v-signal: #9a3a1c;
+
+  /* evidence classes, used as small marks beside a label rather than as fills */
+  --v-given: var(--v-green);
+  --v-derived: #3f6b4f;
+  --v-inferred: #56635a;
+  --v-unknown: var(--v-signal);
 
   /* type and rules */
-  --v-ink: #12140f;
-  /* One reading grey, not two. The guideline's Muted #63645C was carried as a second
-     supporting tint and used interchangeably with this one, which is a vocabulary the
-     reader cannot see. #4f514b is the darker of the pair (8.04:1 on white against
-     5.99:1) so collapsing onto it costs no contrast anywhere it was already used. */
+  --v-ink: #14160f;
   --v-ink-soft: #4f514b;
-  --v-cream: #ffffff;
-  --v-cream-soft: rgba(255, 255, 255, 0.82);
-  --v-cream-faint: rgba(255, 255, 255, 0.62);
+  --v-cream: #f6f3ec;
+  --v-cream-soft: rgba(246, 243, 236, 0.8);
+  --v-cream-faint: rgba(246, 243, 236, 0.58);
   --v-black: var(--v-green-ink);
-  --v-white: var(--v-paper);
-  --v-line: #dedad2;
-  --v-line-green: rgba(255, 255, 255, 0.22);
-  --v-signal: var(--v-confirmed);
-  --v-error: var(--v-risk);
-  --v-error-on-green: #ffd8d1;
+  --v-white: var(--v-panel);
+  --v-line: #d9d3c5;
+  --v-line-strong: var(--v-ink);
+  --v-line-green: rgba(246, 243, 236, 0.22);
+  --v-error: var(--v-signal);
+  --v-error-on-green: #f3c9b8;
 
   /* typography */
-  /* Three faces, and each has one job. Guideline V5.1: Space Grotesk Semibold carries
-     H1, H2 and large display figures; IBM Plex Sans carries everything functional,
-     including navigation, tables, captions and controls; Manrope appears only in the
-     logo lockup. IBM Plex Mono is not in the design language and has been removed.
-     It was styling 18 labels at weight 700 against a face loaded only at 400 and 500,
-     so the browser was synthesising the bold. */
-  --vf-display: 'Space Grotesk', 'Space Grotesk Fallback', Arial, sans-serif;
+  --vf-display: 'Newsreader', 'Newsreader Fallback', Georgia, 'Times New Roman', serif;
   --vf-body: 'IBM Plex Sans', 'IBM Plex Sans Fallback', Arial, sans-serif;
   --vf-brand: 'Manrope', 'Manrope Fallback', Arial, sans-serif;
   --v-font-display: var(--vf-display);
 
-  /* larger reading text, quieter headings.
-     The display cap is 4rem, which is 64px, matching what Anthropic and OpenAI both
-     render for a page title. Guideline V5.1 says 48 to 56px; that is below every
-     comparator and the larger size is a recorded deviation, not drift.
-     h3 is the guideline's Subheading tier: IBM Plex Sans Semibold, 21 to 24px. */
-  --vs-display: clamp(2.65rem, 4.5vw, 4rem);
-  --vs-h1: clamp(2.15rem, 3.5vw, 3.35rem);
-  --vs-h2: clamp(1.65rem, 2.5vw, 2.45rem);
-  --vs-h3: 1.3125rem;
+  /* Newsreader is an optical-size face. The display sizes sit at the top of its range
+     where the serifs are fine and the contrast high; nothing below h2 uses it except
+     quoted brief text, which is set at reading size in the italic. */
+  --vs-display: clamp(2.5rem, 1.6rem + 3.6vw, 4.5rem);
+  --vs-h1: clamp(2.2rem, 1.5rem + 2.6vw, 3.5rem);
+  --vs-h2: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem);
+  --vs-h3: 1.25rem;
   --vs-h4: 1.0625rem;
-  --vs-lead: clamp(1.18rem, 1.55vw, 1.4rem);
-  --vs-body: clamp(1rem, 0.96rem + 0.18vw, 1.075rem);
-  --vs-small: clamp(0.96rem, 0.93rem + 0.1vw, 1rem);
-  /* 15px. Was 0.82rem, or 11.5px, which is smaller than every label on the comparator
-     sites and was the loudest signal that this page did not belong beside them.
-     Guideline V5.1 specifies 14 to 17px for labels. */
-  --vs-label: 0.9375rem;
+  --vs-lead: clamp(1.125rem, 1.05rem + 0.35vw, 1.3rem);
+  --vs-body: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
+  --vs-small: 0.9375rem;
+  --vs-label: 0.875rem;
+  --vs-meta: 0.8125rem;
 
   /* layout */
-  --v-max: 1400px;
-  --v-gutter: clamp(22px, 4vw, 52px);
-  --v-section: clamp(3.75rem, 6vw, 6.5rem);
+  --v-max: 1200px;
+  --v-gutter: clamp(20px, 4vw, 48px);
+  --v-section: clamp(3.5rem, 6vw, 6rem);
 
   /* spacing */
   --v-1: 4px;

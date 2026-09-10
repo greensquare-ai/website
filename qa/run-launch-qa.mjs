@@ -50,8 +50,11 @@ for (const viewport of viewports) {
     /* Two independent properties, not one archetype flag. /about/ opens as a document
        and closes on the conversion block, so it is editorial at the top and marketing
        at the bottom; collapsing these into one set fails it for being correct. */
-    const CENTRED_HERO = new Set(['/', '/product/', '/free/']);
-    const FOREST_CLOSE = new Set(['/', '/product/', '/free/', '/about/']);
+    /* The dossier redesign (10 September 2026) opens every page as a document: one
+       left-aligned h1, paper ground throughout, panels rather than coloured bands. The
+       sets stay as the mechanism so a future page can opt back in deliberately. */
+    const CENTRED_HERO = new Set([]);
+    const FOREST_CLOSE = new Set([]);
     const composition = await page.evaluate((isMarketing) => {
       const parse = (value) => {
         const match = value.match(/rgba?\(([^)]+)\)/);
@@ -110,9 +113,9 @@ for (const viewport of viewports) {
     } else if (!composition.leftFlush) {
       errors.push('Evidence h1 is not left aligned; evidence pages open as a document');
     }
-    const WHITE = '255,255,255';
+    const PAPER = '246,243,236';
     const FOREST = '19,63,38';
-    const stray = composition.grounds.filter(([g]) => g !== WHITE && g !== FOREST);
+    const stray = composition.grounds.filter(([g]) => g !== PAPER && g !== FOREST);
     if (stray.length) errors.push(`Ground census: ${stray.map(([g, sec]) => `${sec} ${g}`).join(' | ')}`);
     const forest = composition.grounds.filter(([g]) => g === FOREST);
     if (forest.length && !FOREST_CLOSE.has(route)) errors.push('Forest ground on a page that closes white');
@@ -120,42 +123,14 @@ for (const viewport of viewports) {
 
 
     if (route === '/') {
-      if (await page.getByRole('link', { name: /Try Frame Free/i }).count() < 1) errors.push('Primary Free CTA missing');
-      const frameFigure = page.locator('[data-frame-hero-figure]');
-      const frameVideo = page.locator('[data-frame-hero-video]');
-      if (await frameFigure.count() !== 1) errors.push('Frame animation figure missing');
-      if (await frameVideo.count() !== 1) errors.push('Frame animation video missing');
-      if (await frameFigure.count() === 1) {
-        const frameDescription = await frameFigure.evaluate(root => document.getElementById(root.getAttribute('aria-labelledby'))?.textContent || '');
-        for (const phrase of ['growing demand', 'limited capacity', 'four tested options', 'conditional recommendation', 'management capacity is released']) {
-          if (!frameDescription.toLowerCase().includes(phrase)) errors.push(`Accessible animation meaning missing: ${phrase}`);
-        }
-      }
-      if (await frameVideo.count() === 1) {
-        const expected = viewport.name === 'mobile'
-          ? { path: '/media/frame-animation-mobile.mp4', media: '(max-width: 767px)' }
-          : { path: '/media/frame-animation-desktop.mp4', media: '(min-width: 768px)' };
-        const media = await frameVideo.evaluate((element) => ({
-          autoplay: element.autoplay,
-          muted: element.muted,
-          loop: element.loop,
-          playsInline: element.playsInline,
-          sources: [...element.querySelectorAll('source')].map(source => ({
-            path: new URL(source.src).pathname,
-            media: source.media,
-            type: source.type,
-          })),
-        }));
-        if (!media.autoplay || !media.muted || !media.loop || !media.playsInline) errors.push('Frame animation playback attributes incomplete');
-        const source = media.sources.find(item => item.path === expected.path);
-        if (!source || source.media !== expected.media || source.type !== 'video/mp4') {
-          errors.push(`Frame animation source configuration missing: ${expected.path}`);
-        }
-      }
+      if (await page.getByRole('link', { name: /Get the Frame Free beta/i }).count() < 1) errors.push('Primary Free CTA missing');
+      const brief = page.locator('figure[aria-label="Excerpt from a Decision Brief"]');
+      if (await brief.count() < 1) errors.push('Decision Brief excerpt missing from the hero');
+      else if (!/Demonstration run, not part of the preregistered study/.test(await brief.first().innerText())) errors.push('Decision Brief excerpt lacks its provenance');
     }
     if (route === '/free/') {
       if (await page.getByLabel('Email address').count() !== 1) errors.push('Email input missing');
-      if (await page.getByRole('button', { name: /Email me Frame Free/i }).count() !== 1) errors.push('Free submit action missing');
+      if (await page.getByRole('button', { name: /Email me the beta/i }).count() !== 1) errors.push('Free submit action missing');
     }
     if (route === '/product/') {
       const tabs = page.getByRole('tab');
@@ -165,11 +140,11 @@ for (const viewport of viewports) {
         if (!await page.getByRole('tabpanel', { name: /Decision Brief/i }).isVisible()) errors.push('Decision Brief panel did not activate');
         if (!/demo=brief/.test(page.url())) errors.push('Product demo state not deep-linked');
         await page.getByRole('tab', { name: /Decision Brief/i }).press('Home');
-        if (await page.locator('[data-demo-tab="context"]').getAttribute('aria-selected') !== 'true') errors.push('Product demo keyboard navigation failed');
+        if (await page.locator('[data-demo-tab="brought"]').getAttribute('aria-selected') !== 'true') errors.push('Product demo keyboard navigation failed');
       }
       if (!/Frame Pro/i.test(state.body) || !/in development/i.test(state.body)) errors.push('Pro boundary missing');
     }
-    if (route === '/research/' && !/not a test of the current Frame Free plan or the future Frame Pro plan/i.test(state.body)) errors.push('Research plan boundary missing');
+    if (route === '/research/' && !/does not validate Frame Free/i.test(state.body)) errors.push('Research plan boundary missing');
 
     if (viewport.name === 'mobile') {
       // Use the stable control ID because the accessible name intentionally
@@ -279,20 +254,14 @@ for (const viewport of viewports) {
 const reduced = await browser.newContext({ viewport: viewports[0], reducedMotion: 'reduce' });
 const reducedPage = await reduced.newPage();
 await reducedPage.goto(base + '/', { waitUntil: 'domcontentloaded' });
-const reducedState = await reducedPage.evaluate(() => {
-  const figure = document.querySelector('[data-frame-hero-figure]');
-  const video = document.querySelector('[data-frame-hero-video]');
-  const still = figure?.querySelector('.frame-hero-video__still');
-  return {
-    figure: Boolean(figure),
-    videoPaused: video instanceof HTMLVideoElement ? video.paused : false,
-    videoDisplay: video ? getComputedStyle(video).display : null,
-    stillDisplay: still ? getComputedStyle(still).display : null,
-    runningAnimations: figure?.getAnimations({ subtree: true }).filter(a => a.playState === 'running').length,
-  };
-});
-const reducedPassed = reducedState.figure && reducedState.videoPaused && reducedState.videoDisplay === 'none' &&
-  reducedState.stillDisplay === 'block' && reducedState.runningAnimations === 0;
+await reducedPage.waitForTimeout(400);
+/* The site carries no autoplaying media. Under reduced motion nothing in <main> may be
+   animating after load; the disclosure and status transitions are the only motion left. */
+const reducedState = await reducedPage.evaluate(() => ({
+  media: document.querySelectorAll('main video, main [autoplay]').length,
+  runningAnimations: document.querySelector('main').getAnimations({ subtree: true }).filter((a) => a.playState === 'running').length,
+}));
+const reducedPassed = reducedState.media === 0 && reducedState.runningAnimations === 0;
 if (!reducedPassed) failed = true;
 results.push({ route: '/', viewport: 'desktop-reduced-motion', reducedState, passed: reducedPassed });
 await reduced.close();
