@@ -1,121 +1,149 @@
 ---
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 import ProductDemo from '../components/ProductDemo.astro';
-import PlanCards from '../components/PlanCards.astro';
+import Signup from '../components/Signup.astro';
 import { withBase } from '../lib/paths';
+import { briefStructure, method, offer } from '../data/offer';
+import { briefExcerpt } from '../data/brief-excerpt';
+import { dates } from '../lib/benchmark';
 
-const plans = [
-  {
-    variant: 'free',
-    title: 'Frame Free',
-    status: 'Available',
-    body: 'The adaptive decision system for individual use during beta.',
-    cta: { href: withBase('/free/'), label: 'Try Frame Free', icon: 'download' },
-  },
-  {
-    variant: 'pro',
-    title: 'Frame Pro',
-    status: 'In development',
-    id: 'pro',
-    body: 'The paid plan that will follow. Scope and pricing will be announced when they are ready.',
-  },
-] as const;
-
-const method = [
-  ['Clarify', 'Define the decision, not just the topic.'],
-  ['Inspect', 'Find the evidence and assumptions underneath it.'],
-  ['Test', 'Challenge the logic before confidence hardens.'],
-  ['Compare', 'Expose trade-offs between credible options.'],
-  ['Decide', 'Form a recommendation with calibrated confidence.'],
-  ['Execute', 'Name risks, owners and the next review point.'],
+const d = dates();
+const free = offer.free;
+const accountable = [
+  { who: 'You', does: 'Own the decision, supply the facts and the constraints, decide what the brief has not decided, and sign the paper. The method will not recommend on a question you have not answered; it records the gap as an unknown.' },
+  { who: 'The model', does: 'Reads, asks, drafts and compares at speed. It contributes the analysis. It does not know which fact matters to your organisation until you tell it.' },
+  { who: 'Frame', does: 'Holds the model to the process: ask first, tag every material claim, compare real options, state confidence and conditions. It is the discipline, not the judgement.' },
+  { who: 'GreenSquare AI', does: 'Writes and maintains the method file, publishes what it has and has not been shown to do, and answers for both. It does not see your decision or your data.' },
 ];
 ---
-
 <BaseLayoutV2
-  title="Frame | Professional judgement system"
-  description="Frame is a professional judgement system that helps people frame, challenge and act on consequential decisions."
+  title="Frame | The Decision Brief and the method that produces it"
+  description="Frame is a method file for ChatGPT, Claude or another capable model. It makes the model interrogate a consequential decision and produce a Decision Brief with its confidence and conditions stated."
   current="product"
 >
-  <div>
-    <section class="product-hero v-hero v-hero--marketing">
-      <div class="v-container">
-        <h1>Better intelligence is not enough. You need better judgement.</h1>
-        <p class="v-lead">Frame is the decision layer between what an AI can generate and what a professional can responsibly act on.</p>
-        <div class="v-actions">
-          <a class="v-btn v-btn--green" href={withBase('/free/')}>Try Frame Free</a>
-          <a class="v-link" href="#demo">Explore the product</a>
+  <section class="v-hero product-hero">
+    <div class="v-container">
+      <h1>The output is a Decision Brief. The method is what makes it defensible.</h1>
+      <p class="v-lead">Frame is a plain-text method file you load into the model you already use. It changes what the model does with a consequential decision: it asks before it advises, tags what it is told, compares real options and states the conditions under which its recommendation fails.</p>
+      <div class="v-actions">
+        <a class="v-btn v-btn--green" href="#get-free">Get the Frame Free beta</a>
+        <a class="v-btn" href="#brief">See a Decision Brief</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="v-section" id="brief">
+    <div class="v-container">
+      <div class="product-head">
+        <h2>One decision, read in three states.</h2>
+        <p>This is the demonstration run published in the site repository: a fictional 42-branch systems cutover, run once on {briefExcerpt.provenance.model} with the method file that predates Frame, unedited. Move through the question as it was brought, one turn of interrogation, and the brief.</p>
+      </div>
+      <ProductDemo />
+    </div>
+  </section>
+
+  <section class="v-section v-section--rule" id="method">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>The six steps the file holds the model to.</h2>
+        <p>The sequence is fixed. What the model asks inside each step depends on what you have already told it, which is why two decisions never produce the same interrogation.</p>
+      </div>
+      <ol class="d-list d-list--indexed">
+        {method.map(([name, text], i) => (
+          <li><span class="d-list__index">{String(i + 1).padStart(2, '0')}</span><div><h3>{name}</h3><p>{text}</p></div></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="v-section v-section--rule" id="receive">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>What you receive.</h2>
+        <p>The beta is the method file and nothing else: no application, no account, no upload of your material to GreenSquare AI.</p>
+      </div>
+      <div class="product-receive">
+        <dl class="d-meta">
+          <div><dt>The file</dt><dd>{free.delivery.object} {free.delivery.how}</dd></div>
+          <div><dt>Delivery</dt><dd>{free.delivery.after}</dd></div>
+          <div><dt>Time</dt><dd>{free.delivery.setup} {free.session}</dd></div>
+          <div><dt>Compatibility</dt><dd>{free.compatibility.tested} {free.compatibility.boundary}</dd></div>
+          <div><dt>Your rights</dt><dd>{free.rights}</dd></div>
+        </dl>
+        <div class="d-panel product-structure">
+          <div class="d-panel__head"><strong>Decision Brief</strong><span>structure, as the file produces it</span></div>
+          <ol class="product-structure__list">
+            {briefStructure.map((row, i) => (
+              <li><span class="d-list__index">{i + 1}</span><div><h3>{row.section}</h3><p>{row.carries}</p></div></li>
+            ))}
+          </ol>
+          <div class="d-panel__foot"><p>Every material claim in the brief is tagged given, derived, inferred or unknown. The brief closes with a confidence statement and what to validate first.</p></div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="v-section">
-      <div class="v-container method-grid">
-        <div class="method-intro">
-          <h2>From a messy situation to a defensible next move.</h2>
-        </div>
-        <ol>
-          {method.map(([title, copy], index) => (
-            <li><span>{String(index + 1).padStart(2, '0')}</span><div><h3>{title}</h3><p>{copy}</p></div></li>
-          ))}
-        </ol>
+  <section class="v-section v-section--rule" id="accountable">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>Who remains accountable.</h2>
+        <p>Four parties touch a decision run through Frame. The brief is only as good as the division of labour between them, so it is stated here rather than in the terms.</p>
       </div>
-    </section>
+      <dl class="d-meta product-accountable">
+        {accountable.map((row) => (
+          <div><dt>{row.who}</dt><dd>{row.does}</dd></div>
+        ))}
+      </dl>
+    </div>
+  </section>
 
-    <section class="v-section" id="demo">
-      <div class="v-container">
-        <div class="demo-head">
-          <h2>See the decision change as the evidence changes.</h2>
-          <p>Move through an illustrative decision, the adaptive interrogation and the resulting Decision Brief.</p>
-        </div>
-        <ProductDemo />
+  <section class="v-section v-section--rule" id="evidence">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>What the evidence covers.</h2>
       </div>
-    </section>
+      <div class="d-panel product-evidence">
+        <dl class="d-meta">
+          <div><dt>Shown</dt><dd>In a preregistered benchmark, the method file made the model ask before answering, compare real options and tag its evidence on every run. That is a change in process, and it held across two models and three cases.</dd></div>
+          <div><dt>Not shown</dt><dd>That the brief is better judged than one a well-briefed model produces unaided. On the three judgement checks the informed baseline matched or exceeded the loaded method.</dd></div>
+          <div><dt>Boundary</dt><dd>The file tested predates Frame. Nothing on this page claims the benchmark result for Frame Free or Frame Pro. Record current as at {d.currentAsAt}.</dd></div>
+        </dl>
+        <div class="d-panel__foot"><p><a href={withBase('/research/')}>Research overview</a>, <a href={withBase('/benchmark/')}>benchmark record</a> and <a href={withBase('/methodology/')}>methodology</a>.</p></div>
+      </div>
+    </div>
+  </section>
 
-    <section class="v-section">
-      <div class="v-container boundary">
-        <h2>The model contributes intelligence. Frame structures judgement. You remain accountable.</h2>
+  <section class="v-section v-section--rule" id="pro">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>Frame Pro</h2>
       </div>
-    </section>
+      <div class="d-panel product-pro">
+        <div class="d-panel__head"><strong>{offer.pro.name}</strong><span>{offer.pro.status}</span></div>
+        <div class="d-panel__body"><p class="v-small">{offer.pro.note} Until then the Frame Free beta is the only plan, and it is the one this page describes.</p></div>
+      </div>
+    </div>
+  </section>
 
-    <section class="v-section" id="plans">
-      <div class="v-container">
-        <div class="plans-head">
-          <h2>Start free. Move up when the work demands it.</h2>
-        </div>
-        <PlanCards plans={plans} />
-      </div>
-    </section>
-
-    <section class="v-section">
-      <div class="v-container research-callout">
-        <div>
-          <h2>We separate what the evidence shows from what the product promises.</h2>
-        </div>
-        <a class="v-link" href={withBase('/research/')}>Read the research record</a>
-      </div>
-    </section>
-  </div>
+  <Signup />
 </BaseLayoutV2>
 
 <style>
-  h1 { max-width:19ch; }
-  .v-lead { max-width:40rem; }
-  .method-grid { display:grid; grid-template-columns:.85fr 1.15fr; gap:clamp(3rem,9vw,9rem); align-items:start; }
-  .method-intro { position:sticky; top:8rem; }
-  .method-grid ol { list-style:none; margin:0; padding:0; }
-  .method-grid li { display:grid; grid-template-columns:3.5rem 1fr; gap:1rem; padding:1.4rem 0; border-top:1px solid var(--v-line); }
-  .method-grid li > span { color:var(--v-green); font:600 var(--vs-label)/1 var(--vf-body); font-variant-numeric:tabular-nums; padding-top:.35rem; }
-  .method-grid h3, .method-grid p { margin:0; }
-  .method-grid p { color:var(--v-ink-soft); margin-top:.35rem; }
-  .demo-head { max-width:47rem; margin-bottom:3rem; }
-  .demo-head > p:last-child { color:var(--v-ink-soft); }
-  .boundary { max-width:62rem; }
-  .plans-head { max-width:45rem; margin-bottom:3rem; }
-  .research-callout { display:flex; justify-content:space-between; gap:3rem; align-items:end; }
-  .research-callout h2 { max-width:20ch; }
-  @media (max-width:760px) {
-    .method-grid { grid-template-columns:1fr; }
-    .method-intro { position:static; }
-    .research-callout { align-items:flex-start; flex-direction:column; }
-  }
+  .product-hero h1 { max-width: 20ch; }
+  .product-hero .v-lead { max-width: 60ch; }
+  .product-head { max-width: 62ch; margin-bottom: var(--v-6); }
+  .product-head p { color: var(--v-ink-soft); margin-top: var(--v-4); }
+  .product-receive { display: grid; gap: var(--v-6); }
+  .product-structure__list { list-style: none; margin: 0; padding: var(--v-2) var(--v-5); }
+  .product-structure__list li { display: grid; grid-template-columns: 2rem 1fr; gap: var(--v-3); padding: 12px 0; border-top: 1px solid var(--v-line); }
+  .product-structure__list li:first-child { border-top: 0; }
+  .product-structure__list h3 { font-size: 1rem; }
+  .product-structure__list p { margin: 2px 0 0; color: var(--v-ink-soft); font-size: var(--vs-small); }
+  .product-accountable > div { grid-template-columns: minmax(7rem, 8rem) 1fr; }
+  .product-accountable dt { font-weight: 600; color: var(--v-ink); font-size: var(--vs-small); }
+  .product-evidence { padding: var(--v-2) 0 0; }
+  .product-evidence .d-meta { padding: 0 var(--v-5); }
+  .product-evidence .d-panel__foot { margin-top: var(--v-2); }
+  .product-pro { background: transparent; }
+  .product-pro .d-panel__body p { margin: 0; }
 </style>

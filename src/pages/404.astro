@@ -2,20 +2,16 @@
 import { withBase } from '../lib/paths';
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 ---
-<BaseLayoutV2
-  title="Page not found | GreenSquare AI"
-  description="This page does not exist."
->
-  <section class="v-section v-green" style="min-height: 66vh; display: flex; align-items: center;">
+<BaseLayoutV2 title="Page not found | GreenSquare AI" description="This page does not exist.">
+  <section class="v-hero">
     <div class="v-container">
-      <h1 class="v-h1" style="max-width: 20ch;">We cannot find that page.</h1>
-      <p class="v-lead" style="margin-top: var(--v-5); max-width: 45ch;">
-        The address may be incorrect, or the page may have moved.
-      </p>
-      <div style="display: flex; gap: var(--v-5); align-items: center; flex-wrap: wrap; margin-top: var(--v-8);">
-        <a class="v-btn v-btn--on-green" href={withBase('/')}>Back to home</a>
-        <a class="v-link" href={withBase('/product/')}>Explore Frame</a>
+      <h1>That page does not exist.</h1>
+      <p class="v-lead">The address may be wrong, or the page may have moved. The pages that do exist are listed in the footer.</p>
+      <div class="v-actions">
+        <a class="v-btn v-btn--green" href={withBase('/')}>Back to the homepage</a>
+        <a class="v-btn" href={withBase('/product/')}>Read about Frame</a>
       </div>
     </div>
   </section>
+  <div style="height: var(--v-12)"></div>
 </BaseLayoutV2>

@@ -1,86 +1,134 @@
 ---
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 import { withBase } from '../lib/paths';
+import { operator, people } from '../data/operator';
+import { dates, deviations, grid } from '../lib/benchmark';
 
-const principles = [
-  ['Model-agnostic', 'The method should survive changes in model provider and capability.'],
-  ['Evidence-led', 'Claims should be inspectable, bounded and revised when the evidence changes.'],
-  ['Professionally accountable', 'The user remains responsible for the decision and its consequences.'],
-  ['Truthful about limits', 'A useful boundary is better than an inflated promise.'],
+const g = grid();
+const d = dates();
+const nDev = deviations().length;
+const commitments = [
+  ['Model-agnostic', 'The method has to survive a change of model provider or capability. It is written as instructions a capable model follows, not as a dependency on one vendor.'],
+  ['Evidence-led', 'Claims are inspectable, bounded and revised when the evidence changes. The research pages carry their corrections in date order.'],
+  ['Professionally accountable', 'The person who uses Frame owns the decision and its consequences. The method will not produce a brief for a decision with no named owner.'],
+  ['Truthful about limits', 'The benchmark headline is partly unfavourable to the product and is published in full, with all its deviations, rather than trimmed to a claim.'],
+];
+const maintained = [
+  { what: 'The method file', by: 'Written and revised by the same consultants who use it on their own decisions. Each release is dated in its header.' },
+  { what: 'The benchmark record', by: 'Run, scored, adjudicated and published by GreenSquare AI. Independence is not claimed anywhere on this site; the record says so in its own limitations.' },
+  { what: 'This site', by: `Maintained by GreenSquare AI. Figures render from one data file with build-time checks so a count cannot be typed wrong twice. Record current as at ${d.currentAsAt}.` },
 ];
 ---
-
 <BaseLayoutV2
   title="About | GreenSquare AI"
-  description="GreenSquare AI builds the professional judgement layer between intelligence and action."
+  description="Who built Frame, the professional problem that led to it, what is personally maintained, and how a buyer can verify the work."
   current="about"
 >
-  <div>
-    <section class="about-hero v-hero v-hero--editorial">
-      <div class="v-container">
-        <h1>Build the judgement layer between intelligence and action.</h1>
-      </div>
-    </section>
+  <section class="v-hero about-hero">
+    <div class="v-container">
+      <h1>{people.heading}</h1>
+      <p class="v-lead">GreenSquare AI is a small Australian practice. It builds the Frame method, runs the research that tests it and publishes both. This page says who is accountable for that and how to check it.</p>
+    </div>
+  </section>
 
-    <section class="v-section">
-      <div class="v-container premise-grid">
-        <div>
-          <h2>AI can generate more options, evidence and analysis than ever. That does not make the final judgement automatic.</h2>
-          <p>GreenSquare AI exists to make consequential decisions more structured, interrogable and accountable.</p>
-        </div>
+  <section class="v-section" id="letter">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>Why Frame exists.</h2>
       </div>
-    </section>
+      <div class="about-letter">
+        <p class="d-quote">Every consequential recommendation we ever put our names to was read by someone whose job was to find the weak point: the number that was inferred rather than given, the option that was never considered, the assumption nobody had tested. Capable models produce fluent, well-structured answers that have not been through that reading. They will happily support the conclusion you arrived with.</p>
+        <p class="d-quote">Frame is that reading, written down as a method a model will follow. It asks before it advises, tags what it has been told, compares real options including doing nothing, and closes with a confidence statement and the findings that would reverse the call. It does not make the decision. It makes the decision inspectable.</p>
+        <p class="d-quote">We tested it, and we published the result including the part that did not go our way: it changed how the model worked, and it did not make the model a better judge than a fully briefed one. That is the honest position, and the product is priced accordingly, which today means the beta is free.</p>
+        <p class="about-letter__sign v-meta">The people behind GreenSquare AI</p>
+      </div>
+    </div>
+  </section>
 
-    <section class="v-section">
-      <div class="v-container">
-        <h2>These four commitments do not change as the underlying model does.</h2>
-        <div class="principles">
-          {principles.map(([title, copy], index) => (
-            <article><span>{String(index + 1).padStart(2, '0')}</span><h3>{title}</h3><p>{copy}</p></article>
-          ))}
-        </div>
+  <section class="v-section v-section--rule" id="people">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>The people, and the experience the method comes from.</h2>
+        <p>Named individuals are not published on this site. The practice is accountable through its registered operator below, and every claim about background is one GreenSquare AI will substantiate on request.</p>
       </div>
-    </section>
+      <div class="about-people">
+        {people.lines.map((line) => <p>{line}</p>)}
+      </div>
+    </div>
+  </section>
 
-    <section class="v-section v-green">
-      <div class="v-container focus-grid">
-        <div>
-          <h2>Make Frame Free genuinely useful. Earn the right to build Frame Pro.</h2>
-        </div>
-        <p>We are starting with an adaptive system for individual decisions, then learning what paid professional use should require before we define it.</p>
+  <section class="v-section v-section--rule" id="maintained">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>What is personally maintained.</h2>
       </div>
-    </section>
+      <dl class="d-meta about-maintained">
+        {maintained.map((row) => <div><dt>{row.what}</dt><dd>{row.by}</dd></div>)}
+      </dl>
+    </div>
+  </section>
 
-    <section class="v-section v-green">
-      <div class="v-container closing">
-        <h2>Bring a real decision.</h2>
-        <div class="v-actions">
-          <a class="v-btn v-btn--green" href={withBase('/free/')}>Try Frame Free</a>
-          <a class="v-link" href="mailto:hello@greensquare.ai">Contact GreenSquare AI</a>
-        </div>
+  <section class="v-section v-section--rule" id="verify">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>How a buyer can verify the work.</h2>
+        <p>Nothing here asks to be taken on trust. Each of these can be done before a conversation with us.</p>
       </div>
-    </section>
-  </div>
+      <dl class="d-meta about-verify">
+        {people.verify.map((row) => <div><dt>{row.label}</dt><dd>{row.text}</dd></div>)}
+        <div><dt>The record</dt><dd>The benchmark is a {g.runs_total}-run preregistered study with {nDev} published deviations. <a href={withBase('/benchmark/')}>Read the deviations first</a>, then the counts.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="v-section v-section--rule" id="commitments">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>Four commitments that do not change as the model does.</h2>
+      </div>
+      <dl class="d-meta about-commitments">
+        {commitments.map(([title, copy]) => <div><dt>{title}</dt><dd>{copy}</dd></div>)}
+      </dl>
+    </div>
+  </section>
+
+  <section class="v-section v-section--rule" id="operator">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>The registered operator.</h2>
+      </div>
+      <div class="d-panel about-operator">
+        <dl class="d-meta">
+          <div><dt>Business name</dt><dd>{operator.businessName}</dd></div>
+          <div><dt>ABN</dt><dd>{operator.abn}</dd></div>
+          <div><dt>Location</dt><dd>{operator.location}</dd></div>
+          <div><dt>Governing law</dt><dd>{operator.jurisdiction}</dd></div>
+          <div><dt>Contact</dt><dd><a href={`mailto:${operator.email}`}>{operator.email}</a>. A reply comes from the person who maintains the method.</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="v-section v-section--rule about-close">
+    <div class="v-container">
+      <h2>Bring a real decision.</h2>
+      <div class="v-actions">
+        <a class="v-btn v-btn--green" href={withBase('/free/#get-free')}>Get the Frame Free beta</a>
+        <a class="v-btn" href={withBase('/product/#brief')}>See a Decision Brief</a>
+      </div>
+    </div>
+  </section>
 </BaseLayoutV2>
 
 <style>
-  .about-hero h1 { max-width:16ch; }
-  .focus-grid { display:grid; grid-template-columns:.45fr 1.55fr; gap:clamp(3rem,8vw,8rem); align-items:start; }
-  .premise-grid { max-width:56rem; }
-  .premise-grid h2 { max-width:24ch; }
-  .premise-grid div > p { max-width:43rem; color:var(--v-ink-soft); font-size:1.1rem; }
-  .principles { display:grid; grid-template-columns:repeat(2,1fr); margin-top:var(--v-5); border-top:1px solid var(--v-line); border-left:1px solid var(--v-line); }
-  .principles article { min-height:17rem; padding:1.5rem; border-right:1px solid var(--v-line); border-bottom:1px solid var(--v-line); }
-  .principles span { color:var(--v-green); font:600 var(--vs-label)/1 var(--vf-body); font-variant-numeric:tabular-nums; }
-  .principles h3 { margin-top:4rem; }
-  .principles p { color:var(--v-ink-soft); max-width:28rem; }
-  .focus-grid > p { font-size:1.15rem; }
-  .closing { display:flex; align-items:end; justify-content:space-between; gap:3rem; }
-  @media (max-width:760px) {
-    .focus-grid { grid-template-columns:1fr; }
-    .principles { grid-template-columns:1fr; }
-    .principles article { min-height:auto; }
-    .principles h3 { margin-top:2.5rem; }
-    .closing { align-items:flex-start; flex-direction:column; }
-  }
+  .about-hero h1 { max-width: 18ch; }
+  .about-letter .d-quote { margin-bottom: var(--v-5); max-width: 58ch; }
+  .about-letter__sign { margin-top: var(--v-6); padding-top: var(--v-4); border-top: 1px solid var(--v-line); max-width: none; }
+  .about-people p { max-width: 62ch; padding-top: var(--v-4); border-top: 1px solid var(--v-line); }
+  .about-people p:first-child { border-top: 0; padding-top: 0; }
+  .about-maintained dt, .about-verify dt, .about-commitments dt { color: var(--v-ink); font-weight: 600; }
+  .about-maintained > div, .about-verify > div, .about-commitments > div { grid-template-columns: minmax(9rem, 12rem) 1fr; }
+  .about-operator { padding: var(--v-2) var(--v-5); }
+  .about-close h2 { max-width: 20ch; }
+  @media (max-width: 480px) { .about-maintained > div, .about-verify > div, .about-commitments > div { grid-template-columns: 1fr; } }
 </style>

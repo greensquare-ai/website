@@ -1,0 +1,38 @@
+---
+/**
+ * The one conversion on the site: a request for the Frame Free beta. The panel says
+ * what arrives and what happens after the address is submitted, beside the form, so the
+ * reader never signs up for an undefined thing.
+ */
+import EmailCaptureForm from './EmailCaptureForm.tsx';
+import { offer } from '../data/offer';
+export interface Props { id?: string; heading?: string; }
+const { id = 'get-free', heading = 'Get the Frame Free beta' } = Astro.props;
+const d = offer.free.delivery;
+---
+<section class="v-section signup" id={id}>
+  <div class="v-container">
+    <div class="d-panel d-panel--ink signup__panel">
+      <div class="signup__copy">
+        <h2>{heading}</h2>
+        <p class="v-lead">{offer.free.oneLine}</p>
+        <dl class="d-meta signup__meta">
+          <div><dt>What arrives</dt><dd>{d.object} {d.how}</dd></div>
+          <div><dt>After you submit</dt><dd>{d.after}</dd></div>
+          <div><dt>Setup</dt><dd>{d.setup}</dd></div>
+        </dl>
+      </div>
+      <div class="signup__form">
+        <EmailCaptureForm client:visible buttonLabel="Email me the beta" fineprint="You confirm your address once. The method file follows in the reply, then occasional product notes. Unsubscribe at any time." />
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .signup__panel { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: clamp(2rem, 5vw, 5rem); padding: clamp(1.5rem, 4vw, 3rem); }
+  .signup__copy h2 { max-width: 16ch; }
+  .signup__meta { margin-top: var(--v-6); border-top: 1px solid var(--v-line); }
+  .signup__meta > div:first-child { border-top: 0; }
+  .signup__form { align-self: end; }
+  @media (max-width: 800px) { .signup__panel { grid-template-columns: 1fr; } }
+</style>

@@ -1,14 +1,11 @@
 ---
 layout: ../../layouts/LegalLayout.astro
 title: Cookie notice
-description: How Frame uses cookies and similar technologies.
+description: How www.greensquare.ai uses cookies and similar technologies.
+updated: 10 September 2026
 ---
 
-# Cookie notice
-
-Last updated: 17 August 2026
-
-This notice explains how www.greensquare.ai, run by GreenSquare AI (the trading name of the operator of this site), uses cookies and similar technologies. Read it alongside our privacy policy.
+This notice explains how www.greensquare.ai, run by GreenSquare AI, uses cookies and similar technologies. Read it alongside the [privacy policy](/legal/privacy/).
 
 ## What cookies are
 
@@ -25,7 +22,7 @@ We do not set cookies to identify you personally. The only personal detail you g
 
 ## Managing cookies
 
-You can control cookies through your browser. Most browsers let you see what is stored, block cookies, or delete them. If you block functional cookies, some parts of the site and any available checkout may not work as intended.
+You can control cookies through your browser. Most browsers let you see what is stored, block cookies, or delete them. Blocking functional cookies may stop some parts of the site behaving as intended. Nothing on the site requires a cookie to request the Frame Free beta.
 
 ## Changes to this notice
 

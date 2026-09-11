@@ -41,3 +41,4 @@ Thumbs.db
 /.design-sync/learnings/
 /.design-sync/node_modules
 .env*
+qa/shots/
