@@ -18,13 +18,13 @@ const accountable = [
 ---
 <BaseLayoutV2
   title="Frame | The Decision Brief and the method that produces it"
-  description="Frame is a method file for ChatGPT, Claude or another capable model. It makes the model interrogate a consequential decision and produce a Decision Brief with its confidence and conditions stated."
+  description="Frame is a method for ChatGPT, Claude or Gemini. Frame Free, the beta available now, is a six-page PDF that makes the model interrogate a consequential decision and stop before evaluation."
   current="product"
 >
   <section class="v-hero product-hero">
     <div class="v-container">
       <h1>The output is a Decision Brief. The method is what makes it defensible.</h1>
-      <p class="v-lead">Frame is a plain-text method file you load into the model you already use. It changes what the model does with a consequential decision: it asks before it advises, tags what it is told, compares real options and states the conditions under which its recommendation fails.</p>
+      <p class="v-lead">Frame Free is a six-page PDF you load into the model you already use. It changes what the model does with a consequential decision: it asks before it advises, tags what it is told, and separates the constraints you have verified from the ones you have assumed. It stops before evaluation, and hands back a frame rather than a recommendation.</p>
       <div class="v-actions">
         <a class="v-btn v-btn--green" href="#get-free">Get the Frame Free beta</a>
         <a class="v-btn" href="#brief">See a Decision Brief</a>
@@ -46,11 +46,11 @@ const accountable = [
     <div class="v-container v-cols">
       <div class="v-cols__head">
         <h2>The six steps the file holds the model to.</h2>
-        <p>The sequence is fixed. What the model asks inside each step depends on what you have already told it, which is why two decisions never produce the same interrogation.</p>
+        <p>The sequence is fixed. Frame Free covers the first three moves and stops before evaluation; Compare, Decide and Execute belong to Frame Pro, which is in development. What the model asks inside each step depends on what you have already told it, which is why two decisions never produce the same interrogation.</p>
       </div>
       <ol class="d-list d-list--indexed">
-        {method.map(([name, text], i) => (
-          <li><span class="d-list__index">{String(i + 1).padStart(2, '0')}</span><div><h3>{name}</h3><p>{text}</p></div></li>
+        {method.map(([name, text, plan], i) => (
+          <li><span class="d-list__index">{String(i + 1).padStart(2, '0')}</span><div><h3>{name}</h3><p>{text}</p><p class="method-plan">{plan === 'free' ? 'Frame Free' : 'Frame Pro, in development'}</p></div></li>
         ))}
       </ol>
     </div>
@@ -71,7 +71,7 @@ const accountable = [
           <div><dt>Your rights</dt><dd>{free.rights}</dd></div>
         </dl>
         <div class="d-panel product-structure">
-          <div class="d-panel__head"><strong>Decision Brief</strong><span>structure, as the file produces it</span></div>
+          <div class="d-panel__head"><strong>Decision Brief</strong><span>structure, the Frame Pro output</span></div>
           <ol class="product-structure__list">
             {briefStructure.map((row, i) => (
               <li><span class="d-list__index">{i + 1}</span><div><h3>{row.section}</h3><p>{row.carries}</p></div></li>

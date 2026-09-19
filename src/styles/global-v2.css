@@ -343,3 +343,11 @@ html:has(.v2) { scroll-behavior: smooth; color-scheme: light; background: var(--
 @media (prefers-reduced-motion: reduce) {
   html:has(.v2) { scroll-behavior: auto; }
 }
+
+/* Plan marker on the six-move list. Frame Free covers the first three moves; the
+   remaining three are Frame Pro and are not purchasable, so each step says which. */
+.method-plan {
+  margin-top: 4px;
+  font-size: 14px;
+  color: var(--v-ink-faint);
+}
