@@ -1,94 +1,151 @@
 ---
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
-import { withBase } from '../lib/paths';
 import SectionNav from '../components/SectionNav.astro';
----
+import EvidenceStatus from '../components/EvidenceStatus.astro';
+import { withBase } from '../lib/paths';
+import { armBvsArmC, check, checks, dates, deviations, fmt, grid, limitations, spell } from '../lib/benchmark';
 
+const g = grid();
+const d = dates();
+const cmp = armBvsArmC();
+const judgement = checks('judgment');
+const process = checks('process');
+const c1 = check('c1'); const c2 = check('c2'); const c3 = check('c3');
+const nDev = deviations().length;
+const nLim = limitations().length;
+const corrections = [
+  { on: '10 September 2026', what: 'This page previously reversed the judgement result, crediting the loaded condition with matching or exceeding the informed baseline. The benchmark record says the opposite, and the counts support the record. The sentence is corrected here and in every place it was repeated.' },
+  { on: '10 August 2026', what: `The published grid was re-cut from ${g.retired.runs_total} runs to ${g.runs_total} by removing ${spell(g.excluded.pilot_runs)} design-phase pilot runs the protocol excluded, and every disputed cell was adjudicated against the sealed answers. Every count on the benchmark page reports the ${g.runs_total}.` },
+  { on: '11 August 2026', what: 'The preregistration commit identifier was corrected. The one previously published exists in no ref; the real commit is linked from the benchmark record.' },
+];
+---
 <BaseLayoutV2
   title="Research | GreenSquare AI"
-  description="The evidence, limits and study record behind our approach to professional judgement."
+  description="What a preregistered benchmark of the method showed, what it did not, and what it says about Frame. One controlled claim, its boundary, and a record of corrections."
   current="research"
 >
-  <div>
-    <section class="research-hero v-hero v-hero--editorial">
-      <div class="v-container">
-        <h1>Test the method.<br />Publish the boundary.</h1>
-        <p class="v-lead">We study whether structured decision support improves professional judgement, and state plainly what the evidence cannot yet establish.</p>
-      </div>
-    </section>
+  <section class="v-hero research-hero">
+    <div class="v-container">
+      <h1>The method changed how the model worked. It did not beat an informed baseline on judgement.</h1>
+      <p class="v-hero__dateline">Research overview. Benchmark record current as at {d.currentAsAt}.</p>
+      <p class="v-lead">One preregistered study, {g.runs_total} scored runs, two models, three fictional cases, {spell(cmp.total)} checks. Everything below is stated so that a buyer can hold GreenSquare AI to it.</p>
+    </div>
+  </section>
 
-    <SectionNav
-      items={[
-        { id: 'finding', label: 'Finding' },
-        { id: 'boundary', label: 'Boundary' },
-        { id: 'record', label: 'Study record' },
-        { id: 'next', label: 'Next work' },
-      ]}
-    />
+  <SectionNav items={[
+    { id: 'status', label: 'Status' },
+    { id: 'finding', label: 'Finding' },
+    { id: 'boundary', label: 'Boundary' },
+    { id: 'corrections', label: 'Corrections' },
+    { id: 'record', label: 'Record' },
+    { id: 'next', label: 'Next work' },
+  ]} />
 
-    <section class="v-section" id="finding">
-      <div class="v-container finding-grid">
-        <div>
-          <h2>The structured process is where the tested change showed up.</h2>
-        </div>
-        <div class="finding-copy">
-          <p>In our initial preregistered benchmark, the loaded condition matched or exceeded an informed baseline on the measured judgement outcomes.</p>
-          <p>That is evidence for a structured method under the tested conditions. It is not proof of universal performance.</p>
-          <a class="v-link" href={withBase('/benchmark/')}>Read the full benchmark</a>
-        </div>
-      </div>
-    </section>
+  <section class="v-section" id="status">
+    <div class="v-container">
+      <EvidenceStatus
+        claim="That loading the method file makes a capable model reliably run a disciplined process on a consequential decision, and surface the decision the facts point to, where a baseline does so only sometimes."
+        result="Process: supported under the tested conditions. Judgement: not supported. The informed baseline matched or exceeded the loaded condition on all three judgement checks."
+        confidence={`Caution. One scorer, no independent re-score, ${g.n_per_arm} runs per condition, and two of the ${cmp.total} results are definitional rather than measured. All ${nDev} protocol deviations are published.`}
+        open={`Independent re-scoring, publication of the ${g.runs_total} transcripts and the sealed reference answers, per-case counts for seven checks, and a refresh on current model versions.`}
+        reviewed={d.currentAsAt}
+        relevance="The study tested a method file that predates Frame. It does not validate Frame Free, and it says nothing about Frame Pro."
+      />
+    </div>
+  </section>
 
-    <section class="v-section" id="boundary">
-      <div class="v-container evidence-boundary">
-        <h2>Under the tested conditions, the structured method improved how the decision was worked.</h2>
-        <div class="boundary-grid">
-          <p><strong>Supported:</strong> the loaded condition matched or exceeded the informed baseline on the measured judgement outcomes.</p>
-          <p><strong>Not established:</strong> performance across every decision type, organisation, user population or model environment.</p>
-        </div>
+  <section class="v-section v-section--rule" id="finding">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>One controlled statement of the result.</h2>
+        <p>The counts that carry it are below, taken from the benchmark record. Every figure on this page renders from the same data file as the record, so the two cannot disagree again.</p>
+        <a class="v-link" href={withBase('/benchmark/')}>Read the full record</a>
       </div>
-    </section>
+      <div class="research-finding">
+        <p class="d-quote d-quote--large">Under the tested conditions the method improved specified process behaviours. It did not outperform the informed baseline on the judgement checks.</p>
+        <div class="d-table-wrap" tabindex="0" aria-label="Scrollable summary of judgement checks">
+          <table class="d-table">
+            <caption>Judgement checks, informed baseline against loaded condition</caption>
+            <thead><tr><th scope="col">Judgement check</th><th scope="col" class="num">All facts (baseline)</th><th scope="col" class="num">Loaded method</th><th scope="col">Reading</th></tr></thead>
+            <tbody>
+              {judgement.map((c) => (
+                <tr>
+                  <th scope="row">{c.page_label}</th>
+                  <td class="num">{fmt(c.armB).text}</td>
+                  <td class="num">{fmt(c.armC).text}</td>
+                  <td>{c.armB.met > c.armC.met ? 'Baseline higher' : c.armB.met === c.armC.met ? 'Tie' : 'Loaded higher'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="research-finding__process">On the process side, the loaded condition asked before answering in {fmt(c1.armC).text} runs against {fmt(c1.armB).text}, compared real options including doing nothing in {fmt(c2.armC).text} against {fmt(c2.armB).text}, and tagged its evidence in {fmt(c3.armC).text} against {fmt(c3.armB).text}. The first of those is definitional: a single-turn baseline cannot ask. The other two are measured.</p>
+      </div>
+    </div>
+  </section>
 
-    <section class="v-section" id="record">
-      <div class="v-container record-grid">
-        <div>
-          <h2>Inspect the claim, method and frozen source material.</h2>
-        </div>
-        <div class="record-links">
-          <a href={withBase('/benchmark/')}><span>Results</span><strong>Benchmark record</strong></a>
-          <a href={withBase('/methodology/')}><span>Design</span><strong>Methodology</strong></a>
-          <a href="https://github.com/greensquare-ai/website/tree/main/evidence/preregistration"><span>Source</span><strong>Frozen preregistration</strong></a>
-        </div>
-        <p class="historical-note"><strong>Historical naming note.</strong> The published study used earlier internal product names and predates Frame. It is evidence about the tested method and condition, not a test of the current Frame Free plan or the future Frame Pro plan.</p>
+  <section class="v-section v-section--rule" id="boundary">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>The boundary sits beside every product claim.</h2>
       </div>
-    </section>
+      <dl class="d-meta research-boundary">
+        <div><dt>Supported</dt><dd>A change in process, on two models and three fictional cases, {g.n_per_arm} runs per condition.</dd></div>
+        <div><dt>Not established</dt><dd>Better judgement than a well-briefed model. Performance on other decision types, organisations, user populations or model versions. What an operator arriving with partial knowledge and a blind spot would get, because that condition was not run.</dd></div>
+        <div><dt>Not tested</dt><dd>Frame Free or Frame Pro. The study used an earlier method file, identified by its published hash. Nothing commits a later release to being that file.</dd></div>
+      </dl>
+    </div>
+  </section>
 
-    <section class="v-section" id="next">
-      <div class="v-container next-grid">
-        <div>
-          <h2>Future work needs to widen the test: more decision domains, more users, sharper measurement of the outcome.</h2>
-        </div>
-        <p>Future studies should test different decision domains, model environments and user populations, with clearer measurement of downstream action and decision quality.</p>
+  <section class="v-section v-section--rule" id="corrections">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>Corrections to the public record.</h2>
+        <p>Kept here in date order so a reader can see what changed and when, rather than finding a page that quietly says something different from the last time they read it.</p>
       </div>
-    </section>
-  </div>
+      <dl class="d-meta research-corrections">
+        {corrections.map((row) => (
+          <div><dt>{row.on}</dt><dd>{row.what}</dd></div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <section class="v-section v-section--rule" id="record">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>Inspect the claim, the method and the frozen inputs.</h2>
+      </div>
+      <div class="research-links">
+        <a class="d-panel research-link" href={withBase('/benchmark/')}><span class="v-meta">Results</span><strong>Benchmark record</strong><span>All {process.length + judgement.length} checks, {nDev} deviations, {spell(nLim)} limitations, sources and what is withheld.</span></a>
+        <a class="d-panel research-link" href={withBase('/methodology/')}><span class="v-meta">Design</span><strong>Methodology</strong><span>Conditions, cases, scorecard, preregistration and scoring.</span></a>
+        <a class="d-panel research-link" href="https://github.com/greensquare-ai/website/tree/main/evidence/preregistration"><span class="v-meta">Source</span><strong>Frozen preregistration</strong><span>Cases, protocol, rubric and hashes, at the commit that fixed them.</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="v-section v-section--rule" id="next">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>What would change the result.</h2>
+      </div>
+      <p class="research-next">A condition that resembles a real operator, arriving with most of what matters and one thing they cannot see. An independent re-score against the published rubric. Publication of the transcripts and the sealed key. A refresh on current model versions, with the date-stamped history the protocol promised. None of this is scheduled; when any of it is done it will be recorded here with a date.</p>
+    </div>
+  </section>
 </BaseLayoutV2>
 
 <style>
-  .research-hero h1 { max-width:12ch; }
-  .research-hero .v-lead { max-width:48rem; }
-  .finding-grid, .record-grid, .next-grid { display:grid; grid-template-columns:minmax(0,1fr) minmax(18rem,.75fr); gap:clamp(3rem,8vw,8rem); align-items:start; }
-  .finding-copy p { font-size:clamp(1.05rem,2vw,1.3rem); }
-  .finding-copy .v-link { display:inline-block; margin-top:1rem; }
-  .evidence-boundary { max-width:67rem; }
-  .boundary-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:2rem; border-top:1px solid var(--v-line); margin-top:3rem; padding-top:1.5rem; }
-  .boundary-grid p { margin:0; }
-  .record-links a { display:grid; grid-template-columns:5rem 1fr; gap:1rem; padding:1.4rem 0; color:var(--v-ink); text-decoration:none; border-top:1px solid var(--v-line); }
-  .record-links span { color:var(--v-ink-soft); font:600 var(--vs-label)/1.4 var(--vf-body); }
-    .historical-note { grid-column:1/-1; max-width:60rem; margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--v-line); color:var(--v-ink-soft); font-size:.88rem; }
-  .next-grid > p { color:var(--v-ink-soft); font-size:1.1rem; }
-  @media (max-width:760px) {
-    .finding-grid, .record-grid, .next-grid, .boundary-grid { grid-template-columns:1fr; }
-    .record-links a { grid-template-columns:4.5rem 1fr; }
-  }
+  .research-hero h1 { max-width: 22ch; font-size: var(--vs-h1); }
+  .research-finding .d-quote { margin: 0 0 var(--v-6); max-width: 32ch; }
+  .research-finding__process { margin-top: var(--v-5); font-size: var(--vs-small); color: var(--v-ink-soft); max-width: none; }
+  .research-boundary > div, .research-corrections > div { grid-template-columns: minmax(8rem, 10rem) 1fr; }
+  .research-boundary dt, .research-corrections dt { color: var(--v-ink); font-weight: 600; }
+  .research-links { display: grid; gap: var(--v-3); }
+  .research-link { display: grid; grid-template-columns: 5rem 1fr; gap: 0 var(--v-4); padding: var(--v-4) var(--v-5); color: var(--v-ink); text-decoration: none; transition: border-color var(--v-fast) var(--v-ease); }
+  .research-link .v-meta { grid-row: span 2; padding-top: 3px; }
+  .research-link strong { font-weight: 600; }
+  .research-link span:last-child { font-size: var(--vs-small); color: var(--v-ink-soft); }
+  .research-link:hover { border-color: var(--v-ink); }
+  .research-next { max-width: none; }
+  @media (max-width: 480px) { .research-boundary > div, .research-corrections > div { grid-template-columns: 1fr; } .research-link { grid-template-columns: 1fr; } .research-link .v-meta { grid-row: auto; } }
 </style>

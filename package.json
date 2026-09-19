@@ -6,10 +6,12 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build && npm run check:copy",
+    "build": "astro build && npm run check:copy && npm run check:excerpts",
     "check:copy": "node scripts/check-copy.mjs",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "check:excerpts": "node qa/check-excerpts.mjs",
+    "qa:shots": "node qa/shots.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "7.0.7",

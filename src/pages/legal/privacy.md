@@ -1,32 +1,40 @@
 ---
 layout: ../../layouts/LegalLayout.astro
 title: Privacy policy
-description: How Frame collects, uses and protects your personal information.
+description: What personal information GreenSquare AI collects, why, who it is shared with, and where the material you put into Frame goes.
+updated: 10 September 2026
 ---
 
-# Privacy policy
-
-Last updated: 1 September 2026
-
-GreenSquare AI runs www.greensquare.ai. This policy explains what personal information we collect, why we collect it, who we share it with, and the choices you have. It applies to everyone who visits the site, wherever you are.
+GreenSquare AI runs www.greensquare.ai. This policy explains what personal information we collect, why we collect it, who we share it with, and the choices you have. It applies to everyone who visits the site, wherever you are. The [terms of use](/legal/terms/) and the [cookie notice](/legal/cookies/) sit alongside it.
 
 We are based in Australia and handle personal information under the Australian Privacy Act 1988 and the Australian Privacy Principles. If you are in the European Union or the United Kingdom, we also aim to meet the standards of the General Data Protection Regulation, and this policy sets out the lawful basis we rely on.
+
+## Where your information goes when you use Frame
+
+Frame is a method file you load into a model provider's product (for example ChatGPT or Claude). GreenSquare AI is not in that session. In plain terms:
+
+| What | Where it goes |
+|---|---|
+| Your email address | Reaches GreenSquare AI. Held by our email provider, Kit, until you unsubscribe or ask us to delete it. |
+| Your decision, your facts and your answers | Go to the model provider you chose, under that provider's terms and the data settings on your account. None of it reaches GreenSquare AI. |
+| Retention and training use of that material | Depend on the provider and the account tier you use. Check the data controls on your own account before a confidential decision. |
+| What you should not submit | Anything you are not permitted to place with that provider: client names under NDA, personal information, price-sensitive or privileged material, unless your account and the provider's terms allow it. |
 
 ## What we collect
 
 We keep collection to the minimum the site needs to work.
 
-- **Your email address.** You give us this when you request Frame Free or join the beta list. This is the only personal detail you enter on the site.
+- **Your email address.** You give us this when you request the Frame Free beta. This is the only personal detail you enter on the site.
 - **Technical and usage data.** When you load a page, our hosting provider records standard information such as your IP address, browser type, device type, the pages you view, and the time of your visit. We also collect aggregate page view counts through Vercel Web Analytics, which uses no cookies and does not identify you.
 
 We do not run advertising trackers. We do not build profiles of you for marketing.
 
 ## How we use your information
 
-- We use your email address to send you Frame Free and occasional product updates covered by the form. Every marketing email includes a one-click unsubscribe link.
+- We use your email address to send you the Frame Free method file and occasional product notes covered by the form. Every marketing email includes a one-click unsubscribe link.
 - We use technical and usage data to keep the site running, to fix problems, and to understand which pages people find useful.
 
-We do not sell your personal information, and we never will.
+We do not sell your personal information.
 
 ## Our lawful basis
 
@@ -34,7 +42,7 @@ For your email address and the messages we send you, we rely on your consent, gi
 
 ## Who we share it with
 
-- **Kit (ConvertKit LLC, United States)** stores the beta list and sends Frame Free and product updates.
+- **Kit (ConvertKit LLC, United States)** stores the beta list and sends the method file and product notes.
 - **Google Workspace (Google LLC, United States)** carries email we send to you and email you send to us at our contact address.
 - **Vercel Inc. (United States)** hosts the site, processes technical and usage data to serve it, and provides the aggregate page view counts described above.
 

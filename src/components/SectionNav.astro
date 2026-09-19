@@ -1,15 +1,10 @@
 ---
 /**
- * In-page section index.
+ * In-page section index for the research pages.
  *
- * Replaces three near-identical left-aligned strips on /research, /benchmark and
- * /methodology. All three were `position: sticky; top: 0; z-index: 20` while the site
- * nav is sticky at 72px with `z-index: 60`, so each one slid underneath the nav and
- * disappeared the moment the reader scrolled. The index only existed above the fold.
- *
- * Geometry follows the DeepMind AlphaFold jumplinks, measured at 1440px on 4 September:
- * a 62px pill rail with 52px pills inside it, 12px by 24px pill padding, sentence case,
- * no uppercase and no tracking. The rail is centred rather than left aligned.
+ * An opaque band that sits under the site nav, so it never floats over the content it
+ * indexes. The previous floating pill rail was transparent at the edges and read over
+ * the text scrolling beneath it.
  */
 export interface Props {
   items: { id: string; label: string }[];
@@ -18,13 +13,14 @@ export interface Props {
 const { items, label = 'On this page' } = Astro.props;
 ---
 <nav class="section-nav" aria-label={label}>
-  <ul class="section-nav__rail">
-    {items.map((item) => (
-      <li>
-        <a href={`#${item.id}`} data-section-link={item.id}>{item.label}</a>
-      </li>
-    ))}
-  </ul>
+  <div class="v-container section-nav__row">
+    <span class="section-nav__label v-meta">{label}</span>
+    <ul class="section-nav__list">
+      {items.map((item) => (
+        <li><a href={`#${item.id}`} data-section-link={item.id}>{item.label}</a></li>
+      ))}
+    </ul>
+  </div>
 </nav>
 
 <script>
@@ -34,13 +30,8 @@ const { items, label = 'On this page' } = Astro.props;
       .map((link) => ({ link, section: document.getElementById(link.dataset.sectionLink ?? '') }))
       .filter((entry): entry is { link: HTMLAnchorElement; section: HTMLElement } => Boolean(entry.section));
     if (!sections.length) return;
-
-    /* Scroll position rather than IntersectionObserver: the sections here vary from one
-       screen to several, and a ratio-based observer picks the wrong one when a short
-       section sits above a long one. The site nav already syncs its own state this way. */
-    const line = 170; // just below the sticky nav and this rail
+    const line = 140;
     let ticking = false;
-
     const sync = () => {
       ticking = false;
       let current = sections[0];
@@ -51,86 +42,26 @@ const { items, label = 'On this page' } = Astro.props;
         if (entry === current) entry.link.setAttribute('aria-current', 'location');
         else entry.link.removeAttribute('aria-current');
       }
-      const pill = current.link;
-      /* Keep the active pill in view when the rail is scrolling horizontally on a phone. */
-      if (nav.scrollWidth > nav.clientWidth) pill.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      const list = nav.querySelector('.section-nav__list');
+      if (list && list.scrollWidth > list.clientWidth) current.link.scrollIntoView({ block: 'nearest', inline: 'nearest' });
     };
-
-    window.addEventListener('scroll', () => {
-      if (!ticking) { ticking = true; requestAnimationFrame(sync); }
-    }, { passive: true });
+    window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(sync); } }, { passive: true });
     sync();
   });
 </script>
 
 <style>
-  .section-nav {
-    position: sticky;
-    /* Clears the 72px site nav with a 16px gap. The old bars used top: 0 and were
-       painted over by that nav. */
-    top: calc(72px + var(--v-4));
-    z-index: 30;
-    display: flex;
-    justify-content: center;
-    margin-block: var(--v-8);
-    padding-inline: var(--v-gutter);
-    /* The strip spans the page so the rail can centre in it, but only the rail is
-       a target. Without this the transparent strip would swallow clicks on the
-       content scrolling underneath it. */
-    pointer-events: none;
+  .section-nav { position: sticky; top: 64px; z-index: 30; background: var(--v-paper); border-bottom: 1px solid var(--v-line); margin-top: var(--v-8); }
+  .section-nav__row { display: flex; align-items: center; gap: var(--v-6); min-height: 48px; }
+  .section-nav__label { flex: none; }
+  .section-nav__list { display: flex; align-items: stretch; gap: var(--v-5); margin: 0; padding: 0; list-style: none; max-width: 100%; overflow-x: auto; scrollbar-width: none; min-height: 48px; }
+  .section-nav__list::-webkit-scrollbar { display: none; }
+  .section-nav__list a { display: flex; align-items: center; min-height: 48px; color: var(--v-ink-soft); font-size: var(--vs-small); font-weight: 500; text-decoration: none; white-space: nowrap; box-shadow: inset 0 -1px 0 transparent; transition: color var(--v-fast) var(--v-ease), box-shadow var(--v-fast) var(--v-ease); }
+  .section-nav__list a:hover { color: var(--v-ink); }
+  .section-nav__list a[aria-current='location'] { color: var(--v-ink); box-shadow: inset 0 -2px 0 var(--v-green); }
+  @media (max-width: 640px) {
+    .section-nav__label { display: none; }
+    .section-nav__row { gap: 0; }
   }
-
-  .section-nav__rail {
-    pointer-events: auto;
-    display: flex;
-    align-items: center;
-    gap: 0;
-    margin: 0;
-    padding: 5px;
-    list-style: none;
-    max-width: 100%;
-    overflow-x: auto;
-    scrollbar-width: none;
-    /* A keyboard user tabbing to the last pill must not land on a half-clipped one.
-       Axe flagged exactly that on the old bars at 390px. */
-    scroll-padding-inline: 5px;
-    background: var(--v-off);
-    border: 1px solid var(--v-line);
-    border-radius: 999px;
-  }
-  .section-nav__rail::-webkit-scrollbar { display: none; }
-
-  .section-nav__rail a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 52px;
-    padding: 12px 24px;
-    border-radius: 999px;
-    color: var(--v-ink);
-    font-family: var(--vf-body);
-    font-size: 1rem;
-    font-weight: 500;
-    line-height: 1.2;
-    text-decoration: none;
-    white-space: nowrap;
-    transition: background-color var(--v-fast) var(--v-ease), color var(--v-fast) var(--v-ease);
-  }
-  @media (hover: hover) and (pointer: fine) {
-    .section-nav__rail a:hover { background: var(--v-paper); color: var(--v-green); }
-  }
-  /* Fill carries the active state, not weight, so the rail does not reflow as the
-     reader scrolls through the page. */
-  .section-nav__rail a[aria-current='location'] {
-    background: var(--v-black);
-    color: var(--v-cream);
-  }
-
-  @media (max-width: 760px) {
-    .section-nav { margin-block: var(--v-6); }
-    .section-nav__rail a { min-height: 44px; padding: 10px 16px; font-size: var(--vs-small); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .section-nav__rail a { transition: none; }
-  }
+  @media (prefers-reduced-motion: reduce) { .section-nav__list a { transition: none; } }
 </style>

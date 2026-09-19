@@ -1,245 +1,176 @@
 ---
 import { withBase } from '../lib/paths';
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
-import EmailCaptureForm from '../components/EmailCaptureForm.tsx';
-import PlanCards from '../components/PlanCards.astro';
-import FrameHeroVideo from '../components/FrameHeroVideo.astro';
+import BriefExcerpt from '../components/BriefExcerpt.astro';
+import Signup from '../components/Signup.astro';
+import { briefExcerpt } from '../data/brief-excerpt';
+import { method, offer } from '../data/offer';
+import { people } from '../data/operator';
+import { armBvsArmC, check, dates, deviations, grid, limitations, spell } from '../lib/benchmark';
 
-const capabilities = [
-  {
-    icon: 'frame',
-    title: 'Define the decision before solving it',
-    body: 'Frame identifies the mandate, decision owner, stakes and evidence needed before a recommendation can be credible.',
-  },
-  {
-    icon: 'search',
-    title: 'Expose assumptions and missing evidence',
-    body: 'It separates what is known from what is inferred, tests contradictions and keeps uncertainty visible where it can still change the call.',
-  },
-  {
-    icon: 'flash',
-    title: 'Compare real options and define the path',
-    body: 'It evaluates distinct choices consistently, recommends only when the evidence permits and carries decision conditions into action.',
-  },
-];
-
-const plans = [
-  {
-    variant: 'free',
-    title: 'Frame Free',
-    body: 'An adaptive decision system you upload to a capable AI model.',
-    cta: { href: withBase('/free/'), label: 'Try Frame Free', icon: 'download' },
-  },
-  {
-    variant: 'pro',
-    title: 'Frame Pro',
-    body: 'The paid plan that will follow, published when the product boundary is ready.',
-    cta: { href: withBase('/product/#pro'), label: 'View the product direction', icon: 'arrow' },
-  },
-] as const;
-
-const researchFacts = [
-  { term: 'Study', detail: 'Preregistered, three arms' },
-  { term: 'Finding', detail: 'Change in process, not in outcome quality' },
-  { term: 'Published', detail: 'Protocol, results, limitations, departures' },
+const g = grid();
+const d = dates();
+const cmp = armBvsArmC();
+const c6 = check('c6');
+const c7 = check('c7');
+const c8 = check('c8');
+const nDev = deviations().length;
+const nLim = spell(limitations().length);
+const useWhen = [
+  { when: 'A capital or contract commitment that is hard to reverse', why: 'The brief separates the options that keep a way back from the ones that do not.' },
+  { when: 'A paper you have to put your name to', why: 'Every material claim is tagged given, derived, inferred or unknown, so the reader can see what you are standing on.' },
+  { when: 'A recommendation you already believe', why: 'The method tests the framing you arrived with before it tests anything else.' },
+  { when: 'A decision with a date and an owner', why: 'It will not produce a brief without one. If neither exists yet, that is the first finding.' },
 ];
 ---
 <BaseLayoutV2
-  title="GreenSquare AI | Professional judgement for consequential decisions"
-  description="Frame adds a disciplined professional judgement process to the AI you already use, from the first material question to an inspectable decision."
+  title="GreenSquare AI | Decision support for consequential work"
+  description="Frame gives the AI you already use a disciplined process for consequential business decisions, and produces a Decision Brief you can put your name to."
   current="home"
 >
-  <section class="home-hero v-hero v-hero--marketing" data-reveal>
+  <section class="v-hero home-hero">
     <div class="v-container">
-      <h1 class="v-display">Make better use of capable AI when the decision matters.</h1>
-      <p class="v-lead">Frame gives AI a disciplined process for consequential business decisions.</p>
-      <div class="hero-actions">
-        <a class="v-btn v-btn--green" href={withBase('/free/')}>Try Frame Free</a>
-        <a class="v-link" href={withBase('/product/')}>Learn More</a>
+      <div class="home-hero__grid">
+        <div class="home-hero__copy">
+          <h1>Decision support for consequential work, built to sit beside the AI you already use.</h1>
+          <p class="v-lead">Frame is a method file. Loaded into ChatGPT, Claude or another capable model, it makes the model ask before it advises, tag its evidence, compare real options and produce a Decision Brief with its confidence and conditions stated.</p>
+          <p class="home-hero__delivery">The current offer is the Frame Free beta: one plain-text method file, sent by email after you confirm your address.</p>
+          <div class="v-actions">
+            <a class="v-btn v-btn--green" href="#get-free">Get the Frame Free beta</a>
+            <a class="v-btn" href={withBase('/product/#brief')}>See a Decision Brief</a>
+          </div>
+        </div>
+        <div class="home-hero__exhibit">
+          <BriefExcerpt compact />
+          <p class="home-exhibit__note v-meta">The closing section of a brief the method produced on a fictional case. <a href={withBase('/product/#brief')}>Read how it got there</a>, from the question as first asked to the reframed decision.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <div class="v-container v-container--wide">
-    <div class="v-hero__visual">
-      <FrameHeroVideo />
-    </div>
-  </div>
-
-  <section class="v-section" data-reveal>
-    <div class="v-container">
-      <div class="section-intro">
-        <h2 class="v-h2">A fluent answer is not the same as a sound decision.</h2>
-        <p class="v-lead">AI can analyse and write at speed. It does not know which question matters or what evidence should change the call.</p>
+  <section class="v-section v-section--rule" id="when">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>For the decisions where a fluent answer is not enough.</h2>
+        <p>Frame is for professionals who already use a capable model and know that a confident paragraph is not the same as a defensible recommendation. It adds the discipline a senior reviewer would apply, in the session, before anything reaches a committee.</p>
       </div>
-      <div class="home-capabilities">
-        {capabilities.map((item) => (
-          <article>
-            <span class="home-capabilities__icon" aria-hidden="true">
-              {item.icon === 'frame' && (
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-                  <path d="M6 2v20" /><path d="M18 2v20" /><path d="M2 6h20" /><path d="M2 18h20" />
-                </svg>
-              )}
-              {item.icon === 'search' && (
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-                  <circle cx="10.5" cy="10.5" r="7" /><path d="m15.5 15.5 5 5" />
-                </svg>
-              )}
-              {item.icon === 'flash' && (
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M13.5 2 4 13.5h6.5L10.5 22 20 10.5h-6.5z" />
-                </svg>
-              )}
-            </span>
-            <h3>{item.title}</h3>
-            <p>{item.body}</p>
-          </article>
+      <dl class="d-meta home-when">
+        {useWhen.map((row) => (
+          <div><dt>{row.when}</dt><dd>{row.why}</dd></div>
         ))}
-      </div>
+      </dl>
     </div>
   </section>
 
-  <section id="plans" class="v-section" data-reveal>
-    <div class="v-container">
-      <div class="product-intro">
-        <h2 class="v-h2">Start with the current beta.</h2>
-        <p class="v-lead">Frame Free is the current adaptive beta. Frame Pro will follow.</p>
+  <section class="v-section v-section--rule" id="method">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>Six steps, run in order, on one decision.</h2>
+        <p>The method file instructs the model to work through these in sequence and not to draft the brief until it has asked what it needs to. The path adapts to the answers; the order does not.</p>
       </div>
-      <PlanCards plans={plans} />
+      <ol class="d-list d-list--indexed home-method">
+        {method.map(([name, text], i) => (
+          <li><span class="d-list__index">{String(i + 1).padStart(2, '0')}</span><div><h3>{name}</h3><p>{text}</p></div></li>
+        ))}
+      </ol>
     </div>
   </section>
 
-  <section id="research" class="v-section research-strip" data-reveal>
-    <div class="v-container research-strip__grid">
-      <div>
-        <h2 class="v-h2">Evidence with its boundary intact.</h2>
+  <section class="v-section v-section--rule" id="anatomy">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>Every material claim carries its evidence class.</h2>
+        <p>The four classes are the reading aid a reviewer uses to find the weak point. From the {briefExcerpt.case} brief, quoted:</p>
       </div>
-      <div>
-        <p class="v-lead">The published benchmark found a consistent change in process, not proof of better judgement. Protocol, findings, limitations and departures are open to scrutiny.</p>
-        <dl class="research-facts">
-          {researchFacts.map((row) => (
-            <div>
-              <dt>{row.term}</dt>
-              <dd>{row.detail}</dd>
-            </div>
-          ))}
+      <ul class="home-anatomy">
+        {briefExcerpt.evidence.map((row) => (
+          <li><span class={`d-tag d-tag--${row.tag}`}>{row.tag}</span><p>{row.text}</p></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="v-section v-section--rule" id="evidence">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>What the research supports, and what it does not.</h2>
+        <p>A {g.runs_total}-run preregistered benchmark across two models and three fictional cases, scored on {spell(cmp.total)} checks, with every count, all {nDev} protocol deviations and all {nLim} limitations published.</p>
+        <a class="v-link" href={withBase('/research/')}>Read the research overview</a>
+      </div>
+      <div class="d-panel home-evidence">
+        <dl class="d-meta">
+          <div><dt>Supported</dt><dd>Under the tested conditions the loaded method changed how the model worked: it asked before answering, compared real options including doing nothing, and tagged its evidence on every run.</dd></div>
+          <div><dt>Not supported</dt><dd>Better judgement. On the three judgement checks the informed baseline matched or exceeded the loaded method: {c6.armB.met} of {c6.armB.n} against {c6.armC.met} of {c6.armC.n} on surfacing the hidden decision, {c7.armB.met} of {c7.armB.n} against {c7.armC.met} of {c7.armC.n} on direction, and {c8.armB.met} of {c8.armB.n} against {c8.armC.met} of {c8.armC.n} on catching the planted bias.</dd></div>
+          <div><dt>Boundary</dt><dd>The study tested a method file that predates Frame. It is not a test of Frame Free or Frame Pro. Record current as at {d.currentAsAt}.</dd></div>
         </dl>
-        <a class="v-link research-strip__link" href={withBase('/research/')}>
-          Review the research
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M7 17 17 7" /><path d="M8 7h9v9" />
-          </svg>
-        </a>
       </div>
     </div>
   </section>
 
-  <section id="get-frame" class="home-cta v-section v-green" data-reveal>
-    <div class="v-container home-cta__grid">
-      <div>
-        <h2 class="v-h2">Bring Frame to your next consequential decision.</h2>
-        <p class="v-lead">Enter your email, confirm your address and receive Frame Free.</p>
+  <section class="v-section v-section--rule" id="people">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>{people.heading}</h2>
+        <p>{people.lines[0]}</p>
+        <a class="v-link" href={withBase('/about/')}>Who is accountable, and how to check</a>
       </div>
-      <EmailCaptureForm client:visible buttonLabel="Get Frame Free" />
+      <dl class="d-meta">
+        {people.verify.map((row) => (
+          <div><dt>{row.label}</dt><dd>{row.text}</dd></div>
+        ))}
+      </dl>
     </div>
   </section>
+
+  <section class="v-section v-section--rule" id="offer">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>One offer today, one in development.</h2>
+      </div>
+      <div class="home-offer">
+        <div class="d-panel d-panel--ink">
+          <div class="d-panel__head"><strong>{offer.free.name}</strong><span>{offer.free.status}</span></div>
+          <div class="d-panel__body">
+            <p>{offer.free.oneLine}</p>
+            <p class="v-small">{offer.free.rights}</p>
+            <a class="v-link" href={withBase('/free/')}>What you receive, and how to run it</a>
+          </div>
+        </div>
+        <div class="d-panel home-offer__pro">
+          <div class="d-panel__head"><strong>{offer.pro.name}</strong><span>{offer.pro.status}</span></div>
+          <div class="d-panel__body"><p class="v-small">{offer.pro.note}</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Signup />
 </BaseLayoutV2>
 
 <style>
-  /* The homepage carries the type scale from the approved Homepage design, which runs a
-     step below the site tokens at the top of each clamp: display caps at 3.5rem rather
-     than 4rem, and the lead at 1.25rem rather than 1.4rem. Scoped here rather than moved
-     into tokens-v2.css, because the other eight pages have not been redesigned against it. */
-  .home-hero { padding-block: clamp(96px, 10vw, 140px) clamp(64px, 7vw, 96px); }
-  .home-hero .v-display { font-size: clamp(3rem, 2.5rem + 1.4vw, 3.5rem); line-height: 1.08; letter-spacing: -0.02em; max-width: 22ch; text-wrap: balance; }
-  .home-hero .v-lead,
-  .section-intro .v-lead,
-  .product-intro .v-lead,
-  .research-strip .v-lead,
-  .home-cta .v-lead { font-size: clamp(1.125rem, 1.05rem + 0.2vw, 1.25rem); line-height: 1.55; max-width: 65ch; }
-
-  /* The design runs h2 at 32 to 38px, a shade tighter at the top than --vs-h2. */
-  .section-intro .v-h2,
-  .product-intro .v-h2,
-  .research-strip .v-h2,
-  .home-cta .v-h2 { font-size: clamp(2rem, 1.75rem + 0.9vw, 2.375rem); line-height: 1.16; letter-spacing: -0.02em; }
-
-  .hero-actions { display: flex; align-items: center; justify-content: center; gap: var(--v-5); flex-wrap: wrap; margin-top: var(--v-8); }
-  .v-btn__icon { width: 20px; height: 20px; margin-right: var(--v-2); flex: none; }
-  .v-btn__icon--trailing { margin-right: 0; margin-left: var(--v-2); }
-
-  /* ---------- capabilities ---------- */
-  .section-intro { max-width: 50rem; }
-  .home-capabilities { margin-top: clamp(40px, 5vw, 64px); display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: clamp(16px, 2vw, 28px); }
-  .home-capabilities article { display: flex; flex-direction: column; gap: var(--v-4); padding: clamp(20px, 2.2vw, 28px); border-radius: 12px; background: transparent; transition: background-color var(--v-fast) var(--v-ease); }
-  .home-capabilities__icon { display: flex; align-items: center; justify-content: center; width: 104px; height: 104px; margin-bottom: var(--v-5); border-radius: 20px; background: var(--v-paper); border: 1px solid var(--v-line); color: var(--v-green); }
-  .home-capabilities__icon svg { width: 40px; height: 40px; }
-  .home-capabilities h3 { font-size: clamp(1.3125rem, 1.2rem + 0.4vw, 1.5rem); line-height: 1.3; letter-spacing: -0.01em; }
-  .home-capabilities p { font-size: clamp(1.125rem, 1.05rem + 0.2vw, 1.25rem); line-height: 1.6; color: var(--v-ink-soft); max-width: 40ch; margin: 0; }
-  @media (hover: hover) and (pointer: fine) {
-    .home-capabilities article:hover { background: var(--v-off); }
-  }
-
-  /* ---------- plans ---------- */
-  .product-intro { display: grid; grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr)); gap: clamp(24px, 4vw, 64px); align-items: end; }
-
-  /* ---------- research ---------- */
-  .research-strip__grid, .home-cta__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr)); gap: clamp(32px, 5vw, 80px); align-items: start; }
-  .home-cta__grid { gap: clamp(32px, 5vw, 72px); }
-  .research-facts { margin: var(--v-6) 0 0; border-top: 1px solid var(--v-line); }
-  .research-facts > div { display: grid; grid-template-columns: minmax(9rem, .4fr) 1fr; gap: var(--v-4); padding: 14px 0; border-bottom: 1px solid var(--v-line); }
-  .research-facts dt { font-size: var(--vs-label); font-weight: 500; color: var(--v-ink-soft); }
-  .research-facts dd { margin: 0; font-size: var(--vs-label); font-weight: 500; }
-  .research-strip .v-link { display: inline-flex; align-items: center; gap: var(--v-2); margin-top: var(--v-5); }
-  .research-strip__link svg { width: 20px; height: 20px; flex: none; }
-  .home-cta { padding-block: clamp(56px, 6vw, 88px); }
-
-  /* ---------- reveal on scroll ---------- */
-  /* Sections below the fold fade up once, when they first cross into view. The pending
-     class is applied by script, so a reader without JavaScript sees the page at rest
-     rather than a blank column. */
-  [data-reveal] { transition: opacity var(--v-mid) var(--v-ease), transform var(--v-mid) var(--v-ease); }
-  [data-reveal].is-pending { opacity: 0; transform: translateY(12px); }
-  @media (prefers-reduced-motion: reduce) {
-    [data-reveal] { transition: none; }
-    [data-reveal].is-pending { opacity: 1; transform: none; }
-  }
-
-  @media (max-width: 560px) {
-    .research-facts > div { grid-template-columns: 1fr; gap: var(--v-1); }
-    .home-capabilities__icon { width: 80px; height: 80px; border-radius: 16px; margin-bottom: var(--v-4); }
-    .home-capabilities__icon svg { width: 32px; height: 32px; }
+  .home-hero { padding-bottom: var(--v-10); }
+  .home-hero__grid { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+  .home-hero__grid > * { min-width: 0; }
+  .home-hero__copy h1 { max-width: 15ch; font-size: clamp(2.4rem, 1.4rem + 3.2vw, 4rem); line-height: 1.02; letter-spacing: -0.02em; }
+  .home-hero__copy .v-lead { max-width: 52ch; }
+  .home-hero__exhibit { padding-top: var(--v-2); }
+  @media (max-width: 1000px) { .home-hero__grid { grid-template-columns: 1fr; } .home-hero__exhibit { padding-top: var(--v-4); } }
+  .home-hero__delivery { margin-top: var(--v-5); font-size: var(--vs-small); color: var(--v-ink); max-width: 58ch; padding-left: var(--v-4); border-left: 1px solid var(--v-ink); }
+  .home-exhibit__note { margin: var(--v-4) 0 0; max-width: none; }
+  .home-when > div { grid-template-columns: minmax(12rem, 0.9fr) 1.1fr; }
+  .home-when dt { font-size: var(--vs-small); font-weight: 600; color: var(--v-ink); }
+  .home-method h3 { font-size: 1.0625rem; }
+  .home-method p { color: var(--v-ink-soft); }
+  .home-anatomy { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--v-line); }
+  .home-anatomy li { display: grid; grid-template-columns: 6rem 1fr; gap: var(--v-4); padding: 14px 0; border-bottom: 1px solid var(--v-line); }
+  .home-anatomy p { margin: 0; font-size: var(--vs-small); }
+  .home-evidence { padding: var(--v-2) var(--v-5); }
+  .home-offer { display: grid; grid-template-columns: 1fr; gap: var(--v-4); }
+  .home-offer .d-panel__body p:last-of-type { margin-bottom: 0; }
+  .home-offer .v-link { display: inline-block; margin-top: var(--v-3); }
+  .home-offer__pro { background: transparent; }
+  @media (max-width: 800px) {
+    .home-when > div { grid-template-columns: 1fr; }
+    .home-anatomy li { grid-template-columns: 1fr; gap: var(--v-1); }
   }
 </style>
-
-<script>
-  // Arm the reveal only for sections that start below the viewport. Anything already
-  // in or near view is left alone, so the first screen never animates in on load.
-  const armReveal = () => {
-    if (!('IntersectionObserver' in window)) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const viewport = window.innerHeight;
-    if (!viewport) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          entry.target.classList.remove('is-pending');
-          observer.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.12 },
-    );
-
-    for (const el of document.querySelectorAll('[data-reveal]')) {
-      const box = el.getBoundingClientRect();
-      if (!box.height || box.top < viewport + 40) continue;
-      el.classList.add('is-pending');
-      observer.observe(el);
-    }
-  };
-
-  requestAnimationFrame(() => requestAnimationFrame(armReveal));
-</script>

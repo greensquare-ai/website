@@ -1,9 +1,11 @@
 ---
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
-import { withBase } from '../lib/paths';
 import SectionNav from '../components/SectionNav.astro';
+import EvidenceStatus from '../components/EvidenceStatus.astro';
+import { withBase } from '../lib/paths';
 import {
-  armLabels, checks, composite, dates, deviations, fmt, grid, limitations, prereg,
+  armBvsArmC, armLabels, checks, composite, dates, deviations, directionByCase, fmt, goCase, grid,
+  hashedInputs, isDefinitional, limitations, prereg, refresh, sealedKey, spell, transcripts,
 } from '../lib/benchmark';
 
 const g = grid();
@@ -14,164 +16,263 @@ const judgement = results.filter((item) => item.group === 'judgment');
 const comp = composite();
 const d = dates();
 const pre = prereg();
-const integrityIssues = deviations();
-const studyLimits = limitations();
-const loaded = arms[2];
----
+const cmp = armBvsArmC();
+const issues = deviations();
+const limits = limitations();
+const go = goCase();
+const dir = directionByCase();
+const ref = refresh();
+const key = sealedKey();
+const tx = transcripts();
+const hashes = hashedInputs();
+const openCount = issues.filter((i) => i.status === 'open').length;
+const correctedCount = issues.filter((i) => i.status === 'corrected').length;
+const statusWord = { open: 'Open', corrected: 'Corrected', disclosed: 'Disclosed' } as const;
 
+/* One cell of the results table: the count, a bar, and whether the cell is a measurement. */
+const cell = (item: (typeof results)[number], arm: 'armA' | 'armB' | 'armC') => {
+  const c = fmt(item[arm]);
+  const def = isDefinitional(item, arm);
+  const cls = arm === 'armC' ? 'd-bar--loaded' : arm === 'armB' ? 'd-bar--baseline' : '';
+  return { ...c, def, cls: def === 'full' ? 'd-bar--def' : cls };
+};
+---
 <BaseLayoutV2
-  title="Benchmark results | GreenSquare AI"
-  description={`The complete public record of our ${g.runs_total}-run preregistered benchmark, including raw counts, limitations and protocol deviations.`}
+  title="Benchmark record | GreenSquare AI"
+  description={`The complete public record of a ${g.runs_total}-run preregistered benchmark: every count, all ${issues.length} protocol deviations, ${spell(limits.length)} limitations, model versions, dates and what is withheld.`}
   current="research"
 >
-  <div>
-    <section class="hero v-hero v-hero--editorial">
-      <div class="v-container">
-        <h1>The loaded method changed the process. It did not beat an informed baseline on judgement.</h1>
-        <p class="v-eyebrow v-dateline">Benchmark record, current as at {d.currentAsAt}</p>
-        <p class="v-lead">A {g.runs_total}-run preregistered study across two models, three fictional cases and three conditions. Raw counts and uncomfortable limitations are part of the result.</p>
+  <section class="v-hero bench-hero">
+    <div class="v-container">
+      <h1>Process separation was strong. Judgement did not beat the informed baseline.</h1>
+      <p class="v-hero__dateline">Benchmark record. Scored {d.scoredOn}, adjudicated {d.adjudicatedOn}, current as at {d.currentAsAt}.</p>
+      <p class="v-lead">{g.runs_total} preregistered runs across {g.models.map((m) => m.name).join(' and ')}, three fictional cases and three conditions, scored on {spell(results.length)} checks. Every count, every deviation and every limitation is on this page.</p>
+    </div>
+  </section>
+
+  <SectionNav label="Benchmark sections" items={[
+    { id: 'status', label: 'Status' },
+    { id: 'results', label: 'Results' },
+    { id: 'cases', label: 'By case' },
+    { id: 'design', label: 'Design' },
+    { id: 'issues', label: 'Issues' },
+    { id: 'limits', label: 'Limits' },
+    { id: 'sources', label: 'Sources' },
+  ]} />
+
+  <section class="v-section" id="status">
+    <div class="v-container">
+      <EvidenceStatus
+        title="Evidence status, benchmark record"
+        claim="That the loaded method file makes a capable model reliably run the process (ask, compare, tag, name constraints, state kill criteria) and surface the hidden decision, where an uninformed or informed baseline does so only sometimes."
+        result={`Process: the loaded condition met the three discriminating process checks in ${g.n_per_arm} of ${g.n_per_arm} runs; the informed baseline met two of them in ${fmt(process[1].armB).met} and ${fmt(process[2].armB).met}. Judgement: the informed baseline matched or exceeded the loaded condition on all three checks (${cmp.baselineHigher.length} higher, ${cmp.tied.filter((id) => judgement.some((j) => j.id === id)).length} tied).`}
+        confidence={`Caution. One scorer who also ran the grid and held the key; ${issues.length} recorded deviations, ${openCount} of them open; ${g.n_per_arm} runs per condition on an unbalanced grid.`}
+        open={`Transcripts and the sealed key are withheld. No independent re-score. Per-case counts for seven of ${spell(results.length)} checks. The refresh commitment on both models has lapsed.`}
+        reviewed={d.currentAsAt}
+        relevance="The file tested is decision-brief-v2.0.md, fixed by its published hash. It predates Frame. This is not a test of Frame Free or Frame Pro."
+      />
+    </div>
+  </section>
+
+  <section class="v-section v-section--rule" id="results">
+    <div class="v-container">
+      <div class="bench-head">
+        <h2>{spell(results.length).charAt(0).toUpperCase() + spell(results.length).slice(1)} preregistered checks, scored out of {g.n_per_arm} per condition.</h2>
+        <p>Counts are adjudicated. A hatched bar marks a cell that is definitional, where a single-turn condition cannot pass by construction, so the zero restates the design rather than measuring judgement.</p>
       </div>
-    </section>
-
-    <SectionNav
-      label="Benchmark sections"
-      items={[
-        { id: 'reading', label: 'Reading' },
-        { id: 'results', label: 'Results' },
-        { id: 'design', label: 'Design' },
-        { id: 'integrity', label: 'Integrity' },
-        { id: 'limits', label: 'Limits' },
-        { id: 'sources', label: 'Sources' },
-      ]}
-    />
-
-    <section class="v-section" id="reading"><div class="v-container reading-grid">
-      <div><h2>Process separation was clear. Judgement stayed too close to call.</h2></div>
-      <div class="reading-points">
-        <p><strong>Process.</strong> The loaded condition asked before answering, compared options and tagged evidence on every run.</p>
-        <p><strong>Judgement.</strong> The all-facts baseline matched or exceeded the loaded condition on all three judgement checks.</p>
-        <p><strong>Boundary.</strong> This grid does not resemble a real operator arriving with partial knowledge and a blind spot.</p>
-      </div>
-    </div></section>
-
-    <section class="v-section" id="results"><div class="v-container">
-      <div class="results-head"><h2>Eight preregistered checks, scored out of {g.n_per_arm} per condition.</h2></div>
-      <div class="table-wrap" tabindex="0" aria-label="Scrollable benchmark results">
-        <table>
+      <div class="d-table-wrap" tabindex="0" aria-label="Scrollable benchmark results">
+        <table class="d-table bench-table">
           <caption>Benchmark checks by condition</caption>
           <thead><tr><th scope="col">Check</th>{arms.map((arm) => <th scope="col">{arm.label}</th>)}</tr></thead>
           <tbody>
             <tr class="group"><th colspan="4" scope="colgroup">Process checks</th></tr>
-            {process.map((item) => <tr><th scope="row">{item.page_label}</th><td>{fmt(item.armA).text}</td><td>{fmt(item.armB).text}</td><td class="loaded">{fmt(item.armC).text}</td></tr>)}
+            {process.map((item) => (
+              <tr>
+                <th scope="row">{item.page_label}</th>
+                {(['armA', 'armB', 'armC'] as const).map((arm) => { const c = cell(item, arm); return (
+                  <td><div class={`d-bar ${c.cls}`}><span>{c.text}</span><span class="d-bar__track" aria-hidden="true"><span class="d-bar__fill" style={`--pct:${c.pct}%`}></span></span></div>{c.def && <span class="bench-def">{c.def === 'full' ? 'definitional' : 'partly definitional'}</span>}</td>
+                ); })}
+              </tr>
+            ))}
             <tr class="group"><th colspan="4" scope="colgroup">Judgement checks</th></tr>
-            {judgement.map((item) => <tr><th scope="row">{item.page_label}</th><td>{fmt(item.armA).text}</td><td>{fmt(item.armB).text}</td><td class="loaded">{fmt(item.armC).text}</td></tr>)}
+            {judgement.map((item) => (
+              <tr>
+                <th scope="row">{item.page_label}</th>
+                {(['armA', 'armB', 'armC'] as const).map((arm) => { const c = cell(item, arm); return (
+                  <td><div class={`d-bar ${c.cls}`}><span>{c.text}</span><span class="d-bar__track" aria-hidden="true"><span class="d-bar__fill" style={`--pct:${c.pct}%`}></span></span></div>{c.def && <span class="bench-def">{c.def === 'full' ? 'definitional' : 'partly definitional'}</span>}</td>
+                ); })}
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
-      <p class="table-note">Some cells are wholly or partly definitional because a single-turn prompt cannot ask questions or obtain facts it was not given. The methodology and limitations record those cases.</p>
-    </div></section>
+      <div class="bench-reading">
+        <div class="d-panel">
+          <div class="d-panel__head"><strong>Reading the table</strong></div>
+          <dl class="d-meta bench-reading__list">
+            <div><dt>Process</dt><dd>The loaded condition asked, compared and tagged in every run. The informed baseline compared options in {fmt(process[1].armB).text} and tagged evidence in {fmt(process[2].armB).text}, with the same facts in hand. Two checks ({process[3].page_label.toLowerCase()}, {process[4].page_label.toLowerCase()}) separated nothing or little.</dd></div>
+            <div><dt>Judgement</dt><dd>The informed baseline scored {fmt(judgement[0].armB).text} against {fmt(judgement[0].armC).text} on surfacing the hidden decision and tied at {fmt(judgement[1].armB).text} on the other two. Given the same facts, the model reasoned as well without the file.</dd></div>
+            <div><dt>Composite</dt><dd>The derived process figure, {fmt(comp.armC).text} for the loaded condition, is the lowest of the five process check counts. It is not an independent ninth result and was not the preregistered headline.</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <section class="v-section"><div class="v-container composite-grid">
-      <div><p class="v-eyebrow">Derived process figure</p><h2>Produced the full brief structure</h2></div>
-      <div class="composite-score"><strong>{fmt(comp.armC).text}</strong><span>{loaded.label}</span></div>
-      <p class="composite-note">This is the lowest of the five process check counts. It is not an independent ninth result and was not the preregistered headline.</p>
-    </div></section>
+  <section class="v-section v-section--rule" id="cases">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>Direction, split by case.</h2>
+        <p>{dir.note} {dir.reading}</p>
+      </div>
+      <div>
+        <div class="d-table-wrap" tabindex="0" aria-label="Scrollable direction by case">
+          <table class="d-table">
+            <caption>Recommendation direction matched the sealed key, by case</caption>
+            <thead><tr><th scope="col">Cases</th>{arms.map((arm) => <th scope="col" class="num">{arm.label}</th>)}</tr></thead>
+            <tbody>
+              <tr><th scope="row">Cases A and C</th><td class="num">{fmt(dir.cases_A_and_C.armA).text}</td><td class="num">{fmt(dir.cases_A_and_C.armB).text}</td><td class="num is-emph">{fmt(dir.cases_A_and_C.armC).text}</td></tr>
+              <tr><th scope="row">Case B, {g.cases[1].name}</th><td class="num">{fmt(dir.case_B.armA).text}</td><td class="num">{fmt(dir.case_B.armB).text}</td><td class="num is-emph">{fmt(dir.case_B.armC).text}</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <dl class="d-meta bench-go">
+          <div><dt>The GO case</dt><dd>{go.label}. {go.note} Question only {fmt(go.armA).text}; all facts {fmt(go.armB).text}; loaded method {fmt(go.armC).text}.</dd></div>
+          <div><dt>Adds least</dt><dd>Case B is the case where the file adds least, as the protocol required to be identified.</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
 
-    <section class="v-section" id="design"><div class="v-container design-grid">
-      <div><h2>Information access was controlled across three conditions.</h2></div>
-      <ol>
-        {arms.map((arm, index) => <li><span>{String(index + 1).padStart(2, '0')}</span><div><h3>{arm.label}</h3><p>{arm.note}</p></div></li>)}
+  <section class="v-section v-section--rule" id="design">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>Three conditions, controlled for information.</h2>
+        <p>{'The all-facts condition is the sceptic’s comparison: it carries equal information to the loaded condition, so the only difference is the method.'}</p>
+        <a class="v-link" href={withBase('/methodology/')}>Read the full methodology</a>
+      </div>
+      <div>
+        <ol class="d-list d-list--indexed">
+          {arms.map((arm, index) => <li><span class="d-list__index">{String(index + 1).padStart(2, '0')}</span><div><h3>{arm.label}</h3><p>{arm.note}</p></div></li>)}
+        </ol>
+        <dl class="d-meta bench-design">
+          <div><dt>Models</dt><dd>{g.models.map((m) => m.name).join('; ')}. {g.planned_models[0].name} was preregistered and not run.</dd></div>
+          <div><dt>Cases</dt><dd>{g.cases.map((c) => `${c.name} (${c.n_per_arm} per condition)`).join('; ')}. Case A ran on one model only.</dd></div>
+          <div><dt>Grid</dt><dd>{g.runs_total} scored runs, {g.n_per_arm} per condition, {g.n_per_cell} per cell. Target was about {g.target_runs}. {spell(g.excluded.pilot_runs).charAt(0).toUpperCase() + spell(g.excluded.pilot_runs).slice(1)} pilot runs are excluded and reconciled on disk.</dd></div>
+          <div><dt>Dates</dt><dd>Scored {d.scoredOn}. Adjudicated {d.adjudicatedOn}. The run window is not verified and is not claimed.</dd></div>
+          <div><dt>Naming</dt><dd>The frozen study artefact used earlier internal product names. The public record calls the arm the loaded condition. This study is not a test of Frame Free or Frame Pro.</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="v-section v-section--rule" id="issues">
+    <div class="v-container">
+      <div class="bench-head">
+        <h2>{issues.length} protocol deviations: {openCount} open, {correctedCount} corrected, {issues.length - openCount - correctedCount} disclosed.</h2>
+        <p>Each one changes how confidently a cell should be read. The status table is the summary; the full text of every entry follows it.</p>
+      </div>
+      <div class="d-table-wrap" tabindex="0" aria-label="Scrollable deviation status table">
+        <table class="d-table bench-issues">
+          <caption>Protocol deviations, status and effect on reading</caption>
+          <thead><tr><th scope="col">No.</th><th scope="col">Issue</th><th scope="col">Effect on reading</th><th scope="col">Status</th><th scope="col">Record</th></tr></thead>
+          <tbody>
+            {issues.map((issue) => (
+              <tr>
+                <td class="num">{issue.n}</td>
+                <th scope="row"><a href={`#dev-${issue.n}`}>{issue.title}</a></th>
+                <td>{issue.effect}</td>
+                <td><span class={`d-status d-status--${issue.status}`}>{statusWord[issue.status as keyof typeof statusWord]}</span></td>
+                <td class="bench-issues__owner">GreenSquare AI, {d.currentAsAt}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <ol class="bench-issue-list">
+        {issues.map((issue) => (
+          <li id={`dev-${issue.n}`}>
+            <details>
+              <summary><span class="bench-issue-list__n">{String(issue.n).padStart(2, '0')}</span><span class="bench-issue-list__title">{issue.title}</span><span class={`d-status d-status--${issue.status}`}>{statusWord[issue.status as keyof typeof statusWord]}</span></summary>
+              <p>{issue.detail}</p>
+            </details>
+          </li>
+        ))}
       </ol>
-      <aside class="historical"><strong>Historical naming note.</strong> The frozen study artefact used earlier internal product names. The public record now calls the arm the loaded condition. This study is not a test of Frame Free or Frame Pro.</aside>
-      <a class="v-link" href={withBase('/methodology/')}>Read the full methodology</a>
-    </div></section>
+      <div class="bench-refresh d-panel" id="refresh">
+        <div class="d-panel__head"><strong>Refresh status</strong><span>{ref.commitmentDays}-day commitment, from the protocol</span></div>
+        <div class="d-table-wrap" tabindex="0" aria-label="Scrollable model refresh status"><table class="d-table">
+          <caption>Model refresh status</caption>
+          <thead><tr><th scope="col">Tested model</th><th scope="col">Superseded by</th><th scope="col">Released</th><th scope="col">Refresh due</th><th scope="col">Status at {d.currentAsAt}</th></tr></thead>
+          <tbody>{ref.legs.map((leg) => (
+            <tr><th scope="row">{leg.tested_model}</th><td>{leg.superseded_by}</td><td>{leg.releasedOn}</td><td>{leg.dueOn}</td><td><span class={`d-status d-status--${leg.lapsed ? 'open' : 'corrected'}`}>{leg.lapsed ? `Lapsed, ${leg.daysPastDue} days past due` : 'Within window'}</span></td></tr>
+          ))}</tbody>
+        </table></div>
+        <div class="d-panel__foot"><p>{ref.legs.map((l) => `${l.vendor}: ${l.caveat}`).join(' ')}</p></div>
+      </div>
+    </div>
+  </section>
 
-    <section class="v-section" id="integrity"><div class="v-container">
-      <div class="integrity-head"><h2>The record includes {integrityIssues.length} deviations.</h2><p>They are not footnotes to be hidden. They change how confidently the result should be read.</p></div>
-      <ol class="issues">
-        {integrityIssues.map((issue) => <li><span>{String(issue.n).padStart(2, '0')}</span><details><summary>{issue.title}</summary><p>{issue.detail}</p></details></li>)}
-      </ol>
-    </div></section>
+  <section class="v-section v-section--rule" id="limits">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>What this benchmark cannot establish.</h2>
+      </div>
+      <ol class="d-list d-list--indexed">{limits.map((item, index) => <li><span class="d-list__index">{String(index + 1).padStart(2, '0')}</span><p class="bench-limit">{item}</p></li>)}</ol>
+    </div>
+  </section>
 
-    <section class="v-section" id="limits"><div class="v-container limits-grid">
-      <div><h2>What this benchmark cannot establish.</h2></div>
-      <ol>{studyLimits.map((item, index) => <li><span>{String(index + 1).padStart(2, '0')}</span><p>{item}</p></li>)}</ol>
-    </div></section>
-
-    <section class="v-section" id="sources"><div class="v-container sources-grid">
-      <div><h2>Inspect what is public, and what remains withheld.</h2></div>
-      <dl>
-        <div><dt>Scored runs</dt><dd>{g.runs_total}</dd></div>
-        <div><dt>Preregistration commit</dt><dd><a href={pre.commitUrl}>{pre.short}</a></dd></div>
-        <div><dt>Authored</dt><dd>{pre.authoredAtTime}</dd></div>
-        <div><dt>Transcripts</dt><dd>Not published</dd></div>
-        <div><dt>Sealed answers</dt><dd>Hash verified, contents not published</dd></div>
-      </dl>
-      <div class="source-actions"><a class="v-btn v-btn--green" href="https://github.com/greensquare-ai/website/tree/main/evidence/preregistration">Frozen source files</a><a class="v-link" href={withBase('/research/')}>Research overview</a></div>
-    </div></section>
-  </div>
+  <section class="v-section v-section--rule" id="sources">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>What is public, and what is withheld.</h2>
+        <p>The frozen inputs, their hashes and the preregistration commit are public. The transcripts and the sealed answers are not, and this page says so rather than implying otherwise.</p>
+        <a class="v-btn" href="https://github.com/greensquare-ai/website/tree/main/evidence/preregistration">Frozen source files</a>
+      </div>
+      <div>
+        <dl class="d-meta bench-sources">
+          <div><dt>Preregistration</dt><dd><a href={pre.commitUrl}>{pre.short}</a>, authored {pre.authoredAtTime}, committed {pre.committedAtTime}. Neither time is evidence of when the commit was pushed.</dd></div>
+          <div><dt>Frozen inputs</dt><dd>{hashes.files.length} files hashed before the first scored run, all matching when read with {hashes.line_endings} line endings.</dd></div>
+          <div><dt>Method file</dt><dd>{hashes.product_file}, SHA-256 {hashes.product_sha256.slice(0, 12)}…. {hashes.product_withheld_note}</dd></div>
+          <div><dt>Sealed answers</dt><dd>Hash {key.verified ? 'verified' : 'not verified'}; contents {key.published ? 'published' : 'not published'}.</dd></div>
+          <div><dt>Transcripts</dt><dd>{tx.inventory.grid_files} grid transcripts and {tx.inventory.pilot_files} pilot files exist and were counted on disk on {new Date(tx.inventory.verified_on).getDate()} August 2026. None is published. {tx.withdrawn_note}</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
 </BaseLayoutV2>
 
 <style>
-  .hero h1 { max-width:18ch; }
-  /* The dateline sits below the h1, in the OpenAI idiom, rather than as a kicker above
-     it. That puts a second element between the h1 and the lead, so the global
-     `h1 + .v-lead` spacing rule no longer applies here; both gaps are set locally. */
-  /* `.v-black .v-eyebrow` (global-v2.css) sets every label in a dark section to lime,
-     which is right for a section label but too loud for a quiet provenance line. Extra
-     class beats it on specificity rather than fighting the cascade with !important. */
-  .hero .v-eyebrow.v-dateline { margin-top: var(--v-4); color: var(--v-ink-soft); }
-  .v-dateline + .v-lead { margin-top: var(--v-5); }
-  .hero .v-lead { max-width:52rem; }
-  .reading-grid, .design-grid, .limits-grid, .sources-grid { display:grid; grid-template-columns:minmax(0,.9fr) minmax(20rem,1.1fr); gap:clamp(3rem,8vw,8rem); align-items:start; }
-  .reading-points p { padding:1.2rem 0; margin:0; border-top:1px solid var(--v-line); }
-  .results-head { max-width:52rem; margin-bottom:3rem; }
-  .table-wrap { overflow-x:auto; outline-offset:.3rem; }
-  table { width:100%; min-width:48rem; border-collapse:collapse; background:var(--v-paper); color:var(--v-ink); }
-  caption { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }
-  th, td { padding:1rem; border:1px solid var(--v-line); text-align:left; }
-  thead th { background:var(--v-off); color:var(--v-ink); font:600 .875rem/1.3 var(--vf-body); }
-  tbody th { font-size:.9rem; }
-  td { font:600 var(--vs-label)/1.3 var(--vf-body); font-variant-numeric:tabular-nums; white-space:nowrap; }
-  /* Derived from Forest, not a new hue. The previous rgba(18,255,117,.13) was a bright
-     mint that appears nowhere in the palette. */
-  td.loaded { background:color-mix(in srgb, var(--v-green) 9%, var(--v-paper)); }
-  tr.group th { background:var(--v-line); font:600 .8125rem/1.3 var(--vf-body); }
-  .table-note { max-width:55rem; font-size:.85rem; }
-  .composite-grid { display:grid; grid-template-columns:1fr auto; gap:2rem 5rem; align-items:end; }
-  .composite-score { display:flex; flex-direction:column; align-items:flex-end; }
-  .composite-score strong { font:600 clamp(3.2rem,9vw,7rem)/.8 var(--v-font-display); font-variant-numeric:tabular-nums; }
-  .composite-score span { margin-top:1rem; font:500 var(--vs-label)/1.3 var(--vf-body); color:var(--v-green); }
-  .composite-note { grid-column:1/-1; border-top:1px solid var(--v-line); padding-top:1rem; font-size:.85rem; }
-  .design-grid ol { list-style:none; margin:0; padding:0; }
-  .design-grid li { display:grid; grid-template-columns:3rem 1fr; gap:1rem; padding:1.2rem 0; border-top:1px solid var(--v-line); }
-  .design-grid li > span { font:600 var(--vs-label)/1.3 var(--vf-body); font-variant-numeric:tabular-nums; color:var(--v-green); padding-top:.3rem; }
-  .design-grid h3, .design-grid p { margin:0; }
-  .design-grid p { margin-top:.4rem; color:var(--v-ink-soft); }
-  .historical { grid-column:1/-1; padding:1.25rem; border-left:.4rem solid var(--v-green); background:var(--v-white); font-size:.88rem; }
-  .design-grid > .v-link { grid-column:2; }
-  .integrity-head { max-width:52rem; margin-bottom:3rem; }
-  .integrity-head > p:last-child { color:var(--v-ink-soft); }
-  .issues { list-style:none; padding:0; margin:0; display:grid; grid-template-columns:repeat(2,1fr); border-top:1px solid var(--v-line); border-left:1px solid var(--v-line); }
-  .issues li { display:grid; grid-template-columns:2.5rem 1fr; gap:1rem; padding:1.25rem; border-right:1px solid var(--v-line); border-bottom:1px solid var(--v-line); }
-  .issues li > span { color:var(--v-green); font:600 var(--vs-label)/1.3 var(--vf-body); font-variant-numeric:tabular-nums; padding-top:.25rem; }
-  .issues summary { cursor:pointer; font-weight:700; }
-  .issues p { color:var(--v-ink-soft); font-size:.88rem; }
-  .limits-grid ol { list-style:none; padding:0; margin:0; }
-  .limits-grid li { display:grid; grid-template-columns:2.5rem 1fr; gap:1rem; border-top:1px solid var(--v-line); padding:1rem 0; }
-  .limits-grid li span { font:600 var(--vs-label)/1.3 var(--vf-body); font-variant-numeric:tabular-nums; color:var(--v-green); padding-top:.45rem; }
-  .limits-grid li p { margin:0; }
-  .sources-grid dl { margin:0; }
-  .sources-grid dl div { display:grid; grid-template-columns:10rem 1fr; gap:1rem; padding:1rem 0; border-top:1px solid var(--v-line); }
-  .sources-grid dt { font-weight:700; }
-  .sources-grid dd { margin:0; overflow-wrap:anywhere; }
-  .source-actions { grid-column:2; display:flex; gap:1.5rem; align-items:center; flex-wrap:wrap; }
-  @media (max-width:760px) {
-    .reading-grid, .design-grid, .limits-grid, .sources-grid { grid-template-columns:1fr; }
-    .design-grid > .v-link, .source-actions { grid-column:1; }
-    .composite-grid { grid-template-columns:1fr; }
-    .composite-score { align-items:flex-start; }
-    .issues { grid-template-columns:1fr; }
-    .sources-grid dl div { grid-template-columns:1fr; gap:.3rem; }
+  .bench-hero h1 { max-width: 22ch; font-size: var(--vs-h1); }
+  .bench-head { max-width: 64ch; margin-bottom: var(--v-6); }
+  .bench-head p { color: var(--v-ink-soft); margin-top: var(--v-3); }
+  .bench-table { min-width: 44rem; }
+  .bench-table td { min-width: 11rem; }
+  .bench-table th[scope='row'] { min-width: 14rem; }
+  .bench-def { display: block; margin-top: 4px; font-size: var(--vs-meta); color: var(--v-ink-soft); }
+  .bench-reading { margin-top: var(--v-6); }
+  .bench-reading__list { padding: var(--v-2) var(--v-5); }
+  .bench-reading__list dt { color: var(--v-ink); font-weight: 600; }
+  .bench-go, .bench-design { margin-top: var(--v-6); }
+  .bench-go dt, .bench-design dt { color: var(--v-ink); font-weight: 600; }
+  .bench-issues th[scope='row'] { min-width: 16rem; font-weight: 500; }
+  .bench-issues th[scope='row'] a { color: var(--v-ink); text-decoration: none; }
+  .bench-issues th[scope='row'] a:hover { text-decoration: underline; }
+  .bench-issues td:nth-child(3) { min-width: 20rem; }
+  .bench-issues__owner { white-space: nowrap; color: var(--v-ink-soft); font-size: var(--vs-meta); }
+  .bench-issue-list { list-style: none; margin: var(--v-8) 0 0; padding: 0; border-top: 1px solid var(--v-ink); }
+  .bench-issue-list summary { display: grid; grid-template-columns: 2.5rem 1fr auto; gap: var(--v-3); align-items: baseline; }
+  .bench-issue-list summary::after { display: none; }
+  .bench-issue-list__n { font-size: var(--vs-meta); font-weight: 500; color: var(--v-ink-soft); font-variant-numeric: tabular-nums; }
+  .bench-issue-list__title { font-weight: 600; }
+  .bench-issue-list p { color: var(--v-ink-soft); font-size: var(--vs-small); margin: 0; padding-left: calc(2.5rem + var(--v-3)); max-width: 80ch; }
+  .bench-refresh { margin-top: var(--v-8); }
+  .bench-limit { margin: 0; }
+  .bench-sources dt { color: var(--v-ink); font-weight: 600; }
+  .bench-sources dd { overflow-wrap: anywhere; }
+  @media (max-width: 800px) {
+    .bench-issue-list summary { grid-template-columns: 2rem 1fr; }
+    .bench-issue-list summary .d-status { grid-column: 2; }
+    .bench-issue-list p { padding-left: 0; }
   }
 </style>

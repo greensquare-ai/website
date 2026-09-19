@@ -1,0 +1,36 @@
+---
+/**
+ * The evidence status panel that opens each research page: the claim, the result, how
+ * confidently it should be read, what is still open, when it was last reviewed and
+ * what it says about the product on sale. Values come from the caller so each page
+ * states its own scope; the wording of the result is shared through props so the three
+ * pages cannot drift.
+ */
+export interface Props {
+  claim: string;
+  result: string;
+  confidence: string;
+  open: string;
+  reviewed: string;
+  relevance: string;
+  title?: string;
+}
+const { claim, result, confidence, open, reviewed, relevance, title = 'Evidence status' } = Astro.props;
+---
+<div class="d-panel d-panel--ink evidence-status">
+  <div class="d-panel__head"><strong>{title}</strong><span>Reviewed {reviewed}</span></div>
+  <dl class="d-meta evidence-status__list">
+    <div><dt>Claim tested</dt><dd>{claim}</dd></div>
+    <div><dt>Result</dt><dd>{result}</dd></div>
+    <div><dt>Read with</dt><dd>{confidence}</dd></div>
+    <div><dt>Still open</dt><dd>{open}</dd></div>
+    <div><dt>Product relevance</dt><dd class="evidence-status__relevance">{relevance}</dd></div>
+  </dl>
+</div>
+<style>
+  .evidence-status__list { padding: var(--v-2) var(--v-5); }
+  .evidence-status__list > div { grid-template-columns: minmax(8rem, 10rem) 1fr; padding: 12px 0; }
+  .evidence-status__list dd { font-size: var(--vs-body); }
+  .evidence-status__relevance { color: var(--v-signal); font-weight: 500; }
+  @media (max-width: 480px) { .evidence-status__list > div { grid-template-columns: 1fr; } }
+</style>

@@ -1,21 +1,45 @@
 ---
 import BaseLayoutV2 from './BaseLayoutV2.astro';
+import { withBase } from '../lib/paths';
+import { operator } from '../data/operator';
 export interface Props {
   frontmatter: {
     title: string;
     description?: string;
+    updated: string;
   };
 }
 const { frontmatter } = Astro.props;
-const title = frontmatter.title;
-const description = frontmatter.description ?? 'Frame legal information.';
+const { title, updated } = frontmatter;
+const description = frontmatter.description ?? 'GreenSquare AI legal information.';
+const related = [
+  { href: withBase('/legal/privacy/'), label: 'Privacy policy' },
+  { href: withBase('/legal/terms/'), label: 'Terms of use' },
+  { href: withBase('/legal/cookies/'), label: 'Cookie notice' },
+];
 ---
-<BaseLayoutV2 title={`${title} | Frame`} description={description}>
-  <section class="v-section">
+<BaseLayoutV2 title={`${title} | GreenSquare AI`} description={description}>
+  <section class="v-hero legal-hero">
     <div class="v-container v-container--narrow">
-      <div class="v-prose">
+      <h1>{title}</h1>
+      <p class="v-hero__dateline">Last updated {updated}. {operator.legalLine}</p>
+      <nav class="legal-related" aria-label="Legal documents">
+        {related.map((r) => <a href={r.href} aria-current={Astro.url.pathname === r.href ? 'page' : undefined}>{r.label}</a>)}
+      </nav>
+    </div>
+  </section>
+  <section class="v-section v-section--tight">
+    <div class="v-container v-container--narrow">
+      <div class="v-prose legal-prose">
         <slot />
       </div>
     </div>
   </section>
 </BaseLayoutV2>
+<style>
+  .legal-hero h1 { font-size: var(--vs-h1); }
+  .legal-related { display: flex; gap: var(--v-5); flex-wrap: wrap; margin-top: var(--v-5); padding-top: var(--v-4); border-top: 1px solid var(--v-line); }
+  .legal-related a { font-size: var(--vs-small); font-weight: 500; color: var(--v-ink-soft); text-decoration: none; }
+  .legal-related a[aria-current='page'] { color: var(--v-ink); box-shadow: inset 0 -1px 0 var(--v-ink); }
+  .legal-prose h2:first-of-type { margin-top: var(--v-4); }
+</style>

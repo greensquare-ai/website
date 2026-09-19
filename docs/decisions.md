@@ -2,6 +2,65 @@
 
 Current public-site decisions, their rationale and the condition that would reverse them.
 
+## 2026-09-10 · The site is a decision dossier, and the Decision Brief is the exhibit
+
+**Decided.** Every page opens as a document: one left-aligned heading in Newsreader, a dateline where the page carries a date, and the content in rectangular panels with hairline rules on warm paper. The homepage hero carries a real Decision Brief excerpt beside the proposition. Pill buttons, rounded plan cards, icon columns, the hero animation and the centred marketing hero are removed. Space Grotesk is removed; Newsreader (self-hosted, `font-display: optional`) carries h1, h2 and quoted brief text, and IBM Plex Sans carries everything else. The palette adds one signal colour, `#9a3a1c`, for unknowns, conditions and corrections, and four evidence-class marks.
+
+**Why.** The 10 September review found the site read as an early-stage software product rather than a professional instrument: the distinctive material, the Decision Brief, appeared late and as an illustration. The published Kelbrane demonstration run is the one artefact a buyer can judge the standard of work by, so it leads. Every excerpt on the site is quoted from `src/data/demonstrations/demo-1.md` through `src/data/brief-excerpt.ts` and labelled as a demonstration, not part of the study.
+
+**Constraint.** The excerpts stay verbatim. A change to the demonstration file is a new demonstration with its own provenance, not an edit.
+
+**Reversed by.** A later review showing the dossier reading costs conversion or comprehension against the previous layout.
+
+## 2026-09-10 · One controlled research statement, with a corrections record
+
+**Decided.** The judgement result is stated one way everywhere: the informed baseline matched or exceeded the loaded condition on all three judgement checks. The research overview previously said the reverse. `scripts/check-copy.mjs` now fails any page that credits the loaded condition with matching or exceeding the baseline, and the research overview carries a dated corrections list.
+
+**Why.** The overview contradicted the benchmark record it summarised, and the counts (15 against 14, two ties at 15) support the record. A buyer who read both pages found the site disagreeing with itself on its headline claim.
+
+**Constraint.** Figures on the research overview render from `src/lib/benchmark.ts`, the same accessors as the record, so the two cannot drift again.
+
+**Reversed by.** A new study with a different result, recorded with its own provenance.
+
+## 2026-09-10 · Model names appear where they state compatibility or provenance
+
+**Decided.** ChatGPT and Claude may be named on the product surfaces where the copy states what the method was tested on, demonstrated on, or is compatible with, and where a session's data goes. The launch rule that kept every model brand off the home, product, free and about pages is narrowed to a ban on endorsement phrasing ("works best with", "built for", "optimised for", "recommended by").
+
+**Why.** "A capable model" told a buyer nothing about whether the file would work in the tool they already use, and the privacy panel cannot say where a decision goes without naming the class of provider.
+
+**Reversed by.** A partnership or distribution arrangement with one provider, which would make the naming an endorsement rather than a statement of fact.
+
+## 2026-09-10 · The operator is named; the people are described, not named
+
+**Decided.** The site names its registered operator, GreenSquare AI, ABN 23 683 689 565, on the About page, in the footer and on every legal page, from one source in `src/data/operator.ts`. The people behind the method are described by their professional background (management consulting, EY, UNSW MBA, FMVA, current operating businesses) and not by name, at the operator's instruction.
+
+**Why.** The review found no accountable operator anywhere on the site and a cookie notice that referred to "the operator" without naming one. The operator chose not to publish individual names.
+
+**Constraint.** Every background claim is one the operator will substantiate on request, and the About page says so. No client names, no NDIS or aged-care reference, no testimonials.
+
+**Reversed by.** The operator's decision to publish a named profile.
+
+## 2026-09-10 · Frame Pro is a compact note until scope and price are real
+
+**Decided.** Frame Pro appears as a one-panel note ("In development") on the homepage and product page and in the terms, and nowhere with equal visual weight to Frame Free. The terms state that scope, price, support and terms of sale will be published together before anything is offered for purchase.
+
+**Why.** An undefined paid plan given equal weight to the current offer sold an experiment more strongly than an instrument.
+
+**Reversed by.** A defined Pro offer: buyer, scope, service boundary, price and support, published with terms of sale.
+
+## 2026-09-10 · Protocol deviations carry a status and an effect on reading
+
+**Decided.** Each of the 18 deviations in `src/data/benchmark-results.json` carries `status` (open, corrected, disclosed) and `effect`, a one-line statement of how it changes the reading of the counts. The benchmark page renders a status table above the full record and repairs two dangling references: the refresh arithmetic deviation 18 pointed at now renders as a refresh status table, and the direction-by-case split deviation 15 refers to renders as its own table.
+
+**Why.** The review found 18 accordions with no way to see at a glance which issues were live and what each did to the result.
+
+**Constraint.** `effect` is the site's reading of the deviation's own text, not new evidence. A status moves to corrected only when the record itself shows the correction.
+
+**Reversed by.** Resolution of an open item, recorded in the deviation text with a date.
+
+
+Current public-site decisions, their rationale and the condition that would reverse them.
+
 ## 2026-09-05 · Frame is the product, and the study arm loses its product name
 
 **Decided.** The product is **Frame**; the plans are **Frame Free** and **Frame Pro**. GreenSquare AI remains the company and Decision Brief remains the output. A bare `GreenSquare` becomes a retired product name, guarded by a negative lookahead so that `GreenSquare AI` still passes. The method step previously called Frame is now **Clarify**, because a step cannot share the product's name.

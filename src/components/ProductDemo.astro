@@ -1,98 +1,73 @@
 ---
+/**
+ * The published demonstration run, read as a working document in three states: the
+ * question as it was brought, one turn of interrogation and what it changed, and the
+ * brief that followed. Every quotation comes from src/data/demonstrations/demo-1.md
+ * through src/data/brief-excerpt.ts; the annotations in the margin are the site's.
+ */
+import { briefExcerpt as b } from '../data/brief-excerpt';
+import BriefExcerpt from './BriefExcerpt.astro';
+const f = b.fields;
+const i = b.interrogation;
 const tabs = [
-  { id: 'context', label: 'Decision' },
+  { id: 'brought', label: 'The question as brought' },
   { id: 'interrogate', label: 'Interrogation' },
   { id: 'brief', label: 'Decision Brief' },
 ];
 ---
-<section class="product-demo" data-product-demo aria-label="Illustrative Frame product demonstration">
-  <div class="product-demo__topbar">
-    <span class="product-demo__mark" aria-hidden="true"></span>
-    <span>Frame</span>
-    <span class="product-demo__status">Illustrative example</span>
-  </div>
-
-  <div class="product-demo__tabs" role="tablist" aria-label="Demonstration stage">
+<section class="demo" data-product-demo aria-label="Demonstration run, read in three states">
+  <div class="demo__tabs" role="tablist" aria-label="Demonstration state">
     {tabs.map((tab, index) => (
-      <button
-        type="button"
-        role="tab"
-        id={`demo-tab-${tab.id}`}
-        aria-controls={`demo-panel-${tab.id}`}
-        aria-selected={index === 0 ? 'true' : 'false'}
-        tabindex={index === 0 ? 0 : -1}
-        data-demo-tab={tab.id}
-      >
-        <span>{String(index + 1).padStart(2, '0')}</span>
-        {tab.label}
+      <button type="button" role="tab" id={`demo-tab-${tab.id}`} aria-controls={`demo-panel-${tab.id}`} aria-selected={index === 0 ? 'true' : 'false'} tabindex={index === 0 ? 0 : -1} data-demo-tab={tab.id}>
+        <span class="demo__index">{index + 1}</span>{tab.label}
       </button>
     ))}
   </div>
 
-  <div class="product-demo__body">
-    <div role="tabpanel" id="demo-panel-context" aria-labelledby="demo-tab-context" data-demo-panel="context">
-      <div class="demo-grid demo-grid--context">
+  <div role="tabpanel" id="demo-panel-brought" aria-labelledby="demo-tab-brought" data-demo-panel="brought">
+    <div class="d-panel d-panel--ink">
+      <div class="d-panel__head"><span><strong>{b.case}</strong> the operator's opening message</span><span>{b.provenance.kind}</span></div>
+      <div class="d-panel__body demo__grid">
         <div>
-          <p class="demo-label">The decision</p>
-          <h3>Should we fund the national expansion now?</h3>
-          <p>The current plan assumes demand, operating capacity and partner readiness can scale together within 12 months.</p>
+          <p class="d-quote d-quote--large">What do I need to be able to defend the readiness call?</p>
+          <p class="demo__context">{b.situation} The integrator has signed off, the test manager is not comfortable, and the only alternative anyone will agree to is a June window that falls after the old platform's support ends on 31 March.</p>
         </div>
-        <dl class="demo-facts">
-          <div><dt>Decision owner</dt><dd>Executive team</dd></div>
-          <div><dt>Required by</dt><dd>30 September</dd></div>
-          <div><dt>Capital at risk</dt><dd>Material</dd></div>
-          <div><dt>Initial confidence</dt><dd>Moderate</dd></div>
-        </dl>
-      </div>
-    </div>
-
-    <div role="tabpanel" id="demo-panel-interrogate" aria-labelledby="demo-tab-interrogate" data-demo-panel="interrogate" hidden>
-      <div class="demo-question">
-        <p class="demo-label">Frame asks before advising</p>
-        <h3>Which evidence shows the operating model can absorb the first two regions without weakening the core business?</h3>
-      </div>
-      <div class="demo-evidence" role="group" aria-label="Evidence status">
-        <div><span>Given</span><p>Two regions have signed expressions of interest.</p></div>
-        <div><span>Derived</span><p>Break-even requires 68% utilisation by month nine.</p></div>
-        <div><span>Inferred</span><p>Current managers can support both launches.</p></div>
-        <div class="is-signal"><span>Unknown</span><p>Recruitment lead time in the second region.</p></div>
-      </div>
-    </div>
-
-    <div role="tabpanel" id="demo-panel-brief" aria-labelledby="demo-tab-brief" data-demo-panel="brief" hidden>
-      <div class="brief-head">
-        <div>
-          <p class="demo-label">Recommendation</p>
-          <h3>Stage the expansion, do not fund the national rollout yet.</h3>
-        </div>
-        <div class="brief-confidence"><span>Confidence</span><strong>Moderate</strong></div>
-      </div>
-
-      <div class="brief-layout">
-        <div>
-          <p class="demo-label">Option priority</p>
-          <div class="option-matrix" role="img" aria-label="Four options positioned by evidence confidence and strategic value. A staged two-region launch is highest on both measures.">
-            <span class="axis axis--y">Strategic value</span>
-            <span class="axis axis--x">Evidence confidence</span>
-            <div class="matrix-quadrant"><span>Protect core</span></div>
-            <div class="matrix-quadrant matrix-quadrant--best"><span>Stage two regions</span></div>
-            <div class="matrix-quadrant"><span>Hold position</span></div>
-            <div class="matrix-quadrant"><span>National rollout</span></div>
-          </div>
-        </div>
-        <div class="brief-notes">
-          <div><p class="demo-label">Why now</p><p>Test the economics before the next capital cycle.</p></div>
-          <div><p class="demo-label">Critical risk</p><p>Management capacity is asserted, not evidenced.</p></div>
-          <div><p class="demo-label">Decision condition</p><p>Approve region two only if recruitment lead time stays below eight weeks.</p></div>
-          <div><p class="demo-label">Next review</p><p>Six weeks after region one begins trading.</p></div>
-        </div>
+        <aside class="demo__margin">
+          <p class="v-meta">What the method does with this</p>
+          <p>It does not answer. It asks six questions first: the test manager's specific objections, what the integrator signed off against, the rollback position, whether the 31 March date has been tested or assumed, why a phased cutover was ruled out, and what a failed weekend costs.</p>
+          <p>It also names the framing for what it is: a request to support a conclusion already reached.</p>
+        </aside>
       </div>
     </div>
   </div>
 
-  <div class="product-demo__footer">
-    <span>One decision, interrogated before recommendation</span>
-    <span>Use the tabs to inspect the flow</span>
+  <div role="tabpanel" id="demo-panel-interrogate" aria-labelledby="demo-tab-interrogate" data-demo-panel="interrogate" hidden>
+    <div class="d-panel d-panel--ink">
+      <div class="d-panel__head"><span><strong>{b.case}</strong> one of six questions, and the answer</span><span>{b.provenance.kind}</span></div>
+      <div class="d-panel__body demo__grid">
+        <div class="demo__exchange">
+          <div><p class="v-meta">The method asks</p><p class="d-quote">{i.question}</p></div>
+          <div><p class="v-meta">The operator answers</p><p class="demo__answer">{i.answer}</p></div>
+          <div><p class="v-meta">The method reads it back</p><p class="d-quote">{i.consequence}</p></div>
+        </div>
+        <aside class="demo__margin">
+          <p class="v-meta">What changed because of the answer</p>
+          <ul class="demo__changes">
+            <li><span class="d-tag d-tag--given">given</span><p>A vendor said no in March 2026.</p></li>
+            <li><span class="d-tag d-tag--unknown">unknown</span><p>Whether extended support on the buyer's own instance can be bought. Nobody has asked.</p></li>
+            <li><span class="demo__shift">Reframed</span><p>{i.reframe}</p></li>
+          </ul>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <div role="tabpanel" id="demo-panel-brief" aria-labelledby="demo-tab-brief" data-demo-panel="brief" hidden>
+    <div class="demo__brief-lead">
+      <p class="v-meta">{f.decision.label}, as the brief restates it</p>
+      <p class="d-quote">{f.decision.text}</p>
+    </div>
+    <BriefExcerpt />
   </div>
 </section>
 
@@ -100,7 +75,6 @@ const tabs = [
   document.querySelectorAll<HTMLElement>('[data-product-demo]').forEach((demo) => {
     const tabs = Array.from(demo.querySelectorAll<HTMLButtonElement>('[data-demo-tab]'));
     const panels = Array.from(demo.querySelectorAll<HTMLElement>('[data-demo-panel]'));
-
     const activate = (id: string, focus = false) => {
       tabs.forEach((tab) => {
         const selected = tab.dataset.demoTab === id;
@@ -113,12 +87,10 @@ const tabs = [
       url.searchParams.set('demo', id);
       window.history.replaceState({}, '', url);
     };
-
     const requested = new URLSearchParams(window.location.search).get('demo');
     if (requested && tabs.some((tab) => tab.dataset.demoTab === requested)) activate(requested);
-
     tabs.forEach((tab, index) => {
-      tab.addEventListener('click', () => activate(tab.dataset.demoTab ?? 'context'));
+      tab.addEventListener('click', () => activate(tab.dataset.demoTab ?? 'brought'));
       tab.addEventListener('keydown', (event) => {
         let next = index;
         if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
@@ -127,62 +99,41 @@ const tabs = [
         else if (event.key === 'End') next = tabs.length - 1;
         else return;
         event.preventDefault();
-        activate(tabs[next]?.dataset.demoTab ?? 'context', true);
+        activate(tabs[next]?.dataset.demoTab ?? 'brought', true);
       });
     });
   });
 </script>
 
 <style>
-  .product-demo { border: 1px solid var(--v-ink); background: var(--v-paper); color: var(--v-ink); }
-  .product-demo h3 { color: var(--v-ink); }
-  .product-demo__topbar, .product-demo__footer { display: flex; align-items: center; gap: var(--v-3); padding: 14px var(--v-5); font-size: var(--vs-label); }
-  .product-demo__topbar { border-bottom: 1px solid var(--v-ink); font-weight: 600; }
-  .product-demo__mark { width: 14px; height: 14px; background: var(--v-green); }
-  .product-demo__status { margin-left: auto; color: var(--v-ink-soft); font-weight: 400; }
-  .product-demo__tabs { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--v-line); }
-  .product-demo__tabs button { display: flex; align-items: center; gap: var(--v-3); min-height: 52px; padding: 0 var(--v-5); border: 0; border-right: 1px solid var(--v-line); background: var(--v-paper); color: var(--v-ink-soft); font: inherit; font-weight: 600; cursor: pointer; text-align: left; }
-  .product-demo__tabs button:last-child { border-right: 0; }
-  .product-demo__tabs button span { color: var(--v-ink-soft); font-size: var(--vs-label); font-variant-numeric: tabular-nums; }
-  .product-demo__tabs button[aria-selected='true'] { background: var(--v-off); color: var(--v-green); box-shadow: inset 0 -3px 0 var(--v-green); }
-  .product-demo__body { min-height: 480px; padding: clamp(1.5rem, 4vw, 3.25rem); }
-  .product-demo__body [role='tabpanel'][hidden] { display: none; }
-  .demo-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(2rem, 6vw, 6rem); align-items: start; }
-  .demo-grid h3, .demo-question h3, .brief-head h3 { margin-top: var(--v-3); max-width: 23ch; font-size: clamp(1.55rem, 3vw, 2.6rem); line-height: 1.08; letter-spacing: -0.025em; }
-  .demo-grid > div > p:last-child { margin-top: var(--v-5); color: var(--v-ink-soft); }
-  .demo-label { margin: 0; color: var(--v-green); font-size: var(--vs-label); font-weight: 600; }
-  .demo-facts { margin: 0; border-top: 2px solid var(--v-ink); }
-  .demo-facts div { display: grid; grid-template-columns: 1fr 1fr; gap: var(--v-4); padding: var(--v-4) 0; border-bottom: 1px solid var(--v-line); }
-  .demo-facts dt { color: var(--v-ink-soft); }
-  .demo-facts dd { margin: 0; font-weight: 600; text-align: right; }
-  .demo-question { max-width: 58rem; padding-bottom: var(--v-8); border-bottom: 1px solid var(--v-line); }
-  .demo-evidence { margin-top: var(--v-6); }
-  .demo-evidence > div { display: grid; grid-template-columns: 8rem 1fr; gap: var(--v-5); padding: var(--v-4) 0; border-bottom: 1px solid var(--v-line); }
-  .demo-evidence span { font-size: var(--vs-label); font-weight: 600; }
-  .demo-evidence p { margin: 0; }
-  .demo-evidence .is-signal { border-left: 3px solid var(--v-green); padding-left: var(--v-4); }
-  .brief-head { display: flex; justify-content: space-between; gap: var(--v-8); padding-bottom: var(--v-6); border-bottom: 1px solid var(--v-line); }
-  .brief-confidence { min-width: 9rem; text-align: right; }
-  .brief-confidence span { display: block; color: var(--v-ink-soft); font-size: var(--vs-label); }
-  .brief-confidence strong { display: block; margin-top: var(--v-1); color: var(--v-green); }
-  .brief-layout { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(18rem, .85fr); gap: clamp(2rem, 5vw, 4.5rem); margin-top: var(--v-6); }
-  .option-matrix { position: relative; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; min-height: 250px; margin: var(--v-5) 0 2.2rem 2.2rem; border-left: 1px solid var(--v-ink); border-bottom: 1px solid var(--v-ink); }
-  .matrix-quadrant { display: flex; align-items: center; justify-content: center; min-height: 120px; padding: var(--v-4); border-top: 1px solid var(--v-line); border-right: 1px solid var(--v-line); color: var(--v-ink-soft); font-size: var(--vs-small); text-align: center; }
-  .matrix-quadrant--best { background: var(--v-green); color: var(--v-cream); font-weight: 600; }
-  .axis { position: absolute; color: var(--v-ink-soft); font-size: var(--vs-label); }
-  .axis--x { left: 50%; bottom: -2rem; transform: translateX(-50%); }
-  .axis--y { left: -2.3rem; top: 50%; writing-mode: vertical-rl; transform: translateY(-50%) rotate(180deg); }
-  .brief-notes { border-top: 2px solid var(--v-ink); }
-  .brief-notes > div { padding: var(--v-3) 0; border-bottom: 1px solid var(--v-line); }
-  .brief-notes p:last-child { margin: var(--v-1) 0 0; color: var(--v-ink-soft); font-size: var(--vs-small); }
-  .product-demo__footer { justify-content: space-between; border-top: 1px solid var(--v-line); color: var(--v-ink-soft); }
-  @media (max-width: 760px) {
-    .product-demo__tabs button { flex-direction: column; align-items: flex-start; justify-content: center; gap: 0; min-height: 62px; padding-inline: var(--v-3); }
-    .product-demo__body { min-height: 0; }
-    .demo-grid, .brief-layout { grid-template-columns: 1fr; }
-    .brief-head { display: grid; }
-    .brief-confidence { text-align: left; }
-    .demo-evidence > div { grid-template-columns: 1fr; gap: var(--v-1); }
-    .product-demo__footer { display: grid; }
+  .demo__tabs { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--v-ink); border-bottom: 0; background: var(--v-panel); }
+  .demo__tabs button { display: flex; align-items: center; gap: var(--v-3); min-height: 52px; padding: 0 var(--v-5); border: 0; border-right: 1px solid var(--v-line); background: transparent; color: var(--v-ink-soft); font: inherit; font-size: var(--vs-small); font-weight: 500; cursor: pointer; text-align: left; }
+  .demo__tabs button:last-child { border-right: 0; }
+  .demo__index { font-size: var(--vs-meta); font-variant-numeric: tabular-nums; }
+  .demo__tabs button[aria-selected='true'] { color: var(--v-ink); font-weight: 600; box-shadow: inset 0 -2px 0 var(--v-green); }
+  [role='tabpanel'][hidden] { display: none; }
+  .demo__grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: clamp(1.5rem, 4vw, 3.5rem); padding: var(--v-6) var(--v-5); }
+  .demo__grid .d-quote { margin: 0 0 var(--v-4); }
+  .demo__context { color: var(--v-ink-soft); font-size: var(--vs-small); }
+  .demo__margin { border-left: 1px solid var(--v-line); padding-left: var(--v-5); font-size: var(--vs-small); }
+  .demo__margin .v-meta { margin-bottom: var(--v-3); }
+  .demo__margin p { max-width: none; }
+  .demo__exchange > div { padding: var(--v-3) 0; border-top: 1px solid var(--v-line); }
+  .demo__exchange > div:first-child { border-top: 0; padding-top: 0; }
+  .demo__exchange .v-meta { margin-bottom: var(--v-2); }
+  .demo__answer { font-size: var(--vs-small); margin: 0 0 var(--v-2); }
+  .demo__changes { list-style: none; margin: 0; padding: 0; }
+  .demo__changes li { display: grid; grid-template-columns: 5.5rem 1fr; gap: var(--v-3); padding: 10px 0; border-top: 1px solid var(--v-line); }
+  .demo__changes p { margin: 0; }
+  .demo__shift { font-size: var(--vs-meta); font-weight: 600; color: var(--v-signal); }
+  .demo__brief-lead { padding: var(--v-5); border: 1px solid var(--v-ink); border-bottom: 0; background: var(--v-panel); }
+  .demo__brief-lead .v-meta { margin-bottom: var(--v-2); }
+  .demo__brief-lead .d-quote { margin: 0; max-width: 60ch; }
+  @media (max-width: 800px) {
+    .demo__tabs { grid-template-columns: 1fr; }
+    .demo__tabs button { border-right: 0; border-bottom: 1px solid var(--v-line); }
+    .demo__tabs button:last-child { border-bottom: 0; }
+    .demo__grid { grid-template-columns: 1fr; padding: var(--v-5); }
+    .demo__margin { border-left: 0; padding-left: 0; border-top: 1px solid var(--v-line); padding-top: var(--v-4); }
   }
 </style>

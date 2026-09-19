@@ -75,10 +75,18 @@ const RULES = [
       [...text.matchAll(/\b(Scout|Atlas|Spark|Forge|Realm)\b/g)].map((m) => m[0]),
   },
   {
-    name: 'model brands on launch product surfaces',
-    decision: 'The launch story is model-agnostic',
-    only: [/^(home|product|free|about)$/],
-    test: (text) => [...text.matchAll(/\b(?:Claude|ChatGPT|Gemini|OpenAI|Anthropic)\b/g)].map((m) => m[0]),
+    name: 'a model brand outside a compatibility or provenance statement',
+    decision: 'Model names appear where they state what was tested, demonstrated or is compatible (2026-09-10)',
+    /* The launch rule kept every model brand off the product surfaces. It was narrowed
+       so that Frame Free can name what it was tested on and where a session's data goes.
+       What stays banned is a brand used as an endorsement: "works best with", "built
+       for", "optimised for", "recommended by". */
+    test: (text) => [...text.matchAll(/\b(?:works best (?:with|on)|built for|optimised for|recommended by|endorsed by|partnered with)\s+(?:Claude|ChatGPT|Gemini|OpenAI|Anthropic|Google)\b/gi)].map((m) => m[0]),
+  },
+  {
+    name: 'a placeholder left in visible copy',
+    decision: 'Bracketed slots and TODOs never ship',
+    test: (text) => [...text.matchAll(/\[(?:to be confirmed|TODO|TBC|placeholder)[^\]]*\]|\bTODO\b/g)].map((m) => m[0]),
   },
   {
     name: 'a price, which is not published before launch',
@@ -155,8 +163,23 @@ try {
   failures.push({ route: 'benchmark', rule: 'the benchmark page did not build', decision: '', hits: [], count: 1 });
 }
 
+/**
+ * The research overview once said the loaded condition "matched or exceeded" the
+ * informed baseline on judgement, which is the reverse of the record. The subject of
+ * that verb is now checked on every page: the baseline may match or exceed the loaded
+ * condition; the loaded condition may never be said to match or exceed the baseline.
+ */
+for (const file of htmlFiles(DIST)) {
+  const route = relative(DIST, file).replace(/\\/g, '/').replace(/index\.html$/, '').replace(/\/$/, '') || 'home';
+  const text = visibleText(readFileSync(file, 'utf8'));
+  const reversed = [...text.matchAll(/loaded (?:condition|method)[^.]{0,60}matched or exceeded[^.]{0,40}baseline/gi)].map((m) => m[0]);
+  if (reversed.length) {
+    failures.push({ route, rule: 'the judgement result is stated the wrong way round', decision: 'One controlled research statement (2026-09-10)', hits: reversed.slice(0, 3), count: reversed.length });
+  }
+}
+
 if (failures.length === 0) {
-  console.log(`check-copy: ${RULES.length + 2} rules, no violations.`);
+  console.log(`check-copy: ${RULES.length + 3} rules, no violations.`);
   process.exit(0);
 }
 
