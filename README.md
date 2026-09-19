@@ -6,7 +6,7 @@ The site is built with Astro and uses a small React island for email capture. It
 
 ## Product architecture
 
-- **GreenSquare AI** is the company, a registered Australian business (ABN 23 683 689 565).
+- **GreenSquare AI** is the company, a registered Australian business.
 - **Frame** is the product: a method file loaded into a capable model.
 - **Frame Free** is the current beta, delivered by email.
 - **Frame Pro** is the future paid plan and remains in development.
