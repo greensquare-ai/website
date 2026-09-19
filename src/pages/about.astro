@@ -38,7 +38,7 @@ const maintained = [
       </div>
       <div class="about-letter">
         <p class="d-quote">Every consequential recommendation we ever put our names to was read by someone whose job was to find the weak point: the number that was inferred rather than given, the option that was never considered, the assumption nobody had tested. Capable models produce fluent, well-structured answers that have not been through that reading. They will happily support the conclusion you arrived with.</p>
-        <p class="d-quote">Frame is that reading, written down as a method a model will follow. It asks before it advises, tags what it has been told, compares real options including doing nothing, and closes with a confidence statement and the findings that would reverse the call. It does not make the decision. It makes the decision inspectable.</p>
+        <p class="d-quote">Frame is that reading, written down as a method a model will follow. It asks before it advises, tags what it has been told, compares real options including doing nothing, and closes with a confidence statement and the findings that would reverse the call. It makes the decision inspectable without making it for you.</p>
         <p class="d-quote">We tested it, and we published the result including the part that did not go our way: it changed how the model worked, and it did not make the model a better judge than a fully briefed one. That is the honest position, and the product is priced accordingly, which today means the beta is free.</p>
         <p class="about-letter__sign v-meta">The people behind GreenSquare AI</p>
       </div>
@@ -60,7 +60,7 @@ const maintained = [
   <section class="v-section v-section--rule" id="maintained">
     <div class="v-container v-cols">
       <div class="v-cols__head">
-        <h2>What is personally maintained.</h2>
+        <h2>The same people maintain all three.</h2>
       </div>
       <dl class="d-meta about-maintained">
         {maintained.map((row) => <div><dt>{row.what}</dt><dd>{row.by}</dd></div>)}
@@ -100,7 +100,6 @@ const maintained = [
       <div class="d-panel about-operator">
         <dl class="d-meta">
           <div><dt>Business name</dt><dd>{operator.businessName}</dd></div>
-          <div><dt>ABN</dt><dd>{operator.abn}</dd></div>
           <div><dt>Location</dt><dd>{operator.location}</dd></div>
           <div><dt>Governing law</dt><dd>{operator.jurisdiction}</dd></div>
           <div><dt>Contact</dt><dd><a href={`mailto:${operator.email}`}>{operator.email}</a>. A reply comes from the person who maintains the method.</dd></div>
