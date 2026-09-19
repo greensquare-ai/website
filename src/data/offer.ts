@@ -5,54 +5,77 @@
  * Model names are permitted here and on the pages that read from this file. The
  * launch-era rule that kept model brands off the product surfaces was narrowed on
  * 10 September 2026 (docs/decisions.md) so that compatibility can be stated plainly.
+ *
+ * Corrected 19 September 2026. This file previously described Frame Free as a
+ * plain-text method file that produces a Decision Brief. The artefact that is
+ * actually delivered is a six-page PDF field guide that stops before evaluation.
+ * The Decision Brief belongs to Frame Pro, which is in development.
  */
 export const offer = {
   free: {
     name: 'Frame Free',
     status: 'Beta, available now',
-    oneLine: 'Email delivery of the Frame method file for use with ChatGPT, Claude or another capable model.',
+    oneLine: 'Email delivery of the Frame Free field guide, a six-page PDF you load into ChatGPT, Claude or Gemini.',
     delivery: {
-      object: 'A single method file in plain text (Markdown).',
-      how: 'You paste it as the first message of a new chat, or attach it as a project or custom instruction where your model allows one.',
+      object: 'A six-page PDF field guide.',
+      how: 'You upload it to a new chat and describe one live decision. The model then asks the six questions in order, one at a time.',
       after: 'Enter your email. Confirm the address from the message we send. The file arrives in the reply.',
       setup: 'Under five minutes from confirmation to the first question.',
     },
     inputs: [
       'The decision as you currently see it, in a paragraph.',
       'Who owns the decision and when it is due.',
-      'The facts, figures and constraints you already hold. Where you do not know something, say so; the method treats a stated unknown as evidence.',
+      'The facts, figures and constraints you already hold. Where you do not know something, say so; the guide treats a stated unknown as evidence.',
     ],
-    session: 'A single decision runs to a completed Decision Brief in one sitting, typically 30 to 60 minutes of interrogation and drafting depending on how much you can answer.',
+    session: 'One decision runs to a completed frame in about ten minutes. Frame Free stops there, by design: it does not rank options, score criteria or recommend a course of action.',
+    output: 'A seven-part framing handoff: the presented decision and its trigger, the decision underneath, the missing third option, the load-bearing assumption, each constraint marked verified or assumed, an evidence map tagging every material claim given, derived, inferred or unknown, and the single evidence gap to test next.',
     compatibility: {
-      tested: 'The method file was benchmarked on Claude Opus 4.8 and ChatGPT GPT-5.5 and demonstrated on Claude Opus. It is written for models of that class.',
-      boundary: 'It depends on a model that can hold a long instruction, ask questions before answering and keep the four evidence classes straight across a long session. Smaller or older models drop the discipline part way through. It is not tied to one provider.',
+      tested: 'Frame Free has not been benchmarked. The preregistered study tested an earlier method file that predates Frame, and the research pages say so.',
+      boundary: 'The guide is written for Claude, ChatGPT or Gemini of current class. It depends on a model that can hold a long instruction, ask one question at a time and keep the four evidence classes straight. Smaller or older models drop the discipline part way through. It is not tied to one provider.',
     },
     dataFlow: [
       { what: 'Your email address', where: 'Reaches GreenSquare AI, held by our email provider (Kit) until you unsubscribe.' },
-      { what: 'Your decision, facts and answers', where: 'Go to the model provider you chose (OpenAI, Anthropic or another), under that provider’s terms and data settings. None of it reaches GreenSquare AI.' },
+      { what: 'Your decision, facts and answers', where: 'Go to the model provider you chose (OpenAI, Anthropic, Google or another), under that provider’s terms and data settings. None of it reaches GreenSquare AI.' },
       { what: 'Retention and training use', where: 'Depend on the provider and the account tier you use. Check the data controls on your own account before a confidential decision.' },
       { what: 'What not to submit', where: 'Anything you are not permitted to place with that provider: client names under NDA, personal information, price-sensitive or privileged material, unless your account and the provider’s terms allow it.' },
     ],
-    rights: 'A personal, non-transferable licence for your own decisions. The Decision Briefs you produce are yours to use, share and act on. The method file itself is not for republishing or resale.',
+    rights: 'A personal, non-transferable licence for your own decisions. The framing you produce is yours to use, share and act on. The guide itself is not for republishing or resale.',
   },
   pro: {
     name: 'Frame Pro',
     status: 'In development',
-    note: 'The paid plan for professional and team use. Scope, price and support terms are not yet fixed and will be published together, with terms of sale, before anything is offered for purchase.',
+    note: 'The paid plan for professional and team use. It continues where Frame Free stops: deeper interrogation, credible options, explicit criteria, comparison, a recommendation and a five-part Decision Brief. Scope, price and support terms are not yet fixed and will be published together, with terms of sale, before anything is offered for purchase.',
   },
 } as const;
 
-/** The six-step method, stated once. */
-export const method = [
-  ['Clarify', 'Turn the topic into the decision that is actually live, name its owner and its due date.'],
-  ['Inspect', 'Separate what is given from what is derived, inferred or unknown, and say which unknowns matter.'],
-  ['Test', 'Challenge the framing and the logic before confidence hardens, including the framing you arrived with.'],
-  ['Compare', 'Put real options, including doing nothing, against the same criteria.'],
-  ['Decide', 'Recommend with a stated confidence and the assumptions the call rests on.'],
-  ['Execute', 'Name the next steps, the conditions that would change the call, and the review date.'],
+/** The six questions Frame Free puts to the decision, in order, as the guide holds them. */
+export const freeQuestions = [
+  ['The decision and trigger', 'What exactly are you deciding, and what made it live now?'],
+  ['The decision underneath', 'If the immediate choice disappeared, what larger question would remain?'],
+  ['The missing option', 'Which genuine third path have you not treated as real, including doing nothing?'],
+  ['The load-bearing assumption', 'Which single belief would change the decision if it proved wrong?'],
+  ['Untested constraints', 'Which deadlines, budgets or stakeholder positions are verified, and which are assumed?'],
+  ['The evidence map', 'What is given, derived, inferred or unknown? Keep approximations visible.'],
 ] as const;
 
-/** What a Decision Brief contains, section by section, as the method file produces it. */
+/**
+ * The full method, stated once. Frame Free covers the first three moves and stops.
+ * Compare, Decide and Execute are Frame Pro, which is in development.
+ */
+export const method = [
+  ['Clarify', 'Turn the topic into the decision that is actually live, name its owner and its due date.', 'free'],
+  ['Inspect', 'Separate what is given from what is derived, inferred or unknown, and say which unknowns matter.', 'free'],
+  ['Test', 'Challenge the framing and the logic before confidence hardens, including the framing you arrived with.', 'free'],
+  ['Compare', 'Put real options, including doing nothing, against the same criteria.', 'pro'],
+  ['Decide', 'Recommend with a stated confidence and the assumptions the call rests on.', 'pro'],
+  ['Execute', 'Name the next steps, the conditions that would change the call, and the review date.', 'pro'],
+] as const;
+
+/**
+ * What a Decision Brief contains, section by section. The Decision Brief is the output
+ * of the full method. Frame Free does not produce one; the published demonstration was
+ * run on the earlier method file that predates Frame.
+ */
 export const briefStructure = [
   { section: 'The decision, and why now', carries: 'The live decision, distinguished from the topic, with the reason it is live today.' },
   { section: 'The options, compared', carries: 'Each credible option including the current plan, with the evidence behind it and the exposure if it goes wrong.' },

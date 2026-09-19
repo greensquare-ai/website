@@ -25,7 +25,7 @@ const useWhen = [
 ---
 <BaseLayoutV2
   title="GreenSquare AI | Decision support for consequential work"
-  description="Frame gives the AI you already use a disciplined process for consequential business decisions, and produces a Decision Brief you can put your name to."
+  description="Frame gives the AI you already use a disciplined process for consequential business decisions. Frame Free, the beta available now, frames the decision and stops before evaluation."
   current="home"
 >
   <section class="v-hero home-hero">
@@ -33,8 +33,8 @@ const useWhen = [
       <div class="home-hero__grid">
         <div class="home-hero__copy">
           <h1>Decision support for consequential work, built to sit beside the AI you already use.</h1>
-          <p class="v-lead">Frame is a method file. Loaded into ChatGPT, Claude or another capable model, it makes the model ask before it advises, tag its evidence, compare real options and produce a Decision Brief with its confidence and conditions stated.</p>
-          <p class="home-hero__delivery">The current offer is the Frame Free beta: one plain-text method file, sent by email after you confirm your address.</p>
+          <p class="v-lead">Frame is a method a model follows instead of answering straight away. Frame Free, the beta available now, is a six-page PDF: load it into ChatGPT, Claude or Gemini with one live decision and the model asks six questions in order, one at a time, then hands back a frame with every material claim tagged given, derived, inferred or unknown. It stops before evaluation.</p>
+          <p class="home-hero__delivery">The current offer is the Frame Free beta: one six-page PDF, sent by email after you confirm your address.</p>
           <div class="v-actions">
             <a class="v-btn v-btn--green" href="#get-free">Get the Frame Free beta</a>
             <a class="v-btn" href={withBase('/product/#brief')}>See a Decision Brief</a>
@@ -66,11 +66,11 @@ const useWhen = [
     <div class="v-container v-cols">
       <div class="v-cols__head">
         <h2>Six steps, run in order, on one decision.</h2>
-        <p>The method file instructs the model to work through these in sequence and not to draft the brief until it has asked what it needs to. The path adapts to the answers; the order does not.</p>
+        <p>Frame Free covers the first three moves and stops there. Compare, Decide and Execute belong to Frame Pro, which is in development. The path adapts to the answers; the order does not.</p>
       </div>
       <ol class="d-list d-list--indexed home-method">
-        {method.map(([name, text], i) => (
-          <li><span class="d-list__index">{String(i + 1).padStart(2, '0')}</span><div><h3>{name}</h3><p>{text}</p></div></li>
+        {method.map(([name, text, plan], i) => (
+          <li><span class="d-list__index">{String(i + 1).padStart(2, '0')}</span><div><h3>{name}</h3><p>{text}</p><p class="method-plan">{plan === 'free' ? 'Frame Free' : 'Frame Pro, in development'}</p></div></li>
         ))}
       </ol>
     </div>
