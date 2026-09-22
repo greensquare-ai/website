@@ -30,13 +30,13 @@ Current public-site decisions, their rationale and the condition that would reve
 
 **Reversed by.** A partnership or distribution arrangement with one provider, which would make the naming an endorsement rather than a statement of fact.
 
-## 2026-09-10 · The operator is named; the people are described, not named
+## 2026-09-22 · The operator is named; individual identity is not published
 
-**Decided.** The site names its registered operator, GreenSquare AI, ABN 23 683 689 565, on the About page, in the footer and on every legal page, from one source in `src/data/operator.ts`. The people behind the method are described by their professional background (management consulting, EY, UNSW MBA, FMVA, current operating businesses) and not by name, at the operator's instruction.
+**Decided.** The site names GreenSquare AI as the registered operator from one source in `src/data/operator.ts`. The people behind Frame are described only through broad, product-relevant capability areas: strategy, capital allocation, operating-model design, transactions, restructuring, transformation, financial analysis and execution. The site does not publish names, employers, institutions, qualifications, client details, transaction values, dates or personal profiles.
 
 **Why.** The review found no accountable operator anywhere on the site and a cookie notice that referred to "the operator" without naming one. The operator chose not to publish individual names.
 
-**Constraint.** Every background claim is one the operator will substantiate on request, and the About page says so. No client names, no NDIS or aged-care reference, no testimonials.
+**Constraint.** Capability claims must remain general enough that they cannot identify an individual through a distinctive combination. No names, employers, institutions, qualifications, client names, sector-specific engagements, transaction values, dates or testimonials.
 
 **Reversed by.** The operator's decision to publish a named profile.
 

@@ -20,6 +20,7 @@ const { items, label = 'On this page' } = Astro.props;
         <li><a href={`#${item.id}`} data-section-link={item.id}>{item.label}</a></li>
       ))}
     </ul>
+    <span class="section-nav__more" aria-hidden="true">More</span>
   </div>
 </nav>
 
@@ -30,6 +31,15 @@ const { items, label = 'On this page' } = Astro.props;
       .map((link) => ({ link, section: document.getElementById(link.dataset.sectionLink ?? '') }))
       .filter((entry): entry is { link: HTMLAnchorElement; section: HTMLElement } => Boolean(entry.section));
     if (!sections.length) return;
+    const list = nav.querySelector<HTMLElement>('.section-nav__list');
+    const syncOverflow = () => {
+      if (!list) return;
+      const scrollable = list.scrollWidth > list.clientWidth + 2;
+      nav.classList.toggle('has-scrollable', scrollable);
+      nav.classList.toggle('is-at-end', !scrollable || list.scrollLeft + list.clientWidth >= list.scrollWidth - 2);
+    };
+    list?.addEventListener('scroll', syncOverflow, { passive: true });
+    new ResizeObserver(syncOverflow).observe(nav);
     const line = 140;
     let ticking = false;
     const sync = () => {
@@ -42,8 +52,8 @@ const { items, label = 'On this page' } = Astro.props;
         if (entry === current) entry.link.setAttribute('aria-current', 'location');
         else entry.link.removeAttribute('aria-current');
       }
-      const list = nav.querySelector('.section-nav__list');
       if (list && list.scrollWidth > list.clientWidth) current.link.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      syncOverflow();
     };
     window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(sync); } }, { passive: true });
     sync();
@@ -59,9 +69,24 @@ const { items, label = 'On this page' } = Astro.props;
   .section-nav__list a { display: flex; align-items: center; min-height: 48px; color: var(--v-ink-soft); font-size: var(--vs-small); font-weight: 500; text-decoration: none; white-space: nowrap; box-shadow: inset 0 -1px 0 transparent; transition: color var(--v-fast) var(--v-ease), box-shadow var(--v-fast) var(--v-ease); }
   .section-nav__list a:hover { color: var(--v-ink); }
   .section-nav__list a[aria-current='location'] { color: var(--v-ink); box-shadow: inset 0 -2px 0 var(--v-green); }
+  .section-nav__more { display: none; }
   @media (max-width: 640px) {
     .section-nav__label { display: none; }
-    .section-nav__row { gap: 0; }
+    .section-nav__row { position: relative; gap: 0; }
+    .section-nav__list { padding-right: 4.5rem; }
+    .section-nav.has-scrollable:not(.is-at-end) .section-nav__more {
+      display: flex;
+      align-items: center;
+      align-self: stretch;
+      position: absolute;
+      right: var(--v-gutter);
+      padding-left: var(--v-8);
+      color: var(--v-ink);
+      font-size: var(--vs-meta);
+      font-weight: 600;
+      background: linear-gradient(90deg, transparent, var(--v-paper) 38%);
+      pointer-events: none;
+    }
   }
   @media (prefers-reduced-motion: reduce) { .section-nav__list a { transition: none; } }
 </style>

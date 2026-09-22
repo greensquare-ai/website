@@ -1,0 +1,62 @@
+---
+import { offer } from '../data/offer';
+
+export interface Props {
+  compact?: boolean;
+}
+
+const { compact = false } = Astro.props;
+
+const plans = [
+  {
+    name: offer.free.name,
+    status: offer.free.status,
+    format: offer.free.delivery.object,
+    steps: 'Clarify, Inspect and Test',
+    output: 'A structured frame and evidence map',
+    boundary: 'No option ranking, recommendation or Decision Brief',
+    available: true,
+  },
+  {
+    name: offer.pro.name,
+    status: offer.pro.status,
+    format: 'Scope and delivery format to be published',
+    steps: 'The full six-step method',
+    output: 'A five-part Decision Brief',
+    boundary: 'Includes comparison, recommendation and execution conditions',
+    available: false,
+  },
+] as const;
+---
+
+<div class:list={['plan-comparison', { 'plan-comparison--compact': compact }]} aria-label="Frame Free and Frame Pro comparison">
+  {plans.map((plan) => (
+    <div class:list={['d-panel', { 'd-panel--ink': plan.available }]} role="group" aria-labelledby={`plan-${plan.name.toLowerCase().replaceAll(' ', '-')}`}>
+      <div class="d-panel__head">
+        <strong id={`plan-${plan.name.toLowerCase().replaceAll(' ', '-')}`}>{plan.name}</strong>
+        <span>{plan.status}</span>
+      </div>
+      <dl class="d-meta plan-comparison__list">
+        <div><dt>Format</dt><dd>{plan.format}</dd></div>
+        <div><dt>Process</dt><dd>{plan.steps}</dd></div>
+        <div><dt>Output</dt><dd>{plan.output}</dd></div>
+        <div><dt>Boundary</dt><dd>{plan.boundary}</dd></div>
+      </dl>
+    </div>
+  ))}
+</div>
+
+<style>
+  .plan-comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--v-4); }
+  .plan-comparison__list { padding: var(--v-2) var(--v-5); }
+  .plan-comparison__list > div { grid-template-columns: minmax(5rem, 7rem) 1fr; }
+  .plan-comparison__list dd { overflow-wrap: anywhere; }
+  .plan-comparison--compact .plan-comparison__list > div { grid-template-columns: 5rem 1fr; }
+  @media (max-width: 760px) {
+    .plan-comparison { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    .plan-comparison__list > div,
+    .plan-comparison--compact .plan-comparison__list > div { grid-template-columns: 1fr; }
+  }
+</style>

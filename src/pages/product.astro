@@ -1,6 +1,7 @@
 ---
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 import ProductDemo from '../components/ProductDemo.astro';
+import PlanComparison from '../components/PlanComparison.astro';
 import Signup from '../components/Signup.astro';
 import { withBase } from '../lib/paths';
 import { briefStructure, method, offer } from '../data/offer';
@@ -23,12 +24,22 @@ const accountable = [
 >
   <section class="v-hero product-hero">
     <div class="v-container">
-      <h1>The output is a Decision Brief. The method is what makes it defensible.</h1>
-      <p class="v-lead">Frame Free is a six-page PDF you load into the model you already use. It changes what the model does with a consequential decision: it asks before it advises, tags what it is told, and separates the constraints you have verified from the ones you have assumed. It stops before evaluation, and hands back a frame rather than a recommendation.</p>
+      <h1>Frame makes an AI interrogate the decision before it advises.</h1>
+      <p class="v-lead">Frame Free is the available beta: a six-page PDF that clarifies, inspects and tests one decision, then hands back a structured frame. Frame Pro is in development and will continue into comparison, recommendation and a Decision Brief.</p>
       <div class="v-actions">
         <a class="v-btn v-btn--green" href="#get-free">Get the Frame Free beta</a>
         <a class="v-btn" href="#brief">See a Decision Brief</a>
       </div>
+    </div>
+  </section>
+
+  <section class="v-section v-section--rule" id="plans">
+    <div class="v-container">
+      <div class="product-plans__head">
+        <h2>What exists now, and what does not.</h2>
+        <p>The two plans have different outputs. The boundary is shown before the demonstration so the example cannot be mistaken for the Frame Free deliverable.</p>
+      </div>
+      <PlanComparison />
     </div>
   </section>
 
@@ -131,6 +142,8 @@ const accountable = [
 <style>
   .product-hero h1 { max-width: 20ch; }
   .product-hero .v-lead { max-width: 60ch; }
+  .product-plans__head { max-width: 62ch; margin-bottom: var(--v-6); }
+  .product-plans__head p { color: var(--v-ink-soft); margin-top: var(--v-3); }
   .product-head { max-width: 62ch; margin-bottom: var(--v-6); }
   .product-head p { color: var(--v-ink-soft); margin-top: var(--v-4); }
   .product-receive { display: grid; gap: var(--v-6); }

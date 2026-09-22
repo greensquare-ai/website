@@ -6,8 +6,8 @@ import { offer } from '../data/offer';
 
 const free = offer.free;
 const faq = [
-  ['Is this a worksheet or a questionnaire?', 'No. The file gives the model a process and a set of rules, not a list of questions. What it asks depends on what you have already told it, and it will not draft the brief until it has what it needs or has recorded what it cannot get.'],
-  ['Does it make the decision for me?', 'No. It produces a recommendation with a stated confidence, the assumptions it rests on and the findings that would reverse it. You decide whether to accept the recommendation, and you own the outcome. The file will not run a decision that has no named owner.'],
+  ['Is this a worksheet or a questionnaire?', 'No. The file gives the model a process and a set of rules, not a fixed questionnaire. It asks six questions in order, adapting each question to what you have already said, then returns the framing handoff described above.'],
+  ['Does it make the decision for me?', `No. ${free.boundary} You decide what happens next, and you remain responsible for the decision.`],
   ['Which model should I use it with?', `${free.compatibility.tested} ${free.compatibility.boundary}`],
   ['Where does my information go?', 'Your decision, your facts and your answers go to the model provider you chose, under that provider’s terms and the data settings on your account. None of it reaches GreenSquare AI. Your email address is the only thing we hold.'],
   ['Can I use it on confidential work?', 'Only where your organisation permits you to place that material with the model provider you are using. Check the retention and training settings on your account first. Do not submit client material under NDA, personal information or privileged material unless your provider terms and your own obligations allow it.'],
@@ -23,7 +23,7 @@ const faq = [
   <section class="v-hero free-hero">
     <div class="v-container">
       <h1>{free.oneLine}</h1>
-      <p class="v-lead">The beta is a six-page PDF. Uploaded to a chat with one live decision, it has the model ask six questions in order and hand back a frame with the evidence tagged. You supply the decision and the facts; the guide supplies the discipline. It stops before evaluation.</p>
+      <p class="v-lead">Bring one live decision. The guide makes the model ask six questions in order, distinguish evidence from assumption and return a structured frame. {free.boundary}</p>
       <div class="v-actions">
         <a class="v-btn v-btn--green" href="#get-free">Get the Frame Free beta</a>
         <a class="v-btn" href={withBase('/product/#brief')}>See a Decision Brief</a>
@@ -42,6 +42,7 @@ const faq = [
         <div><dt>After you submit</dt><dd>{free.delivery.after}</dd></div>
         <div><dt>Setup</dt><dd>{free.delivery.setup}</dd></div>
         <div><dt>A session</dt><dd>{free.session}</dd></div>
+        <div><dt>The output</dt><dd>{free.output}</dd></div>
         <div><dt>Status</dt><dd>{free.status}. The file is revised as the method improves; the version you hold is dated in its header.</dd></div>
       </dl>
     </div>
