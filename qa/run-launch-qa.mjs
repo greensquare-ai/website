@@ -124,9 +124,18 @@ for (const viewport of viewports) {
 
     if (route === '/') {
       if (await page.getByRole('link', { name: /Get the Frame Free beta/i }).count() < 1) errors.push('Primary Free CTA missing');
-      const brief = page.locator('figure[aria-label="Excerpt from a Decision Brief"]');
-      if (await brief.count() < 1) errors.push('Decision Brief excerpt missing from the hero');
-      else if (!/Demonstration run, not part of the preregistered study/.test(await brief.first().innerText())) errors.push('Decision Brief excerpt lacks its provenance');
+      const heroImage = page.locator('.home-hero__visual img');
+      if (await heroImage.count() < 1) errors.push('Decision-path artwork missing from the hero');
+      else {
+        const imageState = await heroImage.first().evaluate((image) => ({
+          alt: image.alt,
+          complete: image.complete,
+          naturalWidth: image.naturalWidth,
+          naturalHeight: image.naturalHeight,
+        }));
+        if (!imageState.complete || imageState.naturalWidth < 1 || imageState.naturalHeight < 1) errors.push('Decision-path artwork failed to load');
+        if (!imageState.alt) errors.push('Decision-path artwork is missing alternative text');
+      }
     }
     if (route === '/free/') {
       if (await page.getByLabel('Email address').count() !== 1) errors.push('Email input missing');

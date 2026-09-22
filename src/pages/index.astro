@@ -1,7 +1,6 @@
 ---
 import { withBase } from '../lib/paths';
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
-import BriefExcerpt from '../components/BriefExcerpt.astro';
 import PlanComparison from '../components/PlanComparison.astro';
 import Signup from '../components/Signup.astro';
 import { briefExcerpt } from '../data/brief-excerpt';
@@ -41,10 +40,19 @@ const useWhen = [
             <a class="v-btn" href={withBase('/product/#brief')}>See a Decision Brief</a>
           </div>
         </div>
-        <div class="home-hero__exhibit">
-          <BriefExcerpt compact />
-          <p class="home-exhibit__note v-meta">The closing section of a brief the method produced on a fictional case. <a href={withBase('/product/#brief')}>Read how it got there</a>, from the question as first asked to the reframed decision.</p>
-        </div>
+        <figure class="home-hero__visual">
+          <picture>
+            <source srcset={withBase('/assets/frame-decision-path.avif')} type="image/avif" />
+            <img
+              src={withBase('/assets/frame-decision-path.webp')}
+              width="960"
+              height="1440"
+              alt="Abstract paper pathways converging on a green square frame."
+              fetchpriority="high"
+              decoding="async"
+            />
+          </picture>
+        </figure>
       </div>
     </div>
   </section>
@@ -140,14 +148,19 @@ const useWhen = [
 
 <style>
   .home-hero { padding-bottom: var(--v-10); }
-  .home-hero__grid { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+  .home-hero__grid { display: grid; grid-template-columns: minmax(0, 6.5fr) minmax(20rem, 5.5fr); gap: clamp(2rem, 5vw, 5rem); align-items: center; }
   .home-hero__grid > * { min-width: 0; }
   .home-hero__copy h1 { max-width: 15ch; font-size: clamp(2.4rem, 1.4rem + 3.2vw, 4rem); line-height: 1.02; letter-spacing: -0.02em; }
   .home-hero__copy .v-lead { max-width: 52ch; }
-  .home-hero__exhibit { padding-top: var(--v-2); }
-  @media (max-width: 1000px) { .home-hero__grid { grid-template-columns: 1fr; } .home-hero__exhibit { padding-top: var(--v-4); } }
+  .home-hero__visual { margin: 0; border: 1px solid var(--v-line); overflow: hidden; background: #eee8dc; }
+  .home-hero__visual picture,
+  .home-hero__visual img { display: block; width: 100%; }
+  .home-hero__visual img { height: auto; aspect-ratio: 2 / 3; object-fit: cover; }
+  @media (max-width: 1000px) {
+    .home-hero__grid { grid-template-columns: 1fr; }
+    .home-hero__visual { width: min(100%, 40rem); margin-top: var(--v-4); }
+  }
   .home-hero__delivery { margin-top: var(--v-5); font-size: var(--vs-small); color: var(--v-ink); max-width: 58ch; padding-left: var(--v-4); border-left: 1px solid var(--v-ink); }
-  .home-exhibit__note { margin: var(--v-4) 0 0; max-width: none; }
   .home-when > div { grid-template-columns: minmax(12rem, 0.9fr) 1.1fr; }
   .home-when dt { font-size: var(--vs-small); font-weight: 600; color: var(--v-ink); }
   .home-method h3 { font-size: 1.0625rem; }

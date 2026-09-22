@@ -2,6 +2,16 @@
 
 Current public-site decisions, their rationale and the condition that would reverse them.
 
+## 2026-09-22 · The homepage hero uses a decision-path artwork
+
+**Decided.** The dense Decision Brief excerpt in the homepage hero is replaced by an original, text-free editorial artwork: uncertain paths converge on a single green frame. The real brief remains available from the secondary hero action and the complete product demonstration.
+
+**Why.** The full excerpt asked a first-time visitor to read two competing columns before they had understood the proposition. The artwork gives the right-hand column one immediate job—expressing the move from ambiguity to a framed decision—while the left-hand copy and actions retain the explanation and route to evidence.
+
+**Constraint.** The artwork carries no people, personal details, product claims, text, logos or generic AI motifs. Production serves AVIF with a WebP fallback, explicit dimensions and useful alternative text.
+
+**Reversed by.** Evidence that the visual reduces product comprehension or that visitors no longer discover the Decision Brief demonstration.
+
 ## 2026-09-10 · The site is a decision dossier, and the Decision Brief is the exhibit
 
 **Decided.** Every page opens as a document: one left-aligned heading in Newsreader, a dateline where the page carries a date, and the content in rectangular panels with hairline rules on warm paper. The homepage hero carries a real Decision Brief excerpt beside the proposition. Pill buttons, rounded plan cards, icon columns, the hero animation and the centred marketing hero are removed. Space Grotesk is removed; Newsreader (self-hosted, `font-display: optional`) carries h1, h2 and quoted brief text, and IBM Plex Sans carries everything else. The palette adds one signal colour, `#9a3a1c`, for unknowns, conditions and corrections, and four evidence-class marks.
