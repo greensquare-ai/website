@@ -89,6 +89,11 @@ const RULES = [
     test: (text) => [...text.matchAll(/\[(?:to be confirmed|TODO|TBC|placeholder)[^\]]*\]|\bTODO\b/g)].map((m) => m[0]),
   },
   {
+    name: 'a private operator identifier',
+    decision: 'The public credibility narrative remains capability-based and anonymous (2026-09-22)',
+    test: (text) => [...text.matchAll(/\b(?:Karim|Sokarno|EY|EY-Parthenon|UNSW|FMVA)\b|hundreds-of-millions/gi)].map((m) => m[0]),
+  },
+  {
     name: 'a price, which is not published before launch',
     decision: 'No price is surfaced at launch',
     test: (text) => [...text.matchAll(/(?:A?\$|AUD\s?)\d/g)].map((m) => m[0]),
@@ -132,6 +137,49 @@ for (const file of htmlFiles(DIST)) {
       failures.push({ route, rule: rule.name, decision: rule.decision, hits: [...new Set(hits)].slice(0, 6), count: hits.length });
     }
   }
+}
+
+/**
+ * Frame Free has one canonical boundary. A previous FAQ said it produced a
+ * recommendation while the offer record said it stopped before evaluation.
+ */
+try {
+  const free = visibleText(readFileSync(join(DIST, 'free', 'index.html'), 'utf8'));
+  if (!/does not compare options, recommend a course of action or produce a Decision Brief/.test(free)) {
+    failures.push({
+      route: 'free',
+      rule: 'the Frame Free output boundary is missing',
+      decision: 'One canonical offer statement (2026-09-22)',
+      hits: ['required boundary sentence absent'],
+      count: 1,
+    });
+  }
+  if (/produces a recommendation/i.test(free)) {
+    failures.push({
+      route: 'free',
+      rule: 'Frame Free is said to produce a recommendation',
+      decision: 'Frame Free stops before evaluation (2026-09-22)',
+      hits: ['produces a recommendation'],
+      count: 1,
+    });
+  }
+} catch {
+  failures.push({ route: 'free', rule: 'the Frame Free page did not build', decision: '', hits: [], count: 1 });
+}
+
+try {
+  const terms = visibleText(readFileSync(join(DIST, 'legal', 'terms', 'index.html'), 'utf8'));
+  if (!/six-page PDF field guide/.test(terms) || /plain-text method file/i.test(terms)) {
+    failures.push({
+      route: 'legal/terms',
+      rule: 'the legal deliverable differs from the offer record',
+      decision: 'Frame Free is delivered as a six-page PDF field guide (2026-09-22)',
+      hits: ['legal description must match the canonical offer'],
+      count: 1,
+    });
+  }
+} catch {
+  failures.push({ route: 'legal/terms', rule: 'the terms page did not build', decision: '', hits: [], count: 1 });
 }
 
 /**
@@ -179,7 +227,7 @@ for (const file of htmlFiles(DIST)) {
 }
 
 if (failures.length === 0) {
-  console.log(`check-copy: ${RULES.length + 3} rules, no violations.`);
+  console.log(`check-copy: ${RULES.length + 5} rules, no violations.`);
   process.exit(0);
 }
 

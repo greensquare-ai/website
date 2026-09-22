@@ -206,6 +206,26 @@ html:has(.v2) { scroll-behavior: smooth; color-scheme: light; background: var(--
 .d-table .num { text-align: right; white-space: nowrap; }
 .d-table .is-emph { background: color-mix(in srgb, var(--v-green) 8%, var(--v-panel)); }
 .d-table tr.group th { background: var(--v-off); font-size: var(--vs-meta); font-weight: 600; color: var(--v-ink); border-bottom: 1px solid var(--v-line); }
+@media (max-width: 640px) {
+  .d-table-wrap::before {
+    content: 'Scroll table to see more';
+    display: block;
+    position: sticky;
+    left: 0;
+    width: max-content;
+    padding: 0 0 var(--v-2);
+    color: var(--v-ink-soft);
+    font-size: var(--vs-meta);
+    font-weight: 500;
+  }
+  .d-table th[scope='row'] {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background: var(--v-panel);
+    box-shadow: 1px 0 0 var(--v-line);
+  }
+}
 
 /* A ruled list: items separated by hairlines, an optional index on the left. */
 .d-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--v-line); }

@@ -2,7 +2,7 @@
 layout: ../../layouts/LegalLayout.astro
 title: Terms of use
 description: The terms governing use of the GreenSquare AI website and the Frame Free beta.
-updated: 10 September 2026
+updated: 22 September 2026
 ---
 
 These terms govern your use of www.greensquare.ai, run by GreenSquare AI, and of the Frame Free beta. By using the site or requesting the beta, you agree to them. The [privacy policy](/legal/privacy/) and the [cookie notice](/legal/cookies/) form part of these terms.
@@ -13,11 +13,11 @@ The site describes Frame and lets you request the Frame Free beta. Nothing is cu
 
 ## The Frame Free beta
 
-**What you receive.** A plain-text method file, sent by email after you confirm your address. It is a beta: we revise it as the method improves, and the version you hold is dated in its header. We may send a revised file to the same address.
+**What you receive.** A six-page PDF field guide, sent by email after you confirm your address. It is a beta: we revise it as the method improves, and the version you hold is dated in its header. We may send a revised file to the same address.
 
 **Who may use it.** The beta is licensed for your own use on your own decisions, including decisions you make in the course of your employment or your own professional practice. It is not licensed for resale, for bundling into another product or service, or for use by a team under one address. If you want team or client use, write to us and we will say what is possible.
 
-**What you may do with the output.** The Decision Briefs and other output you produce with the method are yours. You may use them, share them with colleagues and clients, and act on them without attribution to us.
+**What you may do with the output.** The frames and other output you produce with the guide are yours. You may use them, share them with colleagues and clients, and act on them without attribution to us.
 
 **What you may not do with the file.** The method file, the writing on this site and the methodology behind Frame are ours, protected by copyright and other rights. You may not republish the file, resell it, present it as your own, or remove its header.
 

@@ -29,6 +29,7 @@ export const offer = {
     ],
     session: 'One decision runs to a completed frame in about ten minutes. Frame Free stops there, by design: it does not rank options, score criteria or recommend a course of action.',
     output: 'A seven-part framing handoff: the presented decision and its trigger, the decision underneath, the missing third option, the load-bearing assumption, each constraint marked verified or assumed, an evidence map tagging every material claim given, derived, inferred or unknown, and the single evidence gap to test next.',
+    boundary: 'Frame Free clarifies and tests the decision before evaluation. It does not compare options, recommend a course of action or produce a Decision Brief.',
     compatibility: {
       tested: 'Frame Free has not been benchmarked. The preregistered study tested an earlier method file that predates Frame, and the research pages say so.',
       boundary: 'The guide is written for Claude, ChatGPT or Gemini of current class. It depends on a model that can hold a long instruction, ask one question at a time and keep the four evidence classes straight. Smaller or older models drop the discipline part way through. It is not tied to one provider.',

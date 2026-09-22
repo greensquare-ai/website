@@ -26,11 +26,11 @@ export const operator = {
  * is a statement the operator stands behind; nothing here is a testimonial.
  */
 export const people = {
-  heading: 'Built and maintained by management consultants.',
+  heading: 'Built from strategy, transformation and transaction work.',
   lines: [
-    'Frame was written by management consultants who spent their careers producing decision papers for boards, executive committees and transaction teams, and who now run operating businesses of their own.',
-    'The lead author trained at EY in strategy and transactions, holds an MBA from UNSW and the FMVA financial modelling credential, and has led acquisition work at the hundreds-of-millions scale. The method is the discipline that work required, written down so a model will follow it.',
-    'The same people run the benchmark, score it, publish its deviations and maintain the method file. There is no research team behind a separate marketing team; the person who wrote the claim is the person who has to defend it.',
+    'Frame comes from professional work where recommendations had to survive scrutiny from boards, executives, investors and the teams responsible for delivery.',
+    'The experience behind it spans corporate strategy, capital allocation, operating-model design, transactions, restructuring and enterprise transformation. It combines financial analysis with responsibility for execution, rather than advice in isolation.',
+    'The same small practice maintains the product, runs the benchmark and publishes its limitations and deviations. There is no separate research claim that a marketing team can distance itself from.',
   ],
   verify: [
     { label: 'The method', text: 'Request the Frame Free beta and run a real decision through it, then judge it on what comes out.' },
