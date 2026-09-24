@@ -32,9 +32,8 @@ const useWhen = [
     <div class="v-container">
       <div class="home-hero__grid">
         <div class="home-hero__copy">
-          <h1>Decision support for consequential work, built to sit beside the AI you already use.</h1>
-          <p class="v-lead">Frame gives ChatGPT, Claude or Gemini a disciplined process for one consequential decision. It makes the model ask before it answers, separate evidence from assumption and expose the weak point before confidence hardens.</p>
-          <p class="home-hero__delivery"><strong>Available now:</strong> {offer.free.oneLine} {offer.free.boundary}</p>
+          <h1>Decision support for consequential work.</h1>
+          <p class="v-lead">Frame gives the AI you already use a disciplined process: ask before answering, separate evidence from assumption, and expose the weak point in a decision.</p>
           <div class="v-actions">
             <a class="v-btn v-btn--green" href="#get-free">Get the Frame Free beta</a>
             <a class="v-btn" href={withBase('/product/#brief')}>See a Decision Brief</a>
@@ -42,18 +41,19 @@ const useWhen = [
         </div>
         <figure class="home-hero__visual">
           <picture>
-            <source srcset={withBase('/assets/frame-decision-path.avif')} type="image/avif" />
+            <source media="(max-width: 700px)" srcset={withBase('/assets/stress-visible-square.webp')} type="image/webp" />
             <img
-              src={withBase('/assets/frame-decision-path.webp')}
-              width="960"
-              height="1440"
-              alt="Abstract paper pathways converging on a green square frame."
+              src={withBase('/assets/stress-visible-hero.webp')}
+              width="1536"
+              height="1024"
+              alt="A clear acrylic strip reveals a small concentration of colour around a single stress point."
               fetchpriority="high"
               decoding="async"
             />
           </picture>
         </figure>
       </div>
+      <p class="home-hero__delivery"><strong>Available now:</strong> {offer.free.oneLine} {offer.free.boundary}</p>
     </div>
   </section>
 
@@ -70,6 +70,20 @@ const useWhen = [
       </dl>
     </div>
   </section>
+
+  <div class="v-container home-field">
+    <picture>
+      <source media="(max-width: 700px)" srcset={withBase('/assets/field-visible-square.webp')} type="image/webp" />
+      <img
+        src={withBase('/assets/field-visible-hero.webp')}
+        width="1672"
+        height="941"
+        alt="Small iron filings reveal the shape of a magnetic field across warm paper."
+        loading="lazy"
+        decoding="async"
+      />
+    </picture>
+  </div>
 
   <section class="v-section v-section--rule" id="method">
     <div class="v-container v-cols">
@@ -147,20 +161,29 @@ const useWhen = [
 </BaseLayoutV2>
 
 <style>
-  .home-hero { padding-bottom: var(--v-10); }
-  .home-hero__grid { display: grid; grid-template-columns: minmax(0, 6.5fr) minmax(20rem, 5.5fr); gap: clamp(2rem, 5vw, 5rem); align-items: center; }
-  .home-hero__grid > * { min-width: 0; }
-  .home-hero__copy h1 { max-width: 15ch; font-size: clamp(2.4rem, 1.4rem + 3.2vw, 4rem); line-height: 1.02; letter-spacing: -0.02em; }
-  .home-hero__copy .v-lead { max-width: 52ch; }
-  .home-hero__visual { margin: 0; border: 1px solid var(--v-line); overflow: hidden; background: #eee8dc; }
-  .home-hero__visual picture,
-  .home-hero__visual img { display: block; width: 100%; }
-  .home-hero__visual img { height: auto; aspect-ratio: 2 / 3; object-fit: cover; }
-  @media (max-width: 1000px) {
-    .home-hero__grid { grid-template-columns: 1fr; }
-    .home-hero__visual { width: min(100%, 40rem); margin-top: var(--v-4); }
+  .home-hero { padding-top: var(--v-5); padding-bottom: var(--v-10); }
+  .home-hero__grid { position: relative; min-height: clamp(34rem, 49vw, 43rem); display: flex; align-items: center; }
+  .home-hero__copy { position: relative; z-index: 1; width: min(47%, 31rem); padding-block: var(--v-8); }
+  .home-hero__copy h1 { max-width: 12ch; font-size: clamp(2.8rem, 2rem + 3vw, 4.25rem); line-height: 1.02; letter-spacing: -0.02em; }
+  .home-hero__copy .v-lead { max-width: 37ch; }
+  .home-hero__visual { position: absolute; inset: 0; margin: 0; overflow: hidden; background: var(--v-paper); }
+  .home-hero__visual picture, .home-hero__visual img { display: block; width: 100%; height: 100%; }
+  .home-hero__visual img { object-fit: cover; object-position: center; }
+  .home-hero__delivery { margin: var(--v-4) 0 0; max-width: 72ch; font-size: var(--vs-meta); color: var(--v-ink-soft); }
+  .home-hero__delivery strong { color: var(--v-ink); }
+  .home-field { padding-bottom: var(--v-section); }
+  .home-field picture { display: block; width: 100%; max-height: 31rem; overflow: hidden; }
+  .home-field img { display: block; width: 100%; height: auto; object-fit: cover; }
+  @media (max-width: 900px) {
+    .home-hero__grid { min-height: 0; display: flex; flex-direction: column; align-items: stretch; }
+    .home-hero__copy { width: 100%; padding: var(--v-8) 0 var(--v-6); }
+    .home-hero__copy h1 { max-width: 15ch; }
+    .home-hero__visual { position: static; height: clamp(23rem, 80vw, 35rem); }
   }
-  .home-hero__delivery { margin-top: var(--v-5); font-size: var(--vs-small); color: var(--v-ink); max-width: 58ch; padding-left: var(--v-4); border-left: 1px solid var(--v-ink); }
+  @media (max-width: 700px) {
+    .home-hero__visual { height: min(90vw, 24rem); }
+    .home-field picture { max-height: none; }
+  }
   .home-when > div { grid-template-columns: minmax(12rem, 0.9fr) 1.1fr; }
   .home-when dt { font-size: var(--vs-small); font-weight: 600; color: var(--v-ink); }
   .home-method h3 { font-size: 1.0625rem; }
