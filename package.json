@@ -6,11 +6,12 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build && npm run check:copy && npm run check:excerpts",
+    "build": "astro build && npm run check:copy && npm run check:excerpts && npm run check:media",
     "check:copy": "node scripts/check-copy.mjs",
     "preview": "astro preview",
     "astro": "astro",
     "check:excerpts": "node qa/check-excerpts.mjs",
+    "check:media": "node scripts/check-media.mjs",
     "qa:shots": "node qa/shots.mjs"
   },
   "dependencies": {

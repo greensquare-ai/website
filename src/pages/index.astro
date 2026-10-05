@@ -206,8 +206,11 @@ const useWhen = [
   .home-evidence { padding: var(--v-2) var(--v-5); }
   .home-offer__link { display: inline-block; margin-top: var(--v-4); }
   .home-offer__head { max-width: 54ch; margin-bottom: var(--v-6); }
-  .home-film__head { max-width: 62ch; margin-bottom: var(--v-6); }
-  .home-film__head h2 { max-width: 22ch; }
+  /* The film's head takes the same column as every other section head (the 5fr of
+     .v-cols), and the film spans both columns below it, as PlanComparison does in #offer. */
+  .home-film__head { margin-bottom: var(--v-6); }
+  .home-film__head h2 { max-width: 18ch; }
+  @media (min-width: 801px) { .home-film__head { width: calc((100% - clamp(2rem, 6vw, 6rem)) * 5 / 12); } }
   @media (max-width: 800px) {
     .home-when > div { grid-template-columns: 1fr; }
     .home-anatomy li { grid-template-columns: 1fr; gap: var(--v-1); }

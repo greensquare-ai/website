@@ -77,19 +77,21 @@ jobs:
           mkdir -p qa/launch
           node qa/run-launch-qa.mjs
 
-      # The homepage film: poster and reserved box, reduced motion, lazy insertion, source
-      # per viewport, the pause control and the text equivalent. This runner's Chromium has
-      # no H.264, so the check plays a VP9 transcode of the served file and says so.
-      - name: Frame Free film
-        run: |
-          command -v ffmpeg >/dev/null || { sudo apt-get update && sudo apt-get install -y ffmpeg; }
-          node qa/check-frame-free-film.mjs
-
       - name: Check internal links
         run: node qa/check-links.mjs
 
       - name: Lighthouse budgets
         run: npx lhci autorun --config=./lighthouserc.cjs
+
+      # The homepage film: poster and reserved box, reduced motion, lazy insertion, source
+      # per viewport, the pause control and the text equivalent. This runner's Chromium has
+      # no H.264, so the check plays a VP9 transcode of the served file and says so.
+      # It runs after the existing gates so that a film failure cannot stop them running;
+      # it still fails the job.
+      - name: Frame Free film
+        run: |
+          command -v ffmpeg >/dev/null || { sudo apt-get update && sudo apt-get install -y ffmpeg; }
+          node qa/check-frame-free-film.mjs
 
       - name: Upload QA evidence
         if: always()

@@ -8,10 +8,20 @@
  *   - with motion allowed the <video> is added only once the figure is near the viewport,
  *     and its source is the composition for that viewport;
  *   - the Pause/Play control is a real button, at least 44px tall, whose name follows
- *     state and whose clicks change the video's `paused` property; the film pauses off
- *     screen and when the document is hidden, and never resumes one the reader paused;
- *   - the text equivalent opens and holds all seven parts of the framing handoff;
+ *     state and whose clicks change the video's `paused` property; a keyboard reader
+ *     tabbing down from the hero reaches it before the film starts, and pressing Pause
+ *     before the film arrives keeps it from starting; the film pauses off screen and when
+ *     the document is hidden, and never resumes one the reader paused; if the control has
+ *     focus when it must hide, focus stays in the section rather than falling to <body>;
+ *   - nothing on the page shifts when the video arrives, or when it fails and is removed;
+ *   - the text equivalent opens, holds all seven parts of the framing handoff, carries
+ *     every line in qa/frame-free-film-onscreen.json, and its title is a heading;
+ *   - a landscape phone gets the 16:9 film, no taller than its screen;
  *   - with JavaScript off the reader gets the poster and the text, and no control.
+ *
+ * Scrolling is instant and waits are on state, not on time. The site sets smooth
+ * scrolling, under which a scroll animates and an observer may not have fired when a
+ * fixed wait ends, so an assertion could pass without the behaviour being exercised.
  *
  * Codec note. Playwright's Chromium is an open-source build without H.264, so it cannot
  * decode the production MP4s (Chrome, Edge, Safari and Firefox can). When the browser
@@ -57,7 +67,13 @@ const mustContain = [
   'Evidence gap to test next',
   'No options were scored. Nothing was recommended. The question became the right one',
 ];
-const words = ['Given', 'Derived', 'Inferred', 'Unknown', 'Assumed'];
+/* Page 5 prints no verified or assumed word beside the constraints, so the page adds none. */
+const words = ['Given', 'Derived', 'Inferred', 'Unknown'];
+/* The film's on-screen copy, held apart from the data file (see the file's status note). */
+const onscreen = JSON.parse(await fs.readFile(new URL('./frame-free-film-onscreen.json', import.meta.url), 'utf8')).strings;
+/* PROVISIONAL byte budgets per composition, to be agreed with the film team. The film starts
+   downloading as soon as it nears the viewport, so its weight is a page-weight decision. */
+const BYTE_BUDGET = { desktop: 10_000_000, mobile: 7_000_000 };
 
 const has = (cmd) => { try { execFileSync(cmd, ['-version'], { stdio: 'ignore' }); return true; } catch { return false; } };
 const results = [];
@@ -99,7 +115,34 @@ const watchShifts = (page) => page.evaluate(() => {
   }).observe({ type: 'layout-shift' });
 });
 const shifts = (page) => page.evaluate(() => (window.__filmShifts || []).reduce((a, b) => a + b, 0));
-const scrollToFilm = (page) => page.locator('[data-film-frame]').evaluate((el) => el.scrollIntoView({ block: 'center' }));
+const scrollToFilm = (page) => page.locator('[data-film-frame]').evaluate((el) => el.scrollIntoView({ block: 'center', behavior: 'instant' }));
+const scrollTop = (page) => page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }));
+/* Two animation frames, so observers have delivered after a scroll. */
+const settle = (page) => page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
+const videoPaused = (page) => page.locator('[data-film-video]').evaluate((v) => v.paused);
+const offScreenAndPaused = (page) => page.waitForFunction(() => {
+  const frame = document.querySelector('[data-film-frame]');
+  const v = document.querySelector('[data-film-video]');
+  const r = frame.getBoundingClientRect();
+  return (r.bottom < 0 || r.top > innerHeight) && v && v.paused;
+}, null, { timeout: 5000 }).then(() => true, () => false);
+const toggleShown = (page) => page.waitForFunction(() => { const t = document.querySelector('[data-film-toggle]'); return t && !t.hidden; }, null, { timeout: 5000 }).then(() => true, () => false);
+
+/* The top-level boxes of an MP4, in order. */
+function boxes(buffer) {
+  const out = [];
+  let at = 0;
+  while (at + 8 <= buffer.length) {
+    let size = buffer.readUInt32BE(at);
+    const type = buffer.toString('latin1', at + 4, at + 8);
+    if (size === 1) size = Number(buffer.readBigUInt64BE(at + 8));
+    else if (size === 0) size = buffer.length - at;
+    out.push(type);
+    if (size < 8) break;
+    at += size;
+  }
+  return out;
+}
 
 /* ---------- 0. The served media: codec and dimensions match what the page reserves ---------- */
 {
@@ -116,7 +159,23 @@ const scrollToFilm = (page) => page.locator('[data-film-frame]').evaluate((el) =
       const res = await fetch(new URL(d[key].src, base));
       if (!res.ok) errors.push(`HTTP ${res.status} for ${d[key].src}`);
       else {
-        await fs.writeFile(tmp, Buffer.from(await res.arrayBuffer()));
+        const buffer = Buffer.from(await res.arrayBuffer());
+        await fs.writeFile(tmp, buffer);
+        /* moov before mdat (+faststart): with preload="none" a tail-moov file must be
+           fetched to its end before the first frame. */
+        const order = boxes(buffer);
+        if (!order.includes('moov') || !order.includes('mdat') || order.indexOf('moov') > order.indexOf('mdat')) errors.push(`moov is not before mdat (top-level boxes: ${order.join(', ')}); export with +faststart`);
+        if (buffer.length > BYTE_BUDGET[key]) errors.push(`${buffer.length} bytes, over the provisional ${BYTE_BUDGET[key]}-byte budget`);
+        /* The poster must be the size the page reserves, or it letterboxes silently. */
+        const posterUrl = d[key].src.replace('.mp4', '-poster.webp');
+        const posterRes = await fetch(new URL(posterUrl, base));
+        if (!posterRes.ok) errors.push(`HTTP ${posterRes.status} for ${posterUrl}`);
+        else {
+          const posterTmp = path.join(os.tmpdir(), `film-${key}-poster.webp`);
+          await fs.writeFile(posterTmp, Buffer.from(await posterRes.arrayBuffer()));
+          const p = JSON.parse(execFileSync('ffprobe', ['-v', 'error', '-show_entries', 'stream=width,height', '-of', 'json', posterTmp], { encoding: 'utf8' })).streams[0];
+          if (p.width !== d[key].ratio.w || p.height !== d[key].ratio.h) errors.push(`poster ${p.width}x${p.height}, page reserves ${d[key].ratio.w}x${d[key].ratio.h}`);
+        }
         const probe = JSON.parse(execFileSync('ffprobe', ['-v', 'error', '-select_streams', 'v:0', '-show_entries', 'stream=codec_name,width,height,pix_fmt', '-of', 'json', tmp], { encoding: 'utf8' })).streams[0];
         if (probe.codec_name !== 'h264') errors.push(`codec ${probe.codec_name}, expected h264`);
         if (probe.pix_fmt !== 'yuv420p') errors.push(`pixel format ${probe.pix_fmt}, expected yuv420p`);
@@ -124,7 +183,7 @@ const scrollToFilm = (page) => page.locator('[data-film-frame]').evaluate((el) =
         const audio = execFileSync('ffprobe', ['-v', 'error', '-select_streams', 'a', '-show_entries', 'stream=index', '-of', 'csv=p=0', tmp], { encoding: 'utf8' }).trim();
         if (audio) errors.push('audio track present; the film is published muted');
       }
-      record(`media ${key}`, '-', errors, { src: d[key].src });
+      record(`media ${key}: codec, size, faststart, budget, poster`, '-', errors, { src: d[key].src });
     }
   }
 }
@@ -146,14 +205,25 @@ let substitute = null;
         const src = path.join(os.tmpdir(), `film-${key}.mp4`);
         const out = path.join(os.tmpdir(), `film-${key}-vp9.mp4`);
         const res = await fetch(new URL(d[key].src, base));
+        /* A missing file is already reported by block 0; record it here too and stop,
+           rather than handing a 404 body to ffmpeg and losing the report. */
+        if (!res.ok) { record('playback substitute', '-', [`HTTP ${res.status} for ${d[key].src}`]); substitute = null; break; }
         await fs.writeFile(src, Buffer.from(await res.arrayBuffer()));
-        execFileSync('ffmpeg', ['-y', '-v', 'error', '-i', src, '-t', '6', '-an', '-c:v', 'libvpx-vp9', '-deadline', 'realtime', '-cpu-used', '8', '-b:v', '400k', '-pix_fmt', 'yuv420p', '-f', 'mp4', out]);
+        try {
+          execFileSync('ffmpeg', ['-y', '-v', 'error', '-i', src, '-t', '6', '-an', '-c:v', 'libvpx-vp9', '-deadline', 'realtime', '-cpu-used', '8', '-b:v', '400k', '-pix_fmt', 'yuv420p', '-f', 'mp4', out], { stdio: ['ignore', 'ignore', 'pipe'] });
+        } catch (e) {
+          record('playback substitute', '-', [String(e.stderr || e.message).split('\n')[0]]);
+          substitute = null;
+          break;
+        }
         substitute[new URL(d[key].src, base).pathname] = await fs.readFile(out);
       }
     }
   }
 }
-const canPlay = Boolean(substitute) || notRun.every((n) => !n.startsWith('Playback'));
+const substituteFailed = results.some((r) => r.check === 'playback substitute');
+if (substituteFailed) notRun.push('Playback: the VP9 stand-in could not be made (see the playback substitute failure)');
+const canPlay = !substituteFailed && (Boolean(substitute) || notRun.every((n) => !n.startsWith('Playback')));
 async function newContext(options) {
   const context = await browser.newContext(options);
   if (substitute) {
@@ -212,6 +282,17 @@ for (const viewport of viewports) {
     if (labels.length !== 7) errors.push(`${labels.length} handoff parts, expected 7`);
     handoff.forEach((label, i) => { if (!labels[i]?.includes(label)) errors.push(`Part ${i + 1} should be "${label}", found "${labels[i] ?? 'nothing'}"`); });
     for (const s of mustContain) if (!text.includes(s)) errors.push(`Missing: "${s.slice(0, 50)}"`);
+    /* Everything the film puts on screen must be in the text (WCAG 1.2.1). */
+    const norm = (t) => t.replace(/\s+/g, ' ').toLowerCase();
+    const flat = norm(text);
+    const absent = onscreen.filter((line) => !flat.includes(norm(line)));
+    if (absent.length) errors.push(`On-screen copy missing from the text equivalent: ${absent.map((l) => `"${l.slice(0, 40)}"`).join(', ')}`);
+    const questions = await details.locator('[data-film-question]').count();
+    if (questions !== 6) errors.push(`${questions} questions in the text equivalent, expected 6`);
+    if (!(await details.getByRole('heading', { level: 3, name: 'The software was the surface' }).count())) errors.push('The worked example title is not an h3');
+    /* The summary's name carries no plus or minus glyph. */
+    const summaryName = (await details.locator('summary').ariaSnapshot()).trim();
+    if (/[+\u2212]/.test(summaryName.replace(/^- /, ''))) errors.push(`Summary accessible name includes the glyph: ${summaryName}`);
     if (/\$\s?\d|\b40k\b/i.test(text)) errors.push('A currency figure is visible in the text equivalent');
     if (/\b(?:GIVEN|DERIVED|INFERRED|UNKNOWN|VERIFIED|ASSUMED)\b/.test(text)) errors.push('Evidence words set in capitals');
     const wordState = await page.evaluate((list) => {
@@ -243,7 +324,7 @@ for (const viewport of viewports) {
     await context.close();
   }
 
-  /* ---------- 2. Motion allowed: insertion near the viewport, source, control ---------- */
+  /* ---------- 2. Motion allowed: control first, insertion near the viewport, source, control ---------- */
   {
     const errors = [];
     const context = await newContext({ viewport, reducedMotion: 'no-preference' });
@@ -258,9 +339,20 @@ for (const viewport of viewports) {
     let lazyChecked = false;
     if (distance > 650) {
       lazyChecked = true;
-      await page.waitForTimeout(500);
+      await settle(page);
       if (await page.locator('[data-film-video]').count()) errors.push('Video inserted while the figure was far below the viewport');
     }
+
+    /* The control exists before the film does, and is the next stop after the hero's
+       last action, so a keyboard reader can pause before the film starts. */
+    if (!(await toggleShown(page))) errors.push('Control not shown before the video was inserted');
+    await page.getByRole('link', { name: 'See a Decision Brief' }).first().focus();
+    await page.keyboard.press('Tab');
+    const tabbed = await page.evaluate(() => document.activeElement?.matches('[data-film-toggle]') ?? false);
+    if (!tabbed) errors.push(`One Tab from the hero's last action reaches ${await page.evaluate(() => document.activeElement?.outerHTML.slice(0, 80))}, not the film control`);
+    await page.evaluate(() => document.activeElement?.blur());
+    await scrollTop(page);
+
     await watchShifts(page);
     await scrollToFilm(page);
     const inserted = await page.waitForSelector('[data-film-video]', { state: 'attached', timeout: 5000 }).then(() => true, () => false);
@@ -270,8 +362,10 @@ for (const viewport of viewports) {
       const attrs = await video.evaluate((v) => ({
         muted: v.muted, loop: v.loop, inline: v.playsInline, preload: v.getAttribute('preload'),
         pip: v.hasAttribute('disablepictureinpicture'), hidden: v.getAttribute('aria-hidden'), autoplay: v.hasAttribute('autoplay'),
+        focusable: (() => { const was = document.activeElement; v.focus({ preventScroll: true }); const took = document.activeElement === v; was?.focus?.({ preventScroll: true }); return took || v.hasAttribute('tabindex'); })(),
       }));
       if (!attrs.muted || !attrs.loop || !attrs.inline || attrs.preload !== 'none' || !attrs.pip || attrs.hidden !== 'true') errors.push(`Video attributes ${JSON.stringify(attrs)}`);
+      if (attrs.focusable) errors.push('The aria-hidden video is focusable');
       await page.waitForFunction(() => document.querySelector('[data-film-video]')?.currentSrc, null, { timeout: 5000 }).catch(() => {});
       const current = await video.evaluate((v) => v.currentSrc).catch(() => '');
       if (!current.endsWith(expected.src)) errors.push(`Source ${current || 'none'}, expected ${expected.src}`);
@@ -293,73 +387,122 @@ for (const viewport of viewports) {
         if (!control.visible) errors.push('Control not visible while the video plays');
         if (control.height < 44) errors.push(`Control is ${control.height}px tall, below 44px`);
         const named = async (n) => (await page.getByRole('button', { name: n, exact: true }).count()) === 1;
-        const paused = () => page.locator('[data-film-video]').evaluate((v) => v.paused);
         if (!(await named('Pause the film'))) errors.push('Control is not named "Pause the film" while playing');
 
         await toggle.focus();
         const ring = await toggle.evaluate((b) => { const s = getComputedStyle(b); return s.outlineStyle !== 'none' && parseFloat(s.outlineWidth) >= 2; });
         if (!ring) errors.push('No visible focus indicator on the control');
         await page.keyboard.press('Enter');
-        await page.waitForTimeout(200);
-        if (!(await paused())) errors.push('Pause did not pause the video');
+        await page.waitForFunction(() => document.querySelector('[data-film-video]').paused, null, { timeout: 2000 }).catch(() => errors.push('Pause did not pause the video'));
         if (!(await named('Play the film'))) errors.push('Control not renamed "Play the film" after pausing');
 
-        /* A film the reader paused stays paused through scrolling away and back. */
-        await page.evaluate(() => scrollTo(0, 0));
-        await page.waitForTimeout(300);
+        /* A film the reader paused stays paused through scrolling away and back. The
+           precondition, that the frame really left the screen, is asserted, not assumed. */
+        await scrollTop(page);
+        if (!(await offScreenAndPaused(page))) errors.push('Precondition failed: the frame did not leave the screen');
         await scrollToFilm(page);
-        await page.waitForTimeout(500);
-        if (!(await paused())) errors.push('A reader-paused film resumed on returning to view');
+        await settle(page);
+        if (!(await videoPaused(page))) errors.push('A reader-paused film resumed on returning to view');
 
         await toggle.click();
-        await page.waitForTimeout(300);
-        if (await paused()) errors.push('Play did not resume the video');
+        await page.waitForFunction(() => !document.querySelector('[data-film-video]').paused, null, { timeout: 2000 }).catch(() => errors.push('Play did not resume the video'));
         if (!(await named('Pause the film'))) errors.push('Control not renamed "Pause the film" after playing');
 
         /* Off screen it pauses; back on screen it resumes, because the reader did not pause it. */
-        await page.evaluate(() => scrollTo(0, 0));
-        await page.waitForTimeout(400);
-        if (!(await paused())) errors.push('Video kept playing off screen');
+        await scrollTop(page);
+        if (!(await offScreenAndPaused(page))) errors.push('Video kept playing off screen');
         await scrollToFilm(page);
-        await page.waitForTimeout(600);
-        if (await paused()) errors.push('Video did not resume on returning to view');
+        await page.waitForFunction(() => !document.querySelector('[data-film-video]').paused, null, { timeout: 3000 }).catch(() => errors.push('Video did not resume on returning to view'));
 
         /* A hidden document pauses it. Headless Chromium does not change visibility on its
            own, so the state is simulated and the real event dispatched. */
         await page.evaluate(() => { Object.defineProperty(document, 'hidden', { configurable: true, get: () => true }); document.dispatchEvent(new Event('visibilitychange')); });
-        await page.waitForTimeout(200);
-        if (!(await paused())) errors.push('Video kept playing in a hidden document');
+        if (!(await videoPaused(page))) errors.push('Video kept playing in a hidden document');
         await page.evaluate(() => { Object.defineProperty(document, 'hidden', { configurable: true, get: () => false }); document.dispatchEvent(new Event('visibilitychange')); });
-        await page.waitForTimeout(400);
-        if (await paused()) errors.push('Video did not resume when the document became visible');
+        await page.waitForFunction(() => !document.querySelector('[data-film-video]').paused, null, { timeout: 3000 }).catch(() => errors.push('Video did not resume when the document became visible'));
         await page.locator('#worked-example').screenshot({ path: `${output}/playing-${name}.png` });
       }
 
-      /* Reduced motion switched on mid-visit removes the video; switched off restores it. */
+      /* Reduced motion switched on mid-visit removes the video; switched off restores it.
+         The control has focus when it hides, and focus must stay in the section. */
+      await page.locator('[data-film-toggle]').focus();
       await page.emulateMedia({ reducedMotion: 'reduce' });
-      await page.waitForTimeout(200);
-      if (await page.locator('main video').count()) errors.push('Video not removed when reduced motion became active');
+      await page.waitForFunction(() => !document.querySelector('main video'), null, { timeout: 3000 }).catch(() => errors.push('Video not removed when reduced motion became active'));
       if (await page.locator('[data-film-toggle]').isVisible()) errors.push('Control still visible after the video was removed');
+      const focusAfter = await page.evaluate(() => ({ tag: document.activeElement?.tagName, inText: Boolean(document.activeElement?.closest('[data-film-text]')) }));
+      if (focusAfter.tag === 'BODY' || !focusAfter.inText) errors.push(`Focus fell to ${focusAfter.tag} when the control hid, not to the text equivalent`);
       await page.emulateMedia({ reducedMotion: 'no-preference' });
-      await page.waitForTimeout(300);
-      if (!(await page.locator('[data-film-video]').count())) errors.push('Video not restored when reduced motion was switched off');
+      await page.waitForSelector('[data-film-video]', { state: 'attached', timeout: 3000 }).catch(() => errors.push('Video not restored when reduced motion was switched off'));
+      if (!(await toggleShown(page))) errors.push('Control not restored when reduced motion was switched off');
 
       /* Crossing the breakpoint swaps the composition and the reserved box. */
       if (viewport.width === 1440) {
+        const src = (s) => page.waitForFunction((want) => document.querySelector('[data-film-video]')?.currentSrc.endsWith(want), s, { timeout: 5000 }).then(() => true, () => false);
         await page.setViewportSize({ width: 390, height: 844 });
-        await page.waitForTimeout(400);
-        const swapped = await page.locator('[data-film-video]').evaluate((v) => v.currentSrc).catch(() => '');
-        if (!swapped.endsWith(d.mobile.src)) errors.push(`After resizing to 390 the source is ${swapped || 'none'}, expected ${d.mobile.src}`);
+        if (!(await src(d.mobile.src))) errors.push(`After resizing to 390 the source is ${await page.locator('[data-film-video]').evaluate((v) => v.currentSrc).catch(() => 'none')}, expected ${d.mobile.src}`);
         errors.push(...ratioError(await frameBox(page), d.mobile.ratio, 'Box after resizing to 390'));
         const poster = await page.locator('[data-film-frame] img').evaluate((img) => img.currentSrc);
         if (!poster.endsWith(path.basename(d.mobile.src).replace('.mp4', '-poster.webp'))) errors.push(`After resizing the poster is ${poster}`);
         await page.setViewportSize(viewport);
-        await page.waitForTimeout(400);
-        const back = await page.locator('[data-film-video]').evaluate((v) => v.currentSrc).catch(() => '');
-        if (!back.endsWith(d.desktop.src)) errors.push(`After resizing back the source is ${back || 'none'}`);
+        if (!(await src(d.desktop.src))) errors.push(`After resizing back the source is ${await page.locator('[data-film-video]').evaluate((v) => v.currentSrc).catch(() => 'none')}`);
       }
     }
-    record('motion allowed: insertion, source, pause control', name, errors, { lazyChecked, substitute: Boolean(substitute) });
+    record('motion allowed: control first, insertion, source, pause control', name, errors, { lazyChecked, substitute: Boolean(substitute) });
+    await context.close();
+  }
+
+  /* ---------- 2a. Pressing Pause before the film arrives keeps it from starting ---------- */
+  if (canPlay) {
+    const errors = [];
+    const context = await newContext({ viewport, reducedMotion: 'no-preference' });
+    const page = await context.newPage();
+    page.on('pageerror', (e) => errors.push(`pageerror: ${e.message}`));
+    await page.goto(base + '/', { waitUntil: 'domcontentloaded' });
+    if (!(await toggleShown(page))) errors.push('Control not shown before the video was inserted');
+    else {
+      await page.locator('[data-film-toggle]').focus();
+      await page.keyboard.press('Enter');
+      if ((await page.locator('[data-film-toggle]').innerText()).trim() !== 'Play the film') errors.push('Control not renamed "Play the film" after an early pause');
+      await scrollToFilm(page);
+      await page.waitForSelector('[data-film-video]', { state: 'attached', timeout: 5000 }).catch(() => {});
+      /* A negative is being asserted, so this one wait is on time: long enough for an
+         unpaused film to have started (it starts within a frame or two on these files). */
+      await page.waitForTimeout(1000);
+      const state = await page.evaluate(() => { const v = document.querySelector('[data-film-video]'); return v ? { paused: v.paused, time: v.currentTime } : null; });
+      if (!state) errors.push('Video not inserted after an early pause');
+      else if (!state.paused || state.time > 0) errors.push(`An early pause did not hold: ${JSON.stringify(state)}`);
+    }
+    record('early pause holds', name, errors);
+    await context.close();
+  } else notRun.push(`Early pause at ${name}`);
+
+  /* ---------- 2b. No layout shift with the summary in view as the video arrives or fails ---------- */
+  for (const outcome of ['arrives', 'fails']) {
+    const errors = [];
+    const context = await newContext({ viewport, reducedMotion: 'no-preference' });
+    /* The 404 is held back so the control and the video are painted before the failure;
+       an instant 404 can resolve inside the insertion frame and hide a shift. */
+    if (outcome === 'fails') await context.route('**/media/*.mp4', async (route) => { await new Promise((r) => setTimeout(r, 800)); await route.fulfill({ status: 404, body: 'not found' }); });
+    const page = await context.newPage();
+    page.on('pageerror', (e) => errors.push(`pageerror: ${e.message}`));
+    await page.goto(base + '/', { waitUntil: 'domcontentloaded' });
+    await page.evaluate(() => document.fonts.ready);
+    await watchShifts(page);
+    /* The film's lower edge and the summary are both in view before insertion. */
+    await page.locator('[data-film-text] > summary').evaluate((el) => el.scrollIntoView({ block: 'end', behavior: 'instant' }));
+    await page.waitForSelector('[data-film-video]', { state: 'attached', timeout: 5000 }).catch(() => {});
+    if (outcome === 'arrives' && canPlay) {
+      await page.waitForFunction(() => document.querySelector('[data-film-video]')?.dataset.ready, null, { timeout: 10000 }).catch(() => errors.push('Video did not load'));
+    }
+    if (outcome === 'fails') {
+      await page.waitForFunction(() => document.querySelector('[data-film]').dataset.filmState === 'unavailable', null, { timeout: 10000 }).catch(() => errors.push('A failed source did not leave the poster in place'));
+      if (await page.locator('[data-film-toggle]').isVisible()) errors.push('A dead control is offered after the film failed');
+      if (await page.locator('main video').count()) errors.push('The failed video was not removed');
+    }
+    await settle(page);
+    const cls = await shifts(page);
+    if (cls > 0) errors.push(`Layout shift ${cls.toFixed(4)} as the video ${outcome === 'arrives' ? 'arrived' : 'failed'}`);
+    record(`no layout shift as the video ${outcome}`, name, errors, { cls });
     await context.close();
   }
 
@@ -389,6 +532,25 @@ for (const viewport of viewports) {
     record('no JavaScript: poster and text', name, errors);
     await context.close();
   }
+}
+
+/* ---------- 4. Landscape phones: the 16:9 film, no taller than the screen ---------- */
+for (const viewport of [{ width: 740, height: 360 }, { width: 667, height: 375 }]) {
+  const errors = [];
+  const context = await newContext({ viewport, reducedMotion: 'reduce', isMobile: true, hasTouch: true });
+  const page = await context.newPage();
+  await page.goto(base + '/', { waitUntil: 'domcontentloaded' });
+  const d = await declared(page);
+  if (d.isMobile) errors.push('A landscape phone is served the portrait composition');
+  await scrollToFilm(page);
+  await page.waitForFunction(() => { const i = document.querySelector('[data-film-frame] img'); return i && i.complete && i.naturalWidth > 0; }, null, { timeout: 10000 }).catch(() => errors.push('Poster did not load'));
+  const box = await frameBox(page);
+  errors.push(...ratioError(box, d.desktop.ratio, 'Landscape box'));
+  if (box.height > viewport.height) errors.push(`Film is ${Math.round(box.height)}px tall in a ${viewport.height}px viewport`);
+  const poster = await page.locator('[data-film-frame] img').evaluate((img) => img.currentSrc);
+  if (!poster.endsWith(path.basename(d.desktop.src).replace('.mp4', '-poster.webp'))) errors.push(`Landscape poster ${poster}`);
+  record('landscape phone: 16:9, fits the screen', `${viewport.width}x${viewport.height}`, errors, { box });
+  await context.close();
 }
 
 await browser.close();

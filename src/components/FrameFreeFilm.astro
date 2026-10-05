@@ -7,17 +7,27 @@
  *   - only the poster, the reserved box and the text equivalent are server-rendered; the
  *     <video> is added by script when motion is allowed and the figure is near, so a
  *     reduced-motion or no-JS reader never receives one (qa/run-launch-qa.mjs asserts it);
- *   - a real Pause/Play control (WCAG 2.2.2), present only while there is a video;
- *   - a complete text equivalent in a native <details>, not a one-line figcaption.
+ *   - a real Pause/Play control (WCAG 2.2.2) in the exhibit's head. It is shown as soon as
+ *     the loader runs with motion allowed, before the video exists, so a keyboard reader
+ *     meets it before the film starts; its space is held in every state, so nothing moves;
+ *   - a complete text equivalent in a native <details>: everything the film shows, not a
+ *     one-line figcaption.
  * Copy, paths and dimensions come from src/data/frame-free-film.ts.
  */
 import { withBase } from '../lib/paths';
 import { filmMedia, frameFreeFilm } from '../data/frame-free-film';
 
 const { desktop, mobile } = filmMedia;
-const { textEquivalent: text, controls } = frameFreeFilm;
+const { textEquivalent: text, controls, exhibit } = frameFreeFilm;
 const descriptionId = `${frameFreeFilm.id}-film-description`;
 const textId = `${frameFreeFilm.id}-text`;
+const vars = [
+  `--film-ratio-desktop: ${desktop.width} / ${desktop.height}`,
+  `--film-ratio-mobile: ${mobile.width} / ${mobile.height}`,
+  `--film-aspect-desktop: ${(desktop.width / desktop.height).toFixed(4)}`,
+  `--film-aspect-mobile: ${(mobile.width / mobile.height).toFixed(4)}`,
+  `--film-mobile-max: ${mobile.width / 2}px`,
+].join('; ');
 ---
 <div
   class="film"
@@ -27,9 +37,20 @@ const textId = `${frameFreeFilm.id}-text`;
   data-film-desktop-media={desktop.media}
   data-film-mobile={withBase(mobile.video)}
   data-film-mobile-media={mobile.media}
-  style={`--film-ratio-desktop: ${desktop.width} / ${desktop.height}; --film-ratio-mobile: ${mobile.width} / ${mobile.height}; --film-mobile-max: ${mobile.width / 2}px;`}
+  style={vars}
 >
-  <figure class="film__figure">
+  <figure class="film__figure d-panel">
+    <div class="d-panel__head film__head">
+      <span><strong>{exhibit.name}</strong> {exhibit.source}</span>
+      <button
+        type="button"
+        class="film__toggle"
+        data-film-toggle
+        data-label-pause={controls.pause}
+        data-label-play={controls.play}
+        hidden
+      >{controls.pause}</button>
+    </div>
     <div class="film__frame" data-film-frame>
       <picture class="film__poster">
         <source media={mobile.media} srcset={withBase(mobile.poster)} width={mobile.width} height={mobile.height} type="image/webp" />
@@ -46,40 +67,55 @@ const textId = `${frameFreeFilm.id}-text`;
     <figcaption id={descriptionId} class="sr-only">{frameFreeFilm.description}</figcaption>
   </figure>
 
-  <div class="film__controls">
-    <button
-      type="button"
-      class="v-btn film__toggle"
-      data-film-toggle
-      data-label-pause={controls.pause}
-      data-label-play={controls.play}
-      hidden
-    >{controls.pause}</button>
-  </div>
-
   <details class="film__text" id={textId} data-film-text>
     <summary>{text.summary}</summary>
-    <div class="film__text-body">
-      <p class="film__text-label">{text.label}</p>
-      <p class="film__text-title">{text.title}</p>
-      <p class="film__text-situation">{text.situation}</p>
-      <dl class="d-meta film__handoff">
-        {text.parts.map((part, i) => (
-          <div data-film-part>
-            <dt><span class="film__index">{i + 1}.</span> {part.label}</dt>
-            {part.lines.map((line) => (
-              <dd>
-                {line.lead && <span class="film__lead">{line.lead}.</span>}
-                {line.lead && ' '}
-                {line.word && <span class={`film__word film__word--${line.word.tone}`}>{line.word.text}:</span>}
-                {line.word && ' '}
-                {line.text}
-              </dd>
-            ))}
+    <div class="film__text-body v-cols">
+      <div class="film__text-head">
+        <p class="film__text-label">{text.label}</p>
+        <h3 class="film__text-title">{text.title}</h3>
+        <p class="film__text-situation">{text.situation}</p>
+        <p class="film__prompt"><span class="film__lead">{text.prompt.lead}:</span> {text.prompt.text}</p>
+      </div>
+      <div class="film__text-main">
+        {text.chapters.map((chapter) => (
+          <div class="film__chapter" data-film-chapter>
+            <h4>{chapter.title}</h4>
+            <p class="film__caption">{chapter.caption}</p>
+            <ol class="film__questions" start={chapter.questions[0].n}>
+              {chapter.questions.map((q) => (
+                <li value={q.n} data-film-question>
+                  <span class="film__index">{q.n}.</span>
+                  <div>
+                    <span class="film__lead">{q.name}.</span> {q.text}
+                    {q.note && <span class="film__note">{q.note}</span>}
+                  </div>
+                </li>
+              ))}
+            </ol>
           </div>
         ))}
-      </dl>
-      <p class="film__close">{text.close}</p>
+        <div class="film__chapter">
+          <h4>{text.handoffTitle}</h4>
+          <dl class="d-meta film__handoff">
+            {text.parts.map((part, i) => (
+              <div data-film-part>
+                <dt><span class="film__index">{i + 1}.</span> {part.label}</dt>
+                {part.lines.map((line) => (
+                  <dd>
+                    {line.lead && <span class="film__lead">{line.lead}.</span>}
+                    {line.lead && ' '}
+                    {line.word && <span class={`film__word film__word--${line.word.tone}`}>{line.word.text}:</span>}
+                    {line.word && ' '}
+                    {line.text}
+                  </dd>
+                ))}
+              </div>
+            ))}
+          </dl>
+          <p class="film__stop">{text.stop}</p>
+          <p class="film__close">{text.close}</p>
+        </div>
+      </div>
     </div>
   </details>
 </div>
@@ -91,19 +127,50 @@ const textId = `${frameFreeFilm.id}-text`;
 </script>
 
 <style>
-  .film { --film-ratio: var(--film-ratio-desktop); }
+  .film { --film-ratio: var(--film-ratio-desktop); --film-aspect: var(--film-aspect-desktop); }
 
-  .film__figure { margin: 0; }
+  /* The exhibit sits on the section's left edge, like every other panel. Its width is
+     capped by the viewport height, so on a short screen the whole film, and the captions
+     baked into it, can be on screen at once; 6rem leaves room for the fixed nav and the
+     panel head. */
+  .film__figure {
+    margin: 0;
+    max-width: min(100%, calc((100vh - 6rem) * var(--film-aspect)));
+    max-width: min(100%, calc((100svh - 6rem) * var(--film-aspect)));
+  }
+
+  /* The control is a text-tier control in the panel head, not a third call to action.
+     It always takes up its space: [hidden] only makes it invisible, so the head is the
+     same height whether or not there is a film to control, and nothing below moves
+     when the video arrives or leaves. visibility: hidden also removes it from the tab
+     order and the accessibility tree. */
+  .film__head { align-items: center; }
+  .film__toggle {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-block: calc(-1 * var(--v-3));
+    padding: 0;
+    border: 0;
+    background: none;
+    font: 600 var(--vs-meta)/1.2 var(--vf-body);
+    color: var(--v-ink);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    cursor: pointer;
+    flex: none;
+  }
+  .film__toggle[hidden] { display: inline-flex; visibility: hidden; }
 
   /* The box is sized from the data file's dimensions before any media arrives, on both
-     sides of the breakpoint, so neither the poster nor the video can shift the page. */
+     sides of the breakpoint, so neither the poster nor the video can shift the page.
+     The panel draws the border. */
   .film__frame {
     position: relative;
     width: 100%;
     aspect-ratio: var(--film-ratio);
     overflow: hidden;
     background: var(--v-paper);
-    border: 1px solid var(--v-line);
   }
   .film__poster, .film__poster img, .film__frame :global(video) {
     position: absolute;
@@ -116,41 +183,46 @@ const textId = `${frameFreeFilm.id}-text`;
   /* Until the first frame decodes the video is not painted, so the poster shows through. */
   .film__frame :global(video:not([data-ready])) { visibility: hidden; }
 
-  /* 767px is filmBreakpoint - 1 in src/data/frame-free-film.ts; a media query cannot read a variable. */
-  @media (max-width: 767px) {
-    .film { --film-ratio: var(--film-ratio-mobile); }
-    .film__figure { max-width: var(--film-mobile-max); margin-inline: auto; }
+  /* Matches filmMedia.mobile.media in src/data/frame-free-film.ts; a media query cannot
+     read a variable. The portrait composition is served only in portrait. */
+  @media (max-width: 767.98px) and (orientation: portrait) {
+    .film { --film-ratio: var(--film-ratio-mobile); --film-aspect: var(--film-aspect-mobile); }
+    .film__figure {
+      max-width: min(var(--film-mobile-max), calc((100vh - 6rem) * var(--film-aspect)));
+      max-width: min(var(--film-mobile-max), calc((100svh - 6rem) * var(--film-aspect)));
+    }
   }
-
-  .film__controls { display: flex; justify-content: flex-start; margin-top: var(--v-3); }
-  .film__controls:has(> [hidden]) { display: none; }
-  .film__toggle { min-height: 44px; min-width: 9.5rem; }
-  .film__toggle[hidden] { display: none; }
 
   .film__text { margin-top: var(--v-5); border-top: 1px solid var(--v-line); }
   .film__text > summary { min-height: 44px; align-items: center; }
-  .film__text-body { max-width: 62rem; }
   .film__text-label { margin: 0; font-size: var(--vs-meta); font-weight: 500; color: var(--v-ink-soft); }
-  .film__text-title { margin: var(--v-1) 0 0; font-family: var(--vf-display); font-size: var(--vs-h3); line-height: 1.3; color: var(--v-ink); }
-  .film__text-situation { margin: var(--v-2) 0 var(--v-4); font-size: var(--vs-small); color: var(--v-ink-soft); max-width: 68ch; }
-  .film__handoff { border-top: 1px solid var(--v-line); border-bottom: 1px solid var(--v-line); }
-  .film__handoff > div { grid-template-columns: minmax(11rem, 15rem) 1fr; row-gap: var(--v-1); }
+  .film__text-title { margin: var(--v-1) 0 0; color: var(--v-ink); }
+  .film__text-situation { margin: var(--v-2) 0 var(--v-4); font-size: var(--vs-small); color: var(--v-ink-soft); }
+  .film__prompt { margin: 0; font-size: var(--vs-small); color: var(--v-ink); }
+  .film__lead { font-weight: 600; }
+
+  .film__chapter + .film__chapter { margin-top: var(--v-6); }
+  .film__caption { margin: var(--v-2) 0 var(--v-3); font-size: var(--vs-small); color: var(--v-ink-soft); }
+  .film__questions { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--v-line); }
+  .film__questions > li { display: grid; grid-template-columns: 2rem 1fr; gap: var(--v-2); padding: 10px 0; border-bottom: 1px solid var(--v-line); font-size: var(--vs-small); }
+  .film__note { display: block; margin-top: var(--v-1); color: var(--v-ink-soft); }
+
+  .film__handoff { margin-top: var(--v-3); border-top: 1px solid var(--v-line); border-bottom: 1px solid var(--v-line); }
+  .film__handoff > div { grid-template-columns: minmax(9rem, 11rem) 1fr; row-gap: var(--v-1); }
   .film__handoff dt { color: var(--v-ink); font-weight: 600; }
   .film__index { font-variant-numeric: tabular-nums; color: var(--v-ink-soft); font-weight: 500; }
   .film__handoff dd { grid-column: 2; }
-  .film__lead { font-weight: 600; }
 
-  /* Evidence classes and constraint states are words, set in the evidence-class colours.
-     No square or circle mark: the shared .d-tag carries one, so it is not reused here. */
+  /* Evidence classes are words, set in the evidence-class colours. No square or circle
+     mark: the shared .d-tag carries one, so it is not reused here. */
   .film__word { font-weight: 600; }
   .film__word--given { color: var(--v-given); }
   .film__word--derived { color: var(--v-derived); }
   .film__word--inferred { color: var(--v-inferred); }
   .film__word--unknown { color: var(--v-unknown); }
-  .film__word--verified { color: var(--v-given); }
-  .film__word--assumed { color: var(--v-signal); }
 
-  .film__close { margin: var(--v-4) 0 0; font-size: var(--vs-small); font-weight: 600; color: var(--v-ink); max-width: 68ch; }
+  .film__stop { margin: var(--v-4) 0 0; font-size: var(--vs-small); color: var(--v-ink); }
+  .film__close { margin: var(--v-2) 0 0; font-size: var(--vs-small); font-weight: 600; color: var(--v-ink); }
 
   @media (max-width: 800px) {
     .film__handoff > div { grid-template-columns: 1fr; }
