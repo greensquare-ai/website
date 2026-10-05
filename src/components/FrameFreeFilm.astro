@@ -1,0 +1,159 @@
+---
+/**
+ * The Frame Free film: the worked example from the guide, as a muted looping video.
+ *
+ * Modelled on the hero film removed on 10 September 2026 (FrameHeroVideo, recoverable
+ * from c5e07a6^), with its gaps closed:
+ *   - only the poster, the reserved box and the text equivalent are server-rendered; the
+ *     <video> is added by script when motion is allowed and the figure is near, so a
+ *     reduced-motion or no-JS reader never receives one (qa/run-launch-qa.mjs asserts it);
+ *   - a real Pause/Play control (WCAG 2.2.2), present only while there is a video;
+ *   - a complete text equivalent in a native <details>, not a one-line figcaption.
+ * Copy, paths and dimensions come from src/data/frame-free-film.ts.
+ */
+import { withBase } from '../lib/paths';
+import { filmMedia, frameFreeFilm } from '../data/frame-free-film';
+
+const { desktop, mobile } = filmMedia;
+const { textEquivalent: text, controls } = frameFreeFilm;
+const descriptionId = `${frameFreeFilm.id}-film-description`;
+const textId = `${frameFreeFilm.id}-text`;
+---
+<div
+  class="film"
+  data-film
+  data-film-state="poster"
+  data-film-desktop={withBase(desktop.video)}
+  data-film-desktop-media={desktop.media}
+  data-film-mobile={withBase(mobile.video)}
+  data-film-mobile-media={mobile.media}
+  style={`--film-ratio-desktop: ${desktop.width} / ${desktop.height}; --film-ratio-mobile: ${mobile.width} / ${mobile.height}; --film-mobile-max: ${mobile.width / 2}px;`}
+>
+  <figure class="film__figure">
+    <div class="film__frame" data-film-frame>
+      <picture class="film__poster">
+        <source media={mobile.media} srcset={withBase(mobile.poster)} width={mobile.width} height={mobile.height} type="image/webp" />
+        <img
+          src={withBase(desktop.poster)}
+          width={desktop.width}
+          height={desktop.height}
+          alt=""
+          loading="lazy"
+          decoding="async"
+        />
+      </picture>
+    </div>
+    <figcaption id={descriptionId} class="sr-only">{frameFreeFilm.description}</figcaption>
+  </figure>
+
+  <div class="film__controls">
+    <button
+      type="button"
+      class="v-btn film__toggle"
+      data-film-toggle
+      data-label-pause={controls.pause}
+      data-label-play={controls.play}
+      hidden
+    >{controls.pause}</button>
+  </div>
+
+  <details class="film__text" id={textId} data-film-text>
+    <summary>{text.summary}</summary>
+    <div class="film__text-body">
+      <p class="film__text-label">{text.label}</p>
+      <p class="film__text-title">{text.title}</p>
+      <p class="film__text-situation">{text.situation}</p>
+      <dl class="d-meta film__handoff">
+        {text.parts.map((part, i) => (
+          <div data-film-part>
+            <dt><span class="film__index">{i + 1}.</span> {part.label}</dt>
+            {part.lines.map((line) => (
+              <dd>
+                {line.lead && <span class="film__lead">{line.lead}.</span>}
+                {line.lead && ' '}
+                {line.word && <span class={`film__word film__word--${line.word.tone}`}>{line.word.text}:</span>}
+                {line.word && ' '}
+                {line.text}
+              </dd>
+            ))}
+          </div>
+        ))}
+      </dl>
+      <p class="film__close">{text.close}</p>
+    </div>
+  </details>
+</div>
+
+<script>
+  import { observeFrameFreeFilms } from '../scripts/frame-free-film';
+  const stop = observeFrameFreeFilms();
+  if (import.meta.hot) import.meta.hot.dispose(stop);
+</script>
+
+<style>
+  .film { --film-ratio: var(--film-ratio-desktop); }
+
+  .film__figure { margin: 0; }
+
+  /* The box is sized from the data file's dimensions before any media arrives, on both
+     sides of the breakpoint, so neither the poster nor the video can shift the page. */
+  .film__frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: var(--film-ratio);
+    overflow: hidden;
+    background: var(--v-paper);
+    border: 1px solid var(--v-line);
+  }
+  .film__poster, .film__poster img, .film__frame :global(video) {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .film__poster img, .film__frame :global(video) { object-fit: contain; }
+  /* Until the first frame decodes the video is not painted, so the poster shows through. */
+  .film__frame :global(video:not([data-ready])) { visibility: hidden; }
+
+  /* 767px is filmBreakpoint - 1 in src/data/frame-free-film.ts; a media query cannot read a variable. */
+  @media (max-width: 767px) {
+    .film { --film-ratio: var(--film-ratio-mobile); }
+    .film__figure { max-width: var(--film-mobile-max); margin-inline: auto; }
+  }
+
+  .film__controls { display: flex; justify-content: flex-start; margin-top: var(--v-3); }
+  .film__controls:has(> [hidden]) { display: none; }
+  .film__toggle { min-height: 44px; min-width: 9.5rem; }
+  .film__toggle[hidden] { display: none; }
+
+  .film__text { margin-top: var(--v-5); border-top: 1px solid var(--v-line); }
+  .film__text > summary { min-height: 44px; align-items: center; }
+  .film__text-body { max-width: 62rem; }
+  .film__text-label { margin: 0; font-size: var(--vs-meta); font-weight: 500; color: var(--v-ink-soft); }
+  .film__text-title { margin: var(--v-1) 0 0; font-family: var(--vf-display); font-size: var(--vs-h3); line-height: 1.3; color: var(--v-ink); }
+  .film__text-situation { margin: var(--v-2) 0 var(--v-4); font-size: var(--vs-small); color: var(--v-ink-soft); max-width: 68ch; }
+  .film__handoff { border-top: 1px solid var(--v-line); border-bottom: 1px solid var(--v-line); }
+  .film__handoff > div { grid-template-columns: minmax(11rem, 15rem) 1fr; row-gap: var(--v-1); }
+  .film__handoff dt { color: var(--v-ink); font-weight: 600; }
+  .film__index { font-variant-numeric: tabular-nums; color: var(--v-ink-soft); font-weight: 500; }
+  .film__handoff dd { grid-column: 2; }
+  .film__lead { font-weight: 600; }
+
+  /* Evidence classes and constraint states are words, set in the evidence-class colours.
+     No square or circle mark: the shared .d-tag carries one, so it is not reused here. */
+  .film__word { font-weight: 600; }
+  .film__word--given { color: var(--v-given); }
+  .film__word--derived { color: var(--v-derived); }
+  .film__word--inferred { color: var(--v-inferred); }
+  .film__word--unknown { color: var(--v-unknown); }
+  .film__word--verified { color: var(--v-given); }
+  .film__word--assumed { color: var(--v-signal); }
+
+  .film__close { margin: var(--v-4) 0 0; font-size: var(--vs-small); font-weight: 600; color: var(--v-ink); max-width: 68ch; }
+
+  @media (max-width: 800px) {
+    .film__handoff > div { grid-template-columns: 1fr; }
+    .film__handoff dd { grid-column: 1; }
+  }
+</style>

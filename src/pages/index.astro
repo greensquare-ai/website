@@ -3,7 +3,9 @@ import { withBase } from '../lib/paths';
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 import PlanComparison from '../components/PlanComparison.astro';
 import Signup from '../components/Signup.astro';
+import FrameFreeFilm from '../components/FrameFreeFilm.astro';
 import { briefExcerpt } from '../data/brief-excerpt';
+import { frameFreeFilm } from '../data/frame-free-film';
 import { method, offer } from '../data/offer';
 import { people } from '../data/operator';
 import { armBvsArmC, check, dates, deviations, grid, limitations, spell } from '../lib/benchmark';
@@ -84,6 +86,16 @@ const useWhen = [
       />
     </picture>
   </div>
+
+  <section class="v-section v-section--rule" id={frameFreeFilm.id}>
+    <div class="v-container">
+      <div class="v-cols__head home-film__head">
+        <h2>{frameFreeFilm.heading}</h2>
+        <p>{frameFreeFilm.intro}</p>
+      </div>
+      <FrameFreeFilm />
+    </div>
+  </section>
 
   <section class="v-section v-section--rule" id="method">
     <div class="v-container v-cols">
@@ -194,6 +206,8 @@ const useWhen = [
   .home-evidence { padding: var(--v-2) var(--v-5); }
   .home-offer__link { display: inline-block; margin-top: var(--v-4); }
   .home-offer__head { max-width: 54ch; margin-bottom: var(--v-6); }
+  .home-film__head { max-width: 62ch; margin-bottom: var(--v-6); }
+  .home-film__head h2 { max-width: 22ch; }
   @media (max-width: 800px) {
     .home-when > div { grid-template-columns: 1fr; }
     .home-anatomy li { grid-template-columns: 1fr; gap: var(--v-1); }

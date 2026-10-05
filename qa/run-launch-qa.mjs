@@ -264,8 +264,14 @@ const reduced = await browser.newContext({ viewport: viewports[0], reducedMotion
 const reducedPage = await reduced.newPage();
 await reducedPage.goto(base + '/', { waitUntil: 'domcontentloaded' });
 await reducedPage.waitForTimeout(400);
-/* The site carries no autoplaying media. Under reduced motion nothing in <main> may be
-   animating after load; the disclosure and status transitions are the only motion left. */
+/* The homepage carries one film (src/components/FrameFreeFilm.astro). The server renders
+   only its poster and text equivalent; a script adds a muted, looping <video>, with a
+   pause control, when motion is allowed and the figure nears the viewport, and removes it
+   if reduced motion becomes active. So under reduced motion there is still no video and
+   no autoplaying element in <main>, and nothing there may be animating after load; the
+   disclosure and status transitions are the only motion left.
+   This check loads the top of the page, before the film is near; qa/check-frame-free-film.mjs
+   repeats it with the film scrolled into view and covers the motion-allowed behaviour. */
 const reducedState = await reducedPage.evaluate(() => ({
   media: document.querySelectorAll('main video, main [autoplay]').length,
   runningAnimations: document.querySelector('main').getAnimations({ subtree: true }).filter((a) => a.playState === 'running').length,
