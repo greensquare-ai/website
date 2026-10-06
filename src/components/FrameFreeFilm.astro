@@ -145,9 +145,16 @@ const vars = [
      when the video arrives or leaves. visibility: hidden also removes it from the tab
      order and the accessibility tree. */
   .film__head { align-items: center; }
+  /* The label swaps between Pause and Play while the control is on screen. Right-aligned in
+     the head, a narrower label would move the control sideways, which counts as a layout
+     shift. Both labels are laid out invisibly at zero height, so the control is always as
+     wide as the longer one and only the text inside it changes. Hidden generated content
+     takes no part in the accessible name. */
   .film__toggle {
     display: inline-flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
     min-height: 44px;
     margin-block: calc(-1 * var(--v-3));
     padding: 0;
@@ -160,6 +167,16 @@ const vars = [
     cursor: pointer;
     flex: none;
   }
+  .film__toggle::before,
+  .film__toggle::after {
+    display: block;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+    text-decoration: none;
+  }
+  .film__toggle::before { content: attr(data-label-pause); }
+  .film__toggle::after { content: attr(data-label-play); }
   .film__toggle[hidden] { display: inline-flex; visibility: hidden; }
 
   /* The box is sized from the data file's dimensions before any media arrives, on both

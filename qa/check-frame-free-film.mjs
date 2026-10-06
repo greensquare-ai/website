@@ -506,6 +506,33 @@ for (const viewport of viewports) {
     await context.close();
   }
 
+  /* ---------- 2b. The control does not move when its label changes ----------
+     The label swaps between Pause and Play while it is on screen. The shift checks above
+     only catch that when a swap happens to land inside their observation window, which made
+     CI fail on one run and pass on the next. This measures the cause directly. */
+  {
+    const errors = [];
+    const context = await newContext({ viewport });
+    const page = await context.newPage();
+    await page.goto(base + '/', { waitUntil: 'load' });
+    const boxes = await page.evaluate(() => {
+      const t = document.querySelector('[data-film-toggle]');
+      const out = [];
+      for (const label of [t.dataset.labelPause, t.dataset.labelPlay]) {
+        t.textContent = label;
+        const r = t.getBoundingClientRect();
+        out.push({ label, x: r.x, width: r.width, height: r.height });
+      }
+      return out;
+    });
+    const [a, b] = boxes;
+    if (Math.abs(a.x - b.x) > 0.5 || Math.abs(a.width - b.width) > 0.5 || Math.abs(a.height - b.height) > 0.5) {
+      errors.push(`Control box changes with its label: ${JSON.stringify(boxes)}`);
+    }
+    record('control box stable across Pause and Play', name, errors, { boxes });
+    await context.close();
+  }
+
   /* ---------- 3. No JavaScript: poster plus text, no control ---------- */
   {
     const errors = [];
