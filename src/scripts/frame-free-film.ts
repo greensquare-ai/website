@@ -6,6 +6,7 @@
  * these hold:
  *   - the reader has not asked for reduced motion;
  *   - the figure is within about 600px of the viewport.
+ *   - the page itself has finished loading.
  * It plays only while the figure is on screen and the document is visible, and it never
  * resumes a film the reader paused. If reduced motion becomes active the video is removed,
  * its download stopped, and the poster is what remains.
@@ -80,6 +81,12 @@ export function observeFrameFreeFilms() {
 
     const insert = () => {
       if (video || failed || reduce.matches || !near) return;
+      /* The film sits directly under the opening offer, so it is near on arrival. Its
+         download waits for the page's own load, so it never competes with the hero. */
+      if (document.readyState !== 'complete') {
+        window.addEventListener('load', insert, { once: true, signal: local.signal });
+        return;
+      }
       const v = document.createElement('video');
       videoEvents = new AbortController();
       const signal = videoEvents.signal;

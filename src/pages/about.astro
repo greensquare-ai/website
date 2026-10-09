@@ -1,82 +1,76 @@
 ---
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 import { withBase } from '../lib/paths';
-import { operator, people } from '../data/operator';
+import { operator, practice } from '../data/operator';
 import { dates, deviations, grid } from '../lib/benchmark';
+import release from '../data/frame-free-release.json';
 
 const g = grid();
 const d = dates();
 const nDev = deviations().length;
-const commitments = [
-  ['Model-agnostic', 'The method has to survive a change of model provider or capability. It is written as instructions a capable model follows, not as a dependency on one vendor.'],
-  ['Evidence-led', 'Claims are inspectable, bounded and revised when the evidence changes. The research pages carry their corrections in date order.'],
-  ['Professionally accountable', 'The person who uses Frame owns the decision and its consequences. The method will not produce a brief for a decision with no named owner.'],
-  ['Truthful about limits', 'The benchmark headline is partly unfavourable to the product and is published in full, with all its deviations, rather than trimmed to a claim.'],
+const inspect = [
+  { what: 'The guide', text: 'Frame Free is six pages. The instructions the model follows are printed in it, so you can read exactly what the AI is asked to do before you use it.', href: withBase('/free/'), link: 'Frame Free' },
+  { what: 'Worked examples', text: 'The guide’s own worked example, and five illustrative examples on fictional inputs, each labelled with how it was produced.', href: withBase('/examples/'), link: 'Examples' },
+  { what: 'Historical research', text: `A ${g.runs_total}-run preregistered study of an earlier method file, with all ${nDev} protocol deviations and its limitations. It predates Frame and does not validate it.`, href: withBase('/research/'), link: 'Research overview' },
+  { what: 'File identity', text: `The PDF carries no printed date or version. The release served on this site is identified by its SHA-256 fingerprint, ${release.sha256.slice(0, 16)}, so you can check the file you hold is the one described.`, href: withBase('/free/#included'), link: 'Full fingerprint' },
+  { what: 'Contact', text: `Questions about Frame, the research or this site go to ${operator.email}.`, href: `mailto:${operator.email}`, link: 'Write to us' },
 ];
 const maintained = [
-  { what: 'The method file', by: 'Written and revised by the same consultants who use it on their own decisions. Each release is dated in its header.' },
-  { what: 'The benchmark record', by: 'Run, scored, adjudicated and published by GreenSquare AI. Independence is not claimed anywhere on this site; the record says so in its own limitations.' },
-  { what: 'This site', by: `Maintained by GreenSquare AI. Figures render from one data file with build-time checks so a count cannot be typed wrong twice. Record current as at ${d.currentAsAt}.` },
+  { what: 'The guide', by: 'Written and revised by GreenSquare AI. A revised release will be identified by a new fingerprint on this site.' },
+  { what: 'The research record', by: 'Run, scored, adjudicated and published by GreenSquare AI. Independence is not claimed anywhere on this site; the record says so in its own limitations.' },
+  { what: 'This site', by: `Maintained by GreenSquare AI. Research figures render from one data file with build-time checks, so a count cannot be typed wrong twice. Record current as at ${d.currentAsAt}.` },
+];
+const boundaries = [
+  ['Model-agnostic', 'Frame is written as instructions a capable model follows, not as a dependency on one provider, so it has to survive a change of model.'],
+  ['Evidence-led', 'Claims are bounded and revised when the evidence changes. The research pages carry their corrections in date order.'],
+  ['Accountable use', 'The person who uses Frame owns the decision and its consequences. Frame Free questions a decision; it does not rank options or recommend a course of action.'],
+  ['Truthful about limits', 'The study headline is partly unfavourable to the method and is published in full, with all its deviations, rather than trimmed to a claim.'],
 ];
 ---
 <BaseLayoutV2
   title="About | GreenSquare AI"
-  description="Who built Frame, the professional problem that led to it, what is personally maintained, and how a buyer can verify the work."
+  description="GreenSquare AI is a small Australian practice that writes and maintains Frame. What it is for, who maintains what, its boundaries, and what a reader can inspect."
   current="about"
 >
   <section class="v-hero about-hero">
     <div class="v-container">
-      <h1>{people.heading}</h1>
-      <p class="v-lead">GreenSquare AI is a small Australian practice. It builds Frame and publishes the benchmark of an earlier method file that informed it. This page states the experience behind the work, the evidence boundary and how to check both.</p>
+      <h1>{practice.heading}</h1>
+      <p class="v-lead">{practice.summary}</p>
     </div>
   </section>
 
-  <section class="v-section" id="letter">
+  <section class="v-section" id="purpose">
     <div class="v-container v-cols">
       <div class="v-cols__head">
         <h2>Why Frame exists.</h2>
       </div>
-      <div class="about-letter">
-        <p class="d-quote">Every consequential recommendation we ever put our names to was read by someone whose job was to find the weak point: the number that was inferred rather than given, the option that was never considered, the assumption nobody had tested. Capable models produce fluent, well-structured answers that have not been through that reading. They will happily support the conclusion you arrived with.</p>
-        <p class="d-quote">Frame is that reading, written down as a method a model will follow. It asks before it advises, tags what it has been told, compares real options including doing nothing, and closes with a confidence statement and the findings that would reverse the call. It makes the decision inspectable without making it for you.</p>
-        <p class="d-quote">We tested an earlier method file and published the result including the part that did not go our way: it changed how the model worked, and it did not make the model a better judge than a fully briefed one. That study does not validate Frame Free or Frame Pro. It establishes the evidence boundary the current product has to respect.</p>
-        <p class="about-letter__sign v-meta">The people behind GreenSquare AI</p>
+      <div class="about-purpose">
+        <p>Capable models produce fluent, well-structured answers quickly. Fluency is not the same as a decision that has been questioned: a number that was inferred rather than given, an option nobody considered and an assumption nobody tested can all pass unnoticed.</p>
+        <p>Frame writes that questioning down as instructions a model follows. Frame Free, available now, covers the first part: it questions the decision, separates evidence from assumption and names the next gap to check, then stops. It makes the decision easier to inspect without making it for you.</p>
+        <p>An earlier method file was tested in a preregistered study, and the result was published including the part that did not go our way: it changed how the model worked, and it did not make the model a better judge than a fully briefed one. That study does not validate Frame Free or Frame Pro.</p>
       </div>
     </div>
   </section>
 
-  <section class="v-section v-section--rule" id="people">
+  <section class="v-section v-section--rule" id="inspect">
     <div class="v-container v-cols">
       <div class="v-cols__head">
-        <h2>The people, and the experience the method comes from.</h2>
-        <p>Personal profiles are not published on this site. The practice is accountable through its registered operator, its public research record and a direct contact answered by the person who maintains the product.</p>
+        <h2>What you can inspect.</h2>
+        <p>Each of these can be checked before you give us an email address.</p>
       </div>
-      <div class="about-people">
-        {people.lines.map((line) => <p>{line}</p>)}
-      </div>
+      <dl class="d-meta about-list">
+        {inspect.map((row) => <div><dt>{row.what}</dt><dd>{row.text} <a href={row.href}>{row.link}</a></dd></div>)}
+      </dl>
     </div>
   </section>
 
   <section class="v-section v-section--rule" id="maintained">
     <div class="v-container v-cols">
       <div class="v-cols__head">
-        <h2>The same people maintain all three.</h2>
+        <h2>Who maintains what.</h2>
       </div>
-      <dl class="d-meta about-maintained">
+      <dl class="d-meta about-list">
         {maintained.map((row) => <div><dt>{row.what}</dt><dd>{row.by}</dd></div>)}
-      </dl>
-    </div>
-  </section>
-
-  <section class="v-section v-section--rule" id="verify">
-    <div class="v-container v-cols">
-      <div class="v-cols__head">
-        <h2>How a buyer can verify the work.</h2>
-        <p>Nothing here asks to be taken on trust. Each of these can be done before a conversation with us.</p>
-      </div>
-      <dl class="d-meta about-verify">
-        {people.verify.map((row) => <div><dt>{row.label}</dt><dd>{row.text}</dd></div>)}
-        <div><dt>The record</dt><dd>The benchmark is a {g.runs_total}-run preregistered study with {nDev} published deviations. <a href={withBase('/benchmark/')}>Read the deviations first</a>, then the counts.</dd></div>
       </dl>
     </div>
   </section>
@@ -84,10 +78,10 @@ const maintained = [
   <section class="v-section v-section--rule" id="commitments">
     <div class="v-container v-cols">
       <div class="v-cols__head">
-        <h2>Four commitments that do not change as the model does.</h2>
+        <h2>Boundaries that do not change as the model does.</h2>
       </div>
-      <dl class="d-meta about-commitments">
-        {commitments.map(([title, copy]) => <div><dt>{title}</dt><dd>{copy}</dd></div>)}
+      <dl class="d-meta about-list">
+        {boundaries.map(([title, copy]) => <div><dt>{title}</dt><dd>{copy}</dd></div>)}
       </dl>
     </div>
   </section>
@@ -102,7 +96,7 @@ const maintained = [
           <div><dt>Business name</dt><dd>{operator.businessName}</dd></div>
           <div><dt>Location</dt><dd>{operator.location}</dd></div>
           <div><dt>Governing law</dt><dd>{operator.jurisdiction}</dd></div>
-          <div><dt>Contact</dt><dd><a href={`mailto:${operator.email}`}>{operator.email}</a>. A reply comes from the person who maintains the method.</dd></div>
+          <div><dt>Contact</dt><dd><a href={`mailto:${operator.email}`}>{operator.email}</a></dd></div>
         </dl>
       </div>
     </div>
@@ -112,8 +106,8 @@ const maintained = [
     <div class="v-container">
       <h2>Bring a real decision.</h2>
       <div class="v-actions">
-        <a class="v-btn v-btn--green" href={withBase('/free/#get-free')}>Get the Frame Free beta</a>
-        <a class="v-btn" href={withBase('/product/#brief')}>See a Decision Brief</a>
+        <a class="v-btn v-btn--green" href={withBase('/free/#get-free')}>Get Frame Free PDF</a>
+        <a class="v-btn" href={withBase('/examples/')}>See the examples</a>
       </div>
     </div>
   </section>
@@ -121,13 +115,13 @@ const maintained = [
 
 <style>
   .about-hero h1 { max-width: 18ch; }
-  .about-letter .d-quote { margin-bottom: var(--v-5); max-width: 58ch; }
-  .about-letter__sign { margin-top: var(--v-6); padding-top: var(--v-4); border-top: 1px solid var(--v-line); max-width: none; }
-  .about-people p { max-width: 62ch; padding-top: var(--v-4); border-top: 1px solid var(--v-line); }
-  .about-people p:first-child { border-top: 0; padding-top: 0; }
-  .about-maintained dt, .about-verify dt, .about-commitments dt { color: var(--v-ink); font-weight: 600; }
-  .about-maintained > div, .about-verify > div, .about-commitments > div { grid-template-columns: minmax(9rem, 12rem) 1fr; }
+  .about-hero .v-lead { max-width: 60ch; }
+  .about-purpose p { max-width: 62ch; }
+  .about-purpose p + p { margin-top: var(--v-4); }
+  .about-list dt { color: var(--v-ink); font-weight: 600; }
+  .about-list > div { grid-template-columns: minmax(9rem, 12rem) 1fr; }
+  .about-list dd a { white-space: nowrap; }
   .about-operator { padding: var(--v-2) var(--v-5); }
   .about-close h2 { max-width: 20ch; }
-  @media (max-width: 480px) { .about-maintained > div, .about-verify > div, .about-commitments > div { grid-template-columns: 1fr; } }
+  @media (max-width: 480px) { .about-list > div { grid-template-columns: 1fr; } }
 </style>

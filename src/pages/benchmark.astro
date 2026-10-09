@@ -240,9 +240,27 @@ const cell = (item: (typeof results)[number], arm: 'armA' | 'armB' | 'armC') => 
       </div>
     </div>
   </section>
+  <section class="v-section v-section--rule" id="reading">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>How to read this record.</h2>
+      </div>
+      <div class="record-reading">
+        <p>This is a historical study record. In plain terms: under the tested conditions the earlier method file changed process behaviours, such as asking before answering and tagging evidence, and it did not establish better judgement than an informed baseline. The counts, deviations and limitations above are the record of account and are not revised to suit later product language.</p>
+        <p>The study predates Frame. Nothing on this page is evidence about Frame Free or Frame Pro, and the current examples are kept on their own page with their own provenance.</p>
+        <div class="v-actions">
+          <a class="v-btn v-btn--green" href={withBase('/free/#get-free')}>Get Frame Free PDF</a>
+          <a class="v-btn" href={withBase('/research/')}>Back to the research overview</a>
+        </div>
+      </div>
+    </div>
+  </section>
 </BaseLayoutV2>
 
 <style>
+  .record-reading p { max-width: 62ch; }
+  .record-reading p + p { margin-top: var(--v-4); }
+  .record-reading .v-actions { margin-top: var(--v-6); }
   .bench-hero h1 { max-width: 22ch; font-size: var(--vs-h1); }
   .bench-head { max-width: 64ch; margin-bottom: var(--v-6); }
   .bench-head p { color: var(--v-ink-soft); margin-top: var(--v-3); }

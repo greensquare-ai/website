@@ -21,18 +21,20 @@ const corrections = [
 ---
 <BaseLayoutV2
   title="Research | GreenSquare AI"
-  description="What a preregistered benchmark of the method showed, what it did not, and what it says about Frame. One controlled claim, its boundary, and a record of corrections."
+  description="Current Frame Free examples, kept apart from an earlier preregistered benchmark of a method file that predates Frame: what each shows, what neither establishes, and a record of corrections."
   current="research"
 >
   <section class="v-hero research-hero">
     <div class="v-container">
-      <h1>The method changed how the model worked. It did not beat an informed baseline on judgement.</h1>
+      <h1>Current examples, and an earlier benchmark, kept apart.</h1>
       <p class="v-hero__dateline">Research overview. Benchmark record current as at {d.currentAsAt}.</p>
-      <p class="v-lead">One preregistered study, {g.runs_total} scored runs, two models, three fictional cases, {spell(cmp.total)} checks. Everything below is stated so that a buyer can hold GreenSquare AI to it.</p>
+      <p class="v-lead">Current Frame Free examples illustrate how the guide behaves on fictional inputs. The earlier benchmark tested a method file that predates Frame: it changed how the model worked, and it did not beat an informed baseline on judgement. Neither is a customer result.</p>
     </div>
   </section>
 
   <SectionNav items={[
+    { id: 'current', label: 'Current examples' },
+    { id: 'earlier', label: 'Earlier benchmark' },
     { id: 'status', label: 'Status' },
     { id: 'finding', label: 'Finding' },
     { id: 'boundary', label: 'Boundary' },
@@ -41,7 +43,37 @@ const corrections = [
     { id: 'next', label: 'Next work' },
   ]} />
 
-  <section class="v-section" id="status">
+  <section class="v-section" id="current">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>Current Frame Free examples.</h2>
+        <p>These use the Frame Free guide that is offered today. They show what the questions and the handoff look like on a specific decision.</p>
+      </div>
+      <div>
+        <dl class="d-meta research-boundary">
+          <div><dt>The guide’s example</dt><dd>The worked example printed on page 5 of the guide: a vendor choice that turns out to be a question about shift rules. <a href={withBase('/free/#sample')}>Read the handoff</a></dd></div>
+          <div><dt>Five examples</dt><dd>A vendor renewal, a hiring decision, a capital purchase, a struggling programme and a pricing change, each on fictional inputs, with its provenance stated beside it. <a href={withBase('/examples/')}>Read the examples</a></dd></div>
+          <div><dt>Boundary</dt><dd>Agent-run and worked examples illustrate behaviour. They are not customer outcomes, performance benchmarks or independent validation, and Frame Free has not been benchmarked.</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="v-section v-section--rule" id="earlier">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>Earlier method benchmark.</h2>
+        <p>One preregistered study, {g.runs_total} scored runs, two models, three fictional cases, {spell(cmp.total)} checks. Everything below is stated so that a reader can hold GreenSquare AI to it.</p>
+      </div>
+      <dl class="d-meta research-boundary">
+        <div><dt>Observed</dt><dd>Process behaviours. Under the tested conditions the loaded method changed how the model worked: it asked before answering, compared real options including doing nothing, and tagged its evidence on every run. The first of those is definitional, because a single-turn baseline cannot ask.</dd></div>
+        <div><dt>Not established</dt><dd>Better judgement. On the three judgement checks the informed baseline matched or exceeded the loaded condition.</dd></div>
+        <div><dt>Which artefact</dt><dd>A method file that predates Frame. The study is not a test of Frame Free or Frame Pro, and its result does not transfer to them.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="v-section v-section--rule" id="status">
     <div class="v-container">
       <EvidenceStatus
         claim="That loading the method file makes a capable model reliably run a disciplined process on a consequential decision, and surface the decision the facts point to, where a baseline does so only sometimes."
@@ -132,6 +164,17 @@ const corrections = [
       <p class="research-next">A condition that resembles a real operator, arriving with most of what matters and one thing they cannot see. An independent re-score against the published rubric. Publication of the transcripts and the sealed key. A refresh on current model versions, with the date-stamped history the protocol promised. None of this is scheduled; when any of it is done it will be recorded here with a date.</p>
     </div>
   </section>
+
+  <section class="v-section v-section--rule research-return" id="return">
+    <div class="v-container">
+      <h2>Try the current guide on your own decision.</h2>
+      <p>Frame Free is the guide offered today. Judge it on a real decision, with the boundaries above in mind.</p>
+      <div class="v-actions">
+        <a class="v-btn v-btn--green" href={withBase('/free/#get-free')}>Get Frame Free PDF</a>
+        <a class="v-btn" href={withBase('/examples/')}>See the examples</a>
+      </div>
+    </div>
+  </section>
 </BaseLayoutV2>
 
 <style>
@@ -147,5 +190,8 @@ const corrections = [
   .research-link span:last-child { font-size: var(--vs-small); color: var(--v-ink-soft); }
   .research-link:hover { border-color: var(--v-ink); }
   .research-next { max-width: none; }
+  .research-boundary dd a { white-space: nowrap; }
+  .research-return h2 { max-width: 24ch; }
+  .research-return p { max-width: 62ch; color: var(--v-ink-soft); margin-top: var(--v-3); }
   @media (max-width: 480px) { .research-boundary > div, .research-corrections > div { grid-template-columns: 1fr; } .research-link { grid-template-columns: 1fr; } .research-link .v-meta { grid-row: auto; } }
 </style>

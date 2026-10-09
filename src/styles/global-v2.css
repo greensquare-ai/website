@@ -334,6 +334,29 @@ html:has(.v2) { scroll-behavior: smooth; color-scheme: light; background: var(--
 .v2 .v-green .form-status--success { color: var(--v-cream); }
 .v2 .v-green .form-status--error { color: var(--v-error-on-green); }
 
+/* Email capture: a visible label, and a live region that stays in the tree while empty
+   so the first status is announced, but takes no space until it has something to say. */
+.v2 .capture-form__label { display: block; font-size: var(--vs-small); font-weight: 600; margin-bottom: var(--v-2); }
+.v2 .capture-form .form-status:empty { margin: 0; animation: none; }
+.v2 .capture-form .form-note a, .v2 .capture-form .form-status a { color: inherit; }
+.v2 .v-green .capture-form__label { color: var(--v-cream); }
+/* The accepted state: the file is offered here, with no inbox wait. */
+.v2 .capture-ready { border-top: 2px solid var(--v-green); padding-top: var(--v-4); }
+.v2 .capture-ready__heading { font-size: 1.375rem; margin: 0; }
+.v2 .capture-ready__heading:focus { outline: none; }
+.v2 .capture-ready__heading:focus-visible { outline: 2px solid var(--v-green); outline-offset: 4px; }
+.v2 .capture-ready__body { margin: var(--v-2) 0 var(--v-4); }
+.v2 .capture-ready__actions { display: flex; flex-wrap: wrap; gap: var(--v-3); align-items: center; }
+.v2 .capture-ready__starter { margin: var(--v-4) 0 0; font-size: var(--vs-small); }
+.v2 .capture-ready__starter code { display: block; margin-top: var(--v-1); padding: var(--v-2) var(--v-3); background: var(--v-panel); border: 1px solid var(--v-line); font-size: var(--vs-small); white-space: normal; user-select: all; }
+.v2 .capture-ready__meta { margin: var(--v-2) 0 0; font-size: var(--vs-meta); color: var(--v-ink-soft); }
+.v2 .v-green .capture-ready { border-top-color: var(--v-cream); }
+.v2 .v-green .capture-ready__starter code { background: transparent; border-color: var(--v-cream-soft); color: var(--v-cream); }
+.v2 .v-green .capture-ready__meta { color: var(--v-cream-soft); }
+@media (max-width: 520px) { .v2 .capture-ready__actions .v-btn { width: 100%; } }
+/* Without scripts the island cannot submit, so it is hidden and the fallback shows. */
+html:not(.js) .capture-island { display: none; }
+
 @keyframes v-status-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) {
   .v2 .form-status { animation: none; }

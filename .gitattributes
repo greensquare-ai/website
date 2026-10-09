@@ -1,0 +1,3 @@
+# Evidence records are published with their SHA-256. Store them byte for byte so a
+# checkout on any platform reproduces the hashes shown on /examples/.
+src/data/examples/** -text

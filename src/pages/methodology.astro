@@ -83,9 +83,27 @@ const nDev = deviations().length;
     <p>The results support a claim about process consistency and fact gathering across the tested conditions. They do not support a claim that the method improves an experienced operator’s judgement.</p>
     <a class="v-link" href={withBase('/benchmark/')}>Read the benchmark record</a>
   </div></section>
+  <section class="v-section v-section--rule" id="reading">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>How to read this page.</h2>
+      </div>
+      <div class="record-reading">
+        <p>This page explains how the earlier study was designed. In plain terms: the design can tell a change in process from a change in judgement, and the study found the first without the second.</p>
+        <p>The study predates Frame. Nothing on this page is evidence about Frame Free or Frame Pro, and the current examples are kept on their own page with their own provenance.</p>
+        <div class="v-actions">
+          <a class="v-btn v-btn--green" href={withBase('/free/#get-free')}>Get Frame Free PDF</a>
+          <a class="v-btn" href={withBase('/research/')}>Back to the research overview</a>
+        </div>
+      </div>
+    </div>
+  </section>
 </BaseLayoutV2>
 
 <style>
+  .record-reading p { max-width: 62ch; }
+  .record-reading p + p { margin-top: var(--v-4); }
+  .record-reading .v-actions { margin-top: var(--v-6); }
   .method-hero h1 { max-width: 24ch; font-size: var(--vs-h1); }
   .method-note { margin-top: var(--v-5); padding-top: var(--v-4); border-top: 1px solid var(--v-line); font-size: var(--vs-small); color: var(--v-ink-soft); }
 </style>

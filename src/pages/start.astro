@@ -1,0 +1,199 @@
+---
+/**
+ * Start guidance for Frame Free. Bookmarkable and open to anyone: it is reached from the
+ * accepted state of the email form and from the footer, and it is not a second gate.
+ * It never links the PDF directly; a reader without the file is sent to /free/#get-free.
+ *
+ * Nothing typed or copied here is sent to GreenSquare AI. The copy buttons are handled by
+ * src/scripts/frame-free-journey.ts, which records only that a copy succeeded.
+ */
+import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
+import { withBase } from '../lib/paths';
+import { offer } from '../data/offer';
+import { frameFreeFilm } from '../data/frame-free-film';
+
+const free = offer.free;
+const parts = frameFreeFilm.textEquivalent.parts;
+const gap = parts[parts.length - 1].lines[1].text;
+const providers = [
+  { name: 'ChatGPT', href: 'https://chatgpt.com/' },
+  { name: 'Claude', href: 'https://claude.ai/' },
+  { name: 'Gemini', href: 'https://gemini.google.com/' },
+];
+const trouble = [
+  {
+    problem: 'The PDF will not attach',
+    fix: 'Check that your account and the model you chose accept file attachments in a chat; this varies by plan and model. Try another model in the same account. If none accepts files, open the PDF, copy its text and paste it into the chat above the starter.',
+  },
+  {
+    problem: 'The model answers straight away',
+    fix: 'Reply: “Stop. Use Frame Free in the attached PDF. Ask me the first question only, and do not answer the decision yet.”',
+  },
+  {
+    problem: 'It asks all six questions at once',
+    fix: 'Reply: “Ask the questions one at a time, in order, and wait for my answer each time. Start again from the first.”',
+  },
+  {
+    problem: 'It states facts you did not give it',
+    fix: 'Quote the claim back and reply: “I did not tell you this. Mark it Unknown unless I supply it, and do not add facts, options, owners or dates.”',
+  },
+  {
+    problem: 'It recommends a course of action',
+    fix: 'Reply: “Frame Free stops before evaluation. Remove the recommendation and finish the seven-part framing handoff.”',
+  },
+  {
+    problem: 'The session was interrupted',
+    fix: 'Start a new chat, attach the PDF again and paste the starter. Then paste the answers you had already given, or the last handoff, and ask the model to continue from the next question.',
+  },
+  {
+    problem: 'On a phone, the PDF opens instead of saving',
+    fix: 'Many phone browsers open a PDF rather than save it. Use the viewer’s share or save option to keep a copy in your files, then attach it from the chat app. On a computer the download saves as usual.',
+  },
+];
+---
+<BaseLayoutV2
+  title="Start using Frame Free | GreenSquare AI"
+  description="How to start Frame Free: open the PDF, attach it to a new chat in ChatGPT, Claude or Gemini, paste the starter and describe one decision. With the starter text, troubleshooting and the four evidence labels."
+  current="free"
+  ffPage="start"
+>
+  <section class="v-hero start-hero">
+    <div class="v-container">
+      <h1>Start using Frame Free.</h1>
+      <p class="v-lead">Three steps, then about ten minutes for one decision. Keep this page open beside the chat.</p>
+    </div>
+  </section>
+
+  <section class="v-section" id="steps">
+    <div class="v-container">
+      <ol class="start-steps">
+        <li id="step-open">
+          <span class="d-list__index">01</span>
+          <div>
+            <h2>Open the PDF.</h2>
+            <p>Use the copy you downloaded. If you do not have it yet, <a href={withBase('/free/#get-free')}>get Frame Free on the Frame Free page</a>; it is ready to download as soon as you enter your email.</p>
+          </div>
+        </li>
+        <li id="step-attach">
+          <span class="d-list__index">02</span>
+          <div>
+            <h2>Attach it to a new chat.</h2>
+            <p>Start a new chat in an account you are permitted to use for this decision, and attach the PDF with the chat’s file or attachment control. The links below only open each service; they do not attach the file.</p>
+            <ul class="start-providers">
+              {providers.map((p) => (
+                <li><a class="v-btn" href={p.href} target="_blank" rel="noopener noreferrer">{p.name}<span class="sr-only"> (opens in a new tab)</span></a></li>
+              ))}
+            </ul>
+            <p class="start-note">Whether you can attach a PDF, and which models you can choose, depend on your account and plan. Service labels change; if a control has moved, look for the option to add a file to the message.</p>
+          </div>
+        </li>
+        <li id="step-paste">
+          <span class="d-list__index">03</span>
+          <div>
+            <h2>Paste the starter and describe one decision.</h2>
+            <p>Paste this as your first message, with the PDF attached.</p>
+            <div class="start-copy">
+              <pre class="start-copy__text" id="starter-text">{free.starter}</pre>
+              <button type="button" class="v-btn" data-ff-copy="starter-text" data-ff-location="start_starter" hidden>Copy the starter</button>
+              <p class="start-copy__status" id="starter-text-status" aria-live="polite"></p>
+            </div>
+            <p>If it helps, fill in this outline and paste it below the starter. It is optional.</p>
+            <div class="start-copy">
+              <pre class="start-copy__text" id="starter-template">{free.starterTemplate.join('\n')}</pre>
+              <button type="button" class="v-btn" data-ff-copy="starter-template" data-ff-location="start_template" hidden>Copy the outline</button>
+              <p class="start-copy__status" id="starter-template-status" aria-live="polite"></p>
+            </div>
+            <p class="start-note">You can also select either text by hand and copy it. Neither is sent to GreenSquare AI: copying uses your own clipboard, and the site records only that a copy happened, never the text. What you type goes to the AI service you chose, under its terms.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="v-section v-section--rule" id="labels">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>The four evidence labels.</h2>
+        <p>The handoff tags each material claim with one of these, so you and anyone you share it with can see which parts are known and which are guessed.</p>
+      </div>
+      <dl class="d-meta start-labels">
+        {free.evidenceLabels.map((row) => (
+          <div><dt><span class={`start-word start-word--${row.tag}`}>{row.label}</span></dt><dd>{row.meaning} <span class="start-sounds">Sounds like: {row.sounds}</span></dd></div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <section class="v-section v-section--rule" id="gap">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>The final gap to verify.</h2>
+      </div>
+      <div>
+        <p class="start-gap">The handoff ends on the reframed decision and the single evidence gap to verify next. Check that gap before anyone compares options: it is where the frame is most likely to change.</p>
+        <div class="d-panel start-gap__example">
+          <div class="d-panel__head"><strong>Evidence gap to test next</strong><span>The guide’s worked example</span></div>
+          <div class="d-panel__body"><p>{gap}</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="v-section v-section--rule" id="troubleshooting">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>If the session goes off course.</h2>
+        <p>The PDF is an instruction to the model, not a control over it. These replies usually bring a session back; a model may need a second reminder, and none of them is guaranteed to work.</p>
+      </div>
+      <div class="start-trouble">
+        {trouble.map((row) => (
+          <details><summary>{row.problem}</summary><p>{row.fix}</p></details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="v-section v-section--rule start-close">
+    <div class="v-container">
+      <h2>Framed is not decided.</h2>
+      <p>{free.session}</p>
+      <div class="v-actions">
+        <a class="v-btn" href={withBase('/examples/')}>See the examples</a>
+        <a class="v-btn" href={withBase('/free/#get-free')}>Get Frame Free</a>
+      </div>
+    </div>
+  </section>
+</BaseLayoutV2>
+
+<style>
+  .start-hero { padding-bottom: var(--v-4); }
+  .start-hero h1 { font-size: var(--vs-h1); }
+  .start-steps { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--v-ink); }
+  .start-steps > li { display: grid; grid-template-columns: 3rem minmax(0, 1fr); gap: var(--v-4); padding: var(--v-6) 0; border-bottom: 1px solid var(--v-line); }
+  .start-steps h2 { font-size: var(--vs-h3); }
+  .start-steps p { max-width: 64ch; margin-top: var(--v-3); }
+  .start-providers { list-style: none; margin: var(--v-4) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--v-3); }
+  .start-note { font-size: var(--vs-small); color: var(--v-ink-soft); }
+  .start-copy { margin-top: var(--v-3); max-width: 64ch; }
+  .start-copy__text { margin: 0 0 var(--v-3); padding: var(--v-4); background: var(--v-panel); border: 1px solid var(--v-ink); font-family: var(--vf-body); font-size: var(--vs-small); line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; user-select: all; }
+  /* The script unhides the copy buttons; .v-btn sets a display that would beat [hidden]. */
+  .start-copy button[hidden] { display: none; }
+  .start-copy__status { margin: var(--v-2) 0 0; font-size: var(--vs-small); color: var(--v-ink); min-height: 1.5em; }
+  .start-labels > div { grid-template-columns: minmax(7rem, 9rem) 1fr; }
+  .start-word { font-weight: 600; }
+  .start-word--given { color: var(--v-given); }
+  .start-word--derived { color: var(--v-derived); }
+  .start-word--inferred { color: var(--v-inferred); }
+  .start-word--unknown { color: var(--v-unknown); }
+  .start-sounds { display: block; margin-top: var(--v-1); font-size: var(--vs-small); color: var(--v-ink-soft); }
+  .start-gap { margin-top: 0; max-width: 62ch; }
+  .start-gap__example { margin-top: var(--v-5); }
+  .start-gap__example .d-panel__body p { margin: 0; }
+  .start-trouble details:first-of-type { border-top: 1px solid var(--v-line); }
+  .start-trouble p { color: var(--v-ink-soft); font-size: var(--vs-small); margin-bottom: var(--v-2); }
+  .start-close p { max-width: 62ch; color: var(--v-ink-soft); margin-top: var(--v-3); }
+  @media (max-width: 480px) {
+    .start-steps > li { grid-template-columns: 1fr; gap: var(--v-2); }
+    .start-labels > div { grid-template-columns: 1fr; }
+  }
+</style>

@@ -117,6 +117,7 @@ const watchShifts = (page) => page.evaluate(() => {
 const shifts = (page) => page.evaluate(() => (window.__filmShifts || []).reduce((a, b) => a + b, 0));
 const scrollToFilm = (page) => page.locator('[data-film-frame]').evaluate((el) => el.scrollIntoView({ block: 'center', behavior: 'instant' }));
 const scrollTop = (page) => page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }));
+const scrollAway = (page) => page.evaluate(() => scrollTo({ top: document.documentElement.scrollHeight, behavior: 'instant' }));
 /* Two animation frames, so observers have delivered after a scroll. */
 const settle = (page) => page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
 const videoPaused = (page) => page.locator('[data-film-video]').evaluate((v) => v.paused);
@@ -346,7 +347,7 @@ for (const viewport of viewports) {
     /* The control exists before the film does, and is the next stop after the hero's
        last action, so a keyboard reader can pause before the film starts. */
     if (!(await toggleShown(page))) errors.push('Control not shown before the video was inserted');
-    await page.getByRole('link', { name: 'See a Decision Brief' }).first().focus();
+    await page.getByRole('link', { name: 'See the Free example' }).first().focus();
     await page.keyboard.press('Tab');
     const tabbed = await page.evaluate(() => document.activeElement?.matches('[data-film-toggle]') ?? false);
     if (!tabbed) errors.push(`One Tab from the hero's last action reaches ${await page.evaluate(() => document.activeElement?.outerHTML.slice(0, 80))}, not the film control`);
@@ -398,7 +399,7 @@ for (const viewport of viewports) {
 
         /* A film the reader paused stays paused through scrolling away and back. The
            precondition, that the frame really left the screen, is asserted, not assumed. */
-        await scrollTop(page);
+        await scrollAway(page); // QA fix 2026-10-09: the film now sits near the top, so leaving the screen means scrolling past it
         if (!(await offScreenAndPaused(page))) errors.push('Precondition failed: the frame did not leave the screen');
         await scrollToFilm(page);
         await settle(page);
@@ -409,7 +410,7 @@ for (const viewport of viewports) {
         if (!(await named('Pause the film'))) errors.push('Control not renamed "Pause the film" after playing');
 
         /* Off screen it pauses; back on screen it resumes, because the reader did not pause it. */
-        await scrollTop(page);
+        await scrollAway(page);
         if (!(await offScreenAndPaused(page))) errors.push('Video kept playing off screen');
         await scrollToFilm(page);
         await page.waitForFunction(() => !document.querySelector('[data-film-video]').paused, null, { timeout: 3000 }).catch(() => errors.push('Video did not resume on returning to view'));

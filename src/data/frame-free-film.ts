@@ -146,7 +146,7 @@ export const frameFreeFilm = {
   id: 'worked-example',
   heading: 'A vendor choice, framed before it is evaluated.',
   intro:
-    'This is the worked example from the Frame Free guide: an operations manager told to choose between two rostering platforms before the current contract expires. The guide’s six questions make up Clarify, Inspect and Test, the first three of the six steps below. Frame Free stops before evaluation: neither platform is scored, compared or chosen.',
+    'This is the worked example from the Frame Free guide: an operations manager told to choose between two rostering platforms before the current contract expires. The film runs the guide’s six questions in order. Frame Free stops before evaluation: neither platform is scored, compared or chosen.',
 
   /** The provenance line in the exhibit's head, as every other exhibit on the site carries. */
   exhibit: { name: 'Worked example', source: 'from the Frame Free guide, page 5' },

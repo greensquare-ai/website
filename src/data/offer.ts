@@ -15,13 +15,29 @@ export const offer = {
   free: {
     name: 'Frame Free',
     status: 'Beta, available now',
-    oneLine: 'Email delivery of the Frame Free field guide, a six-page PDF you load into ChatGPT, Claude or Gemini.',
+    oneLine: 'The Frame Free field guide, a six-page PDF you load into ChatGPT, Claude or Gemini. Download it on the page as soon as you enter your email.',
+    offerLine: 'Free six-page PDF. Use it in ChatGPT, Claude or Gemini.',
     delivery: {
       object: 'A six-page PDF field guide.',
       how: 'You upload it to a new chat and describe one live decision. The model then asks the six questions in order, one at a time.',
-      after: 'Enter your email. Confirm the address from the message we send. The file arrives in the reply.',
-      setup: 'Under five minutes from confirmation to the first question.',
+      after: 'Enter your email and the PDF is ready to download on the same page. There is no inbox wait. Confirm your address from the email we send to receive future Frame product emails.',
+      setup: 'Under five minutes from download to the first question.',
     },
+    /** Shown beside every form, before submission. */
+    emailExchange: 'Enter your email for Frame Free and occasional Frame product emails, including Frame Pro launch updates. Confirm your address in the email we send to activate updates. Unsubscribe at any time.',
+    /** Shown once the email provider accepts the request. Acceptance is not confirmation. */
+    ready: {
+      heading: 'Your PDF is ready.',
+      body: 'Download it now, then attach it to a new chat. Check your inbox to confirm future Frame product emails.',
+    },
+    starter: 'Use Frame Free in this PDF. Ask me one question at a time.',
+    starterTemplate: [
+      'The decision I am considering is:',
+      'It became relevant because:',
+      'The facts and constraints I know are:',
+      'The owner and due date, if known, are:',
+      'What I do not know is:',
+    ],
     inputs: [
       'The decision as you currently see it, in a paragraph.',
       'Who owns the decision and when it is due.',
@@ -30,12 +46,29 @@ export const offer = {
     session: 'One decision runs to a completed frame in about ten minutes. Frame Free stops there, by design: it does not rank options, score criteria or recommend a course of action.',
     output: 'A seven-part framing handoff: the presented decision and its trigger, the decision underneath, the missing third option, the load-bearing assumption, each constraint marked verified or assumed, an evidence map tagging every material claim given, derived, inferred or unknown, and the single evidence gap to test next.',
     boundary: 'Frame Free clarifies and tests the decision before evaluation. It does not compare options, recommend a course of action or produce a Decision Brief.',
+    /** The short scope line set beside the opening offer. */
+    scope: 'Frame Free clarifies and tests a decision. It stops before ranking options or recommending a course of action.',
+    /** What the email address is for, in one place for the pages that explain it. */
+    emailMeaning: 'Your email unlocks the PDF on the page straight away. It also asks to add you to the Frame email list for occasional product emails, including Frame Pro launch updates. Those start only once you confirm your address from the email we send, and every one carries an unsubscribe link. Our email provider, Kit, holds the address; we delete it on request.',
+    /** The three steps from download to the first question. /start/ expands them. */
+    setup: [
+      { title: 'Get the PDF', text: 'Enter your email. The PDF is ready to download on the same page, with no inbox wait.' },
+      { title: 'Attach it to a new chat', text: 'Open a new chat in ChatGPT, Claude or Gemini, in an account you are permitted to use for the decision, and attach the PDF.' },
+      { title: 'Paste the starter and describe one decision', text: 'The model asks six questions, one at a time, then returns a seven-part framing handoff and stops.' },
+    ],
+    /** The guide's four evidence labels (page 4), in sentence case as the site sets labels. */
+    evidenceLabels: [
+      { tag: 'given', label: 'Given', meaning: 'Directly supplied or verified.', sounds: '‘The contract says ...’' },
+      { tag: 'derived', label: 'Derived', meaning: 'Calculated from given information.', sounds: '‘That works out to ...’' },
+      { tag: 'inferred', label: 'Inferred', meaning: 'Reasoned from what is known.', sounds: '‘If churn holds, then ...’' },
+      { tag: 'unknown', label: 'Unknown', meaning: 'Material but not established.', sounds: 'Competitor intent; an untested belief.' },
+    ],
     compatibility: {
       tested: 'Frame Free has not been benchmarked. The preregistered study tested an earlier method file that predates Frame, and the research pages say so.',
-      boundary: 'The guide is written for Claude, ChatGPT or Gemini of current class. It depends on a model that can hold a long instruction, ask one question at a time and keep the four evidence classes straight. Smaller or older models drop the discipline part way through. It is not tied to one provider.',
+      boundary: 'The guide is written for use in ChatGPT, Claude or Gemini, and is not tied to one provider. It asks the model to hold a long instruction, ask one question at a time and keep the four evidence labels straight. That is an instruction to the model, not a guarantee: if a session drifts, the start page gives recovery text. Whether you can attach a PDF, and which models you can choose, depend on your account and plan.',
     },
     dataFlow: [
-      { what: 'Your email address', where: 'Reaches GreenSquare AI, held by our email provider (Kit) until you unsubscribe.' },
+      { what: 'Your email address', where: 'Reaches GreenSquare AI, held by our email provider, Kit. Unsubscribing stops the emails; we delete your record on request.' },
       { what: 'Your decision, facts and answers', where: 'Go to the model provider you chose (OpenAI, Anthropic, Google or another), under that provider’s terms and data settings. None of it reaches GreenSquare AI.' },
       { what: 'Retention and training use', where: 'Depend on the provider and the account tier you use. Check the data controls on your own account before a confidential decision.' },
       { what: 'What not to submit', where: 'Anything you are not permitted to place with that provider: client names under NDA, personal information, price-sensitive or privileged material, unless your account and the provider’s terms allow it.' },
@@ -48,6 +81,18 @@ export const offer = {
     note: 'The paid plan for professional and team use. It continues where Frame Free stops: deeper interrogation, credible options, explicit criteria, comparison, a recommendation and a five-part Decision Brief. Scope, price and support terms are not yet fixed and will be published together, with terms of sale, before anything is offered for purchase.',
   },
 } as const;
+
+/**
+ * Five recognisable decision situations. Each links to its worked example on /examples/,
+ * by the anchor that page publishes; the ids double as the opaque analytics category.
+ */
+export const situations = [
+  { id: 'vendor-renewal', title: 'Vendor renewal', situation: 'Choosing between platforms before a contract deadline.', issue: 'Whether the software is the root cause, and whether the deadline is verified.' },
+  { id: 'capacity-hiring', title: 'Capacity and hiring', situation: 'Hiring to relieve repeated delays.', issue: 'Whether capacity, workflow or scope is the bottleneck.' },
+  { id: 'capital-purchase', title: 'Capital purchase', situation: 'Buying equipment for expected demand.', issue: 'Which demand or utilisation assumption carries the decision.' },
+  { id: 'project-continuation', title: 'Project continuation', situation: 'Continuing or pausing a struggling programme.', issue: 'Whether the objective has changed, or sunk cost is driving the framing.' },
+  { id: 'pricing-change', title: 'Pricing or service change', situation: 'Responding to margin pressure.', issue: 'Which customer-response and cost assumptions need checking.' },
+] as const;
 
 /** The six questions Frame Free puts to the decision, in order, as the guide holds them. */
 export const freeQuestions = [

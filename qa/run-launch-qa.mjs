@@ -4,7 +4,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const base = process.env.QA_BASE_URL || 'http://127.0.0.1:4321';
-const routes = ['/', '/product/', '/free/', '/research/', '/benchmark/', '/about/'];
+/* QA 2026-10-09: the new routes, the legal pages and the 404 added. The 404 is reached
+   through a path that does not exist, so it is served with its real status. */
+const routes = ['/', '/product/', '/free/', '/research/', '/benchmark/', '/about/', '/examples/', '/start/', '/legal/privacy/', '/legal/terms/', '/legal/cookies/', '/qa-missing-page/'];
+const expectedStatus = (route) => (route === '/qa-missing-page/' ? 404 : 200);
 const viewports = [
   { name: 'desktop', width: 1440, height: 1000 },
   { name: 'tablet', width: 820, height: 1180 },
@@ -31,7 +34,7 @@ for (const viewport of viewports) {
       clientWidth: document.documentElement.clientWidth,
       body: document.body.innerText,
     }));
-    if (status !== 200) errors.push(`HTTP ${status}`);
+    if (status !== expectedStatus(route)) errors.push(`HTTP ${status}`);
     if (!state.h1) errors.push('Primary heading missing');
     if (state.mains !== 1) errors.push(`Expected one main landmark, found ${state.mains}`);
     if (state.scrollWidth > state.clientWidth + 2) errors.push(`Horizontal overflow ${state.scrollWidth}/${state.clientWidth}`);
@@ -123,23 +126,21 @@ for (const viewport of viewports) {
 
 
     if (route === '/') {
-      if (await page.getByRole('link', { name: /Get the Frame Free beta/i }).count() < 1) errors.push('Primary Free CTA missing');
-      const heroImage = page.locator('.home-hero__visual img');
-      if (await heroImage.count() < 1) errors.push('Decision-path artwork missing from the hero');
-      else {
-        const imageState = await heroImage.first().evaluate((image) => ({
-          alt: image.alt,
-          complete: image.complete,
-          naturalWidth: image.naturalWidth,
-          naturalHeight: image.naturalHeight,
-        }));
-        if (!imageState.complete || imageState.naturalWidth < 1 || imageState.naturalHeight < 1) errors.push('Decision-path artwork failed to load');
-        if (!imageState.alt) errors.push('Decision-path artwork is missing alternative text');
-      }
+      /* QA 2026-10-09: the hero is now the offer with a one-field form (handoff section 3);
+         the decorative artwork may be removed. The film must be the next section. */
+      if (await page.getByRole('button', { name: /Get Frame Free PDF/i }).count() < 1) errors.push('Primary Free capture button missing');
+      const order = await page.evaluate(() => {
+        const sections = [...document.querySelectorAll('main > section, main > div > section')];
+        const hero = sections.findIndex((s) => s.querySelector('h1'));
+        const film = sections.findIndex((s) => s.querySelector('[data-film]'));
+        return { hero, film };
+      });
+      if (order.film !== order.hero + 1) errors.push(`Film is not the section after the opening offer (hero ${order.hero}, film ${order.film})`);
     }
     if (route === '/free/') {
-      if (await page.getByLabel('Email address').count() !== 1) errors.push('Email input missing');
-      if (await page.getByRole('button', { name: /Email me the beta/i }).count() !== 1) errors.push('Free submit action missing');
+      /* QA 2026-10-09: /free/ carries two forms (opening offer and final form). */
+      if (await page.getByLabel('Email address').count() < 1) errors.push('Email input missing');
+      if (await page.getByRole('button', { name: /Get Frame Free PDF/i }).count() < 1) errors.push('Free submit action missing');
     }
     if (route === '/product/') {
       const tabs = page.getByRole('tab');
@@ -249,7 +250,7 @@ for (const viewport of viewports) {
       errors.push(`Contrast: ${contrastFailures.map((c) => `${c.selector} ${c.ratio}:1 needs ${c.required}:1 ("${c.text}")`).join(' | ')}`);
     }
 
-    const safeRoute = route === '/' ? 'home' : route.replaceAll('/', '-').replace(/^-|-$/g, '');
+    const safeRoute = route === '/' ? 'home' : route === '/qa-missing-page/' ? '404' : route.replaceAll('/', '-').replace(/^-|-$/g, '');
     const screenshot = path.join(output, `${safeRoute}-${viewport.name}.png`);
     await page.screenshot({ path: screenshot, fullPage: true });
     const passed = errors.length === 0;

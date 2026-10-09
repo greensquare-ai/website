@@ -2,14 +2,14 @@
 import { withBase } from '../lib/paths';
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 ---
-<BaseLayoutV2 title="Page not found | GreenSquare AI" description="This page does not exist.">
+<BaseLayoutV2 title="Page not found | GreenSquare AI" description="This page does not exist." noindex>
   <section class="v-hero">
     <div class="v-container">
       <h1>That page does not exist.</h1>
-      <p class="v-lead">The address may be wrong, or the page may have moved. The pages that do exist are listed in the footer.</p>
+      <p class="v-lead">The address may be wrong, or the page may have moved. If you came for the Frame Free PDF, it is one step away.</p>
       <div class="v-actions">
-        <a class="v-btn v-btn--green" href={withBase('/')}>Back to the homepage</a>
-        <a class="v-btn" href={withBase('/product/')}>Read about Frame</a>
+        <a class="v-btn v-btn--green" href={withBase('/free/#get-free')}>Get Frame Free</a>
+        <a class="v-btn" href={withBase('/')}>Go to the homepage</a>
       </div>
     </div>
   </section>

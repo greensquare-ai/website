@@ -1,7 +1,7 @@
 import { request } from 'node:http';
 
 const base = new URL(process.env.QA_BASE_URL || 'http://127.0.0.1:4321/');
-const seeds = ['/', '/product/', '/free/', '/research/', '/benchmark/', '/about/', '/methodology/'];
+const seeds = ['/', '/product/', '/free/', '/research/', '/benchmark/', '/about/', '/methodology/', '/examples/', '/start/', '/legal/privacy/', '/legal/terms/', '/legal/cookies/', '/404.html']; // QA 2026-10-09: new and legal routes added
 
 const get = (pathname) => new Promise((resolve, reject) => {
   const req = request(new URL(pathname, base), (response) => {

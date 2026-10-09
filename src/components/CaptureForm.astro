@@ -1,0 +1,36 @@
+---
+/**
+ * The email capture, as every page places it. Wraps the React island with the
+ * no-script fallback, so no page can ship a submit button that cannot submit.
+ *
+ * Without scripts the Kit request cannot be sent from this site, so the fallback says
+ * so plainly, offers the support address, and links the public file as a recovery
+ * route. Those downloads are not email captures and are not counted as such.
+ */
+import EmailCaptureForm from './EmailCaptureForm.tsx';
+import { withBase } from '../lib/paths';
+export interface Props {
+  /** Fixed analytics identifier for this placement, e.g. 'home_hero'. */
+  location: string;
+  buttonLabel?: string;
+  dark?: boolean;
+  /** Hydrate on load rather than when visible. Use for a form in the first screen. */
+  eager?: boolean;
+}
+const { location, buttonLabel, dark = false, eager = false } = Astro.props;
+---
+<div class="capture-island">
+  {eager
+    ? <EmailCaptureForm client:load location={location} buttonLabel={buttonLabel} dark={dark} />
+    : <EmailCaptureForm client:visible location={location} buttonLabel={buttonLabel} dark={dark} />}
+</div>
+<noscript>
+  <div class="capture-noscript">
+    <p>The email form needs JavaScript, which is turned off in this browser. To join the Frame email list, write to <a href="mailto:hello@greensquare.ai?subject=Frame%20Free">hello@greensquare.ai</a>.</p>
+    <p>You can still <a href={withBase('/frame-free.pdf')}>open the Frame Free PDF directly</a>.</p>
+  </div>
+</noscript>
+<style>
+  .capture-noscript p { margin: 0 0 var(--v-2); font-size: var(--vs-small); }
+  .capture-noscript a { color: inherit; }
+</style>

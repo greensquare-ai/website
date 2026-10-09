@@ -3,18 +3,19 @@ import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 import ProductDemo from '../components/ProductDemo.astro';
 import PlanComparison from '../components/PlanComparison.astro';
 import Signup from '../components/Signup.astro';
+import FreeHandoff from '../components/FreeHandoff.astro';
 import { withBase } from '../lib/paths';
-import { briefStructure, method, offer } from '../data/offer';
+import { briefStructure, freeQuestions, method, offer } from '../data/offer';
 import { briefExcerpt } from '../data/brief-excerpt';
 import { dates } from '../lib/benchmark';
 
 const d = dates();
 const free = offer.free;
 const accountable = [
-  { who: 'You', does: 'Own the decision, supply the facts and the constraints, decide what the brief has not decided, and sign the paper. The method will not recommend on a question you have not answered; it records the gap as an unknown.' },
-  { who: 'The model', does: 'Reads, asks, drafts and compares at speed. It contributes the analysis. It does not know which fact matters to your organisation until you tell it.' },
-  { who: 'Frame', does: 'Holds the model to the process: ask first, tag every material claim, compare real options, state confidence and conditions. It is the discipline, not the judgement.' },
-  { who: 'GreenSquare AI', does: 'Writes and maintains the method file, publishes what it has and has not been shown to do, and answers for both. It does not see your decision or your data.' },
+  { who: 'You', does: 'Own the decision, supply the facts and the constraints, and decide. Frame Free does not recommend at all; where you cannot answer a question, the handoff records an unknown rather than a guess.' },
+  { who: 'The model', does: 'Reads, asks and drafts at speed. It does not know which fact matters to your organisation until you tell it, and it can drift from the instructions it was given.' },
+  { who: 'Frame', does: 'Gives the model a process to follow: ask first, one question at a time, and tag every material claim. It is an instruction the model follows, not a guarantee of its behaviour, and it is the discipline, not the judgement.' },
+  { who: 'GreenSquare AI', does: 'Writes and maintains the guide, publishes what it has and has not been shown to do, and answers for both. It does not see your decision or your data.' },
 ];
 ---
 <BaseLayoutV2
@@ -25,10 +26,10 @@ const accountable = [
   <section class="v-hero product-hero">
     <div class="v-container">
       <h1>Frame makes an AI interrogate the decision before it advises.</h1>
-      <p class="v-lead">Frame Free is the available beta: a six-page PDF that clarifies, inspects and tests one decision, then hands back a structured frame. Frame Pro is in development and will continue into comparison, recommendation and a Decision Brief.</p>
+      <p class="v-lead">Frame Free is available now: a six-page PDF whose six questions clarify, inspect and test one decision, then hand back a seven-part frame. Frame Pro is in development and will continue into comparison, recommendation and a Decision Brief.</p>
       <div class="v-actions">
-        <a class="v-btn v-btn--green" href="#get-free">Get the Frame Free beta</a>
-        <a class="v-btn" href="#brief">See a Decision Brief</a>
+        <a class="v-btn v-btn--green" href="#get-free">Get Frame Free PDF</a>
+        <a class="v-btn" href="#free">See the Frame Free output</a>
       </div>
     </div>
   </section>
@@ -43,11 +44,31 @@ const accountable = [
     </div>
   </section>
 
+  <section class="v-section v-section--rule" id="free">
+    <div class="v-container">
+      <div class="v-cols product-free">
+        <div class="v-cols__head">
+          <h2>Today: six questions and a seven-part handoff.</h2>
+          <p>Frame Free asks six questions, one at a time. Together they cover Clarify, Inspect and Test, the first three of the method’s six steps listed further down. The six questions are not the six steps: Frame Free stops before Compare, Decide and Execute.</p>
+          <a class="v-link" href={withBase('/free/')}>What Frame Free includes</a>
+        </div>
+        <ol class="d-list d-list--indexed">
+          {freeQuestions.map(([name, q], i) => (
+            <li><span class="d-list__index">{String(i + 1).padStart(2, '0')}</span><div><h3>{name}</h3><p>{q}</p></div></li>
+          ))}
+        </ol>
+      </div>
+      <div class="product-free__handoff">
+        <FreeHandoff id="product-handoff" />
+      </div>
+    </div>
+  </section>
+
   <section class="v-section" id="brief">
     <div class="v-container">
       <div class="product-head">
         <h2>One decision, read in three states.</h2>
-        <p>This is the demonstration run published in the site repository: a fictional 42-branch systems cutover, run once on {briefExcerpt.provenance.model} with the method file that predates Frame, unedited. Move through the question as it was brought, one turn of interrogation, and the brief.</p>
+        <p>The Decision Brief is what the full method produces, and what Frame Pro is planned to produce. Frame Free does not produce one. This is the demonstration run published in the site repository: a fictional 42-branch systems cutover, run once on {briefExcerpt.provenance.model} with the method file that predates Frame, unedited. Move through the question as it was brought, one turn of interrogation, and the brief.</p>
       </div>
       <ProductDemo />
     </div>
@@ -56,8 +77,8 @@ const accountable = [
   <section class="v-section v-section--rule" id="method">
     <div class="v-container v-cols">
       <div class="v-cols__head">
-        <h2>The six steps the file holds the model to.</h2>
-        <p>The sequence is fixed. Frame Free covers the first three moves and stops before evaluation; Compare, Decide and Execute belong to Frame Pro, which is in development. What the model asks inside each step depends on what you have already told it, which is why two decisions never produce the same interrogation.</p>
+        <h2>The full method: six steps.</h2>
+        <p>The sequence is fixed. Frame Free’s six questions cover the first three steps and stop before evaluation; Compare, Decide and Execute belong to Frame Pro, which is in development. What the model asks inside each step depends on what you have already told it, so two decisions rarely produce the same questions.</p>
       </div>
       <ol class="d-list d-list--indexed">
         {method.map(([name, text, plan], i) => (
@@ -70,8 +91,8 @@ const accountable = [
   <section class="v-section v-section--rule" id="receive">
     <div class="v-container v-cols">
       <div class="v-cols__head">
-        <h2>One file, delivered by email.</h2>
-        <p>The beta is the method file and nothing else: no application, no account, no upload of your material to GreenSquare AI.</p>
+        <h2>One file, ready on the page.</h2>
+        <p>Frame Free is the PDF and nothing else: no application, no account with us and no upload of your material to GreenSquare AI.</p>
       </div>
       <div class="product-receive">
         <dl class="d-meta">
@@ -98,7 +119,7 @@ const accountable = [
     <div class="v-container v-cols">
       <div class="v-cols__head">
         <h2>Who remains accountable.</h2>
-        <p>Four parties touch a decision run through Frame. The brief is only as good as the division of labour between them, so it is stated here rather than in the terms.</p>
+        <p>Four parties touch a decision run through Frame. The output is only as good as the division of labour between them, so it is stated here rather than in the terms.</p>
       </div>
       <dl class="d-meta product-accountable">
         {accountable.map((row) => (
@@ -115,7 +136,7 @@ const accountable = [
       </div>
       <div class="d-panel product-evidence">
         <dl class="d-meta">
-          <div><dt>Shown</dt><dd>In a preregistered benchmark, the method file made the model ask before answering, compare real options and tag its evidence on every run. That is a change in process, and it held across two models and three cases.</dd></div>
+          <div><dt>Shown</dt><dd>In a preregistered benchmark, an earlier method file made the model ask before answering, compare real options and tag its evidence on every run. That is a change in process, and it held across two models and three cases.</dd></div>
           <div><dt>Not shown</dt><dd>That the brief is better judged than one a well-briefed model produces unaided. On the three judgement checks the informed baseline matched or exceeded the loaded method.</dd></div>
           <div><dt>Boundary</dt><dd>The file tested predates Frame. Nothing on this page claims the benchmark result for Frame Free or Frame Pro. Record current as at {d.currentAsAt}.</dd></div>
         </dl>
@@ -136,7 +157,7 @@ const accountable = [
     </div>
   </section>
 
-  <Signup />
+  <Signup location="product_footer" />
 </BaseLayoutV2>
 
 <style>
@@ -147,6 +168,7 @@ const accountable = [
   .product-head { max-width: 62ch; margin-bottom: var(--v-6); }
   .product-head p { color: var(--v-ink-soft); margin-top: var(--v-4); }
   .product-receive { display: grid; gap: var(--v-6); }
+  .product-free__handoff { margin-top: var(--v-8); }
   .product-structure__list { list-style: none; margin: 0; padding: var(--v-2) var(--v-5); }
   .product-structure__list li { display: grid; grid-template-columns: 2rem 1fr; gap: var(--v-3); padding: 12px 0; border-top: 1px solid var(--v-line); }
   .product-structure__list li:first-child { border-top: 0; }

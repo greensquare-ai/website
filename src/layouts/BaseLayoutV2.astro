@@ -11,8 +11,10 @@ export interface Props {
   current?: string;
   ogType?: string;
   noindex?: boolean;
+  /** Marks the page for journey events; 'start' records a start-guidance view. */
+  ffPage?: string;
 }
-const { title, description, current = '', ogType = 'website', noindex = false } = Astro.props;
+const { title, description, current = '', ogType = 'website', noindex = false, ffPage } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 const ogImage = new URL(withBase('/assets/og-image.png'), Astro.site).toString();
 ---
@@ -50,7 +52,7 @@ const ogImage = new URL(withBase('/assets/og-image.png'), Astro.site).toString()
       rel="stylesheet"
     />
   </head>
-  <body class="v2 brand-site">
+  <body class="v2 brand-site" data-ff-page={ffPage}>
     <a class="skip-link" href="#main">Skip to content</a>
     <NavV2 current={current} />
     <main id="main">
@@ -58,6 +60,9 @@ const ogImage = new URL(withBase('/assets/og-image.png'), Astro.site).toString()
     </main>
     <FooterV2 />
     <Analytics />
+    <script>
+      import '../scripts/frame-free-journey';
+    </script>
     <script>
       const nav = document.querySelector('.v-nav');
       if (nav) {

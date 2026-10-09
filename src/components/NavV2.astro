@@ -3,8 +3,8 @@ import { withBase } from '../lib/paths';
 export interface Props { current?: string; }
 const { current = '' } = Astro.props;
 const links = [
-  { href: withBase('/product/'), label: 'Product', key: 'product' },
   { href: withBase('/free/'), label: 'Frame Free', key: 'free' },
+  { href: withBase('/examples/'), label: 'Examples', key: 'examples' },
   { href: withBase('/research/'), label: 'Research', key: 'research' },
   { href: withBase('/about/'), label: 'About', key: 'about' },
 ];
@@ -21,7 +21,7 @@ const links = [
           <a href={l.href} aria-current={current === l.key ? 'page' : undefined}>{l.label}</a>
         ))}
       </nav>
-      <a class="v-btn v-btn--green" href={withBase('/free/#get-free')}>Get the Frame Free beta</a>
+      <a class="v-btn v-btn--green" href={withBase('/free/#get-free')}>Get Frame Free PDF</a>
       <button class="v-nav__toggle" type="button" id="v-nav-toggle" aria-label="Open menu" aria-controls="v-nav-drawer" aria-expanded="false">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
           <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -36,7 +36,7 @@ const links = [
       {links.map((l) => (
         <a href={l.href} aria-current={current === l.key ? 'page' : undefined}>{l.label}</a>
       ))}
-      <a class="v-btn v-btn--green" href={withBase('/free/#get-free')}>Get the Frame Free beta</a>
+      <a class="v-btn v-btn--green" href={withBase('/free/#get-free')}>Get Frame Free PDF</a>
     </div>
   </nav>
 </header>

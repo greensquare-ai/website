@@ -98,8 +98,10 @@ const RULES = [
     decision: 'No price is surfaced at launch',
     test: (text) => [...text.matchAll(/(?:A?\$|AUD\s?)\d/g)].map((m) => m[0]),
     // The demonstration transcript is a fictional case containing fictional money.
-    // It is quoted evidence, not a Frame price.
-    exempt: (route) => route.startsWith('benchmark'),
+    // It is quoted evidence, not a Frame price. The same holds for the five agent-run
+    // examples (src/data/examples/), whose frozen fact sheets carry fictional amounts.
+    // The exemption is the one route; every other page stays guarded.
+    exempt: (route) => route.startsWith('benchmark') || route === 'examples',
   },
   {
     name: 'an arrow glyph',

@@ -1,121 +1,181 @@
 ---
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 import Signup from '../components/Signup.astro';
+import CaptureForm from '../components/CaptureForm.astro';
+import FreeHandoff from '../components/FreeHandoff.astro';
 import { withBase } from '../lib/paths';
-import { offer } from '../data/offer';
+import { freeQuestions, offer, situations } from '../data/offer';
+import release from '../data/frame-free-release.json';
 
 const free = offer.free;
 const faq = [
-  ['Is this a worksheet or a questionnaire?', 'No. The file gives the model a process and a set of rules, not a fixed questionnaire. It asks six questions in order, adapting each question to what you have already said, then returns the framing handoff described above.'],
   ['Does it make the decision for me?', `No. ${free.boundary} You decide what happens next, and you remain responsible for the decision.`],
-  ['Which model should I use it with?', `${free.compatibility.tested} ${free.compatibility.boundary}`],
-  ['Where does my information go?', 'Your decision, your facts and your answers go to the model provider you chose, under that provider’s terms and the data settings on your account. None of it reaches GreenSquare AI. Your email address is the only thing we hold.'],
-  ['Can I use it on confidential work?', 'Only where your organisation permits you to place that material with the model provider you are using. Check the retention and training settings on your account first. Do not submit client material under NDA, personal information or privileged material unless your provider terms and your own obligations allow it.'],
-  ['What does it cost, and what am I allowed to do with it?', `Nothing during the beta. ${free.rights}`],
-  ['What is Frame Pro?', `${offer.pro.note}`],
+  ['Is it a questionnaire?', 'No. The PDF gives the model a process and rules to follow. The model asks the six questions in order, one at a time, adapting each to what you have already said.'],
+  ['Which AI should I use it with?', `${free.compatibility.boundary} ${free.compatibility.tested}`],
+  ['Can I use it on confidential work?', 'Only where your organisation permits you to place that material with the model provider you are using. Check the retention and training settings on your account first.'],
+  ['What does it cost?', 'Nothing. No payment details are asked for, and nothing is sold through this page.'],
 ];
 ---
 <BaseLayoutV2
-  title="Frame Free beta | GreenSquare AI"
-  description="Email delivery of the Frame Free field guide, a six-page PDF for use with ChatGPT, Claude or Gemini. What arrives, what to prepare, how long it takes and where your information goes."
+  title="Frame Free | GreenSquare AI"
+  description="Frame Free is a free six-page PDF for ChatGPT, Claude or Gemini. Enter your email and download it on the page. It questions one decision and returns a seven-part framing handoff, then stops before evaluation."
   current="free"
 >
-  <section class="v-hero free-hero">
+  <section class="v-hero free-hero" id="get-free">
+    <div class="v-container free-hero__grid">
+      <div>
+        <h1>Test the question before you commit to the answer.</h1>
+        <p class="v-lead">Frame Free is a six-page PDF you attach to a chat in the AI you already use. It asks six questions about one decision, one at a time, and hands back a seven-part frame of what is known, what is assumed and what to check next.</p>
+        <p class="free-hero__boundary">{free.boundary}</p>
+      </div>
+      <div class="d-panel d-panel--ink free-hero__offer">
+        <p class="free-hero__offer-line">{free.offerLine}</p>
+        <CaptureForm location="free_hero" eager />
+      </div>
+    </div>
+  </section>
+
+  <section class="v-section v-section--rule" id="sample">
     <div class="v-container">
-      <h1>{free.oneLine}</h1>
-      <p class="v-lead">Bring one live decision. The guide makes the model ask six questions in order, distinguish evidence from assumption and return a structured frame. {free.boundary}</p>
-      <div class="v-actions">
-        <a class="v-btn v-btn--green" href="#get-free">Get the Frame Free beta</a>
-        <a class="v-btn" href={withBase('/product/#brief')}>See a Decision Brief</a>
+      <div class="free-head">
+        <h2>What comes back: seven parts, before any evaluation.</h2>
+        <p>Pros-and-cons lists and decision matrices start by weighing options. Frame Free starts a step earlier, with the question, the assumptions and the constraints, so that the weighing, when it comes, is aimed at the right decision. It has not been tested against a well-written ordinary prompt, so judge it on your own decision. This is the guide’s own worked example.</p>
+      </div>
+      <FreeHandoff id="free-handoff" />
+    </div>
+  </section>
+
+  <section class="v-section v-section--rule" id="included">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>What is included.</h2>
+        <p>One file. No application, no account with us and no upload of your decision to GreenSquare AI.</p>
+      </div>
+      <div>
+        <dl class="d-meta free-meta">
+          <div><dt>The file</dt><dd>{free.delivery.object} {free.delivery.how}</dd></div>
+          <div><dt>The six questions</dt><dd>
+            <ol class="free-questions">{freeQuestions.map(([name, q]) => <li><strong>{name}.</strong> {q}</li>)}</ol>
+          </dd></div>
+          <div><dt>The output</dt><dd>{free.output}</dd></div>
+          <div><dt>A session</dt><dd>{free.session}</dd></div>
+          <div><dt>Cost</dt><dd>Free. {free.status}.</dd></div>
+          <div><dt>This release</dt><dd>{release.pages} pages, {Math.round(release.bytes / 1024)} KB. The PDF carries no printed date or version, so this page identifies the file by its SHA-256 fingerprint: <code class="free-hash">{release.sha256}</code></dd></div>
+        </dl>
       </div>
     </div>
   </section>
 
-  <section class="v-section v-section--rule" id="what">
+  <section class="v-section v-section--rule" id="setup">
     <div class="v-container v-cols">
       <div class="v-cols__head">
-        <h2>What you get, and what happens after you submit your address.</h2>
-      </div>
-      <dl class="d-meta free-meta">
-        <div><dt>The file</dt><dd>{free.delivery.object}</dd></div>
-        <div><dt>How you run it</dt><dd>{free.delivery.how}</dd></div>
-        <div><dt>After you submit</dt><dd>{free.delivery.after}</dd></div>
-        <div><dt>Setup</dt><dd>{free.delivery.setup}</dd></div>
-        <div><dt>A session</dt><dd>{free.session}</dd></div>
-        <div><dt>The output</dt><dd>{free.output}</dd></div>
-        <div><dt>Status</dt><dd>{free.status}. The file is revised as the method improves; the version you hold is dated in its header.</dd></div>
-      </dl>
-    </div>
-  </section>
-
-  <section class="v-section v-section--rule" id="prepare">
-    <div class="v-container v-cols">
-      <div class="v-cols__head">
-        <h2>What to have ready.</h2>
-        <p>Three things. The method asks for the rest, and treats a stated unknown as evidence rather than as a gap to paper over.</p>
+        <h2>Three steps to the first question.</h2>
+        <p>{free.delivery.setup}</p>
+        <a class="v-link" href={withBase('/start/')}>Read the start guide, with the starter text and troubleshooting</a>
       </div>
       <ol class="d-list d-list--indexed">
-        {free.inputs.map((text, i) => (
-          <li><span class="d-list__index">{String(i + 1).padStart(2, '0')}</span><p class="free-input">{text}</p></li>
+        {free.setup.map((step, i) => (
+          <li><span class="d-list__index">{String(i + 1).padStart(2, '0')}</span><div><h3>{step.title}</h3><p>{step.text}</p></div></li>
         ))}
       </ol>
     </div>
   </section>
 
-  <section class="v-section v-section--rule" id="compatibility">
+  <section class="v-section v-section--rule" id="examples">
     <div class="v-container v-cols">
       <div class="v-cols__head">
-        <h2>Model compatibility.</h2>
+        <h2>Decisions to try it on.</h2>
+        <p>Five illustrative examples on fictional inputs. Reading them is open to anyone; the PDF is the same whichever you choose.</p>
       </div>
-      <dl class="d-meta">
-        <div><dt>Tested on</dt><dd>{free.compatibility.tested}</dd></div>
-        <div><dt>Boundary</dt><dd>{free.compatibility.boundary}</dd></div>
-      </dl>
+      <ul class="free-situations">
+        {situations.map((s) => (
+          <li>
+            <a href={withBase(`/examples/#${s.id}`)} data-ff-event="example_selected" data-ff-location={`free_${s.id}`}>
+              <strong>{s.title}</strong>
+              <span>{s.situation} To inspect: {s.issue}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
     </div>
   </section>
 
-  <section class="v-section v-section--rule" id="data">
+  <section class="v-section v-section--rule" id="guidance">
     <div class="v-container v-cols">
       <div class="v-cols__head">
-        <h2>Where your information goes.</h2>
-        <p>Frame runs inside the model you choose. GreenSquare AI is not in that session.</p>
+        <h2>Your email, your decision and the file.</h2>
+        <p>Frame Free runs inside the AI account you choose. GreenSquare AI is not in that session.</p>
       </div>
       <div class="d-panel">
         <dl class="d-meta free-data">
-          {free.dataFlow.map((row) => (
+          <div><dt>Your email</dt><dd>{free.emailMeaning}</dd></div>
+          {free.dataFlow.slice(1).map((row) => (
             <div><dt>{row.what}</dt><dd>{row.where}</dd></div>
           ))}
+          <div><dt>Compatibility</dt><dd>{free.compatibility.boundary}</dd></div>
+          <div><dt>What you may share</dt><dd>{free.rights}</dd></div>
         </dl>
-        <div class="d-panel__foot"><p>The <a href={withBase('/legal/privacy/')}>privacy policy</a> covers the email address. The model provider's terms cover everything you type into the session.</p></div>
+        <div class="d-panel__foot"><p>The <a href={withBase('/legal/privacy/')}>privacy policy</a> covers your email address and the <a href={withBase('/legal/terms/')}>terms of use</a> cover the licence. The model provider’s terms cover everything you type into the session.</p></div>
       </div>
     </div>
   </section>
-
-  <Signup />
 
   <section class="v-section v-section--rule" id="faq">
     <div class="v-container v-cols">
       <div class="v-cols__head">
-        <h2>What Frame Free is, and is not.</h2>
+        <h2>Questions before you start.</h2>
       </div>
       <div class="free-faq">
-        {faq.map(([q, a], i) => (
-          <details open={i === 0}><summary>{q}</summary><p>{a}</p></details>
+        {faq.map(([q, a]) => (
+          <details><summary>{q}</summary><p>{a}</p></details>
         ))}
       </div>
     </div>
   </section>
+
+  <section class="v-section v-section--rule" id="pro">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>Later: Frame Pro.</h2>
+      </div>
+      <div class="d-panel free-pro">
+        <div class="d-panel__head"><strong>{offer.pro.name}</strong><span>{offer.pro.status}</span></div>
+        <div class="d-panel__body"><p class="v-small">{offer.pro.note}</p></div>
+      </div>
+    </div>
+  </section>
+
+  <Signup id="get-free-final" location="free_footer" />
 </BaseLayoutV2>
 
 <style>
-  .free-hero h1 { max-width: 22ch; font-size: var(--vs-h1); }
-  .free-hero .v-lead { max-width: 58ch; }
+  .free-hero { padding-bottom: clamp(2rem, 4vw, 3.5rem); }
+  .free-hero__grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(2rem, 5vw, 5rem); align-items: center; }
+  .free-hero h1 { max-width: 16ch; font-size: var(--vs-h1); }
+  .free-hero .v-lead { max-width: 52ch; }
+  .free-hero__boundary { margin: var(--v-5) 0 0; max-width: 56ch; padding-top: var(--v-4); border-top: 1px solid var(--v-line); font-size: var(--vs-small); color: var(--v-ink-soft); }
+  .free-hero__offer { padding: clamp(1.25rem, 3vw, 2rem); }
+  .free-hero__offer-line { margin: 0 0 var(--v-4); font-weight: 600; color: var(--v-ink); }
+  @media (max-width: 860px) { .free-hero__grid { grid-template-columns: 1fr; gap: var(--v-6); } }
+  .free-head { max-width: 62ch; margin-bottom: var(--v-6); }
+  .free-head p { color: var(--v-ink-soft); margin-top: var(--v-4); }
   .free-meta > div { grid-template-columns: minmax(8rem, 10rem) 1fr; }
-  .free-input { margin: 0; }
+  .free-meta dt { color: var(--v-ink); font-weight: 600; }
+  .free-questions { margin: 0; padding-left: 1.25rem; }
+  .free-questions li + li { margin-top: var(--v-2); }
+  .free-questions strong { font-weight: 600; }
+  .free-hash { font-size: var(--vs-meta); overflow-wrap: anywhere; word-break: break-all; }
+  .free-situations { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--v-line); }
+  .free-situations a { display: grid; gap: var(--v-1); padding: var(--v-4) 0; border-bottom: 1px solid var(--v-line); color: var(--v-ink); text-decoration: none; }
+  .free-situations a:hover strong { text-decoration: underline; text-underline-offset: 4px; }
+  .free-situations strong { font-weight: 600; }
+  .free-situations span { font-size: var(--vs-small); color: var(--v-ink-soft); }
   .free-data { padding: var(--v-2) var(--v-5); }
   .free-data > div { grid-template-columns: minmax(9rem, 12rem) 1fr; }
   .free-data dt { color: var(--v-ink); font-weight: 600; }
   .free-faq details:first-of-type { border-top: 1px solid var(--v-line); }
   .free-faq p { color: var(--v-ink-soft); font-size: var(--vs-small); margin-bottom: var(--v-2); }
+  .free-pro { background: transparent; }
+  .free-pro .d-panel__body p { margin: 0; }
   @media (max-width: 480px) { .free-meta > div, .free-data > div { grid-template-columns: 1fr; } }
 </style>

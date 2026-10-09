@@ -6,15 +6,17 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build && npm run check:copy && npm run check:excerpts && npm run check:media",
+    "build": "astro build && npm run check:copy && npm run check:excerpts && npm run check:media && npm run check:pdf",
     "check:copy": "node scripts/check-copy.mjs",
     "preview": "astro preview",
     "astro": "astro",
     "check:excerpts": "node qa/check-excerpts.mjs",
     "check:media": "node scripts/check-media.mjs",
+    "check:pdf": "node scripts/pdf-manifest.mjs",
     "qa:shots": "node qa/shots.mjs"
   },
   "dependencies": {
+    "@astrojs/markdown-remark": "7.2.4",
     "@astrojs/mdx": "7.0.7",
     "@astrojs/react": "6.0.4",
     "@astrojs/sitemap": "3.7.3",

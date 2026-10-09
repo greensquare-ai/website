@@ -2,7 +2,7 @@
 layout: ../../layouts/LegalLayout.astro
 title: Terms of use
 description: The terms governing use of the GreenSquare AI website and the Frame Free beta.
-updated: 22 September 2026
+updated: 9 October 2026
 ---
 
 These terms govern your use of www.greensquare.ai, run by GreenSquare AI, and of the Frame Free beta. By using the site or requesting the beta, you agree to them. The [privacy policy](/legal/privacy/) and the [cookie notice](/legal/cookies/) form part of these terms.
@@ -13,13 +13,15 @@ The site describes Frame and lets you request the Frame Free beta. Nothing is cu
 
 ## The Frame Free beta
 
-**What you receive.** A six-page PDF field guide, sent by email after you confirm your address. It is a beta: we revise it as the method improves, and the version you hold is dated in its header. We may send a revised file to the same address.
+**What you receive.** A six-page PDF field guide, offered for download on the page as soon as our email provider accepts your request. It is a beta: we may revise it as the method improves. The PDF carries no printed date or version, so the release offered on this site is identified by its SHA-256 fingerprint on the Frame Free page. We may tell you by email when a revised file is available.
+
+**Emails.** Entering your email also asks to add you to the Frame email list for occasional product emails, including Frame Pro launch updates. Those emails start only once you confirm your address from the email we send; confirming is not needed to download the PDF. Every one carries an unsubscribe link. The [privacy policy](/legal/privacy/) explains how unsubscribing differs from asking us to delete your record.
 
 **Who may use it.** The beta is licensed for your own use on your own decisions, including decisions you make in the course of your employment or your own professional practice. It is not licensed for resale, for bundling into another product or service, or for use by a team under one address. If you want team or client use, write to us and we will say what is possible.
 
 **What you may do with the output.** The frames and other output you produce with the guide are yours. You may use them, share them with colleagues and clients, and act on them without attribution to us.
 
-**What you may not do with the file.** The method file, the writing on this site and the methodology behind Frame are ours, protected by copyright and other rights. You may not republish the file, resell it, present it as your own, or remove its header.
+**What you may not do with the file.** The method file, the writing on this site and the methodology behind Frame are ours, protected by copyright and other rights. You may not republish the file, resell it, present it as your own, or remove the GreenSquare AI attribution printed on its pages.
 
 **Confidentiality.** Frame runs inside the model provider you choose. Nothing you put into that session reaches GreenSquare AI, and we hold no confidentiality obligation in respect of it, because we never see it. Your obligations to your own clients and employer, and the model provider's terms, govern what you may place in the session.
 

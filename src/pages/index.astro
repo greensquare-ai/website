@@ -1,200 +1,177 @@
 ---
 import { withBase } from '../lib/paths';
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
-import PlanComparison from '../components/PlanComparison.astro';
 import Signup from '../components/Signup.astro';
+import CaptureForm from '../components/CaptureForm.astro';
 import FrameFreeFilm from '../components/FrameFreeFilm.astro';
-import { briefExcerpt } from '../data/brief-excerpt';
+import FreeHandoff from '../components/FreeHandoff.astro';
 import { frameFreeFilm } from '../data/frame-free-film';
-import { method, offer } from '../data/offer';
-import { people } from '../data/operator';
-import { armBvsArmC, check, dates, deviations, grid, limitations, spell } from '../lib/benchmark';
+import { offer, situations } from '../data/offer';
 
-const g = grid();
-const d = dates();
-const cmp = armBvsArmC();
-const c6 = check('c6');
-const c7 = check('c7');
-const c8 = check('c8');
-const nDev = deviations().length;
-const nLim = spell(limitations().length);
-const useWhen = [
-  { when: 'A capital or contract commitment that is hard to reverse', why: 'The brief separates the options that keep a way back from the ones that do not.' },
-  { when: 'A paper you have to put your name to', why: 'Every material claim is tagged given, derived, inferred or unknown, so the reader can see what you are standing on.' },
-  { when: 'A recommendation you already believe', why: 'The method tests the framing you arrived with before it tests anything else.' },
-  { when: 'A decision with a date and an owner', why: 'It will not produce a brief without one. If neither exists yet, that is the first finding.' },
-];
+const free = offer.free;
+/* The guide's worked example, read from the film's data so the page quotes what the film shows. */
+const parts = frameFreeFilm.textEquivalent.parts;
+const part = (label: string) => parts.find((p) => p.label === label)!;
+const presented = part('Presented decision').lines[0].text;
+const underneath = part('Decision underneath').lines[0].text;
+const assumption = part('Load-bearing assumption').lines[0].text;
+const [reframed, gap] = parts[parts.length - 1].lines.map((line) => line.text);
 ---
 <BaseLayoutV2
-  title="GreenSquare AI | Decision support for consequential work"
-  description="Frame gives the AI you already use a disciplined process for consequential business decisions. Frame Free, the beta available now, frames the decision and stops before evaluation."
+  title="GreenSquare AI | Frame the decision before AI answers it"
+  description="Frame Free is a free six-page PDF for ChatGPT, Claude or Gemini. It questions one business decision, separates evidence from assumption and names the next gap to check, then stops before ranking or recommending."
   current="home"
 >
   <section class="v-hero home-hero">
-    <div class="v-container">
-      <div class="home-hero__grid">
-        <div class="home-hero__copy">
-          <h1>Decision support for consequential work.</h1>
-          <p class="v-lead">Frame gives the AI you already use a disciplined process: ask before answering, separate evidence from assumption, and expose the weak point in a decision.</p>
-          <div class="v-actions">
-            <a class="v-btn v-btn--green" href="#get-free">Get the Frame Free beta</a>
-            <a class="v-btn" href={withBase('/product/#brief')}>See a Decision Brief</a>
-          </div>
-        </div>
-        <figure class="home-hero__visual">
-          <picture>
-            <source media="(max-width: 700px)" srcset={withBase('/assets/stress-visible-square.webp')} type="image/webp" />
-            <img
-              src={withBase('/assets/stress-visible-hero.webp')}
-              width="1536"
-              height="1024"
-              alt="A clear acrylic strip reveals a small concentration of colour around a single stress point."
-              fetchpriority="high"
-              decoding="async"
-            />
-          </picture>
-        </figure>
+    <div class="v-container home-hero__grid">
+      <div class="home-hero__copy">
+        <h1>Frame the decision before AI answers it.</h1>
+        <p class="v-lead">Use Frame Free with the AI you already use to question the decision, separate evidence from assumption and identify the next gap to check.</p>
+        <p class="home-hero__scope">{free.scope}</p>
       </div>
-      <p class="home-hero__delivery"><strong>Available now:</strong> {offer.free.oneLine} {offer.free.boundary}</p>
+      <div class="d-panel d-panel--ink home-hero__offer">
+        <p class="home-hero__offer-line">{free.offerLine}</p>
+        <CaptureForm location="home_hero" eager />
+        <a class="v-link home-hero__secondary" href="#worked-example">See the Free example</a>
+      </div>
     </div>
   </section>
 
-  <section class="v-section v-section--rule" id="when">
-    <div class="v-container v-cols">
-      <div class="v-cols__head">
-        <h2>For the decisions where a fluent answer is not enough.</h2>
-        <p>Frame is for professionals who already use a capable model and know that a confident paragraph is not the same as a defensible recommendation. It adds the discipline a senior reviewer would apply, in the session, before anything reaches a committee.</p>
-      </div>
-      <dl class="d-meta home-when">
-        {useWhen.map((row) => (
-          <div><dt>{row.when}</dt><dd>{row.why}</dd></div>
-        ))}
-      </dl>
-    </div>
-  </section>
-
-  <section class="v-section v-section--rule" id={frameFreeFilm.id}>
+  <section class="v-section home-film" id={frameFreeFilm.id}>
     <div class="v-container">
-      <div class="v-cols__head home-film__head">
+      <div class="home-film__head">
         <h2>{frameFreeFilm.heading}</h2>
         <p>{frameFreeFilm.intro}</p>
       </div>
       <FrameFreeFilm />
+      <div class="home-contrast">
+        <p class="home-contrast__label">What the guide’s worked example shows</p>
+        <dl class="home-contrast__grid">
+          <div><dt>The vendor choice</dt><dd>{presented}</dd></div>
+          <div><dt>What it concealed</dt><dd>{underneath}</dd></div>
+          <div><dt>Why switching may not help</dt><dd>{assumption}</dd></div>
+        </dl>
+      </div>
     </div>
   </section>
 
-  <section class="v-section v-section--rule" id="method">
-    <div class="v-container v-cols">
-      <div class="v-cols__head">
-        <h2>Six steps, run in order, on one decision.</h2>
-        <p>Frame Free covers the first three moves and stops there. Compare, Decide and Execute belong to Frame Pro, which is in development. The path adapts to the answers; the order does not.</p>
+  <section class="v-section v-section--rule" id="output">
+    <div class="v-container">
+      <div class="home-section__head">
+        <h2>The question you bring, and the one you leave with.</h2>
+        <p>Frame Free does not answer the question as presented. It returns a framing handoff in seven parts, so you can see what was assumed, what was verified and what to check next.</p>
       </div>
-      <ol class="d-list d-list--indexed home-method">
-        {method.map(([name, text, plan], i) => (
-          <li><span class="d-list__index">{String(i + 1).padStart(2, '0')}</span><div><h3>{name}</h3><p>{text}</p><p class="method-plan">{plan === 'free' ? 'Frame Free' : 'Frame Pro, in development'}</p></div></li>
-        ))}
-      </ol>
+      <div class="home-before-after">
+        <div class="d-panel">
+          <div class="d-panel__head"><strong>Before</strong><span>The question as presented</span></div>
+          <div class="d-panel__body"><p>{presented}</p></div>
+        </div>
+        <div class="d-panel d-panel--ink">
+          <div class="d-panel__head"><strong>After</strong><span>Reframed, with the gap to verify</span></div>
+          <div class="d-panel__body"><p>{reframed}</p><p class="home-before-after__gap">{gap}</p></div>
+        </div>
+      </div>
+      <FreeHandoff id="home-handoff" />
     </div>
   </section>
 
-  <section class="v-section v-section--rule" id="anatomy">
+  <section class="v-section v-section--rule" id="situations">
     <div class="v-container v-cols">
       <div class="v-cols__head">
-        <h2>Every material claim carries its evidence class.</h2>
-        <p>The four classes are the reading aid a reviewer uses to find the weak point. From the {briefExcerpt.case} brief, quoted:</p>
+        <h2>Five decisions it is built to question.</h2>
+        <p>Each links to an illustrative example: the starting decision, what was questioned, the framing handoff and what remains unknown. The PDF is the same whichever you read.</p>
       </div>
-      <ul class="home-anatomy">
-        {briefExcerpt.evidence.map((row) => (
-          <li><span class={`d-tag d-tag--${row.tag}`}>{row.tag}</span><p>{row.text}</p></li>
+      <ul class="home-situations">
+        {situations.map((s) => (
+          <li>
+            <a href={withBase(`/examples/#${s.id}`)} data-ff-event="example_selected" data-ff-location={`home_${s.id}`}>
+              <strong>{s.title}</strong>
+              <span>{s.situation}</span>
+              <span class="home-situations__issue">To inspect: {s.issue}</span>
+            </a>
+          </li>
         ))}
       </ul>
+    </div>
+  </section>
+
+  <section class="v-section v-section--rule" id="setup">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>Three steps to the first question.</h2>
+        <p>{free.delivery.setup} Then about ten minutes for one decision.</p>
+        <a class="v-link" href={withBase('/start/')}>Read the start guide</a>
+      </div>
+      <ol class="d-list d-list--indexed">
+        {free.setup.map((step, i) => (
+          <li><span class="d-list__index">{String(i + 1).padStart(2, '0')}</span><div><h3>{step.title}</h3><p>{step.text}</p></div></li>
+        ))}
+      </ol>
     </div>
   </section>
 
   <section class="v-section v-section--rule" id="evidence">
     <div class="v-container v-cols">
       <div class="v-cols__head">
-        <h2>The research, and its limits.</h2>
-        <p>A {g.runs_total}-run preregistered benchmark across two models and three fictional cases, scored on {spell(cmp.total)} checks, with every count, all {nDev} protocol deviations and all {nLim} limitations published.</p>
-        <a class="v-link" href={withBase('/research/')}>Read the research overview</a>
+        <h2>What has and has not been shown.</h2>
       </div>
       <div class="d-panel home-evidence">
         <dl class="d-meta">
-          <div><dt>Supported</dt><dd>Under the tested conditions the loaded method changed how the model worked: it asked before answering, compared real options including doing nothing, and tagged its evidence on every run.</dd></div>
-          <div><dt>Not supported</dt><dd>Better judgement. On the three judgement checks the informed baseline matched or exceeded the loaded method: {c6.armB.met} of {c6.armB.n} against {c6.armC.met} of {c6.armC.n} on surfacing the hidden decision, {c7.armB.met} of {c7.armB.n} against {c7.armC.met} of {c7.armC.n} on direction, and {c8.armB.met} of {c8.armB.n} against {c8.armC.met} of {c8.armC.n} on catching the planted bias.</dd></div>
-          <div><dt>Boundary</dt><dd>The study tested a method file that predates Frame. It is not a test of Frame Free or Frame Pro. Record current as at {d.currentAsAt}.</dd></div>
+          <div><dt>Shown here</dt><dd>The guide’s own worked example, and illustrative examples on fictional inputs. They show how the framing behaves, not customer results.</dd></div>
+          <div><dt>Not shown</dt><dd>Frame Free has not been benchmarked. An earlier study tested a method file that predates Frame: it changed how the model worked, and it did not beat an informed baseline on judgement.</dd></div>
+          <div><dt>Not offered</dt><dd>Ranking, scoring or a recommendation. Frame Pro, which continues into those, is in development.</dd></div>
         </dl>
+        <div class="d-panel__foot"><p><a href={withBase('/research/')}>Read the research overview</a></p></div>
       </div>
     </div>
   </section>
 
-  <section class="v-section v-section--rule" id="people">
-    <div class="v-container v-cols">
-      <div class="v-cols__head">
-        <h2>{people.heading}</h2>
-        <p>{people.lines[0]}</p>
-        <a class="v-link" href={withBase('/about/')}>Who is accountable, and how to check</a>
-      </div>
-      <dl class="d-meta">
-        {people.verify.map((row) => (
-          <div><dt>{row.label}</dt><dd>{row.text}</dd></div>
-        ))}
-      </dl>
-    </div>
-  </section>
-
-  <section class="v-section v-section--rule" id="offer">
-    <div class="v-container">
-      <div class="home-offer__head">
-        <h2>Frame Free is the only plan today.</h2>
-      </div>
-      <div>
-        <PlanComparison compact />
-        <a class="v-link home-offer__link" href={withBase('/free/')}>What you receive, and how to run it</a>
-      </div>
-    </div>
-  </section>
-
-  <Signup />
+  <Signup location="home_footer" />
 </BaseLayoutV2>
 
 <style>
-  .home-hero { padding-top: var(--v-5); padding-bottom: var(--v-10); }
-  .home-hero__grid { position: relative; min-height: clamp(34rem, 49vw, 43rem); display: flex; align-items: center; }
-  .home-hero__copy { position: relative; z-index: 1; width: min(47%, 31rem); padding-block: var(--v-8); }
-  .home-hero__copy h1 { max-width: 12ch; font-size: clamp(2.8rem, 2rem + 3vw, 4.25rem); line-height: 1.02; letter-spacing: -0.02em; }
-  .home-hero__copy .v-lead { max-width: 37ch; }
-  .home-hero__visual { position: absolute; inset: 0; margin: 0; overflow: hidden; background: var(--v-paper); }
-  .home-hero__visual picture, .home-hero__visual img { display: block; width: 100%; height: 100%; }
-  .home-hero__visual img { object-fit: cover; object-position: center; }
-  .home-hero__delivery { margin: var(--v-4) 0 0; max-width: 72ch; font-size: var(--vs-meta); color: var(--v-ink-soft); }
-  .home-hero__delivery strong { color: var(--v-ink); }
-  @media (max-width: 900px) {
-    .home-hero__grid { min-height: 0; display: flex; flex-direction: column; align-items: stretch; }
-    .home-hero__copy { width: 100%; padding: var(--v-8) 0 var(--v-6); }
+  .home-hero { padding-block: clamp(2rem, 5vw, 4.5rem) clamp(2rem, 4vw, 3.5rem); }
+  .home-hero__grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(2rem, 5vw, 5rem); align-items: center; }
+  .home-hero__copy h1 { max-width: 13ch; font-size: clamp(2.5rem, 1.7rem + 3vw, 4rem); line-height: 1.04; letter-spacing: -0.02em; }
+  .home-hero__copy .v-lead { max-width: 40ch; }
+  .home-hero__scope { margin: var(--v-5) 0 0; max-width: 52ch; padding-top: var(--v-4); border-top: 1px solid var(--v-line); font-size: var(--vs-small); color: var(--v-ink-soft); }
+  .home-hero__offer { padding: clamp(1.25rem, 3vw, 2rem); }
+  .home-hero__offer-line { margin: 0 0 var(--v-4); font-weight: 600; color: var(--v-ink); }
+  .home-hero__secondary { display: inline-block; margin-top: var(--v-4); }
+  @media (max-width: 860px) {
+    .home-hero__grid { grid-template-columns: 1fr; gap: var(--v-6); }
     .home-hero__copy h1 { max-width: 15ch; }
-    .home-hero__visual { position: static; height: clamp(23rem, 80vw, 35rem); }
   }
-  @media (max-width: 700px) {
-    .home-hero__visual { height: min(90vw, 24rem); }
-  }
-  .home-when > div { grid-template-columns: minmax(12rem, 0.9fr) 1.1fr; }
-  .home-when dt { font-size: var(--vs-small); font-weight: 600; color: var(--v-ink); }
-  .home-method h3 { font-size: 1.0625rem; }
-  .home-method p { color: var(--v-ink-soft); }
-  .home-anatomy { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--v-line); }
-  .home-anatomy li { display: grid; grid-template-columns: 6rem 1fr; gap: var(--v-4); padding: 14px 0; border-bottom: 1px solid var(--v-line); }
-  .home-anatomy p { margin: 0; font-size: var(--vs-small); }
-  .home-evidence { padding: var(--v-2) var(--v-5); }
-  .home-offer__link { display: inline-block; margin-top: var(--v-4); }
-  .home-offer__head { max-width: 54ch; margin-bottom: var(--v-6); }
-  /* The film's head takes the same column as every other section head (the 5fr of
-     .v-cols), and the film spans both columns below it, as PlanComparison does in #offer. */
-  .home-film__head { margin-bottom: var(--v-6); }
+
+  .home-film { padding-top: clamp(2rem, 4vw, 3rem); }
+  .home-film__head { margin-bottom: var(--v-6); max-width: 60ch; }
   .home-film__head h2 { max-width: 18ch; }
-  @media (min-width: 801px) { .home-film__head { width: calc((100% - clamp(2rem, 6vw, 6rem)) * 5 / 12); } }
+  .home-film__head p { color: var(--v-ink-soft); margin-top: var(--v-4); }
+  .home-contrast { margin-top: var(--v-6); }
+  .home-contrast__label { margin: 0 0 var(--v-3); font-size: var(--vs-meta); font-weight: 500; color: var(--v-ink-soft); }
+  .home-contrast__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--v-5); margin: 0; border-top: 1px solid var(--v-ink); }
+  .home-contrast__grid > div { padding-top: var(--v-4); }
+  .home-contrast__grid dt { font-size: var(--vs-small); font-weight: 600; color: var(--v-ink); }
+  .home-contrast__grid dd { margin: var(--v-2) 0 0; font-size: var(--vs-small); color: var(--v-ink-soft); }
   @media (max-width: 800px) {
-    .home-when > div { grid-template-columns: 1fr; }
-    .home-anatomy li { grid-template-columns: 1fr; gap: var(--v-1); }
+    .home-contrast__grid { grid-template-columns: 1fr; gap: 0; }
+    .home-contrast__grid > div + div { border-top: 1px solid var(--v-line); margin-top: var(--v-4); }
   }
+
+  .home-section__head { max-width: 60ch; margin-bottom: var(--v-6); }
+  .home-section__head p { color: var(--v-ink-soft); margin-top: var(--v-4); }
+  .home-before-after { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--v-4); margin-bottom: var(--v-4); }
+  .home-before-after .d-panel__body p { margin: 0; }
+  .home-before-after .d-panel__body .home-before-after__gap { margin-top: var(--v-3); padding-top: var(--v-3); border-top: 1px solid var(--v-line); font-size: var(--vs-small); color: var(--v-ink-soft); }
+  @media (max-width: 760px) { .home-before-after { grid-template-columns: 1fr; } }
+
+  .home-situations { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--v-line); }
+  .home-situations a { display: grid; gap: var(--v-1); padding: var(--v-4) 0; border-bottom: 1px solid var(--v-line); color: var(--v-ink); text-decoration: none; }
+  .home-situations a:hover strong { text-decoration: underline; text-underline-offset: 4px; }
+  .home-situations strong { font-weight: 600; }
+  .home-situations span { font-size: var(--vs-small); color: var(--v-ink-soft); }
+  .home-situations .home-situations__issue { color: var(--v-ink); }
+
+  .home-evidence .d-meta { padding: var(--v-2) var(--v-5); }
+  .home-evidence dt { color: var(--v-ink); font-weight: 600; }
 </style>
