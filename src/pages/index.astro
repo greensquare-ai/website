@@ -73,20 +73,6 @@ const useWhen = [
     </div>
   </section>
 
-  <div class="v-container home-field">
-    <picture>
-      <source media="(max-width: 700px)" srcset={withBase('/assets/field-visible-square.webp')} type="image/webp" />
-      <img
-        src={withBase('/assets/field-visible-hero.webp')}
-        width="1672"
-        height="941"
-        alt="Small iron filings reveal the shape of a magnetic field across warm paper."
-        loading="lazy"
-        decoding="async"
-      />
-    </picture>
-  </div>
-
   <section class="v-section v-section--rule" id={frameFreeFilm.id}>
     <div class="v-container">
       <div class="v-cols__head home-film__head">
@@ -183,9 +169,6 @@ const useWhen = [
   .home-hero__visual img { object-fit: cover; object-position: center; }
   .home-hero__delivery { margin: var(--v-4) 0 0; max-width: 72ch; font-size: var(--vs-meta); color: var(--v-ink-soft); }
   .home-hero__delivery strong { color: var(--v-ink); }
-  .home-field { padding-bottom: var(--v-section); }
-  .home-field picture { display: block; width: 100%; max-height: 31rem; overflow: hidden; }
-  .home-field img { display: block; width: 100%; height: auto; object-fit: cover; }
   @media (max-width: 900px) {
     .home-hero__grid { min-height: 0; display: flex; flex-direction: column; align-items: stretch; }
     .home-hero__copy { width: 100%; padding: var(--v-8) 0 var(--v-6); }
@@ -194,7 +177,6 @@ const useWhen = [
   }
   @media (max-width: 700px) {
     .home-hero__visual { height: min(90vw, 24rem); }
-    .home-field picture { max-height: none; }
   }
   .home-when > div { grid-template-columns: minmax(12rem, 0.9fr) 1.1fr; }
   .home-when dt { font-size: var(--vs-small); font-weight: 600; color: var(--v-ink); }
