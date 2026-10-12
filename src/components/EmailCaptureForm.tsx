@@ -124,6 +124,7 @@ export default function EmailCaptureForm({ location, buttonLabel = 'Get Frame Fr
           Then paste this into the chat: <code>{offer.free.starter}</code>
         </p>
         <p className="capture-ready__meta">Six pages, PDF, {Math.round(release.bytes / 1024)} KB.</p>
+        <RoleQuestion location={location} dark={dark} />
       </div>
     );
   }
@@ -173,5 +174,43 @@ export default function EmailCaptureForm({ location, buttonLabel = 'Get Frame Fr
         {offer.free.emailExchange} <a href={withBase('/legal/privacy/')}>Privacy policy</a>.
       </p>
     </form>
+  );
+}
+
+/**
+ * Optional, after delivery, one click. Records the visitor's broad role as an anonymous
+ * analytics label so audience fit can be reported by acquisition source. It
+ * never blocks or follows the download and is never sent to Kit.
+ */
+function RoleQuestion({ location, dark }: { location: string; dark: boolean }) {
+  const legendId = `role-${useId().replace(/:/g, '')}`;
+  const [chosen, setChosen] = useState<string | null>(null);
+  const { role } = offer.free;
+
+  function choose(id: string) {
+    if (chosen) return;
+    setChosen(id);
+    trackFrameFree(EVENTS.roleSelected, `${location}_role_${id}`);
+  }
+
+  return (
+    <div className={`capture-role${dark ? ' capture-role--dark' : ''}`} role="group" aria-labelledby={legendId}>
+      <p id={legendId} className="capture-role__legend">{role.legend}</p>
+      <div className="capture-role__options">
+        {role.options.map((o) => (
+          <button
+            key={o.id}
+            type="button"
+            className="capture-role__option"
+            aria-pressed={chosen === o.id}
+            disabled={chosen !== null && chosen !== o.id}
+            onClick={() => choose(o.id)}
+          >
+            {o.label}
+          </button>
+        ))}
+      </div>
+      <p className="capture-role__note" aria-live="polite" aria-atomic="true">{chosen ? role.thanks : role.note}</p>
+    </div>
   );
 }
