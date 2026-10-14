@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build && npm run check:copy && npm run check:excerpts && npm run check:media && npm run check:pdf",
+    "build": "node scripts/generate-og.mjs && astro build && npm run check:copy && npm run check:excerpts && npm run check:media && npm run check:pdf",
     "check:copy": "node scripts/check-copy.mjs",
     "preview": "astro preview",
     "astro": "astro",
