@@ -16,7 +16,7 @@ export interface Props {
 }
 const { title, description, current = '', ogType = 'website', noindex = false, ffPage } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
-const ogImage = new URL(withBase('/assets/og-image.png'), Astro.site).toString();
+const ogImage = new URL(withBase('/assets/og-image-v2.png'), Astro.site).toString();
 ---
 <!doctype html>
 <html lang="en-AU">
@@ -36,8 +36,11 @@ const ogImage = new URL(withBase('/assets/og-image.png'), Astro.site).toString()
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="GreenSquare AI" />
+    <meta property="og:image:alt" content="GreenSquare. Frame the decision before AI answers it." />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
     <link rel="icon" href={withBase('/assets/favicon.svg')} type="image/svg+xml" />
     <link rel="icon" href={withBase('/favicon.ico')} sizes="48x48" />
     <link rel="apple-touch-icon" href={withBase('/assets/apple-touch-icon.png')} />
