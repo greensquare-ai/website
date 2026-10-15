@@ -2,7 +2,7 @@
 layout: ../../layouts/LegalLayout.astro
 title: Privacy policy
 description: What personal information GreenSquare AI collects, why, who it is shared with, and where the material you put into Frame goes.
-updated: 9 October 2026
+updated: 12 October 2026
 ---
 
 GreenSquare AI runs www.greensquare.ai. This policy explains what personal information we collect, why we collect it, who we share it with, and the choices you have. It applies to everyone who visits the site, wherever you are. The [terms of use](/legal/terms/) and the [cookie notice](/legal/cookies/) sit alongside it.
@@ -26,7 +26,7 @@ We keep collection to the minimum the site needs to work.
 
 - **Your email address.** You give us this when you request the Frame Free PDF. This is the only personal detail you enter on the site.
 - **Technical and usage data.** When you load a page, our hosting provider records standard information such as your IP address, browser type, device type, the pages you view, and the time of your visit. We also collect aggregate page view counts through Vercel Web Analytics, which uses no cookies and does not identify you.
-- **Site events.** Alongside page views, the site sends Vercel Web Analytics a small set of named events: an email request attempted, accepted by our email provider, or failed; the PDF offered on the page; a PDF link selected; the start guide viewed; the starter text copied; and an example selected. Each event carries two short labels: where on the site the action happened, and the campaign label described under *Information stored in your browser*. No event carries your email address or anything you type.
+- **Site events.** Alongside page views, the site sends Vercel Web Analytics a small set of named events: an email request attempted, accepted by our email provider, or failed; the PDF offered on the page; a PDF link selected; the start guide viewed; the starter text copied; an example selected; and, if you choose to answer it, the optional question about which broad role best describes your work. Each event carries two short labels: where on the site the action happened (for the role question, also the option you chose), and the campaign label described under *Information stored in your browser*. No event carries your email address or anything you type.
 
 We do not run advertising trackers. We do not build profiles of you for marketing.
 
@@ -39,7 +39,7 @@ The record is not a cookie and is not sent anywhere on its own. A short label ma
 ## How we use your information
 
 - We use your email address to give you the Frame Free PDF on the page as soon as our email provider accepts the request, to send one email asking you to confirm your address and, once you confirm, to send occasional Frame product emails, including Frame Pro launch updates. Confirming is not needed to download the PDF. Every marketing email includes a one-click unsubscribe link.
-- We use technical and usage data, the site events and the browser record to keep the site running, to fix problems, and to understand which pages and links people find useful.
+- We use technical and usage data, the site events and the browser record to keep the site running, to fix problems, to understand which pages and links people find useful, and to see which broad roles the site reaches.
 
 We do not sell your personal information.
 

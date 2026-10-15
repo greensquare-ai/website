@@ -354,6 +354,21 @@ html:has(.v2) { scroll-behavior: smooth; color-scheme: light; background: var(--
 .v2 .v-green .capture-ready__starter code { background: transparent; border-color: var(--v-cream-soft); color: var(--v-cream); }
 .v2 .v-green .capture-ready__meta { color: var(--v-cream-soft); }
 @media (max-width: 520px) { .v2 .capture-ready__actions .v-btn { width: 100%; } }
+.v2 .capture-role { margin-top: var(--v-4); padding-top: var(--v-3); border-top: 1px solid var(--v-line); }
+.v2 .capture-role__legend { margin: 0 0 var(--v-2); font-size: var(--vs-small); font-weight: 600; }
+.v2 .capture-role__options { display: flex; flex-wrap: wrap; gap: var(--v-2); }
+.v2 .capture-role__option { min-height: 40px; padding: 8px 14px; border: 1px solid var(--v-ink-soft); border-radius: 0; background: transparent; color: var(--v-ink); font-family: var(--vf-body); font-size: var(--vs-small); line-height: 1.2; cursor: pointer; touch-action: manipulation; }
+.v2 .capture-role__option:focus-visible { outline: 2px solid var(--v-green); outline-offset: 2px; }
+.v2 .capture-role__option[aria-pressed="true"] { background: var(--v-green); border-color: var(--v-green); color: var(--v-cream); }
+.v2 .capture-role__option:disabled:not([aria-pressed="true"]) { opacity: 0.45; cursor: default; }
+@media (hover: hover) { .v2 .capture-role__option:not(:disabled):hover { border-color: var(--v-ink); } }
+.v2 .capture-role__note { margin: var(--v-2) 0 0; font-size: var(--vs-meta); color: var(--v-ink-soft); }
+.v2 .capture-role--dark { border-top-color: var(--v-cream-soft); }
+.v2 .capture-role--dark .capture-role__option { border-color: var(--v-cream-soft); color: var(--v-cream); }
+.v2 .capture-role--dark .capture-role__option[aria-pressed="true"] { background: var(--v-cream); border-color: var(--v-cream); color: var(--v-green); }
+.v2 .capture-role--dark .capture-role__note { color: var(--v-cream-soft); }
+.v2 .capture-role--dark .capture-role__option:focus-visible { outline-color: var(--v-cream); }
+@media (hover: hover) { .v2 .capture-role--dark .capture-role__option:not(:disabled):hover { border-color: var(--v-cream); } }
 /* Without scripts the island cannot submit, so it is hidden and the fallback shows. */
 html:not(.js) .capture-island { display: none; }
 

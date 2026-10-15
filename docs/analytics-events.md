@@ -8,7 +8,7 @@ The Vercel Pro plan records two custom properties per event (eight with the Web 
 
 | Property | Holds | Example |
 |---|---|---|
-| `cta` | Event schema version and the fixed placement identifier | `ff1:home_hero` |
+| `cta` | Event schema version and the fixed placement identifier; for `frame_free_role_selected`, the placement plus the chosen role id | `ff1:home_hero`, `ff1:free_hero_role_strategy` |
 | `touch` | First touch and latest campaign, each as source/medium/campaign plus landing path | `f:linkedin/social/frame-free-launch/free/\|l:direct/none/none/` |
 
 Campaign values come only from `utm_source`, `utm_medium` (or `gs_channel`), `utm_campaign` and `utm_content`. A value is kept only if it is on the allowlists in `src/data/campaigns.ts`; any other value is recorded as `other`. Pattern filters were tried first and let disguised email addresses, names and tokens through, so the allowlist is the mechanism. **Add a campaign's id to `src/data/campaigns.ts` before its links go out**, or its events will read `other`. The landing path is kept only as the top-level site section (`/other` for anything else). The typed email address and any decision text are never passed to analytics at all.
@@ -27,6 +27,7 @@ The served PDF is identified per deployment by its SHA-256 in `src/data/frame-fr
 | `frame_free_start_viewed` | The /start/ page loads | Guidance was viewed | A chat was started |
 | `frame_free_starter_copied` | The clipboard write succeeds | The starter was copied | It was pasted or used |
 | `frame_free_example_selected` | A decision situation link is followed | Interest in that situation | Relevance was confirmed |
+| `frame_free_role_selected` | A visitor answers the optional role question shown after the PDF is offered. `cta` holds `ff1:<placement>_role_<id>` (`strategy`, `consultant`, `owner`, `functional` or `other`) | The visitor's self-described role, for audience fit by source | Anything about a specific Kit contact. The event carries no identifier shared with Kit, so it is not joined to an email address. It counts answers, not people: only visitors who answer are counted, and a visitor who submits two forms can answer twice |
 
 The three signup event names keep the retired product name on purpose: they are the keys of a running time series.
 

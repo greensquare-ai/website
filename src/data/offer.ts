@@ -30,6 +30,23 @@ export const offer = {
       heading: 'Your PDF is ready.',
       body: 'Download it now, then attach it to a new chat. Check your inbox to confirm future Frame product emails.',
     },
+    /**
+     * Optional one-click question shown after the PDF is offered. The answer goes to
+     * Vercel Web Analytics as an anonymous event label. It is never sent to Kit and is
+     * never joined to the email address.
+     */
+    role: {
+      legend: 'Optional: which best describes your work?',
+      note: 'One click. It tells us who Frame Free is reaching, and it is not linked to your email address.',
+      thanks: 'Thanks. Noted.',
+      options: [
+        { id: 'strategy', label: 'Strategy, transformation or portfolio' },
+        { id: 'consultant', label: 'Independent consultant or fractional operator' },
+        { id: 'owner', label: 'Owner or general manager' },
+        { id: 'functional', label: 'Operations, finance, risk or product leader' },
+        { id: 'other', label: 'Something else' },
+      ],
+    },
     starter: 'Use Frame Free in this PDF. Ask me one question at a time.',
     starterTemplate: [
       'The decision I am considering is:',

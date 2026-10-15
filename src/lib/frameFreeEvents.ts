@@ -5,7 +5,8 @@
  *
  * The Vercel Pro plan records two custom properties per event (eight with the Web
  * Analytics Plus add-on). Each event therefore carries exactly two: `cta`, which holds
- * the event schema version and where on the site the action happened, and `touch`,
+ * the event schema version and where on the site the action happened (or, for the role
+ * question, the placement and the chosen role), and `touch`,
  * which holds the first touch and the latest campaign. The served PDF is identified by
  * its hash in src/data/frame-free-release.json, which is fixed per deployment, so it is
  * not repeated on every event.
@@ -32,6 +33,7 @@ export const EVENTS = {
   startViewed: 'frame_free_start_viewed',
   starterCopied: 'frame_free_starter_copied',
   exampleSelected: 'frame_free_example_selected',
+  roleSelected: 'frame_free_role_selected',
 } as const;
 
 export type EventName = (typeof EVENTS)[keyof typeof EVENTS];
