@@ -28,7 +28,7 @@ const ogImage = new URL(withBase('/assets/og-image-v2.png'), Astro.site).toStrin
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonical} />
-    <meta name="theme-color" content="#f6f3ec" />
+    <meta name="theme-color" content="#ffffff" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content={ogType} />
@@ -36,7 +36,7 @@ const ogImage = new URL(withBase('/assets/og-image-v2.png'), Astro.site).toStrin
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="GreenSquare. Frame the decision before AI answers it." />
+    <meta property="og:image:alt" content="GreenSquare AI. Find the real question before AI answers it." />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
@@ -46,10 +46,7 @@ const ogImage = new URL(withBase('/assets/og-image-v2.png'), Astro.site).toStrin
     <link rel="apple-touch-icon" href={withBase('/assets/apple-touch-icon.png')} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Newsreader sets h1, h2 and quoted brief text. It is served from this origin and
-         preloaded so that `font-display: optional` in global-v2.css wins the race on a
-         cold visit and the headings never reflow. Reading text swaps in from Google. -->
-    <link rel="preload" href={withBase('/fonts/newsreader-variable-latin.woff2')} as="font" type="font/woff2" crossorigin />
+    <!-- IBM Plex Sans sets headings and reading text; Manrope sets the wordmark. -->
     <link
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Manrope:wght@600&display=swap"
       rel="stylesheet"

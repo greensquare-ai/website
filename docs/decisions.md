@@ -2,6 +2,16 @@
 
 Current public-site decisions, their rationale and the condition that would reverse them.
 
+## 2026-11-10 · White, green and black replace the dossier palette
+
+**Decided.** Pages are white with black text. Greens run in five steps from `#0b2e1c` to `#eef4f0`: the pale wash marks alternate bands and plain panel heads, the deep green heads the emphasised panel, and the brand green `#133f26` carries the closing sign-up band. Tables have a black head with white text. IBM Plex Sans now sets headings as well as reading text; Newsreader, its preload and its files are removed, and quoted brief text is set upright with a green rule. Body text rises to 18px on desktop and nothing a reader needs falls below 14px. The homepage headline becomes "Find the real question before AI answers it.", and the social preview follows the new palette and headline.
+
+**Why.** The 10 November review found the site read as an AI product rather than an advisory practice. Cream paper, a serif display face and a hairline box around every block are now the common look of AI start-ups, and the review asked for a cleaner, executive register: white grounds, shades of green, black text and black table heads. The previous headline also used Frame as a verb, which the naming rule reserves for the product.
+
+**Constraint.** Colour and type stay in `src/styles/tokens-v2.css`. The signal colour and the four evidence-class colours are unchanged. The launch QA's ground census now admits white, the wash and forest, with forest only on the closing sign-up band of the four pages that carry it. The Frame Free film keeps its cream ground until it is re-cut, which will be recorded as its own decision. This supersedes the palette and typography of the 10 September dossier entry; its rule that excerpts stay verbatim still holds.
+
+**Reversed by.** Evidence that the new look costs comprehension or conversion against the dossier layout.
+
 ## 2026-10-05 · The homepage carries a film of the Frame Free worked example, as a section
 
 **Decided.** The homepage gains a section, directly before the six-step method, holding a muted, looping film of the worked example from the Frame Free guide ("The software was the surface", page 5 of the PDF). The hero is unchanged and keeps its artwork. The film sits in a panel whose head carries its provenance, like every other exhibit on the site. The server renders a poster in a box reserved at the film's own aspect ratio (a portrait composition below 768px in portrait, 16:9 otherwise) and a complete text equivalent in a native disclosure: the guide's opening prompt, its six questions under the guide's chapter titles, and the seven-part framing handoff, quoted except as recorded below, with the guide's stop line and closing line. A script adds the video only when the reader has not asked for reduced motion and the figure is within about 600px of the viewport; it plays only while on screen and while the tab is visible, and removes itself, stopping the download, if reduced motion becomes active. A Pause/Play control sits in the panel head whenever motion is allowed and the film can play, before the video arrives, so a keyboard reader reaches it before the film starts; its space is held in every state, so nothing on the page moves. Copy, paths, dimensions and the handoff live once in `src/data/frame-free-film.ts`.

@@ -18,14 +18,14 @@ const assumption = part('Load-bearing assumption').lines[0].text;
 const [reframed, gap] = parts[parts.length - 1].lines.map((line) => line.text);
 ---
 <BaseLayoutV2
-  title="GreenSquare AI | Frame the decision before AI answers it"
+  title="GreenSquare AI | Find the real question before AI answers it"
   description="Frame Free is a free six-page PDF for ChatGPT, Claude or Gemini. It questions one business decision, separates evidence from assumption and names the next gap to check, then stops before ranking or recommending."
   current="home"
 >
   <section class="v-hero home-hero">
     <div class="v-container home-hero__grid">
       <div class="home-hero__copy">
-        <h1>Frame the decision before AI answers it.</h1>
+        <h1>Find the real question before AI answers it.</h1>
         <p class="v-lead">Use Frame Free with the AI you already use to question the decision, separate evidence from assumption and identify the next gap to check.</p>
         <p class="home-hero__scope">{free.scope}</p>
       </div>
@@ -55,7 +55,7 @@ const [reframed, gap] = parts[parts.length - 1].lines.map((line) => line.text);
     </div>
   </section>
 
-  <section class="v-section v-section--rule" id="output">
+  <section class="v-section v-section--wash" id="output">
     <div class="v-container">
       <div class="home-section__head">
         <h2>The question you bring, and the one you leave with.</h2>
@@ -75,7 +75,7 @@ const [reframed, gap] = parts[parts.length - 1].lines.map((line) => line.text);
     </div>
   </section>
 
-  <section class="v-section v-section--rule" id="situations">
+  <section class="v-section" id="situations">
     <div class="v-container v-cols">
       <div class="v-cols__head">
         <h2>Five decisions it is built to question.</h2>
@@ -95,7 +95,7 @@ const [reframed, gap] = parts[parts.length - 1].lines.map((line) => line.text);
     </div>
   </section>
 
-  <section class="v-section v-section--rule" id="setup">
+  <section class="v-section v-section--wash" id="setup">
     <div class="v-container v-cols">
       <div class="v-cols__head">
         <h2>Three steps to the first question.</h2>
@@ -132,10 +132,10 @@ const [reframed, gap] = parts[parts.length - 1].lines.map((line) => line.text);
 <style>
   .home-hero { padding-block: clamp(2rem, 5vw, 4.5rem) clamp(2rem, 4vw, 3.5rem); }
   .home-hero__grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(2rem, 5vw, 5rem); align-items: center; }
-  .home-hero__copy h1 { max-width: 13ch; font-size: clamp(2.5rem, 1.7rem + 3vw, 4rem); line-height: 1.04; letter-spacing: -0.02em; }
+  .home-hero__copy h1 { max-width: 14ch; font-size: clamp(2.5rem, 1.7rem + 3vw, 4rem); line-height: 1.05; letter-spacing: -0.03em; }
   .home-hero__copy .v-lead { max-width: 40ch; }
   .home-hero__scope { margin: var(--v-5) 0 0; max-width: 52ch; padding-top: var(--v-4); border-top: 1px solid var(--v-line); font-size: var(--vs-small); color: var(--v-ink-soft); }
-  .home-hero__offer { padding: clamp(1.25rem, 3vw, 2rem); }
+  .home-hero__offer { padding: clamp(1.25rem, 3vw, 2rem); border-top: 4px solid var(--v-green); }
   .home-hero__offer-line { margin: 0 0 var(--v-4); font-weight: 600; color: var(--v-ink); }
   .home-hero__secondary { display: inline-block; margin-top: var(--v-4); }
   @media (max-width: 860px) {
@@ -149,7 +149,7 @@ const [reframed, gap] = parts[parts.length - 1].lines.map((line) => line.text);
   .home-film__head p { color: var(--v-ink-soft); margin-top: var(--v-4); }
   .home-contrast { margin-top: var(--v-6); }
   .home-contrast__label { margin: 0 0 var(--v-3); font-size: var(--vs-meta); font-weight: 500; color: var(--v-ink-soft); }
-  .home-contrast__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--v-5); margin: 0; border-top: 1px solid var(--v-ink); }
+  .home-contrast__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--v-5); margin: 0; border-top: 3px solid var(--v-green); }
   .home-contrast__grid > div { padding-top: var(--v-4); }
   .home-contrast__grid dt { font-size: var(--vs-small); font-weight: 600; color: var(--v-ink); }
   .home-contrast__grid dd { margin: var(--v-2) 0 0; font-size: var(--vs-small); color: var(--v-ink-soft); }

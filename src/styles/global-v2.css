@@ -1,40 +1,11 @@
 /* GreenSquare AI public-site foundation.
-   The site reads as a decision dossier: warm paper, rectangular panels with hairline
-   rules, compact metadata rows, and the Decision Brief quoted as the exhibit. */
+   White pages, black text, deep-green bands and panel heads, black table heads.
+   One sans family (IBM Plex Sans) for headings and reading. See docs/decisions.md,
+   10 November 2026, which supersedes the 10 September dossier look. */
 @import './tokens-v2.css';
 
-/* Newsreader, served from this origin as one variable file per style. It carries
-   `font-display: optional` so a heading never reflows mid-visit: preloaded from this
-   origin the file is in memory before first paint. Google's own v26 latin subset,
-   SIL Open Font License. Keep the preload in BaseLayoutV2 pointed at the upright file. */
-@font-face {
-  font-family: 'Newsreader';
-  font-style: normal;
-  font-weight: 200 800;
-  font-display: optional;
-  src: url('/fonts/newsreader-variable-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: 'Newsreader';
-  font-style: italic;
-  font-weight: 200 800;
-  font-display: optional;
-  src: url('/fonts/newsreader-italic-variable-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-/* Metric-matched fallbacks, so a swap or a missed `optional` window changes glyph shape
-   without moving a wrap point. Georgia is the nearest installed face to Newsreader's
-   advance widths; Liberation Serif is what Ubuntu resolves it to in CI. */
-@font-face {
-  font-family: 'Newsreader Fallback';
-  src: local('Georgia'), local('Liberation Serif'), local('Times New Roman');
-  size-adjust: 93.2%;
-  ascent-override: 95%;
-  descent-override: 26%;
-  line-gap-override: 0%;
-}
+/* Metric-matched fallbacks, so a late web font changes glyph shape without moving a
+   wrap point. */
 @font-face {
   font-family: 'IBM Plex Sans Fallback';
   src: local('Arial'), local('Liberation Sans'), local('Helvetica');
@@ -83,13 +54,13 @@ html:has(.v2) { scroll-behavior: smooth; color-scheme: light; background: var(--
 
 /* ---------- typography ---------- */
 .v2 h1, .v2 h2, .v2 h3, .v2 h4 { margin: 0; }
-.v2 h1, .v2 h2 { font-family: var(--vf-display); font-weight: 500; font-variation-settings: 'opsz' 72; }
+.v2 h1, .v2 h2 { font-family: var(--vf-display); font-weight: 600; color: var(--v-ink); }
 .v2 h3, .v2 h4 { font-family: var(--vf-body); font-weight: 600; }
-.v2 h1 { font-size: var(--vs-h1); line-height: 1.04; letter-spacing: -0.015em; text-wrap: balance; }
-.v2 h2 { font-size: var(--vs-h2); line-height: 1.1; letter-spacing: -0.01em; text-wrap: balance; }
+.v2 h1 { font-size: var(--vs-h1); line-height: 1.08; letter-spacing: -0.025em; text-wrap: balance; }
+.v2 h2 { font-size: var(--vs-h2); line-height: 1.15; letter-spacing: -0.02em; text-wrap: balance; }
 .v2 h3 { font-size: var(--vs-h3); line-height: 1.3; letter-spacing: -0.005em; }
 .v2 h4 { font-size: var(--vs-h4); line-height: 1.35; }
-.v-display { font-family: var(--vf-display); font-weight: 500; font-variation-settings: 'opsz' 72; font-size: var(--vs-display); line-height: 1; letter-spacing: -0.02em; text-wrap: balance; }
+.v-display { font-family: var(--vf-display); font-weight: 600; font-size: var(--vs-display); line-height: 1.05; letter-spacing: -0.03em; text-wrap: balance; }
 .v-h2 { font-size: var(--vs-h2); line-height: 1.1; letter-spacing: -0.01em; text-wrap: balance; }
 .v-h3 { font-family: var(--vf-body); font-size: var(--vs-h3); font-weight: 600; line-height: 1.3; }
 
@@ -112,6 +83,7 @@ html:has(.v2) { scroll-behavior: smooth; color-scheme: light; background: var(--
 .v-container--narrow { max-width: 760px; }
 .v-section { padding-block: var(--v-section); position: relative; }
 .v-section--rule { border-top: 1px solid var(--v-line); }
+.v-section--wash { background: var(--v-green-50); }
 .v-section--tight { padding-block: var(--v-8); }
 .v-green { background: var(--v-green); color: var(--v-cream); }
 .v-green h1, .v-green h2, .v-green h3, .v-green h4 { color: var(--v-cream); }
@@ -150,9 +122,11 @@ html:has(.v2) { scroll-behavior: smooth; color-scheme: light; background: var(--
 /* ---------- dossier primitives ---------- */
 /* A panel is a rectangle on the paper with a hairline edge. No radius, no shadow. */
 .d-panel { background: var(--v-panel); border: 1px solid var(--v-line); }
-.d-panel--ink { border-color: var(--v-ink); }
-.d-panel__head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--v-4); padding: var(--v-3) var(--v-5); border-bottom: 1px solid var(--v-line); font-size: var(--vs-meta); font-weight: 500; color: var(--v-ink-soft); font-variant-numeric: tabular-nums; }
-.d-panel--ink > .d-panel__head { border-bottom-color: var(--v-ink); }
+.d-panel--ink { border-color: var(--v-green-900); }
+.d-panel__head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--v-4); padding: var(--v-3) var(--v-5); background: var(--v-green-50); border-bottom: 1px solid var(--v-line); font-size: var(--vs-meta); font-weight: 500; color: var(--v-ink-soft); font-variant-numeric: tabular-nums; }
+.d-panel--ink > .d-panel__head { background: var(--v-green-900); border-bottom-color: var(--v-green-900); color: var(--v-cream-soft); }
+.d-panel--ink > .d-panel__head strong { color: var(--v-cream); }
+.d-panel--ink > .d-panel__head a { color: var(--v-cream); }
 .d-panel__head strong { color: var(--v-ink); font-weight: 600; }
 .d-panel__body { padding: var(--v-5); }
 .d-panel__foot { padding: var(--v-3) var(--v-5); border-top: 1px solid var(--v-line); font-size: var(--vs-meta); color: var(--v-ink-soft); }
@@ -190,8 +164,8 @@ html:has(.v2) { scroll-behavior: smooth; color-scheme: light; background: var(--
 .d-status--disclosed { color: var(--v-ink-soft); }
 .d-status--disclosed::before { border: 1px solid currentColor; }
 
-/* Quoted brief text. Newsreader italic at reading size, with the source under it. */
-.d-quote { font-family: var(--vf-display); font-style: italic; font-weight: 400; font-variation-settings: 'opsz' 18; font-size: 1.125rem; line-height: 1.5; color: var(--v-ink); text-wrap: pretty; }
+/* Quoted brief text: upright, set off by a green rule, with the source under it. */
+.d-quote { font-family: var(--vf-body); font-style: normal; font-weight: 500; font-size: 1.125rem; line-height: 1.5; color: var(--v-ink); text-wrap: pretty; border-left: 3px solid var(--v-green); padding-left: var(--v-4); }
 .d-quote--large { font-size: clamp(1.25rem, 1rem + 1vw, 1.6rem); line-height: 1.4; }
 
 /* Tables: hairlines, tabular figures, a ruled head. Wide tables scroll in their wrap. */
@@ -199,12 +173,12 @@ html:has(.v2) { scroll-behavior: smooth; color-scheme: light; background: var(--
 .d-table { width: 100%; border-collapse: collapse; background: var(--v-panel); font-size: var(--vs-small); }
 .d-table caption { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 .d-table th, .d-table td { padding: 12px 14px; border-bottom: 1px solid var(--v-line); text-align: left; vertical-align: top; }
-.d-table thead th { font-size: var(--vs-meta); font-weight: 500; color: var(--v-ink-soft); border-bottom: 1px solid var(--v-ink); background: var(--v-panel); }
+.d-table thead th { font-size: var(--vs-meta); font-weight: 600; color: var(--v-table-head-ink); border-bottom: 0; background: var(--v-table-head); }
 .d-table tbody th { font-weight: 600; }
 .d-table td { font-variant-numeric: tabular-nums; }
 .d-table td p { margin: 0; max-width: none; }
 .d-table .num { text-align: right; white-space: nowrap; }
-.d-table .is-emph { background: color-mix(in srgb, var(--v-green) 8%, var(--v-panel)); }
+.d-table .is-emph { background: var(--v-green-50); }
 .d-table tr.group th { background: var(--v-off); font-size: var(--vs-meta); font-weight: 600; color: var(--v-ink); border-bottom: 1px solid var(--v-line); }
 @media (max-width: 640px) {
   .d-table-wrap::before {
@@ -247,7 +221,7 @@ html:has(.v2) { scroll-behavior: smooth; color-scheme: light; background: var(--
 .v-prose { max-width: 70ch; }
 .v-prose > :first-child { margin-top: 0; }
 .v-prose h1 { font-family: var(--vf-display); font-weight: 500; font-size: var(--vs-h1); letter-spacing: -0.015em; line-height: 1.06; margin-bottom: var(--v-5); }
-.v-prose h2 { font-family: var(--vf-body); font-weight: 600; font-size: 1.25rem; letter-spacing: 0; margin-top: var(--v-10); padding-top: var(--v-4); border-top: 1px solid var(--v-ink); margin-bottom: var(--v-4); }
+.v-prose h2 { font-family: var(--vf-body); font-weight: 600; font-size: 1.25rem; letter-spacing: 0; margin-top: var(--v-10); padding-top: var(--v-4); border-top: 2px solid var(--v-green); margin-bottom: var(--v-4); }
 .v-prose h2:first-of-type { margin-top: var(--v-6); }
 .v-prose h3 { font-family: var(--vf-body); font-weight: 600; font-size: 1.0625rem; margin-top: var(--v-6); margin-bottom: var(--v-3); }
 .v-prose p, .v-prose li { color: var(--v-ink); }
@@ -258,7 +232,7 @@ html:has(.v2) { scroll-behavior: smooth; color-scheme: light; background: var(--
 .v-prose a { text-decoration: underline; text-underline-offset: 3px; }
 .v-prose table { width: 100%; border-collapse: collapse; font-size: var(--vs-small); margin-bottom: var(--v-5); }
 .v-prose th, .v-prose td { padding: 10px 12px; border-bottom: 1px solid var(--v-line); text-align: left; vertical-align: top; }
-.v-prose thead th { font-size: var(--vs-meta); font-weight: 500; color: var(--v-ink-soft); border-bottom: 1px solid var(--v-ink); }
+.v-prose thead th { font-size: var(--vs-meta); font-weight: 600; color: var(--v-table-head-ink); background: var(--v-table-head); border-bottom: 0; }
 .v-prose .legal-updated { font-size: var(--vs-meta); color: var(--v-ink-soft); margin-bottom: var(--v-6); }
 
 /* ---------- heroes ---------- */
@@ -272,7 +246,7 @@ html:has(.v2) { scroll-behavior: smooth; color-scheme: light; background: var(--
 
 /* ---------- nav ---------- */
 .v-nav { position: sticky; top: 0; z-index: 60; background: var(--v-paper); color: var(--v-ink); border-bottom: 1px solid var(--v-line); transition: border-color var(--v-mid) var(--v-ease); }
-.v-nav.is-solid { border-bottom-color: var(--v-ink); }
+.v-nav.is-solid { border-bottom-color: var(--v-line); box-shadow: 0 1px 0 var(--v-line); }
 .v-nav__row { display: flex; align-items: center; justify-content: space-between; min-height: 64px; padding-block: var(--v-2); }
 .v-nav__brand { display: flex; align-items: center; gap: var(--v-3); text-decoration: none; color: var(--v-ink); font-family: var(--vf-brand); font-weight: 600; letter-spacing: -0.015em; font-size: 1rem; }
 .v-nav__brand img { height: 22px; width: auto; }
@@ -394,6 +368,6 @@ html:not(.js) .capture-island { display: none; }
    remaining three are Frame Pro and are not purchasable, so each step says which. */
 .method-plan {
   margin-top: 4px;
-  font-size: 14px;
-  color: var(--v-ink-faint);
+  font-size: var(--vs-meta);
+  color: var(--v-ink-soft);
 }

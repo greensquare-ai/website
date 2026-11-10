@@ -9,9 +9,9 @@ export interface Props { id?: string; heading?: string; location: string; }
 const { id = 'get-free', heading = 'Get the Frame Free PDF', location } = Astro.props;
 const d = offer.free.delivery;
 ---
-<section class="v-section signup" id={id}>
+<section class="v-section v-green signup" id={id}>
   <div class="v-container">
-    <div class="d-panel d-panel--ink signup__panel">
+    <div class="signup__panel">
       <div class="signup__copy">
         <h2>{heading}</h2>
         <p class="v-lead">{offer.free.oneLine}</p>
@@ -22,16 +22,21 @@ const d = offer.free.delivery;
         </dl>
       </div>
       <div class="signup__form">
-        <CaptureForm location={location} />
+        <CaptureForm location={location} dark />
       </div>
     </div>
   </div>
 </section>
 <style>
-  .signup__panel { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: clamp(2rem, 5vw, 5rem); padding: clamp(1.5rem, 4vw, 3rem); }
+  /* A deep-green band: white heading and copy, the form in its on-green style. */
+  .signup__panel { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: clamp(2rem, 5vw, 5rem); }
   .signup__copy h2 { max-width: 16ch; }
-  .signup__meta { margin-top: var(--v-6); border-top: 1px solid var(--v-line); }
+  .signup__meta { margin-top: var(--v-6); border-top: 1px solid var(--v-line-green); }
+  .signup__meta > div { border-top-color: var(--v-line-green); }
   .signup__meta > div:first-child { border-top: 0; }
+  .signup__meta dt { color: var(--v-cream-faint); }
+  .signup__meta dd { color: var(--v-cream); }
+  .signup :global(.capture-noscript a) { color: var(--v-cream); }
   .signup__form { align-self: end; }
   @media (max-width: 800px) { .signup__panel { grid-template-columns: 1fr; } }
 </style>

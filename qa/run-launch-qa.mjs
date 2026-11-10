@@ -53,11 +53,12 @@ for (const viewport of viewports) {
     /* Two independent properties, not one archetype flag. /about/ opens as a document
        and closes on the conversion block, so it is editorial at the top and marketing
        at the bottom; collapsing these into one set fails it for being correct. */
-    /* The dossier redesign (10 September 2026) opens every page as a document: one
-       left-aligned h1, paper ground throughout, panels rather than coloured bands. The
-       sets stay as the mechanism so a future page can opt back in deliberately. */
+    /* Every page opens with one left-aligned h1. Since 10 November 2026 the grounds are
+       white with a pale green wash for alternate bands, and forest is allowed only on
+       the closing sign-up band, which these four pages carry. CENTRED_HERO stays as the
+       mechanism so a future page can opt in deliberately. */
     const CENTRED_HERO = new Set([]);
-    const FOREST_CLOSE = new Set([]);
+    const FOREST_CLOSE = new Set(['/', '/product/', '/free/', '/examples/']);
     const composition = await page.evaluate((isMarketing) => {
       const parse = (value) => {
         const match = value.match(/rgba?\(([^)]+)\)/);
@@ -116,9 +117,10 @@ for (const viewport of viewports) {
     } else if (!composition.leftFlush) {
       errors.push('Evidence h1 is not left aligned; evidence pages open as a document');
     }
-    const PAPER = '246,243,236';
+    const WHITE = '255,255,255';
+    const WASH = '238,244,240';
     const FOREST = '19,63,38';
-    const stray = composition.grounds.filter(([g]) => g !== PAPER && g !== FOREST);
+    const stray = composition.grounds.filter(([g]) => g !== WHITE && g !== WASH && g !== FOREST);
     if (stray.length) errors.push(`Ground census: ${stray.map(([g, sec]) => `${sec} ${g}`).join(' | ')}`);
     const forest = composition.grounds.filter(([g]) => g === FOREST);
     if (forest.length && !FOREST_CLOSE.has(route)) errors.push('Forest ground on a page that closes white');

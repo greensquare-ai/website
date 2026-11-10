@@ -1,20 +1,28 @@
 /* GreenSquare AI public-site tokens.
-   The site is set as a decision dossier: warm paper, deep green, near-black ink,
-   one signal colour for the things a reader must not miss (an unknown, a condition,
-   a correction). Newsreader carries headings and quoted brief text; IBM Plex Sans
-   carries reading, data and controls; Manrope stays in the wordmark. */
+   White pages, black text and a five-step green scale. Deep green carries emphasis
+   bands, panel heads and the footer; black carries table heads. One signal colour
+   marks the things a reader must not miss (an unknown, a condition, a correction).
+   IBM Plex Sans carries headings, reading, data and controls; Manrope stays in the
+   wordmark. See docs/decisions.md, 10 November 2026. */
 :root {
-  /* surfaces: warm paper for the page, white for a panel, one deeper band */
-  --v-paper: #f6f3ec;
-  --v-panel: #fffdf8;
-  --v-off: #ece7db;
+  /* surfaces: white for the page and panels, one pale green wash for bands and heads */
+  --v-paper: #ffffff;
+  --v-panel: #ffffff;
+  --v-off: #eef4f0;
+
+  /* the green scale, darkest first. 800 is the brand green. */
+  --v-green-900: #0b2e1c;
+  --v-green-800: #133f26;
+  --v-green-600: #2b6a45;
+  --v-green-200: #cfe0d5;
+  --v-green-50: #eef4f0;
 
   /* identity */
-  --v-green: #133f26;
-  --v-green-bright: #1b5433;
-  --v-green-ink: #0f1a13;
+  --v-green: var(--v-green-800);
+  --v-green-bright: var(--v-green-600);
+  --v-green-ink: var(--v-green-900);
 
-  /* the one signal colour: conditions, unknowns, corrections. 6.3:1 on paper. */
+  /* the one signal colour: conditions, unknowns, corrections. 7.6:1 on white. */
   --v-signal: #9a3a1c;
 
   /* evidence classes, used as small marks beside a label rather than as fills */
@@ -23,44 +31,47 @@
   --v-inferred: #56635a;
   --v-unknown: var(--v-signal);
 
-  /* type and rules */
-  --v-ink: #14160f;
-  --v-ink-soft: #4f514b;
-  --v-cream: #f6f3ec;
-  --v-cream-soft: rgba(246, 243, 236, 0.8);
-  --v-cream-faint: rgba(246, 243, 236, 0.58);
-  --v-black: var(--v-green-ink);
-  --v-white: var(--v-panel);
-  --v-line: #d9d3c5;
+  /* type and rules. Body text is black; the soft tier is for captions and labels only. */
+  --v-ink: #111111;
+  --v-ink-soft: #3d433f;
+  --v-ink-faint: #5a615c;
+  --v-cream: #ffffff;
+  --v-cream-soft: rgba(255, 255, 255, 0.86);
+  --v-cream-faint: rgba(255, 255, 255, 0.68);
+  --v-black: #111111;
+  --v-white: #ffffff;
+  --v-line: #d5dcd7;
   --v-line-strong: var(--v-ink);
-  --v-line-green: rgba(246, 243, 236, 0.22);
+  --v-line-green: rgba(255, 255, 255, 0.2);
   --v-error: var(--v-signal);
   --v-error-on-green: #f3c9b8;
 
-  /* typography */
-  --vf-display: 'Newsreader', 'Newsreader Fallback', Georgia, 'Times New Roman', serif;
+  /* table heads: white text on a black fill */
+  --v-table-head: var(--v-black);
+  --v-table-head-ink: var(--v-white);
+
+  /* typography. One family for everything a reader reads. */
+  --vf-display: 'IBM Plex Sans', 'IBM Plex Sans Fallback', Arial, sans-serif;
   --vf-body: 'IBM Plex Sans', 'IBM Plex Sans Fallback', Arial, sans-serif;
   --vf-brand: 'Manrope', 'Manrope Fallback', Arial, sans-serif;
   --v-font-display: var(--vf-display);
 
-  /* Newsreader is an optical-size face. The display sizes sit at the top of its range
-     where the serifs are fine and the contrast high; nothing below h2 uses it except
-     quoted brief text, which is set at reading size in the italic. */
-  --vs-display: clamp(2.5rem, 1.6rem + 3.6vw, 4.5rem);
-  --vs-h1: clamp(2.2rem, 1.5rem + 2.6vw, 3.5rem);
-  --vs-h2: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem);
+  /* fewer sizes, larger floor: body 18px on desktop, nothing a reader needs below 14px */
+  --vs-display: clamp(2.5rem, 1.6rem + 3.4vw, 4rem);
+  --vs-h1: clamp(2.25rem, 1.5rem + 2.6vw, 3.5rem);
+  --vs-h2: clamp(1.75rem, 1.35rem + 1.4vw, 2.375rem);
   --vs-h3: 1.25rem;
   --vs-h4: 1.0625rem;
-  --vs-lead: clamp(1.125rem, 1.05rem + 0.35vw, 1.3rem);
-  --vs-body: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
-  --vs-small: 0.9375rem;
-  --vs-label: 0.875rem;
-  --vs-meta: 0.8125rem;
+  --vs-lead: clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem);
+  --vs-body: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --vs-small: 1rem;
+  --vs-label: 0.9375rem;
+  --vs-meta: 0.875rem;
 
   /* layout */
   --v-max: 1200px;
   --v-gutter: clamp(20px, 4vw, 48px);
-  --v-section: clamp(3.5rem, 6vw, 6rem);
+  --v-section: clamp(4rem, 7vw, 7rem);
 
   /* spacing */
   --v-1: 4px;
