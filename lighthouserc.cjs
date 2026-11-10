@@ -3,8 +3,8 @@ module.exports = {
     collect: {
       url: [
         'http://127.0.0.1:4321/',
-        'http://127.0.0.1:4321/product/',
         'http://127.0.0.1:4321/free/',
+        'http://127.0.0.1:4321/start/',
         'http://127.0.0.1:4321/research/',
       ],
       numberOfRuns: 1,

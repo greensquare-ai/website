@@ -180,6 +180,7 @@ html:has(.v2) { scroll-behavior: smooth; color-scheme: light; background: var(--
 .d-table .num { text-align: right; white-space: nowrap; }
 .d-table .is-emph { background: var(--v-green-50); }
 .d-table tr.group th { background: var(--v-off); font-size: var(--vs-meta); font-weight: 600; color: var(--v-ink); border-bottom: 1px solid var(--v-line); }
+.v-section--wash .d-table tr.group th { background: var(--v-green-200); }
 @media (max-width: 640px) {
   .d-table-wrap::before {
     content: 'Scroll table to see more';

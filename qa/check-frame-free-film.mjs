@@ -347,7 +347,7 @@ for (const viewport of viewports) {
     /* The control exists before the film does, and is the next stop after the hero's
        last action, so a keyboard reader can pause before the film starts. */
     if (!(await toggleShown(page))) errors.push('Control not shown before the video was inserted');
-    await page.getByRole('link', { name: 'See the Free example' }).first().focus();
+    await page.getByRole('link', { name: 'Watch the example first' }).first().focus();
     await page.keyboard.press('Tab');
     const tabbed = await page.evaluate(() => document.activeElement?.matches('[data-film-toggle]') ?? false);
     if (!tabbed) errors.push(`One Tab from the hero's last action reaches ${await page.evaluate(() => document.activeElement?.outerHTML.slice(0, 80))}, not the film control`);

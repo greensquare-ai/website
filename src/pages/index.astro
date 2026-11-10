@@ -4,35 +4,44 @@ import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 import Signup from '../components/Signup.astro';
 import CaptureForm from '../components/CaptureForm.astro';
 import FrameFreeFilm from '../components/FrameFreeFilm.astro';
-import FreeHandoff from '../components/FreeHandoff.astro';
+import Faq from '../components/Faq.astro';
 import { frameFreeFilm } from '../data/frame-free-film';
 import { offer, situations } from '../data/offer';
+import { beforeAfter, workedExample } from '../data/worked-example';
 
 const free = offer.free;
-/* The guide's worked example, read from the film's data so the page quotes what the film shows. */
-const parts = frameFreeFilm.textEquivalent.parts;
-const part = (label: string) => parts.find((p) => p.label === label)!;
-const presented = part('Presented decision').lines[0].text;
-const underneath = part('Decision underneath').lines[0].text;
-const assumption = part('Load-bearing assumption').lines[0].text;
-const [reframed, gap] = parts[parts.length - 1].lines.map((line) => line.text);
+const part = (guide: string) => workedExample.parts.find((p) => p.guide === guide)!;
+/* The film's insight in three lines, quoted from the guide's worked example. */
+const insight = [
+  { label: 'What they were asked', text: part('Presented decision').lines[0].text },
+  { label: 'The real question', text: part('Decision underneath').lines[0].text },
+  { label: 'Why new software alone would not help', text: part('Load-bearing assumption').lines[0].text },
+];
+const benefits = [
+  'What you are really deciding.',
+  'What you know, and what you are only assuming.',
+  'The one thing to check before you commit.',
+];
 ---
 <BaseLayoutV2
   title="GreenSquare AI | Find the real question before AI answers it"
-  description="Frame Free is a free six-page PDF for ChatGPT, Claude or Gemini. It questions one business decision, separates evidence from assumption and names the next gap to check, then stops before ranking or recommending."
+  description="Frame Free is a free six-page PDF for ChatGPT, Claude or Gemini. The AI asks you six questions about one decision. In about ten minutes you know the real question, what you are assuming and what to check first."
   current="home"
 >
   <section class="v-hero home-hero">
     <div class="v-container home-hero__grid">
       <div class="home-hero__copy">
-        <h1>Find the real question before AI answers it.</h1>
-        <p class="v-lead">Use Frame Free with the AI you already use to question the decision, separate evidence from assumption and identify the next gap to check.</p>
+        <h1>Find the real question before AI answers it</h1>
+        <p class="v-lead">Frame Free is a free guide you attach to ChatGPT, Claude or Gemini. The AI asks you six questions about one decision. In about ten minutes you will know:</p>
+        <ul class="home-benefits">
+          {benefits.map((b) => <li>{b}</li>)}
+        </ul>
         <p class="home-hero__scope">{free.scope}</p>
       </div>
       <div class="d-panel d-panel--ink home-hero__offer">
         <p class="home-hero__offer-line">{free.offerLine}</p>
         <CaptureForm location="home_hero" eager />
-        <a class="v-link home-hero__secondary" href="#worked-example">See the Free example</a>
+        <a class="v-link home-hero__secondary" href="#worked-example">Watch the example first</a>
       </div>
     </div>
   </section>
@@ -40,66 +49,44 @@ const [reframed, gap] = parts[parts.length - 1].lines.map((line) => line.text);
   <section class="v-section home-film" id={frameFreeFilm.id}>
     <div class="v-container">
       <div class="home-film__head">
-        <h2>{frameFreeFilm.heading}</h2>
-        <p>{frameFreeFilm.intro}</p>
+        <h2>Watch it question one decision</h2>
+        <p>An operations manager is told to choose between two rostering platforms before the contract runs out. Frame Free asks its six questions. It finds that the shift rules keep changing, so new software alone would not fix the problem. It does not pick a platform: that stays with the manager.</p>
       </div>
       <FrameFreeFilm />
-      <div class="home-contrast">
-        <p class="home-contrast__label">What the guide’s worked example shows</p>
-        <dl class="home-contrast__grid">
-          <div><dt>The vendor choice</dt><dd>{presented}</dd></div>
-          <div><dt>What it concealed</dt><dd>{underneath}</dd></div>
-          <div><dt>Why switching may not help</dt><dd>{assumption}</dd></div>
-        </dl>
-      </div>
+      <dl class="home-insight">
+        {insight.map((row) => <div><dt>{row.label}</dt><dd>{row.text}</dd></div>)}
+      </dl>
     </div>
   </section>
 
   <section class="v-section v-section--wash" id="output">
     <div class="v-container">
       <div class="home-section__head">
-        <h2>The question you bring, and the one you leave with.</h2>
-        <p>Frame Free does not answer the question as presented. It returns a framing handoff in seven parts, so you can see what was assumed, what was verified and what to check next.</p>
+        <h2>What you bring, and what you leave with</h2>
+        <p>The question moves from which software to buy to what the shift rules should be. Nothing is scored or chosen. You decide what happens next.</p>
       </div>
       <div class="home-before-after">
         <div class="d-panel">
-          <div class="d-panel__head"><strong>Before</strong><span>The question as presented</span></div>
-          <div class="d-panel__body"><p>{presented}</p></div>
+          <div class="d-panel__head"><strong>You bring</strong><span>The decision as it was put to you</span></div>
+          <div class="d-panel__body"><p>{beforeAfter.before}</p></div>
         </div>
         <div class="d-panel d-panel--ink">
-          <div class="d-panel__head"><strong>After</strong><span>Reframed, with the gap to verify</span></div>
-          <div class="d-panel__body"><p>{reframed}</p><p class="home-before-after__gap">{gap}</p></div>
+          <div class="d-panel__head"><strong>You leave with</strong><span>A better question, and what to check first</span></div>
+          <div class="d-panel__body">
+            <p>{beforeAfter.after}</p>
+            <p class="home-before-after__gap"><strong>Check first:</strong> {beforeAfter.checkFirst}</p>
+          </div>
         </div>
       </div>
-      <FreeHandoff id="home-handoff" />
+      <p class="home-section__more"><a class="v-link" href={withBase('/free/#sample')}>See the full seven-part summary</a></p>
     </div>
   </section>
 
-  <section class="v-section" id="situations">
+  <section class="v-section" id="setup">
     <div class="v-container v-cols">
       <div class="v-cols__head">
-        <h2>Five decisions it is built to question.</h2>
-        <p>Each links to an illustrative example: the starting decision, what was questioned, the framing handoff and what remains unknown. The PDF is the same whichever you read.</p>
-      </div>
-      <ul class="home-situations">
-        {situations.map((s) => (
-          <li>
-            <a href={withBase(`/examples/#${s.id}`)} data-ff-event="example_selected" data-ff-location={`home_${s.id}`}>
-              <strong>{s.title}</strong>
-              <span>{s.situation}</span>
-              <span class="home-situations__issue">To inspect: {s.issue}</span>
-            </a>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </section>
-
-  <section class="v-section v-section--wash" id="setup">
-    <div class="v-container v-cols">
-      <div class="v-cols__head">
-        <h2>Three steps to the first question.</h2>
-        <p>{free.delivery.setup} Then about ten minutes for one decision.</p>
+        <h2>How it works</h2>
+        <p>Under five minutes to set up, then about ten minutes for one decision.</p>
         <a class="v-link" href={withBase('/start/')}>Read the start guide</a>
       </div>
       <ol class="d-list d-list--indexed">
@@ -110,19 +97,33 @@ const [reframed, gap] = parts[parts.length - 1].lines.map((line) => line.text);
     </div>
   </section>
 
-  <section class="v-section v-section--rule" id="evidence">
+  <section class="v-section v-section--wash" id="situations">
     <div class="v-container v-cols">
       <div class="v-cols__head">
-        <h2>What has and has not been shown.</h2>
+        <h2>Who it is for</h2>
+        <p>Owners, managers and advisers facing a business decision with money, people or a deadline at stake. It suits decisions like these. Each links to a worked example.</p>
       </div>
-      <div class="d-panel home-evidence">
-        <dl class="d-meta">
-          <div><dt>Shown here</dt><dd>The guide’s own worked example, and illustrative examples on fictional inputs. They show how the framing behaves, not customer results.</dd></div>
-          <div><dt>Not shown</dt><dd>Frame Free has not been benchmarked. An earlier study tested a method file that predates Frame: it changed how the model worked, and it did not beat an informed baseline on judgement.</dd></div>
-          <div><dt>Not offered</dt><dd>Ranking, scoring or a recommendation. Frame Pro, which continues into those, is in development.</dd></div>
-        </dl>
-        <div class="d-panel__foot"><p><a href={withBase('/research/')}>Read the research overview</a></p></div>
+      <ul class="home-situations">
+        {situations.map((s) => (
+          <li>
+            <a href={withBase(`/examples/#${s.id}`)} data-ff-event="example_selected" data-ff-location={`home_${s.id}`}>
+              <strong>{s.title}</strong>
+              <span>{s.situation}</span>
+              <span class="home-situations__issue">What it checks: {s.issue}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="v-section" id="questions">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>Questions before you start</h2>
+        <p>More detail, including your data and the full summary, is on the <a href={withBase('/free/')}>Frame Free page</a>.</p>
       </div>
+      <Faq homeOnly />
     </div>
   </section>
 
@@ -130,10 +131,13 @@ const [reframed, gap] = parts[parts.length - 1].lines.map((line) => line.text);
 </BaseLayoutV2>
 
 <style>
-  .home-hero { padding-block: clamp(2rem, 5vw, 4.5rem) clamp(2rem, 4vw, 3.5rem); }
+  .home-hero { padding-block: clamp(2rem, 5vw, 4.5rem) clamp(2.5rem, 5vw, 4rem); }
   .home-hero__grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(2rem, 5vw, 5rem); align-items: center; }
   .home-hero__copy h1 { max-width: 14ch; font-size: clamp(2.5rem, 1.7rem + 3vw, 4rem); line-height: 1.05; letter-spacing: -0.03em; }
-  .home-hero__copy .v-lead { max-width: 40ch; }
+  .home-hero__copy .v-lead { max-width: 44ch; color: var(--v-ink); }
+  .home-benefits { list-style: none; margin: var(--v-4) 0 0; padding: 0; display: grid; gap: var(--v-2); }
+  .home-benefits li { position: relative; padding-left: 1.75rem; font-size: var(--vs-lead); font-weight: 500; line-height: 1.4; }
+  .home-benefits li::before { content: ''; position: absolute; left: 0; top: 0.45em; width: 0.75rem; height: 0.75rem; background: var(--v-green); }
   .home-hero__scope { margin: var(--v-5) 0 0; max-width: 52ch; padding-top: var(--v-4); border-top: 1px solid var(--v-line); font-size: var(--vs-small); color: var(--v-ink-soft); }
   .home-hero__offer { padding: clamp(1.25rem, 3vw, 2rem); border-top: 4px solid var(--v-green); }
   .home-hero__offer-line { margin: 0 0 var(--v-4); font-weight: 600; color: var(--v-ink); }
@@ -144,34 +148,29 @@ const [reframed, gap] = parts[parts.length - 1].lines.map((line) => line.text);
   }
 
   .home-film { padding-top: clamp(2rem, 4vw, 3rem); }
-  .home-film__head { margin-bottom: var(--v-6); max-width: 60ch; }
-  .home-film__head h2 { max-width: 18ch; }
+  .home-film__head { margin-bottom: var(--v-6); max-width: 64ch; }
   .home-film__head p { color: var(--v-ink-soft); margin-top: var(--v-4); }
-  .home-contrast { margin-top: var(--v-6); }
-  .home-contrast__label { margin: 0 0 var(--v-3); font-size: var(--vs-meta); font-weight: 500; color: var(--v-ink-soft); }
-  .home-contrast__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--v-5); margin: 0; border-top: 3px solid var(--v-green); }
-  .home-contrast__grid > div { padding-top: var(--v-4); }
-  .home-contrast__grid dt { font-size: var(--vs-small); font-weight: 600; color: var(--v-ink); }
-  .home-contrast__grid dd { margin: var(--v-2) 0 0; font-size: var(--vs-small); color: var(--v-ink-soft); }
+  .home-insight { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--v-5); margin: var(--v-6) 0 0; border-top: 3px solid var(--v-green); }
+  .home-insight > div { padding-top: var(--v-4); }
+  .home-insight dt { font-weight: 600; color: var(--v-ink); }
+  .home-insight dd { margin: var(--v-2) 0 0; color: var(--v-ink-soft); }
   @media (max-width: 800px) {
-    .home-contrast__grid { grid-template-columns: 1fr; gap: 0; }
-    .home-contrast__grid > div + div { border-top: 1px solid var(--v-line); margin-top: var(--v-4); }
+    .home-insight { grid-template-columns: 1fr; gap: 0; }
+    .home-insight > div + div { border-top: 1px solid var(--v-line); margin-top: var(--v-4); }
   }
 
-  .home-section__head { max-width: 60ch; margin-bottom: var(--v-6); }
+  .home-section__head { max-width: 62ch; margin-bottom: var(--v-6); }
   .home-section__head p { color: var(--v-ink-soft); margin-top: var(--v-4); }
-  .home-before-after { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--v-4); margin-bottom: var(--v-4); }
-  .home-before-after .d-panel__body p { margin: 0; }
-  .home-before-after .d-panel__body .home-before-after__gap { margin-top: var(--v-3); padding-top: var(--v-3); border-top: 1px solid var(--v-line); font-size: var(--vs-small); color: var(--v-ink-soft); }
+  .home-before-after { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--v-4); }
+  .home-before-after .d-panel__body p { margin: 0; font-size: var(--vs-lead); line-height: 1.45; }
+  .home-before-after .d-panel__body .home-before-after__gap { margin-top: var(--v-4); padding-top: var(--v-4); border-top: 1px solid var(--v-line); font-size: var(--vs-small); }
+  .home-section__more { margin: var(--v-5) 0 0; }
   @media (max-width: 760px) { .home-before-after { grid-template-columns: 1fr; } }
 
   .home-situations { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--v-line); }
   .home-situations a { display: grid; gap: var(--v-1); padding: var(--v-4) 0; border-bottom: 1px solid var(--v-line); color: var(--v-ink); text-decoration: none; }
   .home-situations a:hover strong { text-decoration: underline; text-underline-offset: 4px; }
-  .home-situations strong { font-weight: 600; }
-  .home-situations span { font-size: var(--vs-small); color: var(--v-ink-soft); }
-  .home-situations .home-situations__issue { color: var(--v-ink); }
-
-  .home-evidence .d-meta { padding: var(--v-2) var(--v-5); }
-  .home-evidence dt { color: var(--v-ink); font-weight: 600; }
+  .home-situations strong { font-weight: 600; color: var(--v-green); }
+  .home-situations span { color: var(--v-ink-soft); }
+  .home-situations .home-situations__issue { color: var(--v-ink); font-size: var(--vs-meta); }
 </style>

@@ -6,7 +6,7 @@ import path from 'node:path';
 const base = process.env.QA_BASE_URL || 'http://127.0.0.1:4321';
 /* QA 2026-10-09: the new routes, the legal pages and the 404 added. The 404 is reached
    through a path that does not exist, so it is served with its real status. */
-const routes = ['/', '/product/', '/free/', '/research/', '/benchmark/', '/about/', '/examples/', '/start/', '/legal/privacy/', '/legal/terms/', '/legal/cookies/', '/qa-missing-page/'];
+const routes = ['/', '/free/', '/research/', '/benchmark/', '/about/', '/examples/', '/start/', '/legal/privacy/', '/legal/terms/', '/legal/cookies/', '/qa-missing-page/'];
 const expectedStatus = (route) => (route === '/qa-missing-page/' ? 404 : 200);
 const viewports = [
   { name: 'desktop', width: 1440, height: 1000 },
@@ -55,10 +55,10 @@ for (const viewport of viewports) {
        at the bottom; collapsing these into one set fails it for being correct. */
     /* Every page opens with one left-aligned h1. Since 10 November 2026 the grounds are
        white with a pale green wash for alternate bands, and forest is allowed only on
-       the closing sign-up band, which these four pages carry. CENTRED_HERO stays as the
+       the closing sign-up band, which these three pages carry. CENTRED_HERO stays as the
        mechanism so a future page can opt in deliberately. */
     const CENTRED_HERO = new Set([]);
-    const FOREST_CLOSE = new Set(['/', '/product/', '/free/', '/examples/']);
+    const FOREST_CLOSE = new Set(['/', '/free/', '/examples/']);
     const composition = await page.evaluate((isMarketing) => {
       const parse = (value) => {
         const match = value.match(/rgba?\(([^)]+)\)/);
@@ -143,8 +143,11 @@ for (const viewport of viewports) {
       /* QA 2026-10-09: /free/ carries two forms (opening offer and final form). */
       if (await page.getByLabel('Email address').count() < 1) errors.push('Email input missing');
       if (await page.getByRole('button', { name: /Get Frame Free PDF/i }).count() < 1) errors.push('Free submit action missing');
+      /* The plans and Frame Pro moved here from /product/ on 10 November 2026. */
+      if (!/Frame Pro/i.test(state.body) || !/in development/i.test(state.body)) errors.push('Pro boundary missing');
     }
-    if (route === '/product/') {
+    if (route === '/research/') {
+      /* The Decision Brief demonstration moved here from /product/ on 10 November 2026. */
       const tabs = page.getByRole('tab');
       if (await tabs.count() !== 3) errors.push('Product demo tabs missing');
       else {
@@ -154,9 +157,8 @@ for (const viewport of viewports) {
         await page.getByRole('tab', { name: /Decision Brief/i }).press('Home');
         if (await page.locator('[data-demo-tab="brought"]').getAttribute('aria-selected') !== 'true') errors.push('Product demo keyboard navigation failed');
       }
-      if (!/Frame Pro/i.test(state.body) || !/in development/i.test(state.body)) errors.push('Pro boundary missing');
+      if (!/does not validate Frame Free/i.test(state.body)) errors.push('Research plan boundary missing');
     }
-    if (route === '/research/' && !/does not validate Frame Free/i.test(state.body)) errors.push('Research plan boundary missing');
 
     if (viewport.name === 'mobile') {
       // Use the stable control ID because the accessible name intentionally

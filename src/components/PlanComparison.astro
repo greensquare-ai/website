@@ -1,62 +1,86 @@
 ---
-import { offer } from '../data/offer';
-
-export interface Props {
-  compact?: boolean;
-}
-
-const { compact = false } = Astro.props;
+/**
+ * Frame Free now, Frame Pro later: two plain columns and the six method steps beneath,
+ * with the three each plan covers. Frame Pro is described only from offer.ts and is
+ * marked in development wherever it appears.
+ */
+import { method, offer } from '../data/offer';
 
 const plans = [
   {
     name: offer.free.name,
     status: offer.free.status,
-    format: offer.free.delivery.object,
-    steps: 'Clarify, Inspect and Test',
-    output: 'A structured frame and evidence map',
-    boundary: 'No option ranking, recommendation or Decision Brief',
+    rows: [
+      ['What it is', offer.free.delivery.object],
+      ['What it covers', 'Clarify, Inspect and Test: getting the question right'],
+      ['What you get', 'A seven-part summary of the decision'],
+      ['Not included', 'Comparing options, a recommendation or a Decision Brief'],
+    ],
     available: true,
   },
   {
     name: offer.pro.name,
     status: offer.pro.status,
-    format: 'Scope and delivery format to be published',
-    steps: 'The full six-step method',
-    output: 'A five-part Decision Brief',
-    boundary: 'Includes comparison, recommendation and execution conditions',
+    rows: [
+      ['What it is', 'The paid plan. Format to be published'],
+      ['What it covers', 'All six steps, adding Compare, Decide and Execute'],
+      ['What you get', 'A Decision Brief with a recommendation'],
+      ['Price', 'Not set. Published with terms of sale before anything is offered'],
+    ],
     available: false,
   },
 ] as const;
+const slug = (name: string) => `plan-${name.toLowerCase().replaceAll(' ', '-')}`;
 ---
 
-<div class:list={['plan-comparison', { 'plan-comparison--compact': compact }]} aria-label="Frame Free and Frame Pro comparison">
+<div class="plan-comparison" aria-label="Frame Free and Frame Pro comparison">
   {plans.map((plan) => (
-    <div class:list={['d-panel', { 'd-panel--ink': plan.available }]} role="group" aria-labelledby={`plan-${plan.name.toLowerCase().replaceAll(' ', '-')}`}>
+    <div class:list={['d-panel', { 'd-panel--ink': plan.available }]} role="group" aria-labelledby={slug(plan.name)}>
       <div class="d-panel__head">
-        <strong id={`plan-${plan.name.toLowerCase().replaceAll(' ', '-')}`}>{plan.name}</strong>
+        <strong id={slug(plan.name)}>{plan.name}</strong>
         <span>{plan.status}</span>
       </div>
       <dl class="d-meta plan-comparison__list">
-        <div><dt>Format</dt><dd>{plan.format}</dd></div>
-        <div><dt>Process</dt><dd>{plan.steps}</dd></div>
-        <div><dt>Output</dt><dd>{plan.output}</dd></div>
-        <div><dt>Boundary</dt><dd>{plan.boundary}</dd></div>
+        {plan.rows.map(([label, value]) => <div><dt>{label}</dt><dd>{value}</dd></div>)}
       </dl>
     </div>
   ))}
 </div>
+<ol class="plan-steps" aria-label="The six steps of the full method">
+  {method.map(([name, text, plan], i) => (
+    <li class:list={['plan-steps__step', `plan-steps__step--${plan}`]}>
+      <span class="plan-steps__n">{i + 1}</span>
+      <strong>{name}</strong>
+      <span class="plan-steps__text">{text}</span>
+      <span class="plan-steps__plan">{plan === 'free' ? 'Frame Free' : 'Frame Pro, in development'}</span>
+    </li>
+  ))}
+</ol>
 
 <style>
   .plan-comparison { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--v-4); }
   .plan-comparison__list { padding: var(--v-2) var(--v-5); }
-  .plan-comparison__list > div { grid-template-columns: minmax(5rem, 7rem) 1fr; }
+  .plan-comparison__list > div { grid-template-columns: minmax(7rem, 9rem) 1fr; }
+  .plan-comparison__list dt { color: var(--v-ink); font-weight: 600; }
   .plan-comparison__list dd { overflow-wrap: anywhere; }
-  .plan-comparison--compact .plan-comparison__list > div { grid-template-columns: 5rem 1fr; }
-  @media (max-width: 760px) {
-    .plan-comparison { grid-template-columns: 1fr; }
-  }
-  @media (max-width: 480px) {
-    .plan-comparison__list > div,
-    .plan-comparison--compact .plan-comparison__list > div { grid-template-columns: 1fr; }
-  }
+
+  /* Six steps in one row: the first three on deep green (Frame Free), the last three on
+     the wash (Frame Pro, in development). */
+  .plan-steps { list-style: none; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 2px; margin: var(--v-6) 0 0; padding: 0; }
+  .plan-steps__step { display: grid; align-content: start; gap: var(--v-1); padding: var(--v-4); }
+  .plan-steps__step--free { background: var(--v-green-900); color: var(--v-cream); }
+  .plan-steps__step--pro { background: var(--v-green-50); color: var(--v-ink); }
+  .plan-steps__n { font-size: var(--vs-meta); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .plan-steps__step strong { font-size: 1.0625rem; }
+  .plan-steps__text { font-size: var(--vs-meta); line-height: 1.45; }
+  .plan-steps__step--free .plan-steps__text, .plan-steps__step--free .plan-steps__n { color: var(--v-cream-soft); }
+  .plan-steps__step--pro .plan-steps__text { color: var(--v-ink-soft); }
+  .plan-steps__plan { margin-top: var(--v-2); font-size: var(--vs-meta); font-weight: 600; }
+  .plan-steps__step--free .plan-steps__plan { color: var(--v-cream); }
+  .plan-steps__step--pro .plan-steps__plan { color: var(--v-green); }
+
+  @media (max-width: 960px) { .plan-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 760px) { .plan-comparison { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) { .plan-steps { grid-template-columns: 1fr; } }
+  @media (max-width: 480px) { .plan-comparison__list > div { grid-template-columns: 1fr; } }
 </style>

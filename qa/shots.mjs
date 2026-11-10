@@ -4,7 +4,7 @@ import { chromium } from 'playwright';
 import fs from 'node:fs';
 
 const base = process.argv[2] || 'http://127.0.0.1:4321';
-const routes = ['/', '/product/', '/free/', '/research/', '/benchmark/', '/methodology/', '/about/', '/legal/privacy/', '/legal/terms/', '/legal/cookies/'];
+const routes = ['/', '/free/', '/start/', '/examples/', '/research/', '/benchmark/', '/methodology/', '/about/', '/legal/privacy/', '/legal/terms/', '/legal/cookies/'];
 const viewports = [
   { name: 'desktop', width: 1440, height: 1000 },
   { name: 'mobile', width: 390, height: 844, isMobile: true, deviceScaleFactor: 2 },

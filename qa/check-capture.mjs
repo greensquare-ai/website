@@ -236,7 +236,7 @@ await check('unique input ids on every route', async () => {
   const context = await browser.newContext();
   const page = await context.newPage();
   const dupes = [];
-  for (const route of ['/', '/free/', '/product/', '/about/', '/start/', '/examples/', '/404']) {
+  for (const route of ['/', '/free/', '/research/', '/about/', '/start/', '/examples/', '/404']) {
     await page.goto(base + route, { waitUntil: 'networkidle' }).catch(() => {});
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
     await page.waitForTimeout(400);

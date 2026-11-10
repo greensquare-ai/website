@@ -19,12 +19,12 @@ const base = new URL(process.env.QA_BASE_URL || 'http://127.0.0.1:4321/');
 
 /* Links the handoff names explicitly. They are checked whether or not a page links them. */
 const REQUIRED = [
-  '/product/#brief', '/product/#pro', '/product/#plans', '/free/#get-free',
+  '/research/#demonstration', '/free/#pro', '/free/#sample', '/free/#included', '/free/#get-free', '/start/#terms',
   '/examples/#vendor-renewal', '/examples/#capacity-hiring', '/examples/#capital-purchase',
   '/examples/#project-continuation', '/examples/#pricing-change',
 ];
 /* Redirects that must land on a live page, with any fragment resolving there. */
-const REDIRECTS = { '/decision-frame': '/free', '/evidence': '/research', '/pricing': '/product#plans' };
+const REDIRECTS = { '/decision-frame': '/free', '/evidence': '/research', '/pricing': '/free#pro', '/product': '/free' };
 
 const cache = new Map();
 async function fetchFinal(pathname, hops = 0) {

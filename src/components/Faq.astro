@@ -1,0 +1,26 @@
+---
+/**
+ * The questions a reader asks before signing up, from src/data/offer.ts so every page
+ * gives the same answer. `homeOnly` shows the shorter homepage set.
+ */
+import { withBase } from '../lib/paths';
+import { faq } from '../data/offer';
+
+export interface Props { homeOnly?: boolean; }
+const { homeOnly = false } = Astro.props;
+const items = homeOnly ? faq.filter((item) => item.home) : faq;
+---
+<div class="faq">
+  {items.map((item) => (
+    <details id={`faq-${item.id}`}>
+      <summary>{item.q}</summary>
+      <p>{item.a}{'link' in item && item.link && <> <a href={withBase(item.link.href)}>{item.link.label}</a></>}</p>
+    </details>
+  ))}
+</div>
+
+<style>
+  .faq details:first-of-type { border-top: 1px solid var(--v-line); }
+  .faq summary { min-height: 44px; align-items: center; }
+  .faq p { color: var(--v-ink-soft); margin-bottom: var(--v-2); max-width: 64ch; }
+</style>

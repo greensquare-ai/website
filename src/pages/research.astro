@@ -2,6 +2,8 @@
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 import SectionNav from '../components/SectionNav.astro';
 import EvidenceStatus from '../components/EvidenceStatus.astro';
+import ProductDemo from '../components/ProductDemo.astro';
+import { briefExcerpt } from '../data/brief-excerpt';
 import { withBase } from '../lib/paths';
 import { armBvsArmC, check, checks, dates, deviations, fmt, grid, limitations, spell } from '../lib/benchmark';
 
@@ -37,6 +39,7 @@ const corrections = [
     { id: 'earlier', label: 'Earlier benchmark' },
     { id: 'status', label: 'Status' },
     { id: 'finding', label: 'Finding' },
+    { id: 'demonstration', label: 'Demonstration' },
     { id: 'boundary', label: 'Boundary' },
     { id: 'corrections', label: 'Corrections' },
     { id: 'record', label: 'Record' },
@@ -113,6 +116,16 @@ const corrections = [
         </div>
         <p class="research-finding__process">On the process side, the loaded condition asked before answering in {fmt(c1.armC).text} runs against {fmt(c1.armB).text}, compared real options including doing nothing in {fmt(c2.armC).text} against {fmt(c2.armB).text}, and tagged its evidence in {fmt(c3.armC).text} against {fmt(c3.armB).text}. The first of those is definitional: a single-turn baseline cannot ask. The other two are measured.</p>
       </div>
+    </div>
+  </section>
+
+  <section class="v-section v-section--rule" id="demonstration">
+    <div class="v-container">
+      <div class="research-demo__head">
+        <h2>A demonstration of the full method.</h2>
+        <p>What the full six-step method produced in one published run: a fictional 42-branch systems cutover, run once on {briefExcerpt.provenance.model} with the earlier method file that predates Frame, unedited. It ends in a Decision Brief, the output Frame Pro is planned to produce. Frame Free does not produce one, and this run is not part of the benchmark. Move through the question as it was brought, one turn of questioning, and the brief.</p>
+      </div>
+      <ProductDemo />
     </div>
   </section>
 
@@ -194,4 +207,6 @@ const corrections = [
   .research-return h2 { max-width: 24ch; }
   .research-return p { max-width: 62ch; color: var(--v-ink-soft); margin-top: var(--v-3); }
   @media (max-width: 480px) { .research-boundary > div, .research-corrections > div { grid-template-columns: 1fr; } .research-link { grid-template-columns: 1fr; } .research-link .v-meta { grid-row: auto; } }
+  .research-demo__head { max-width: 64ch; margin-bottom: var(--v-6); }
+  .research-demo__head p { color: var(--v-ink-soft); margin-top: var(--v-4); }
 </style>

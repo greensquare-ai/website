@@ -9,12 +9,16 @@
  */
 import BaseLayoutV2 from '../layouts/BaseLayoutV2.astro';
 import { withBase } from '../lib/paths';
-import { offer } from '../data/offer';
-import { frameFreeFilm } from '../data/frame-free-film';
+import { freeQuestions, offer } from '../data/offer';
+import { beforeAfter, plainQuestionNames, workedExample } from '../data/worked-example';
 
 const free = offer.free;
-const parts = frameFreeFilm.textEquivalent.parts;
-const gap = parts[parts.length - 1].lines[1].text;
+const gap = beforeAfter.checkFirst;
+/* The site's plain names beside the guide's own, which the PDF and the chat use. */
+const terms = [
+  { group: 'The six questions', rows: freeQuestions.map(([guide], i) => [plainQuestionNames[i], guide]) },
+  { group: 'The seven-part summary', rows: workedExample.parts.map((p) => [p.plain, p.guide]) },
+];
 const providers = [
   { name: 'ChatGPT', href: 'https://chatgpt.com/' },
   { name: 'Claude', href: 'https://claude.ai/' },
@@ -26,7 +30,7 @@ const trouble = [
     fix: 'Check that your account and the model you chose accept file attachments in a chat; this varies by plan and model. Try another model in the same account. If none accepts files, open the PDF, copy its text and paste it into the chat above the starter.',
   },
   {
-    problem: 'The model answers straight away',
+    problem: 'The AI answers straight away',
     fix: 'Reply: “Stop. Use Frame Free in the attached PDF. Ask me the first question only, and do not answer the decision yet.”',
   },
   {
@@ -38,7 +42,7 @@ const trouble = [
     fix: 'Quote the claim back and reply: “I did not tell you this. Mark it Unknown unless I supply it, and do not add facts, options, owners or dates.”',
   },
   {
-    problem: 'It recommends a course of action',
+    problem: 'It recommends what to do',
     fix: 'Reply: “Frame Free stops before evaluation. Remove the recommendation and finish the seven-part framing handoff.”',
   },
   {
@@ -59,7 +63,7 @@ const trouble = [
 >
   <section class="v-hero start-hero">
     <div class="v-container">
-      <h1>Start using Frame Free.</h1>
+      <h1>Start using Frame Free</h1>
       <p class="v-lead">Three steps, then about ten minutes for one decision. Keep this page open beside the chat.</p>
     </div>
   </section>
@@ -70,27 +74,27 @@ const trouble = [
         <li id="step-open">
           <span class="d-list__index">01</span>
           <div>
-            <h2>Open the PDF.</h2>
-            <p>Use the copy you downloaded. If you do not have it yet, <a href={withBase('/free/#get-free')}>get Frame Free on the Frame Free page</a>; it is ready to download as soon as you enter your email.</p>
+            <h2>Open the PDF</h2>
+            <p>Use the copy you downloaded. If you do not have it yet, <a href={withBase('/free/#get-free')}>get it on the Frame Free page</a>. It downloads as soon as you enter your email.</p>
           </div>
         </li>
         <li id="step-attach">
           <span class="d-list__index">02</span>
           <div>
-            <h2>Attach it to a new chat.</h2>
-            <p>Start a new chat in an account you are permitted to use for this decision, and attach the PDF with the chat’s file or attachment control. The links below only open each service; they do not attach the file.</p>
+            <h2>Attach it to a new chat</h2>
+            <p>Start a new chat in an account you are allowed to use for this decision, and attach the PDF. The links below open each service; they do not attach the file.</p>
             <ul class="start-providers">
               {providers.map((p) => (
                 <li><a class="v-btn" href={p.href} target="_blank" rel="noopener noreferrer">{p.name}<span class="sr-only"> (opens in a new tab)</span></a></li>
               ))}
             </ul>
-            <p class="start-note">Whether you can attach a PDF, and which models you can choose, depend on your account and plan. Service labels change; if a control has moved, look for the option to add a file to the message.</p>
+            <p class="start-note">Whether you can attach a PDF depends on your account and plan. If a button has moved, look for the option to add a file to your message.</p>
           </div>
         </li>
         <li id="step-paste">
           <span class="d-list__index">03</span>
           <div>
-            <h2>Paste the starter and describe one decision.</h2>
+            <h2>Paste the starter and describe one decision</h2>
             <p>Paste this as your first message, with the PDF attached.</p>
             <div class="start-copy">
               <pre class="start-copy__text" id="starter-text">{free.starter}</pre>
@@ -103,7 +107,7 @@ const trouble = [
               <button type="button" class="v-btn" data-ff-copy="starter-template" data-ff-location="start_template" hidden>Copy the outline</button>
               <p class="start-copy__status" id="starter-template-status" aria-live="polite"></p>
             </div>
-            <p class="start-note">You can also select either text by hand and copy it. Neither is sent to GreenSquare AI: copying uses your own clipboard, and the site records only that a copy happened, never the text. What you type goes to the AI service you chose, under its terms.</p>
+            <p class="start-note">You can also select either text by hand. Nothing you copy here is sent to GreenSquare AI: the site records only that a copy happened, never the text. What you type in the chat goes to the AI service you chose, under its terms.</p>
           </div>
         </li>
       </ol>
@@ -113,8 +117,8 @@ const trouble = [
   <section class="v-section v-section--rule" id="labels">
     <div class="v-container v-cols">
       <div class="v-cols__head">
-        <h2>The four evidence labels.</h2>
-        <p>The handoff tags each material claim with one of these, so you and anyone you share it with can see which parts are known and which are guessed.</p>
+        <h2>What the four labels mean</h2>
+        <p>The AI tags each important claim with one of these words, so you and anyone you share the summary with can see what is known and what is guessed.</p>
       </div>
       <dl class="d-meta start-labels">
         {free.evidenceLabels.map((row) => (
@@ -124,26 +128,49 @@ const trouble = [
     </div>
   </section>
 
-  <section class="v-section v-section--rule" id="gap">
+  <section class="v-section v-section--wash" id="terms">
     <div class="v-container v-cols">
       <div class="v-cols__head">
-        <h2>The final gap to verify.</h2>
+        <h2>The guide’s terms, in plain words</h2>
+        <p>This site uses plain names. The PDF, and so the AI in your chat, uses the guide’s own. They mean the same thing.</p>
+      </div>
+      <div class="d-table-wrap" tabindex="0" role="region" aria-label="The guide’s terms beside the site’s plain names">
+        <table class="d-table start-terms">
+          <caption>The guide’s terms beside the site’s plain names</caption>
+          <thead><tr><th scope="col">On this site</th><th scope="col">In the guide and the chat</th></tr></thead>
+          <tbody>
+            {terms.map((t) => (
+              <>
+                <tr class="group"><th scope="rowgroup" colspan="2">{t.group}</th></tr>
+                {t.rows.map(([plain, guide]) => <tr><td>{plain}</td><td>{guide}</td></tr>)}
+              </>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="v-section" id="gap">
+    <div class="v-container v-cols">
+      <div class="v-cols__head">
+        <h2>Check this first</h2>
       </div>
       <div>
-        <p class="start-gap">The handoff ends on the reframed decision and the single evidence gap to verify next. Check that gap before anyone compares options: it is where the frame is most likely to change.</p>
+        <p class="start-gap">The summary ends with the one thing to check before anyone compares options. It is where the decision is most likely to change, so check it first.</p>
         <div class="d-panel start-gap__example">
-          <div class="d-panel__head"><strong>Evidence gap to test next</strong><span>The guide’s worked example</span></div>
+          <div class="d-panel__head"><strong>Check first</strong><span>The guide’s worked example</span></div>
           <div class="d-panel__body"><p>{gap}</p></div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="v-section v-section--rule" id="troubleshooting">
+  <section class="v-section v-section--wash" id="troubleshooting">
     <div class="v-container v-cols">
       <div class="v-cols__head">
-        <h2>If the session goes off course.</h2>
-        <p>The PDF is an instruction to the model, not a control over it. These replies usually bring a session back; a model may need a second reminder, and none of them is guaranteed to work.</p>
+        <h2>If the AI goes off course</h2>
+        <p>The PDF instructs the AI; it cannot force it. Paste one of these replies to bring the chat back. Some models need a second reminder.</p>
       </div>
       <div class="start-trouble">
         {trouble.map((row) => (
@@ -155,7 +182,7 @@ const trouble = [
 
   <section class="v-section v-section--rule start-close">
     <div class="v-container">
-      <h2>Framed is not decided.</h2>
+      <h2>You still make the decision</h2>
       <p>{free.session}</p>
       <div class="v-actions">
         <a class="v-btn" href={withBase('/examples/')}>See the examples</a>

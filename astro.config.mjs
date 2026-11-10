@@ -9,6 +9,7 @@ export default defineConfig({
   redirects: {
     '/decision-frame': '/free',
     '/evidence': '/research',
-    '/pricing': '/product#plans',
+    '/pricing': '/free#pro',
+    '/product': '/free',
   },
 });

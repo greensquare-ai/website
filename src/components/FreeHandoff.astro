@@ -1,39 +1,40 @@
 ---
 /**
- * The seven-part framing handoff Frame Free returns, shown as a readable output panel.
+ * The seven-part summary Frame Free returns, shown on the guide's own worked example.
  *
- * The content is the guide's own worked example (page 5 of public/frame-free.pdf),
- * read from src/data/frame-free-film.ts so the panel, the film's text equivalent and
- * the guide cannot drift apart. That file records the deliberate departures from the
- * printed page, including the omitted budget figure. The panel is labelled as the
- * guide's worked example wherever it appears, so it is never read as a customer result.
+ * The content is page 5 of public/frame-free.pdf, read from src/data/worked-example.ts,
+ * which records the deliberate departures from the printed page. Each part carries the
+ * site's plain label; /start/ lists the guide's own terms beside them. The panel is
+ * labelled as the guide's worked example wherever it appears, so it is never read as a
+ * customer result.
  */
-import { frameFreeFilm } from '../data/frame-free-film';
+import { withBase } from '../lib/paths';
+import { offer } from '../data/offer';
+import { workedExample as ex } from '../data/worked-example';
 
 export interface Props {
   /** Prefix for element ids, unique per page. */
   id?: string;
 }
 const { id = 'handoff' } = Astro.props;
-const text = frameFreeFilm.textEquivalent;
 ---
 <figure class="d-panel ff-handoff" aria-labelledby={`${id}-title`}>
   <div class="d-panel__head">
-    <strong id={`${id}-title`}>Framing handoff</strong>
-    <span>The guide’s worked example, page 5</span>
+    <strong id={`${id}-title`}>The seven-part summary</strong>
+    <span>The guide’s worked example</span>
   </div>
   <div class="ff-handoff__situation">
-    <p>{text.situation}</p>
+    <p>{ex.situation}</p>
   </div>
   <ol class="ff-handoff__parts">
-    {text.parts.map((part, i) => (
+    {ex.parts.map((part, i) => (
       <li>
         <span class="ff-handoff__n">{i + 1}</span>
         <div>
-          <h3>{part.label}</h3>
+          <h3>{part.plain}</h3>
           {part.lines.map((line) => (
             <p>
-              {line.lead && <span class="ff-handoff__lead">{line.lead}.</span>}
+              {line.lead && <span class="ff-handoff__lead">{line.lead}:</span>}
               {line.lead && ' '}
               {line.word && <span class={`ff-handoff__word ff-handoff__word--${line.word.tone}`}>{line.word.text}:</span>}
               {line.word && ' '}
@@ -44,26 +45,34 @@ const text = frameFreeFilm.textEquivalent;
       </li>
     ))}
   </ol>
+  <dl class="ff-handoff__key" aria-label="What the four evidence labels mean">
+    {offer.free.evidenceLabels.map((row) => (
+      <div><dt class={`ff-handoff__word ff-handoff__word--${row.tag}`}>{row.label}</dt><dd>{row.meaning}</dd></div>
+    ))}
+  </dl>
   <figcaption class="d-panel__foot">
-    <p>{text.stop} Fictional business from the guide; not a customer result.</p>
+    <p>A fictional business from the guide, not a customer result. The PDF uses its own names for the seven parts; the <a href={withBase('/start/#terms')}>start guide</a> lists them.</p>
   </figcaption>
 </figure>
 
 <style>
   .ff-handoff { margin: 0; }
   .ff-handoff__situation { padding: var(--v-4) var(--v-5) 0; }
-  .ff-handoff__situation p { margin: 0; font-size: var(--vs-small); color: var(--v-ink-soft); max-width: 70ch; }
+  .ff-handoff__situation p { margin: 0; color: var(--v-ink-soft); max-width: 70ch; }
   .ff-handoff__parts { list-style: none; margin: 0; padding: var(--v-2) var(--v-5) var(--v-3); }
-  .ff-handoff__parts > li { display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: var(--v-3); padding: var(--v-3) 0; border-top: 1px solid var(--v-line); }
+  .ff-handoff__parts > li { display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: var(--v-3); padding: var(--v-4) 0; border-top: 1px solid var(--v-line); }
   .ff-handoff__parts > li:first-child { border-top: 0; }
-  .ff-handoff__n { font-size: var(--vs-meta); font-weight: 500; color: var(--v-ink-soft); font-variant-numeric: tabular-nums; padding-top: 2px; }
+  .ff-handoff__n { font-size: var(--vs-small); font-weight: 600; color: var(--v-green); font-variant-numeric: tabular-nums; }
   .ff-handoff__parts h3 { font-family: var(--vf-body); font-size: var(--vs-small); font-weight: 600; letter-spacing: 0; }
-  .ff-handoff__parts p { margin: var(--v-1) 0 0; font-size: var(--vs-small); color: var(--v-ink); max-width: 68ch; }
+  .ff-handoff__parts p { margin: var(--v-1) 0 0; color: var(--v-ink); max-width: 68ch; }
   .ff-handoff__lead { font-weight: 600; }
-  /* Evidence classes as words in the evidence-class colours, as the film's text sets them. */
   .ff-handoff__word { font-weight: 600; }
   .ff-handoff__word--given { color: var(--v-given); }
   .ff-handoff__word--derived { color: var(--v-derived); }
   .ff-handoff__word--inferred { color: var(--v-inferred); }
   .ff-handoff__word--unknown { color: var(--v-unknown); }
+  /* The key sits under the parts on the wash, so a reader meets the four words once, defined. */
+  .ff-handoff__key { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--v-4); margin: 0; padding: var(--v-4) var(--v-5); background: var(--v-green-50); border-top: 1px solid var(--v-line); }
+  .ff-handoff__key dd { margin: var(--v-1) 0 0; font-size: var(--vs-meta); color: var(--v-ink-soft); }
+  @media (max-width: 760px) { .ff-handoff__key { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 </style>

@@ -2,9 +2,19 @@
 
 Current public-site decisions, their rationale and the condition that would reverse them.
 
+## 2026-11-10 · One product page, in plain words
+
+**Decided.** `/product/` is retired and redirects to `/free/`, which becomes the single product page: what you get back, the six questions, what is included, how to start, your data, Frame Free beside Frame Pro, and the questions a reader asks before signing up. The Decision Brief demonstration moves to `/research/`, where it sits with the rest of the earlier-method evidence. The homepage gains "Who it is for" and a short set of questions and answers, and loses the full seven-part summary and the "what has and has not been shown" panel, whose content now answers "Has it been tested?". Marketing pages use plain names: "the real question" for the decision underneath, "the assumption everything rests on" for the load-bearing assumption, and so on. `/start/` prints the plain names beside the guide's own, because the PDF and the chat use the guide's. Headings on the rewritten pages carry no full stop.
+
+**Why.** The 10 November review asked for plain language that leads with what the reader gets, with each section answering the question a reader would ask next. The homepage carried 17 hedges against four statements of benefit, and `/product/` and `/free/` described one free PDF across two pages, with the same boundary repeated on each.
+
+**Constraint.** Benefits describe what a session produces, never an outcome: no claim that decisions improve, because the earlier study found no gain in judgement. The boundary sentence `/free/` must carry, the six questions as the guide puts them and the starter text are unchanged; the six questions are still read by the film's text version. The worked example the pages show now lives in `src/data/worked-example.ts`, so the film can be re-cut without moving the page copy. Every reader question has one answer, in `faq` in `src/data/offer.ts`.
+
+**Reversed by.** Evidence that the plain names confuse readers once they open the PDF, which would argue for revising the guide's terms instead; or a defined Frame Pro offer that needs its own page.
+
 ## 2026-11-10 · White, green and black replace the dossier palette
 
-**Decided.** Pages are white with black text. Greens run in five steps from `#0b2e1c` to `#eef4f0`: the pale wash marks alternate bands and plain panel heads, the deep green heads the emphasised panel, and the brand green `#133f26` carries the closing sign-up band. Tables have a black head with white text. IBM Plex Sans now sets headings as well as reading text; Newsreader, its preload and its files are removed, and quoted brief text is set upright with a green rule. Body text rises to 18px on desktop and nothing a reader needs falls below 14px. The homepage headline becomes "Find the real question before AI answers it.", and the social preview follows the new palette and headline.
+**Decided.** Pages are white with black text. Greens run in five steps from `#0b2e1c` to `#eef4f0`: the pale wash marks alternate bands and plain panel heads, the deep green heads the emphasised panel, and the brand green `#133f26` carries the closing sign-up band. Tables have a black head with white text. IBM Plex Sans now sets headings as well as reading text; Newsreader, its preload and its files are removed, and quoted brief text is set upright with a green rule. Body text rises to 18px on desktop and nothing a reader needs falls below 14px. The homepage headline becomes "Find the real question before AI answers it", and the social preview follows the new palette and headline.
 
 **Why.** The 10 November review found the site read as an AI product rather than an advisory practice. Cream paper, a serif display face and a hairline box around every block are now the common look of AI start-ups, and the review asked for a cleaner, executive register: white grounds, shades of green, black text and black table heads. The previous headline also used Frame as a verb, which the naming rule reserves for the product.
 
