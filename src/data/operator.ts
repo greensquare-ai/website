@@ -27,6 +27,6 @@ export const operator = {
  * can inspect for themselves. Nothing here is a testimonial.
  */
 export const practice = {
-  heading: 'A practice that makes decision work inspectable.',
-  summary: 'GreenSquare AI is a small Australian practice. It writes and maintains Frame, publishes worked examples and the full record of an earlier study, and answers for all of it as a business.',
+  heading: 'The small Australian business behind Frame',
+  summary: 'GreenSquare AI writes and maintains Frame. We publish worked examples and the full record of an earlier study, and we answer for all of it as a registered business.',
 } as const;

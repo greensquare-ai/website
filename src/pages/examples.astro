@@ -2,6 +2,10 @@
 /**
  * Five agent-run demonstrations of the Frame Free guide, with their complete records.
  *
+ * Each decision opens as a short summary in plain words. The agents' own words (the
+ * summary, the full exchange and the fact sheet) sit behind disclosures marked
+ * `data-guide-terms`, because they quote the guide's terms and are frozen records.
+ *
  * The transcripts and fact sheets are rendered from the frozen files in
  * src/data/examples/, exactly as recorded. The hashes shown are computed from those
  * files at build time, so a later edit to a record shows up as a changed hash.
@@ -63,13 +67,13 @@ const records = await Promise.all(
 ---
 <BaseLayoutV2
   title="Examples | GreenSquare AI"
-  description="Five agent-run examples of the Frame Free guide on fictional business decisions, each with its full transcript, frozen inputs and the shortfalls found on review."
+  description="Five fictional business decisions run through the Frame Free guide by AI agents, each with a plain summary, the full exchange, the frozen inputs and what review found."
   current="examples"
 >
   <section class="v-hero examples-hero">
     <div class="v-container">
-      <h1>Five decisions, put through the guide.</h1>
-      <p class="v-lead">Each example starts from a fictional decision as its owner first stated it, and ends where Frame Free stops: a framed decision, with no option ranked or recommended. The full exchange, the inputs and what review found are published with each one.</p>
+      <h1>Five decisions, put through the guide</h1>
+      <p class="v-lead">Each example starts with a fictional decision as its owner first put it, and ends where Frame Free stops: a clearer question, with nothing ranked or recommended. Every exchange, the inputs and what review found are published with each one.</p>
       <p class="examples-label">{examplesLabel}</p>
       <ul class="examples-jump">
         {records.map((r) => (
@@ -79,89 +83,81 @@ const records = await Promise.all(
     </div>
   </section>
 
-  <section class="v-section v-section--rule" id="how">
+  <section class="v-section v-section--wash" id="how">
     <div class="v-container v-cols">
       <div class="v-cols__head">
-        <h2>How these were produced</h2>
-        <p>Two agents, kept apart. One followed the guide. The other answered as the decision owner, only from a fact sheet written and frozen before the run began.</p>
+        <h2>How these were made</h2>
       </div>
-      <dl class="d-meta">
-        <div><dt>Date</dt><dd>{examplesProvenance.date}</dd></div>
-        <div><dt>Guide</dt><dd>The Frame Free PDF, SHA-256 <code class="examples-hash">{release.sha256}</code>. {examplesProvenance.inputMode}</dd></div>
-        <div><dt>Environment</dt><dd>{examplesProvenance.environment}</dd></div>
-        <div><dt>Method</dt><dd>{examplesProvenance.method}</dd></div>
-        <div><dt>Not tested</dt><dd>{examplesProvenance.notTested}</dd></div>
-      </dl>
+      <div>
+        <p>Two AI agents, kept apart. The guide agent followed the Frame Free guide. The owner agent played the person facing the decision, answering only from a fact sheet written and frozen before the run began. A third agent then reviewed each record against its fact sheet. No person took part.</p>
+        <details class="examples-how">
+          <summary>Full run details</summary>
+          <dl class="d-meta">
+            <div><dt>Date</dt><dd>{examplesProvenance.date}</dd></div>
+            <div><dt>Guide</dt><dd>The Frame Free PDF, SHA-256 <code class="examples-hash">{release.sha256}</code>. {examplesProvenance.inputMode}</dd></div>
+            <div><dt>Environment</dt><dd>{examplesProvenance.environment}</dd></div>
+            <div><dt>Method</dt><dd>{examplesProvenance.method}</dd></div>
+            <div><dt>Not tested</dt><dd>{examplesProvenance.notTested}</dd></div>
+          </dl>
+        </details>
+      </div>
     </div>
   </section>
 
-  {records.map((r) => (
-    <section class="v-section v-section--rule example" id={r.id}>
+  {records.map((r, i) => (
+    <section class:list={['v-section', 'example', { 'v-section--wash': i % 2 === 1 }]} id={r.id}>
       <div class="v-container">
         <header class="example__head">
           <p class="example__situation">{r.situation.title}</p>
           <h2>{r.title}</h2>
           <p class="example__issue">What it checks: {r.situation.issue}</p>
-          <p class="examples-label">{examplesLabel}</p>
         </header>
 
-        <div class="example__grid">
-          <div>
-            <h3>Starting decision</h3>
-            <blockquote class="example__opening"><p>{r.opening}</p></blockquote>
-
-            <h3>What was questioned</h3>
-            <p>{r.changed}</p>
-            <p class="example__meta">{r.questions} questions from the method agent over {r.turnCount} turns.</p>
-          </div>
-
-          <div class="d-panel example__handoff">
-            <h3>Framing handoff</h3>
-            <div class="example__md" set:html={r.handoffHtml} />
-          </div>
+        <div class="d-panel example__summary">
+          <dl class="d-meta">
+            <div><dt>As first put</dt><dd><blockquote class="example__opening"><p>{r.opening}</p></blockquote></dd></div>
+            <div><dt>What changed</dt><dd>{r.changed}</dd></div>
+            <div><dt>Where it ended</dt><dd><p class="example__meta">The guide agent’s own words, using the guide’s terms.</p><div class="example__md" data-guide-terms set:html={r.remainsHtml} /></dd></div>
+            <div><dt>Found on review</dt><dd>{r.shortfall ?? 'The reviewer agent found no departure from the guide and no statement unsupported by the fact sheet.'}</dd></div>
+            <div><dt>Length</dt><dd>{r.questions} questions over {r.turnCount} turns.</dd></div>
+          </dl>
         </div>
 
-        <div class="example__remains">
-          <h3>Reframed decision, and what remains unknown</h3>
-          <div class="example__md" set:html={r.remainsHtml} />
-        </div>
+        <details class="example__record" data-guide-terms>
+          <summary>Read the AI’s full summary</summary>
+          <div class="example__md" set:html={r.handoffHtml} />
+        </details>
 
-        <div class="example__review">
-          <h3>Found on review</h3>
-          <p>{r.shortfall ?? 'The reviewer agent found no departure from the guide and no statement unsupported by the fact sheet.'}</p>
-        </div>
-
-        <details class="example__record">
+        <details class="example__record" data-guide-terms>
           <summary>Read the full exchange ({r.turnCount} turns)</summary>
           <ol class="example__turns">
             {r.turnsHtml.map((t) => (
               <li class={`example__turn example__turn--${t.role.toLowerCase()}`}>
-                <p class="example__who">Turn {t.n}. {t.role === 'Assistant' ? 'Method agent, following the guide' : 'Operator agent, answering from the fact sheet'}</p>
+                <p class="example__who">Turn {t.n}. {t.role === 'Assistant' ? 'Guide agent, following the guide' : 'Owner agent, answering from the fact sheet'}</p>
                 <div class="example__md" set:html={t.html} />
               </li>
             ))}
           </ol>
         </details>
 
-        <details class="example__record">
+        <details class="example__record" data-guide-terms>
           <summary>Read the frozen fact sheet</summary>
-          <p class="example__meta">Written before the run. The operator agent was told never to volunteer its last section.</p>
+          <p class="example__meta">Written before the run. The owner agent was told never to volunteer its last section.</p>
           <div class="example__md" set:html={r.factsHtml} />
         </details>
 
         <p class="example__meta example__hashes">Fact sheet SHA-256 <code class="examples-hash">{r.factsSha}</code>. Transcript SHA-256 <code class="examples-hash">{r.transcriptSha}</code>.</p>
-        <p><a class="v-link" href="#get-free">Get the Frame Free PDF and run your own decision</a></p>
       </div>
     </section>
   ))}
 
-  <section class="v-section v-section--rule" id="limits">
+  <section class="v-section" id="limits">
     <div class="v-container v-cols">
       <div class="v-cols__head">
         <h2>What these examples do not show</h2>
       </div>
       <div>
-        <p>They show how one model, given the guide as text, behaved on five fictional decisions on one day. They are not customer results, not a benchmark and not independent validation. They do not show that Frame Free improves a decision, saves money or behaves the same in another model or account. The <a href={withBase('/research/')}>research overview</a> keeps them apart from the earlier benchmark.</p>
+        <p>They show how one AI, given the guide as text, behaved on five fictional decisions on one day. They are not customer results, not a benchmark and not independent validation. They do not show that Frame Free improves a decision, saves money or behaves the same in another AI or account. The <a href={withBase('/research/')}>research overview</a> keeps them apart from the earlier study.</p>
       </div>
     </div>
   </section>
@@ -171,31 +167,31 @@ const records = await Promise.all(
 
 <style>
   .examples-hero h1 { max-width: 18ch; }
-  .examples-label { margin: var(--v-4) 0 0; padding: var(--v-2) var(--v-3); border-left: 2px solid var(--v-green); background: var(--v-panel); font-size: var(--vs-small); max-width: 72ch; }
+  .examples-label { margin: var(--v-4) 0 0; padding: var(--v-2) var(--v-3); border-left: 3px solid var(--v-green); background: var(--v-green-50); font-size: var(--vs-small); max-width: 72ch; }
   .examples-jump { list-style: none; margin: var(--v-6) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--v-2) var(--v-5); }
   .examples-jump a { font-weight: 600; }
+  .examples-how { margin-top: var(--v-4); border-top: 1px solid var(--v-line); }
   .examples-hash { font-size: var(--vs-meta); overflow-wrap: anywhere; }
   .example__situation { margin: 0; font-size: var(--vs-small); font-weight: 600; color: var(--v-green); }
   .example__head h2 { margin-top: var(--v-1); max-width: 24ch; }
   .example__issue { margin: var(--v-2) 0 0; color: var(--v-ink-soft); max-width: 72ch; }
-  .example__grid { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(1.5rem, 4vw, 4rem); margin-top: var(--v-8); align-items: start; }
-  .example h3 { font-size: 1.0625rem; margin: var(--v-6) 0 var(--v-2); }
-  .example__grid > div > h3:first-child, .example__handoff h3 { margin-top: 0; }
-  .example__opening { margin: 0; padding: var(--v-3) var(--v-4); border-left: 2px solid var(--v-ink); font-size: var(--vs-small); }
+  .example__summary { margin-top: var(--v-6); }
+  .example__summary .d-meta { padding: var(--v-2) var(--v-5); }
+  .example__summary .d-meta > div { grid-template-columns: minmax(8rem, 10rem) 1fr; }
+  .example__summary dt { color: var(--v-ink); font-weight: 600; }
+  .example__opening { margin: 0; padding-left: var(--v-3); border-left: 3px solid var(--v-green); }
   .example__opening p { margin: 0; }
-  .example__handoff { padding: var(--v-5); }
   .example__md { font-size: var(--vs-small); max-width: 72ch; overflow-wrap: anywhere; }
   .example__md :where(p, ul, ol) { margin: 0 0 var(--v-3); }
   .example__md :where(ul, ol) { padding-left: 1.25rem; }
   .example__md li { margin-bottom: var(--v-1); }
-  .example__remains, .example__review { margin-top: var(--v-6); max-width: 72ch; }
-  .example__review p { font-size: var(--vs-small); }
   .example__record { margin-top: var(--v-4); max-width: 80ch; }
+  .example__record:first-of-type { border-top: 1px solid var(--v-line); }
   .example__turns { list-style: none; margin: var(--v-4) 0 0; padding: 0; }
   .example__turn { padding: var(--v-3) 0 var(--v-3) var(--v-4); border-left: 2px solid var(--v-line); margin-bottom: var(--v-3); }
   .example__turn--assistant { border-left-color: var(--v-green); }
   .example__who { margin: 0 0 var(--v-2); font-size: var(--vs-meta); font-weight: 600; color: var(--v-ink-soft); }
-  .example__meta { font-size: var(--vs-meta); color: var(--v-ink-soft); }
+  .example__meta { font-size: var(--vs-meta); color: var(--v-ink-soft); margin: 0 0 var(--v-2); }
   .example__hashes { margin-top: var(--v-4); }
-  @media (max-width: 800px) { .example__grid { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 560px) { .example__summary .d-meta > div { grid-template-columns: 1fr; } }
 </style>

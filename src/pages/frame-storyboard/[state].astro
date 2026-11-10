@@ -15,7 +15,7 @@ const { phase } = Astro.props;
     <p>Static composition review. Select a state to inspect it at your screen size.</p>
     <nav aria-label="Storyboard states">{frameProcess.states.map((state, index) => <a href={withBase(`/frame-storyboard/${state.id}/`)} aria-current={phase === index + 1 ? 'step' : undefined}>{index + 1}. {state.name}</a>)}</nav>
     <FrameProcessAnimation state={phase} />
-    <a class="v-link" href={withBase('/#frame-process')}>See the proposed homepage placement</a>
+    <a class="v-link" href={withBase('/')}>See the homepage</a>
   </section>
 </BaseLayoutV2>
 <style>

@@ -2,6 +2,18 @@
 
 Current public-site decisions, their rationale and the condition that would reverse them.
 
+## 2026-11-10 · Plain summaries on the evidence pages, and two guards that hold the rewrite
+
+**Decided.** The research overview and the benchmark record open with a short plain summary ("In short", "In plain words"): what was tested, what changed, what did not, how far to trust it and what it means for Frame Free. Every figure in those summaries renders from `src/lib/benchmark.ts`. The detailed record below them is unchanged: all checks, the composite with its provenance line, all 18 deviations, all eight limitations, the historical naming note and the one controlled statement of the result. Examples now open each decision as a short summary (as first put, what changed, where it ended, found on review), with the agents' summary, the full exchange and the fact sheet behind disclosures. The descriptions in `src/data/examples.ts` use the plain names; the frozen records are untouched. About is rewritten around why Frame exists, who is behind it (the capability areas the 22 September decision allows, and nothing more), what a reader can check and how to make contact.
+
+`scripts/check-copy.mjs` gains two rules. No h1 or h2 on any page ends in a full stop. The marketing pages (home, Frame Free, start, about, examples, 404) may not use the guide's or the research vocabulary ("handoff", "load-bearing", "decision underneath", "preregistered", "informed baseline", "loaded condition" and similar), except inside regions marked `data-film` or `data-guide-terms`, which quote the guide or a frozen record.
+
+**Why.** The 10 November review asked that every section of every page pass the same plain-language test. The evidence pages cannot drop their technical terms without losing precision, so they keep them in the record and add a plain summary above it. Without a guard, the vocabulary returns the first time someone edits a page without knowing why it reads the way it does.
+
+**Constraint.** A plain summary may restate the record, never extend it. It may not type a count, claim the run window or imply the 45 transcripts are absent. A new region that must quote the guide is marked `data-guide-terms`; the marker is not a way round the rule for ordinary copy.
+
+**Reversed by.** A decision to publish the research in its technical register only, which would remove the summaries and narrow the jargon guard to the product pages.
+
 ## 2026-11-10 · One product page, in plain words
 
 **Decided.** `/product/` is retired and redirects to `/free/`, which becomes the single product page: what you get back, the six questions, what is included, how to start, your data, Frame Free beside Frame Pro, and the questions a reader asks before signing up. The Decision Brief demonstration moves to `/research/`, where it sits with the rest of the earlier-method evidence. The homepage gains "Who it is for" and a short set of questions and answers, and loses the full seven-part summary and the "what has and has not been shown" panel, whose content now answers "Has it been tested?". Marketing pages use plain names: "the real question" for the decision underneath, "the assumption everything rests on" for the load-bearing assumption, and so on. `/start/` prints the plain names beside the guide's own, because the PDF and the chat use the guide's. Headings on the rewritten pages carry no full stop.

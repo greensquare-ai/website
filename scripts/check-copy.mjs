@@ -228,8 +228,56 @@ for (const file of htmlFiles(DIST)) {
   }
 }
 
+/**
+ * Plain language (10 November 2026). Two rules that keep the rewrite from drifting back.
+ *
+ * Headings are statements, not sentences: no h1 or h2 ends in a full stop, on any page.
+ *
+ * The marketing pages use plain names, not the guide's terms or the research vocabulary.
+ * Regions that must quote the guide or a frozen record are marked and skipped: the film
+ * and its text version (`data-film`), and anything carrying `data-guide-terms` (the terms
+ * table and paste-in replies on /start/, the agent-run records on /examples/).
+ */
+function stripMarked(html) {
+  const open = /<([a-z][a-z0-9]*)\b[^>]*\sdata-(?:film|guide-terms)(?=[\s=>\/])[^>]*>/i;
+  let out = html;
+  for (let m = out.match(open); m; m = out.match(open)) {
+    const tag = m[1].toLowerCase();
+    const start = m.index;
+    const tokens = new RegExp(`<${tag}\\b[^>]*>|</${tag}>`, 'gi');
+    tokens.lastIndex = start + m[0].length;
+    let depth = 1;
+    let end = out.length;
+    for (let t = tokens.exec(out); t; t = tokens.exec(out)) {
+      depth += t[0][1] === '/' ? -1 : 1;
+      if (depth === 0) { end = t.index + t[0].length; break; }
+    }
+    out = out.slice(0, start) + out.slice(end);
+  }
+  return out;
+}
+const MARKETING = new Set(['home', 'free', 'start', 'about', 'examples', '404.html']);
+const JARGON = /\b(?:handoff|load-bearing|decision underneath|interrogat\w*|preregister\w*|informed baseline|loaded (?:condition|method)|provenance|evidence gap)\b/gi;
+for (const file of htmlFiles(DIST)) {
+  const route = relative(DIST, file).replace(/\\/g, '/').replace(/index\.html$/, '').replace(/\/$/, '') || 'home';
+  const html = readFileSync(file, 'utf8');
+  if (/http-equiv="?refresh"?/i.test(html) && html.length < 2000) continue;
+  const stops = [...html.matchAll(/<h([12])\b[^>]*>([\s\S]*?)<\/h\1>/gi)]
+    .map((m) => visibleText(m[2]).trim())
+    .filter((h) => h.endsWith('.'));
+  if (stops.length) {
+    failures.push({ route, rule: 'a heading ends in a full stop', decision: 'One product page, in plain words (2026-11-10)', hits: stops.slice(0, 4), count: stops.length });
+  }
+  if (MARKETING.has(route)) {
+    const hits = [...visibleText(stripMarked(html)).matchAll(JARGON)].map((m) => m[0]);
+    if (hits.length) {
+      failures.push({ route, rule: 'guide or research jargon on a marketing page', decision: 'One product page, in plain words (2026-11-10)', hits: [...new Set(hits)].slice(0, 6), count: hits.length });
+    }
+  }
+}
+
 if (failures.length === 0) {
-  console.log(`check-copy: ${RULES.length + 5} rules, no violations.`);
+  console.log(`check-copy: ${RULES.length + 7} rules, no violations.`);
   process.exit(0);
 }
 

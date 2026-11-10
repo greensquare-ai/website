@@ -14,6 +14,7 @@ const judgement = checks('judgment');
 const process = checks('process');
 const c1 = check('c1'); const c2 = check('c2'); const c3 = check('c3');
 const nDev = deviations().length;
+const nOpen = deviations().filter((i) => i.status === 'open').length;
 const nLim = limitations().length;
 const corrections = [
   { on: '10 September 2026', what: 'This page previously reversed the judgement result, crediting the loaded condition with matching or exceeding the informed baseline. The benchmark record says the opposite, and the counts support the record. The sentence is corrected here and in every place it was repeated.' },
@@ -23,14 +24,22 @@ const corrections = [
 ---
 <BaseLayoutV2
   title="Research | GreenSquare AI"
-  description="Current Frame Free examples, kept apart from an earlier preregistered benchmark of a method file that predates Frame: what each shows, what neither establishes, and a record of corrections."
+  description="What has and has not been tested: Frame Free examples on fictional decisions, kept apart from an earlier study of a method file that predates Frame, with a plain summary, the full result and a record of corrections."
   current="research"
 >
   <section class="v-hero research-hero">
     <div class="v-container">
-      <h1>Current examples, and an earlier benchmark, kept apart.</h1>
+      <h1>What has been tested, and what has not</h1>
       <p class="v-hero__dateline">Research overview. Benchmark record current as at {d.currentAsAt}.</p>
-      <p class="v-lead">Current Frame Free examples illustrate how the guide behaves on fictional inputs. The earlier benchmark tested a method file that predates Frame: it changed how the model worked, and it did not beat an informed baseline on judgement. Neither is a customer result.</p>
+      <p class="v-lead">Frame Free itself has not been tested in a study. An earlier version of the method was, in {g.runs_total} runs: it changed how the AI worked, but it did not make the AI a better judge than one given all the facts. Neither the study nor the examples is a customer result.</p>
+      <div class="d-panel research-short">
+        <div class="d-panel__head"><strong>In short</strong><span>Plain summary of this page</span></div>
+        <dl class="d-meta">
+          <div><dt>Frame Free</dt><dd>Not tested in a study. Five examples show how it behaves on fictional decisions, so judge it on your own.</dd></div>
+          <div><dt>What the study found</dt><dd>With the earlier method file, the AI asked before answering, compared real options and marked its evidence. On judgement, the same AI given all the facts without the method did as well or better.</dd></div>
+          <div><dt>How far to trust it</dt><dd>With caution. One scorer ran it, scored it and held the answer key, and {nOpen} of its {nDev} recorded problems are still open.</dd></div>
+        </dl>
+      </div>
     </div>
   </section>
 
@@ -49,12 +58,12 @@ const corrections = [
   <section class="v-section" id="current">
     <div class="v-container v-cols">
       <div class="v-cols__head">
-        <h2>Current Frame Free examples.</h2>
-        <p>These use the Frame Free guide that is offered today. They show what the questions and the handoff look like on a specific decision.</p>
+        <h2>Frame Free examples</h2>
+        <p>These use the Frame Free guide that is offered today. They show what the questions and the seven-part summary look like on a specific decision.</p>
       </div>
       <div>
         <dl class="d-meta research-boundary">
-          <div><dt>The guide’s example</dt><dd>The worked example printed on page 5 of the guide: a vendor choice that turns out to be a question about shift rules. <a href={withBase('/free/#sample')}>Read the handoff</a></dd></div>
+          <div><dt>The guide’s example</dt><dd>The worked example printed on page 5 of the guide: a vendor choice that turns out to be a question about shift rules. <a href={withBase('/free/#sample')}>See the summary</a></dd></div>
           <div><dt>Five examples</dt><dd>A vendor renewal, a hiring decision, a capital purchase, a struggling programme and a pricing change, each on fictional inputs, with its provenance stated beside it. <a href={withBase('/examples/')}>Read the examples</a></dd></div>
           <div><dt>Boundary</dt><dd>Agent-run and worked examples illustrate behaviour. They are not customer outcomes, performance benchmarks or independent validation, and Frame Free has not been benchmarked.</dd></div>
         </dl>
@@ -65,7 +74,7 @@ const corrections = [
   <section class="v-section v-section--rule" id="earlier">
     <div class="v-container v-cols">
       <div class="v-cols__head">
-        <h2>Earlier method benchmark.</h2>
+        <h2>The earlier study</h2>
         <p>One preregistered study, {g.runs_total} scored runs, two models, three fictional cases, {spell(cmp.total)} checks. Everything below is stated so that a reader can hold GreenSquare AI to it.</p>
       </div>
       <dl class="d-meta research-boundary">
@@ -92,7 +101,7 @@ const corrections = [
   <section class="v-section v-section--rule" id="finding">
     <div class="v-container v-cols">
       <div class="v-cols__head">
-        <h2>One controlled statement of the result.</h2>
+        <h2>The result, stated once</h2>
         <p>The counts that carry it are below, taken from the benchmark record. Every figure on this page renders from the same data file as the record, so the two cannot disagree again.</p>
         <a class="v-link" href={withBase('/benchmark/')}>Read the full record</a>
       </div>
@@ -122,7 +131,7 @@ const corrections = [
   <section class="v-section v-section--rule" id="demonstration">
     <div class="v-container">
       <div class="research-demo__head">
-        <h2>A demonstration of the full method.</h2>
+        <h2>A demonstration of the full method</h2>
         <p>What the full six-step method produced in one published run: a fictional 42-branch systems cutover, run once on {briefExcerpt.provenance.model} with the earlier method file that predates Frame, unedited. It ends in a Decision Brief, the output Frame Pro is planned to produce. Frame Free does not produce one, and this run is not part of the benchmark. Move through the question as it was brought, one turn of questioning, and the brief.</p>
       </div>
       <ProductDemo />
@@ -132,7 +141,7 @@ const corrections = [
   <section class="v-section v-section--rule" id="boundary">
     <div class="v-container v-cols">
       <div class="v-cols__head">
-        <h2>The boundary sits beside every product claim.</h2>
+        <h2>What the result does and does not cover</h2>
       </div>
       <dl class="d-meta research-boundary">
         <div><dt>Supported</dt><dd>A change in process, on two models and three fictional cases, {g.n_per_arm} runs per condition.</dd></div>
@@ -145,7 +154,7 @@ const corrections = [
   <section class="v-section v-section--rule" id="corrections">
     <div class="v-container v-cols">
       <div class="v-cols__head">
-        <h2>Corrections to the public record.</h2>
+        <h2>Corrections</h2>
         <p>Kept here in date order so a reader can see what changed and when, rather than finding a page that quietly says something different from the last time they read it.</p>
       </div>
       <dl class="d-meta research-corrections">
@@ -159,7 +168,7 @@ const corrections = [
   <section class="v-section v-section--rule" id="record">
     <div class="v-container v-cols">
       <div class="v-cols__head">
-        <h2>Inspect the claim, the method and the frozen inputs.</h2>
+        <h2>Read the full record</h2>
       </div>
       <div class="research-links">
         <a class="d-panel research-link" href={withBase('/benchmark/')}><span class="v-meta">Results</span><strong>Benchmark record</strong><span>All {process.length + judgement.length} checks, {nDev} deviations, {spell(nLim)} limitations, sources and what is withheld.</span></a>
@@ -172,7 +181,7 @@ const corrections = [
   <section class="v-section v-section--rule" id="next">
     <div class="v-container v-cols">
       <div class="v-cols__head">
-        <h2>What would change the result.</h2>
+        <h2>What would change the result</h2>
       </div>
       <p class="research-next">A condition that resembles a real operator, arriving with most of what matters and one thing they cannot see. An independent re-score against the published rubric. Publication of the transcripts and the sealed key. A refresh on current model versions, with the date-stamped history the protocol promised. None of this is scheduled; when any of it is done it will be recorded here with a date.</p>
     </div>
@@ -180,7 +189,7 @@ const corrections = [
 
   <section class="v-section v-section--rule research-return" id="return">
     <div class="v-container">
-      <h2>Try the current guide on your own decision.</h2>
+      <h2>Try Frame Free on your own decision</h2>
       <p>Frame Free is the guide offered today. Judge it on a real decision, with the boundaries above in mind.</p>
       <div class="v-actions">
         <a class="v-btn v-btn--green" href={withBase('/free/#get-free')}>Get Frame Free PDF</a>
@@ -209,4 +218,9 @@ const corrections = [
   @media (max-width: 480px) { .research-boundary > div, .research-corrections > div { grid-template-columns: 1fr; } .research-link { grid-template-columns: 1fr; } .research-link .v-meta { grid-row: auto; } }
   .research-demo__head { max-width: 64ch; margin-bottom: var(--v-6); }
   .research-demo__head p { color: var(--v-ink-soft); margin-top: var(--v-4); }
+  .research-short { margin-top: var(--v-6); max-width: 72ch; }
+  .research-short .d-meta { padding: var(--v-2) var(--v-5); }
+  .research-short .d-meta > div { grid-template-columns: minmax(8rem, 11rem) 1fr; }
+  .research-short dt { color: var(--v-ink); font-weight: 600; }
+  @media (max-width: 480px) { .research-short .d-meta > div { grid-template-columns: 1fr; } }
 </style>

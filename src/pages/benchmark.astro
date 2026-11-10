@@ -44,9 +44,19 @@ const cell = (item: (typeof results)[number], arm: 'armA' | 'armB' | 'armC') => 
 >
   <section class="v-hero bench-hero">
     <div class="v-container">
-      <h1>Process separation was strong. Judgement did not beat the informed baseline.</h1>
+      <h1>An earlier method changed the process, but did not beat a fully briefed AI on judgement</h1>
       <p class="v-hero__dateline">Benchmark record. Scored {d.scoredOn}, adjudicated {d.adjudicatedOn}, current as at {d.currentAsAt}.</p>
       <p class="v-lead">{g.runs_total} preregistered runs across {g.models.map((m) => m.name).join(' and ')}, three fictional cases and three conditions, scored on {spell(results.length)} checks. Every count, every deviation and every limitation is on this page.</p>
+      <div class="d-panel bench-plain">
+        <div class="d-panel__head"><strong>In plain words</strong><span>The full record follows</span></div>
+        <dl class="d-meta">
+          <div><dt>What was tested</dt><dd>An earlier method file, which predates Frame, on {g.models.map((m) => m.name).join(' and ')}. Each case ran three ways: the question alone ({arms[0].label}), the question with every fact ({arms[1].label}), and every fact with the method file loaded ({arms[2].label}).</dd></div>
+          <div><dt>What changed</dt><dd>With the method file loaded, the AI followed the process. It met the three process checks that separate the conditions in {g.n_per_arm} of {g.n_per_arm} runs.</dd></div>
+          <div><dt>What did not</dt><dd>Its judgement was no better than the same AI given every fact without the method. On all three judgement checks, the ‘{arms[1].label}’ condition did as well or better.</dd></div>
+          <div><dt>How far to trust it</dt><dd>With caution. One scorer ran the study, scored it and held the answer key. {issues.length} problems are recorded, {openCount} still open.</dd></div>
+          <div><dt>What it means for Frame Free</dt><dd>It does not test Frame Free. The file tested predates Frame.</dd></div>
+        </dl>
+      </div>
     </div>
   </section>
 
@@ -77,7 +87,7 @@ const cell = (item: (typeof results)[number], arm: 'armA' | 'armB' | 'armC') => 
   <section class="v-section v-section--rule" id="results">
     <div class="v-container">
       <div class="bench-head">
-        <h2>{spell(results.length).charAt(0).toUpperCase() + spell(results.length).slice(1)} preregistered checks, scored out of {g.n_per_arm} per condition.</h2>
+        <h2>{spell(results.length).charAt(0).toUpperCase() + spell(results.length).slice(1)} preregistered checks, scored out of {g.n_per_arm} per condition</h2>
         <p>Counts are adjudicated. A hatched bar marks a cell that is definitional, where a single-turn condition cannot pass by construction, so the zero restates the design rather than measuring judgement.</p>
       </div>
       <div class="d-table-wrap" tabindex="0" aria-label="Scrollable benchmark results">
@@ -122,7 +132,7 @@ const cell = (item: (typeof results)[number], arm: 'armA' | 'armB' | 'armC') => 
   <section class="v-section v-section--rule" id="cases">
     <div class="v-container v-cols">
       <div class="v-cols__head">
-        <h2>Direction, split by case.</h2>
+        <h2>Direction, split by case</h2>
         <p>{dir.note} {dir.reading}</p>
       </div>
       <div>
@@ -147,7 +157,7 @@ const cell = (item: (typeof results)[number], arm: 'armA' | 'armB' | 'armC') => 
   <section class="v-section v-section--rule" id="design">
     <div class="v-container v-cols">
       <div class="v-cols__head">
-        <h2>Three conditions, controlled for information.</h2>
+        <h2>Three conditions, controlled for information</h2>
         <p>{'The all-facts condition is the sceptic’s comparison: it carries equal information to the loaded condition, so the only difference is the method.'}</p>
         <a class="v-link" href={withBase('/methodology/')}>Read the full methodology</a>
       </div>
@@ -169,7 +179,7 @@ const cell = (item: (typeof results)[number], arm: 'armA' | 'armB' | 'armC') => 
   <section class="v-section v-section--rule" id="issues">
     <div class="v-container">
       <div class="bench-head">
-        <h2>{issues.length} protocol deviations: {openCount} open, {correctedCount} corrected, {issues.length - openCount - correctedCount} disclosed.</h2>
+        <h2>{issues.length} protocol deviations: {openCount} open, {correctedCount} corrected, {issues.length - openCount - correctedCount} disclosed</h2>
         <p>Each one changes how confidently a cell should be read. The status table is the summary; the full text of every entry follows it.</p>
       </div>
       <div class="d-table-wrap" tabindex="0" aria-label="Scrollable deviation status table">
@@ -216,7 +226,7 @@ const cell = (item: (typeof results)[number], arm: 'armA' | 'armB' | 'armC') => 
   <section class="v-section v-section--rule" id="limits">
     <div class="v-container v-cols">
       <div class="v-cols__head">
-        <h2>What this benchmark cannot establish.</h2>
+        <h2>What this benchmark cannot establish</h2>
       </div>
       <ol class="d-list d-list--indexed">{limits.map((item, index) => <li><span class="d-list__index">{String(index + 1).padStart(2, '0')}</span><p class="bench-limit">{item}</p></li>)}</ol>
     </div>
@@ -225,7 +235,7 @@ const cell = (item: (typeof results)[number], arm: 'armA' | 'armB' | 'armC') => 
   <section class="v-section v-section--rule" id="sources">
     <div class="v-container v-cols">
       <div class="v-cols__head">
-        <h2>What is public, and what is withheld.</h2>
+        <h2>What is public, and what is withheld</h2>
         <p>The frozen inputs, their hashes and the preregistration commit are public. The transcripts and the sealed answers are not, and this page says so rather than implying otherwise.</p>
         <a class="v-btn" href="https://github.com/greensquare-ai/website/tree/main/evidence/preregistration">Frozen source files</a>
       </div>
@@ -243,7 +253,7 @@ const cell = (item: (typeof results)[number], arm: 'armA' | 'armB' | 'armC') => 
   <section class="v-section v-section--rule" id="reading">
     <div class="v-container v-cols">
       <div class="v-cols__head">
-        <h2>How to read this record.</h2>
+        <h2>How to read this record</h2>
       </div>
       <div class="record-reading">
         <p>This is a historical study record. In plain terms: under the tested conditions the earlier method file changed process behaviours, such as asking before answering and tagging evidence, and it did not establish better judgement than an informed baseline. The counts, deviations and limitations above are the record of account and are not revised to suit later product language.</p>
@@ -261,7 +271,7 @@ const cell = (item: (typeof results)[number], arm: 'armA' | 'armB' | 'armC') => 
   .record-reading p { max-width: 62ch; }
   .record-reading p + p { margin-top: var(--v-4); }
   .record-reading .v-actions { margin-top: var(--v-6); }
-  .bench-hero h1 { max-width: 22ch; font-size: var(--vs-h1); }
+  .bench-hero h1 { max-width: 30ch; font-size: var(--vs-h2); }
   .bench-head { max-width: 64ch; margin-bottom: var(--v-6); }
   .bench-head p { color: var(--v-ink-soft); margin-top: var(--v-3); }
   .bench-table { min-width: 44rem; }
@@ -293,4 +303,9 @@ const cell = (item: (typeof results)[number], arm: 'armA' | 'armB' | 'armC') => 
     .bench-issue-list summary .d-status { grid-column: 2; }
     .bench-issue-list p { padding-left: 0; }
   }
+  .bench-plain { margin-top: var(--v-6); max-width: 76ch; }
+  .bench-plain .d-meta { padding: var(--v-2) var(--v-5); }
+  .bench-plain .d-meta > div { grid-template-columns: minmax(8rem, 12rem) 1fr; }
+  .bench-plain dt { color: var(--v-ink); font-weight: 600; }
+  @media (max-width: 480px) { .bench-plain .d-meta > div { grid-template-columns: 1fr; } }
 </style>

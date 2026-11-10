@@ -134,7 +134,7 @@ const trouble = [
         <h2>The guide’s terms, in plain words</h2>
         <p>This site uses plain names. The PDF, and so the AI in your chat, uses the guide’s own. They mean the same thing.</p>
       </div>
-      <div class="d-table-wrap" tabindex="0" role="region" aria-label="The guide’s terms beside the site’s plain names">
+      <div class="d-table-wrap" tabindex="0" role="region" aria-label="The guide’s terms beside the site’s plain names" data-guide-terms>
         <table class="d-table start-terms">
           <caption>The guide’s terms beside the site’s plain names</caption>
           <thead><tr><th scope="col">On this site</th><th scope="col">In the guide and the chat</th></tr></thead>
@@ -172,7 +172,7 @@ const trouble = [
         <h2>If the AI goes off course</h2>
         <p>The PDF instructs the AI; it cannot force it. Paste one of these replies to bring the chat back. Some models need a second reminder.</p>
       </div>
-      <div class="start-trouble">
+      <div class="start-trouble" data-guide-terms>
         {trouble.map((row) => (
           <details><summary>{row.problem}</summary><p>{row.fix}</p></details>
         ))}
